@@ -994,7 +994,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-05">5 October 2015</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2015-10-06">6 October 2015</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1020,7 +1020,7 @@
    <p>This document defines an imperative mechanism which allows web developers to
 
 instruct a user agent to clear a site’s locally stored data related to a
-host and its subdomains.</p>
+host.</p>
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
@@ -1071,8 +1071,7 @@ host and its subdomains.</p>
         <li><a href="#cookies-parameter"><span class="secno">2.1.2</span> <span class="content"> The <code>cookies</code> parameter </span></a>
         <li><a href="#storage-parameter"><span class="secno">2.1.3</span> <span class="content"> The <code>storage</code> parameter </span></a>
         <li><a href="#executionContexts-parameter"><span class="secno">2.1.4</span> <span class="content"> The <code>executionContexts</code> parameter </span></a>
-        <li><a href="#includeSubdomains-parameter"><span class="secno">2.1.5</span> <span class="content"> The <code>includeSubdomains</code> parameter </span></a>
-        <li><a href="#wildcard-parameter"><span class="secno">2.1.6</span> <span class="content"> The <code>*</code> parameter </span></a>
+        <li><a href="#wildcard-parameter"><span class="secno">2.1.5</span> <span class="content"> The <code>*</code> parameter </span></a>
        </ul>
       <li><a href="#dom-api"><span class="secno">2.2</span> <span class="content">JavaScript API</span></a>
       <li><a href="#fetch-integration"><span class="secno">2.3</span> <span class="content">Fetch Integration</span></a>
@@ -1084,20 +1083,17 @@ host and its subdomains.</p>
        <a href="#parsing"><span class="secno">3.1</span> <span class="content">Parsing</span></a>
        <ul class="toc">
         <li><a href="#get-types"><span class="secno">3.1.1</span> <span class="content"> Which data types ought to be removed for <var>response</var>? </span></a>
-        <li><a href="#should-include-subdomains"><span class="secno">3.1.2</span> <span class="content"> Should subdomains' data be cleared for <var>response</var> </span></a>
-        <li><a href="#matches-origin"><span class="secno">3.1.3</span> <span class="content"> Does <var>origin</var> match <var>origin to clear</var> and <var>subdomain state</var> </span></a>
        </ul>
       <li><a href="#clear-response"><span class="secno">3.2</span> <span class="content"> Clear data for <var>response</var> </span></a>
       <li><a href="#clear-api"><span class="secno">3.3</span> <span class="content"> Clear data for <var>storageRequestOptions</var> </span></a>
       <li>
-       <a href="#clear-internal"><span class="secno">3.4</span> <span class="content"> Clear <var>types</var> for <var>origin</var> with <var>subdomain
-    state</var> </span></a>
+       <a href="#clear-internal"><span class="secno">3.4</span> <span class="content"> Clear <var>types</var> for <var>origin</var> </span></a>
        <ul class="toc">
-        <li><a href="#neuter-contexts"><span class="secno">3.4.1</span> <span class="content"> Neuter browsing contexts matching <var>origin</var> with <var>subdomain state</var> </span></a>
-        <li><a href="#reload-contexts"><span class="secno">3.4.2</span> <span class="content"> Reload browsing contexts matching <var>origin</var> with <var>subdomain state</var> </span></a>
-        <li><a href="#clear-cache"><span class="secno">3.4.3</span> <span class="content"> Clear cache for <var>origin</var> with <var>subdomain state</var> </span></a>
-        <li><a href="#clear-cookies"><span class="secno">3.4.4</span> <span class="content"> Clear cookies for <var>origin</var> with <var>subdomain state</var> </span></a>
-        <li><a href="#clear-dom"><span class="secno">3.4.5</span> <span class="content"> Clear DOM-accessible storage for <var>origin</var> with <var>subdomain state</var> </span></a>
+        <li><a href="#neuter-contexts"><span class="secno">3.4.1</span> <span class="content"> Neuter browsing contexts matching <var>origin</var> </span></a>
+        <li><a href="#reload-contexts"><span class="secno">3.4.2</span> <span class="content"> Reload browsing contexts matching <var>origin</var> </span></a>
+        <li><a href="#clear-cache"><span class="secno">3.4.3</span> <span class="content"> Clear cache for <var>origin</var> </span></a>
+        <li><a href="#clear-cookies"><span class="secno">3.4.4</span> <span class="content"> Clear cookies for <var>origin</var> </span></a>
+        <li><a href="#clear-dom"><span class="secno">3.4.5</span> <span class="content"> Clear DOM-accessible storage for <var>origin</var> </span></a>
        </ul>
      </ul>
     <li>
@@ -1169,8 +1165,8 @@ host and its subdomains.</p>
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.2" id="example-targeted"><span class="secno">1.1.2. </span><span class="content">Targeted Clearing</span><a class="self-link" href="#example-targeted"></a></h4>
-    <div class="example" id="example-5c8dc63b">
-     <a class="self-link" href="#example-5c8dc63b"></a> A user signs out of Megacorp Inc.'s site via a CSRF-protected POST to <code>https://megacorp.example.com/logout</code>. Megacorp has a large
+    <div class="example" id="example-343aea92">
+     <a class="self-link" href="#example-343aea92"></a> A user signs out of Megacorp Inc.'s site via a CSRF-protected POST to <code>https://megacorp.example.com/logout</code>. Megacorp has a large
     number of services available as subdomains, so many that it’s not entirely
     clear which of them would be safe to clear as a response to a logout action.
     One option would be to simply clear everything, and deal with the fallout.
@@ -1192,23 +1188,23 @@ host and its subdomains.</p>
 </pre>
      <p>That endpoint would return proper CORS headers in response to that request’s
     preflight, and would return the following header for the actual request:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#">*</a>; <a data-link-type="dfn" href="#includesubdomains">includeSubdomains</a>
+<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#">*</a>
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.3" id="example-keepcookies"><span class="secno">1.1.3. </span><span class="content">Keep Critical Cookies</span><a class="self-link" href="#example-keepcookies"></a></h4>
-    <div class="example" id="example-a6bed4ce">
-     <a class="self-link" href="#example-a6bed4ce"></a> A user opts-out of interest-based advertising via a CSRF-protected POST to <code>https://ads-are-awesome.example.com/optout</code>. The site author
+    <div class="example" id="example-1ae8cb27">
+     <a class="self-link" href="#example-1ae8cb27"></a> A user opts-out of interest-based advertising via a CSRF-protected POST to <code>https://ads-are-awesome.example.com/optout</code>. The site author
     wishes to remove DOM-accessible data which might contain tracking
     information, but needs to ensure that the opt-out cookie which the user has
     just received isn’t wiped along with it. 
      <p>They can do so by sending the following HTTP header in the response, which
     includes all the types except for "<a data-link-type="dfn" href="#cookies">cookies</a>":</p>
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#storage">storage</a>; <a data-link-type="dfn" href="#executioncontexts">executionContexts</a>; <a data-link-type="dfn" href="#cache">cache</a>; <a data-link-type="dfn" href="#includesubdomains">includeSubdomains</a>
+<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#storage">storage</a>; <a data-link-type="dfn" href="#executioncontexts">executionContexts</a>; <a data-link-type="dfn" href="#cache">cache</a>
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.4" id="example-killswitch"><span class="secno">1.1.4. </span><span class="content">Kill Switch</span><a class="self-link" href="#example-killswitch"></a></h4>
-    <div class="example" id="example-464d0d26">
-     <a class="self-link" href="#example-464d0d26"></a> Super Secret Social Network’s developers learn that the site was vulnerable
+    <div class="example" id="example-e23cb5d5">
+     <a class="self-link" href="#example-e23cb5d5"></a> Super Secret Social Network’s developers learn that the site was vulnerable
     to cross-site scripting attacks which allowed malicious parties to inject
     arbitrary code into its origin. They fixed the site, and added a strong
     Content Security Policy <a data-link-type="biblio" href="#biblio-csp2">[CSP2]</a> to mitigate the risk going forward, but
@@ -1216,7 +1212,7 @@ host and its subdomains.</p>
     state. Perhaps the attackers found a clever persistence mechanism? 
      <p>They can reduce the risk of a persistent client-side XSS by sending the
     following HTTP header in a response to wipe out local sources of data:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#">*</a>; <a data-link-type="dfn" href="#includesubdomains">includeSubdomains</a>
+<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#">*</a>
 </pre>
      <p class="note" role="note">Note: Installing a Service Worker guarantees that a request will go out to
     a server every ~24 hours. That update ping would be a wonderful time to send
@@ -1238,8 +1234,6 @@ host and its subdomains.</p>
       <p>Service Workers registered for an origin are terminated and deregistered.</p>
      <li data-md="">
       <p>Resources from an origin are removed from the user agent’s local cache.</p>
-     <li data-md="">
-      <p>All of the above can be propagated to an origin’s host’s subdomains.</p>
      <li data-md="">
       <p>All of the above can be propagated to the HTTP version of an HTTPS origin.</p>
      <li data-md="">
@@ -1277,7 +1271,7 @@ host and its subdomains.</p>
   which a user agent implements (prerendered pages, script caches, shader
   caches, etc.).</p>
     <p>The <a data-link-type="dfn" href="#value">value</a> component of this parameter is currently ignored, if present.</p>
-    <p>Implementation details are in <a href="#clear-cache">§3.4.3 Clear cache for origin with subdomain state</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
+    <p>Implementation details are in <a href="#clear-cache">§3.4.3 Clear cache for origin</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
     <div class="example" id="example-e22fa0f9">
      <a class="self-link" href="#example-e22fa0f9"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause caches associated with the origin <code>https://example.com</code> to be cleared: 
@@ -1290,7 +1284,7 @@ host and its subdomains.</p>
   course, but will also remove data from various other caches which a user agent
   implements (prerendered pages, script caches, shader caches, etc.).</p>
     <p>The <a data-link-type="dfn" href="#value">value</a> component of this parameter is currently ignored, if present.</p>
-    <p>Implementation details are in <a href="#clear-cache">§3.4.3 Clear cache for origin with subdomain state</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
+    <p>Implementation details are in <a href="#clear-cache">§3.4.3 Clear cache for origin</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
     <div class="example" id="example-a59997a7">
      <a class="self-link" href="#example-a59997a7"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause cookies associated with the origin <code>https://example.com</code> to be cleared: 
@@ -1303,8 +1297,7 @@ host and its subdomains.</p>
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. This includes storage
   mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registrations</a>.</p>
     <p>The <a data-link-type="dfn" href="#value">value</a> component of this parameter is currently ignored, if present.</p>
-    <p>Implementation details are in <a href="#clear-dom">§3.4.5 Clear DOM-accessible storage for origin with
-    subdomain state</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
+    <p>Implementation details are in <a href="#clear-dom">§3.4.5 Clear DOM-accessible storage for origin</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
     <div class="example" id="example-8b4a4823">
      <a class="self-link" href="#example-8b4a4823"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause DOM-accessible storage for the origin <code>https://example.com</code> to be cleared: 
@@ -1315,30 +1308,14 @@ host and its subdomains.</p>
     <p>The <dfn data-dfn-type="dfn" data-noexport="" id="executioncontexts"><code>executionContexts</code><a class="self-link" href="#executioncontexts"></a></dfn> parameter indicates that the
   server wishes to neuter and reload execution contexts currently rendering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>.</p>
     <p>The <a data-link-type="dfn" href="#value">value</a> component of this parameter is currently ignored, if present.</p>
-    <p>Implementation details are in <a href="#neuter-contexts">§3.4.1 Neuter browsing contexts matching origin with
-    subdomain state</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
+    <p>Implementation details are in <a href="#neuter-contexts">§3.4.1 Neuter browsing contexts matching origin</a>, as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
     <div class="example" id="example-5e780ed8">
      <a class="self-link" href="#example-5e780ed8"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause execution contexts displaying the origin <code>https://example.com</code> to be neutered and reloaded: 
 <pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#executioncontexts">executionContexts</a>
 </pre>
     </div>
-    <h4 class="heading settled" data-level="2.1.5" id="includeSubdomains-parameter"><span class="secno">2.1.5. </span><span class="content"> The <code>includeSubdomains</code> parameter </span><a class="self-link" href="#includeSubdomains-parameter"></a></h4>
-    <p>The <dfn data-dfn-type="dfn" data-noexport="" id="includesubdomains"><code>includeSubdomains</code><a class="self-link" href="#includesubdomains"></a></dfn> parameter expands the scope of
-  the storage type parameters to include any origin whose <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code> is a
-  subdomain of the <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>'s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code>.</p>
-    <p>Implementation details are included as part of the larger <a href="#clear-response">§3.2 Clear data for response</a> and <a href="#clear-api">§3.3 Clear data for storageRequestOptions</a> algorithms.</p>
-    <div class="example" id="example-dae816c4">
-     <a class="self-link" href="#example-dae816c4"></a> When delivered with a response from <code>https://example.com/clear</code>,
-    the following header will cause caches associated with the origins <code>https://example.com</code> and <code>https://anythingelse.example.com</code> to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#cache">cache</a>; <a data-link-type="dfn" href="#includesubdomains">includeSubdomains</a>
-</pre>
-    </div>
-    <p class="issue" id="issue-e4e01624"><a class="self-link" href="#issue-e4e01624"></a> The folks at Google who were interested in using this feature are no
-  longer interested in using `includeSubdomains`. Perhaps we should punt it to
-  a "level 2" of this spec if there’s demand? Simplifying the origin
-  implications here might be helpful.</p>
-    <h4 class="heading settled" data-level="2.1.6" id="wildcard-parameter"><span class="secno">2.1.6. </span><span class="content"> The <code>*</code> parameter </span><a class="self-link" href="#wildcard-parameter"></a></h4>
+    <h4 class="heading settled" data-level="2.1.5" id="wildcard-parameter"><span class="secno">2.1.5. </span><span class="content"> The <code>*</code> parameter </span><a class="self-link" href="#wildcard-parameter"></a></h4>
     <p>The <dfn data-dfn-type="dfn" data-noexport="" id=""><code>*</code><a class="self-link" href="#"></a></dfn> parameter is syntactic sugar which includes all
   storage type parameters. That is:</p>
 <pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#">*</a>
@@ -1348,17 +1325,16 @@ host and its subdomains.</p>
 </pre>
     <h3 class="heading settled" data-level="2.2" id="dom-api"><span class="secno">2.2. </span><span class="content">JavaScript API</span><a class="self-link" href="#dom-api"></a></h3>
     <p class="issue" id="issue-3153cbda"><a class="self-link" href="#issue-3153cbda"></a> This might live more cleanly in <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a>.</p>
-    <div class="example" id="example-8ad2344d">
-     <a class="self-link" href="#example-8ad2344d"></a> Megacorp, Inc. wants to remove data in response to a user’s activity on
+    <div class="example" id="example-ab4fc395">
+     <a class="self-link" href="#example-ab4fc395"></a> Megacorp, Inc. wants to remove data in response to a user’s activity on
     their site. They can execute the following JavaScript to clear all the
     relevant data for a user: 
 <pre>navigator.storage.<a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear">clear()</a>;
 </pre>
      <p>If they only wished to clear the otherwise inaccessible cache for the
-    current origin and all subdomains:</p>
+    current origin:</p>
 <pre>navigator.storage.<a class="idl-code" data-link-type="method" href="https://html.spec.whatwg.org/multipage/interaction.html#dom-datatransferitemlist-clear">clear</a>({
   <a class="idl-code" data-link-type="dict-member" href="#dom-storageclearoptions-types">types</a>: [ "cache" ],
-  <a class="idl-code" data-link-type="dict-member" href="#dom-storageclearoptions-includesubdomains">includeSubdomains</a>: true
 });
 </pre>
     </div>
@@ -1371,7 +1347,6 @@ host and its subdomains.</p>
 
 dictionary <dfn class="idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-storageclearoptions">StorageClearOptions<a class="self-link" href="#dictdef-storageclearoptions"></a></dfn> {
   sequence&lt;<a data-link-type="idl-name" href="#enumdef-storagecleartype">StorageClearType</a>> <dfn class="idl-code" data-dfn-for="StorageClearOptions" data-dfn-type="dict-member" data-export="" data-type="sequence<StorageClearType> " id="dom-storageclearoptions-types">types<a class="self-link" href="#dom-storageclearoptions-types"></a></dfn>;
-  boolean <dfn class="idl-code" data-default="false" data-dfn-for="StorageClearOptions" data-dfn-type="dict-member" data-export="" data-type="boolean " id="dom-storageclearoptions-includesubdomains">includeSubdomains<a class="self-link" href="#dom-storageclearoptions-includesubdomains"></a></dfn> = false;
 };
 
 partial interface <a class="idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
@@ -1448,53 +1423,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
        <li data-md="">
         <p>Return <var>remove</var>.</p>
       </ol>
-      <h4 class="heading settled" data-level="3.1.2" id="should-include-subdomains"><span class="secno">3.1.2. </span><span class="content"> Should subdomains' data be cleared for <var>response</var> </span><a class="self-link" href="#should-include-subdomains"></a></h4>
-      <ol>
-       <li data-md="">
-        <p>If <var>response</var> does not contain a <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header, return <dfn data-dfn-type="dfn" data-noexport="" id="exclude-subdomains"><code>Exclude
-  Subdomains</code><a class="self-link" href="#exclude-subdomains"></a></dfn>.</p>
-       <li data-md="">
-        <p>Let <var>parameters</var> be the list of <a data-link-type="dfn" href="#parameter">parameter</a> components in
-  the value of <var>response</var>’s <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header.</p>
-       <li data-md="">
-        <p>If <var>parameters</var> contains a <a data-link-type="dfn" href="#parameter">parameter</a> whose <a data-link-type="dfn" href="#key">key</a> is <a data-link-type="dfn" href="#includesubdomains"><code>includeSubdomains</code></a>, return <dfn data-dfn-type="dfn" data-noexport="" id="include-subdomains"><code>Include
-  Subdomains</code><a class="self-link" href="#include-subdomains"></a></dfn>.</p>
-       <li data-md="">
-        <p>Otherwise, return <code>Exclude Subdomains</code>.</p>
-      </ol>
-      <h4 class="heading settled" data-level="3.1.3" id="matches-origin"><span class="secno">3.1.3. </span><span class="content"> Does <var>origin</var> match <var>origin to clear</var> and <var>subdomain state</var> </span><a class="self-link" href="#matches-origin"></a></h4>
-      <p>Given an origin, the origin to clear, and the "include subdomains"
-  flag, return <dfn data-dfn-type="dfn" data-noexport="" id="matches"><code>Matches</code><a class="self-link" href="#matches"></a></dfn> or <dfn data-dfn-type="dfn" data-noexport="" id="does-not-match"><code>Does Not
-  Match</code><a class="self-link" href="#does-not-match"></a></dfn>.</p>
-      <ol>
-       <li data-md="">
-        <p>If either <var>origin</var> or <var>origin to clear</var> are <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-2.3">globally
-  unique identifiers</a>, return <code>Does Not Match</code>.</p>
-       <li data-md="">
-        <p>If <var>origin</var> is <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-5">the same</a> as <var>origin to clear</var>,
-  return <code>Matches</code>.</p>
-       <li data-md="">
-        <p>If <var>subdomain state</var> is <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude Subdomains</code></a>,
-  return <code>Does Not Match</code>.</p>
-       <li data-md="">
-        <p>Let <var>labels to clear</var> be the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code> component of <var>origin
-  to clear</var> split into <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc5890#section-2.2">labels</a>, and <var>labels</var> be the <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code> component of <var>origin</var>, split into <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc5890#section-2.2">labels</a>.</p>
-       <li data-md="">
-        <p>If <var>labels</var> does not have more entries than <var>labels to
-  clear</var>, return <code>Does Not Match</code>.</p>
-       <li data-md="">
-        <p>While <var>labels to clear</var> is not empty:</p>
-        <ol>
-         <li data-md="">
-          <p>If the final entry of <var>labels to clear</var> does not exactly
-  match the final entry of <var>labels</var>, return <code>Does Not
-  Match</code>.</p>
-         <li data-md="">
-          <p>Remove the final entry of <var>labels to clear</var>, and of <var>labels</var>.</p>
-        </ol>
-       <li data-md="">
-        <p>Return <code>Matches</code>.</p>
-      </ol>
       <h3 class="heading settled" data-level="3.2" id="clear-response"><span class="secno">3.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
       <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), this algorithm parses the <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header to determine what needs to be
   cleared, which origins are affected, and then executes those requests.</p>
@@ -1507,10 +1435,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
        <li data-md="">
         <p>Let <var>types</var> be the result of <a href="#get-types">§3.1.1 Which data types ought to be removed for response?</a> executed on <var>response</var>.</p>
        <li data-md="">
-        <p>Let <var>subdomain state</var> be the result of <a href="#should-include-subdomains">§3.1.2 Should subdomains' data be cleared for response</a> executed on <var>response</var>.</p>
-       <li data-md="">
-        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin with subdomain
-    state</a> on <var>types</var>, <var>response</var>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>'s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, and <var>subdomain state</var>.</p>
+        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin</a> on <var>types</var>, <var>response</var>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>'s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>.</p>
       </ol>
       <p class="note" role="note">Note: Especially given the cross-context implications, user agents are
   are encouraged to give web developers some mechanism by which the clearing
@@ -1529,9 +1454,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
        <li data-md="">
         <p>Return <var>promise</var>, and execute the remaining steps asynchronously.</p>
        <li data-md="">
-        <p>Let <var>subdomain state</var> be <a data-link-type="dfn" href="#include-subdomains"><code>Include Subdomains</code></a> if <var>options</var>' <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-includesubdomains">includeSubdomains</a></code> property
-  is <code>true</code>, and <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude Subdomains</code></a> otherwise.</p>
-       <li data-md="">
         <p>Let <var>types</var> be an empty list.</p>
        <li data-md="">
         <p>If <var>options</var>' <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types">types</a></code> is an empty sequence:</p>
@@ -1546,39 +1468,30 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
           <p>Append <var>type</var> to <var>types</var>.</p>
         </ol>
        <li data-md="">
-        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin with subdomain
-    state</a> on <var>types</var>, the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent
-  settings object</a>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, and <var>subdomain state</var>.</p>
+        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin</a> on <var>types</var> and the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent
+  settings object</a>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>.</p>
        <li data-md="">
         <p>Resolve <var>promise</var> with <code>undefined</code>.</p>
       </ol>
-      <h3 class="heading settled" data-level="3.4" id="clear-internal"><span class="secno">3.4. </span><span class="content"> Clear <var>types</var> for <var>origin</var> with <var>subdomain
-    state</var> </span><a class="self-link" href="#clear-internal"></a></h3>
+      <h3 class="heading settled" data-level="3.4" id="clear-internal"><span class="secno">3.4. </span><span class="content"> Clear <var>types</var> for <var>origin</var> </span><a class="self-link" href="#clear-internal"></a></h3>
       <ol>
        <li data-md="">
-        <p>If <var>types</var> contains "<code>executionContexts</code>", execute <a href="#neuter-contexts">§3.4.1 Neuter browsing contexts matching origin with
-    subdomain state</a> on <var>origin</var>, with <var>subdomain
-  state</var>.</p>
+        <p>If <var>types</var> contains "<code>executionContexts</code>", execute <a href="#neuter-contexts">§3.4.1 Neuter browsing contexts matching origin</a> on <var>origin</var>.</p>
        <li data-md="">
-        <p>If <var>types</var> contains "<code>cookies</code>", execute <a href="#clear-cookies">§3.4.4 Clear cookies for origin with subdomain state</a> on <var>origin</var>, with <var>subdomain state</var>.</p>
+        <p>If <var>types</var> contains "<code>cookies</code>", execute <a href="#clear-cookies">§3.4.4 Clear cookies for origin</a> on <var>origin</var>.</p>
        <li data-md="">
-        <p>If <var>types</var> contains "<code>storage</code>", execute <a href="#clear-dom">§3.4.5 Clear DOM-accessible storage for origin with
-    subdomain state</a> on <var>origin</var>, with <var>subdomain state</var>.</p>
+        <p>If <var>types</var> contains "<code>storage</code>", execute <a href="#clear-dom">§3.4.5 Clear DOM-accessible storage for origin</a> on <var>origin</var>.</p>
        <li data-md="">
-        <p>If <var>types</var> contains "<code>cache</code>", execute <a href="#clear-cache">§3.4.3 Clear cache for origin with subdomain state</a> on <var>origin</var>, with <var>subdomain state</var>.</p>
+        <p>If <var>types</var> contains "<code>cache</code>", execute <a href="#clear-cache">§3.4.3 Clear cache for origin</a> on <var>origin</var>.</p>
        <li data-md="">
-        <p>If <var>types</var> contains "<code>executionContexts</code>", execute <a href="#reload-contexts">§3.4.2 Reload browsing contexts matching origin with
-    subdomain state</a> on <var>origin</var>, with <var>subdomain
-  state</var>.</p>
+        <p>If <var>types</var> contains "<code>executionContexts</code>", execute <a href="#reload-contexts">§3.4.2 Reload browsing contexts matching origin</a> on <var>origin</var>.</p>
       </ol>
-      <h4 class="heading settled" data-level="3.4.1" id="neuter-contexts"><span class="secno">3.4.1. </span><span class="content"> Neuter browsing contexts matching <var>origin</var> with <var>subdomain state</var> </span><a class="self-link" href="#neuter-contexts"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a <var>subdomain state</var> of either <a data-link-type="dfn" href="#include-subdomains"><code>Include Subdomains</code></a> or <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude
-  Subdomains</code></a>, this algorithm walks through the set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
-  contexts</a> which the user agent knows about, and sandboxes each in order
-  to prevent them from recreating cleared data (from in-memory JavaScript
-  variables, for instance). Once data is cleared, the affected browsing
-  contexts will be hard-reloaded, as defined in <a href="#reload-contexts">§3.4.2 Reload browsing contexts matching origin with
-    subdomain state</a>:</p>
+      <h4 class="heading settled" data-level="3.4.1" id="neuter-contexts"><span class="secno">3.4.1. </span><span class="content"> Neuter browsing contexts matching <var>origin</var> </span><a class="self-link" href="#neuter-contexts"></a></h4>
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) this algorithm walks through the
+  set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing contexts</a> which the user agent knows about, and
+  sandboxes each in order to prevent them from recreating cleared data (from
+  in-memory JavaScript variables, for instance). Once data is cleared, the
+  affected browsing contexts will be hard-reloaded, as defined in <a href="#reload-contexts">§3.4.2 Reload browsing contexts matching origin</a>:</p>
       <ol>
        <li data-md="">
         <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
@@ -1590,9 +1503,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
          <li data-md="">
           <p>While <var>document</var> is <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an <code>iframe srcdoc</code> document</a>, let <var>document</var> be the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#active-document">active document</a> of <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context-container">browsing context container</a>.</p>
          <li data-md="">
-          <p>If <a href="#matches-origin">§3.1.3 Does origin match origin to clear and
-    subdomain state</a> returns <a data-link-type="dfn" href="#matches"><code>Matches</code></a> when
-  executed on <var>context</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, <var>origin</var>, and <code>subdomain state</code>:</p>
+          <p>If <var>context</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p><a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#sandboxing:parse-a-sandboxing-directive">Parse a sandboxing directive</a> using the empty string as
@@ -1601,10 +1512,10 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
           </ol>
         </ol>
       </ol>
-      <h4 class="heading settled" data-level="3.4.2" id="reload-contexts"><span class="secno">3.4.2. </span><span class="content"> Reload browsing contexts matching <var>origin</var> with <var>subdomain state</var> </span><a class="self-link" href="#reload-contexts"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a <var>subdomain state</var> of either <a data-link-type="dfn" href="#include-subdomains"><code>Include Subdomains</code></a> or <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude
-  Subdomains</code></a>, this algorithm walks through the set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
-  contexts</a> which the user agent knows about and reloads each of them:</p>
+      <h4 class="heading settled" data-level="3.4.2" id="reload-contexts"><span class="secno">3.4.2. </span><span class="content"> Reload browsing contexts matching <var>origin</var> </span><a class="self-link" href="#reload-contexts"></a></h4>
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), this algorithm walks through the
+  set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing contexts</a> which the user agent knows about and reloads
+  each of them:</p>
       <ol>
        <li data-md="">
         <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
@@ -1616,48 +1527,38 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
          <li data-md="">
           <p>While <var>document</var> is <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an <code>iframe srcdoc</code> document</a>, let <var>document</var> be the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#active-document">active document</a> of <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context-container">browsing context container</a>.</p>
          <li data-md="">
-          <p>If <a href="#matches-origin">§3.1.3 Does origin match origin to clear and
-    subdomain state</a> returns <a data-link-type="dfn" href="#matches"><code>Matches</code></a> when
-  executed on <var>context</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, <var>origin</var>, and <code>subdomain state</code>:</p>
+          <p>If <var>context</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p>Navigate <var>context</var> to <var>document</var>’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url">URL</a></code> with <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#replacement-enabled">replacement enabled</a> and <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#exceptions-enabled">exceptions enabled</a>. The <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#source-browsing-context">source browsing context</a> is <var>context</var>. This is a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#reload-triggered-navigation">reload-triggered navigation</a>.</p>
           </ol>
         </ol>
       </ol>
-      <h4 class="heading settled" data-level="3.4.3" id="clear-cache"><span class="secno">3.4.3. </span><span class="content"> Clear cache for <var>origin</var> with <var>subdomain state</var> </span><a class="self-link" href="#clear-cache"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a <var>subdomain state</var> of either <a data-link-type="dfn" href="#include-subdomains"><code>Include Subdomains</code></a> or <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude
-  Subdomains</code></a>, this algorithm removes data from the user agent’s
-  local caches that matches the origin and subdomain state.</p>
+      <h4 class="heading settled" data-level="3.4.3" id="clear-cache"><span class="secno">3.4.3. </span><span class="content"> Clear cache for <var>origin</var> </span><a class="self-link" href="#clear-cache"></a></h4>
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), this algorithm removes data from
+  the user agent’s local caches that matches the origin.</p>
       <ol>
        <li data-md="">
         <p>Let <var>host</var> be <var>origin</var>’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code>, <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
        <li data-md="">
-        <p>If <var>subdomain state</var> is <a data-link-type="dfn" href="#include-subdomains"><code>Include Subdomains</code></a>,
-  then let <var>cache list</var> be the set of entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network
-  cache</a> whose <code>target URI</code>’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code> <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-matches</a> <var>host</var> when <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per
-  Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a></p>
-       <li data-md="">
-        <p>Otherwise, <var>subdomain state</var> is <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude
-  Subdomains</code></a>, so let <var>cache list</var> be the set of
-  entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network cache</a> whose <code>target URI</code> <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code> is identical to <var>host</var> when <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as
-  per Section 5.1.2 or <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
+        <p>Let <var>cache list</var> be the set of entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network
+  cache</a> whose <code>target URI</code> <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code> is identical to <var>host</var> when <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
        <li data-md="">
         <p>Remove each <var>entry</var> in <var>cache list</var> from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network
   cache</a>.</p>
        <li data-md="">
         <p>If a user agent implements caches beyond a pure <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network cache</a>, it
-  MUST remove all entries from those caches which match <var>origin</var> and <var>subdomain state</var>.</p>
+  MUST remove all entries from those caches which match <var>origin</var>.</p>
         <p class="issue" id="issue-d40aa458"><a class="self-link" href="#issue-d40aa458"></a> We’re dealing with the network cache here, as defined in <a data-link-type="biblio" href="#biblio-rfc7234">[RFC7234]</a>, but that’s not nearly everything a user agent caches. How
   hand-wavey with the vendor-specific section can we be? For instance,
   Chrome clears out prerendered pages, script caches, WebGL shader caches,
   WebRTC bits and pieces, address bar suggestion caches, various networking
   bits that aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a> will make this clearer?</p>
       </ol>
-      <h4 class="heading settled" data-level="3.4.4" id="clear-cookies"><span class="secno">3.4.4. </span><span class="content"> Clear cookies for <var>origin</var> with <var>subdomain state</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a <var>subdomain state</var> of either <a data-link-type="dfn" href="#include-subdomains"><code>Include Subdomains</code></a> or <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude
-  Subdomains</code></a>, this algorithm removes cookies from the user agent’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a> whose <code>domain</code> attribute matches the origin
-  and subdomain state.</p>
+      <h4 class="heading settled" data-level="3.4.4" id="clear-cookies"><span class="secno">3.4.4. </span><span class="content"> Clear cookies for <var>origin</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), this algorithm removes cookies
+  from the user agent’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a> whose <code>domain</code> attribute
+  matches the origin.</p>
       <p class="note" role="note">Note: This algorithm assumes that the user agent has implemented a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
   store</a> (as discussed in Section 5.3 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>), which offers the
   ability to retrieve a list of cookies by host, and to remove individual
@@ -1666,31 +1567,20 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
        <li data-md="">
         <p>Let <var>host</var> be <var>origin</var>’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code>, <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
        <li data-md="">
-        <p>If <var>subdomain state</var> is <a data-link-type="dfn" href="#include-subdomains"><code>Include Subdomains</code></a>,
-  then let <var>cookie list</var> be the set of cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
-  store</a> whose <code>domain</code> attribute is <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-matched</a> by <var>host</var>.</p>
-        <p class="note" role="note">Note: The direction of the matching is important. If <code>subdomain.example.com</code> delivers the <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header and includes subdomains, then
-  cookies for <code>.another.subdomain.example.com</code> will be cleared,
-  but cookies for <code>.example.com</code> will not.</p>
-       <li data-md="">
-        <p>Otherwise, <var>subdomain state</var> is <a data-link-type="dfn" href="#exclude-subdomains"><code>Exclude
-  Subdomains</code></a>, so let <var>cookie list</var> be the set of
-  cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a> whose <code>domain</code> attribute
-  is identical to <var>host</var>.</p>
+        <p>Let <var>cookie list</var> be the set of cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
+  store</a> whose <code>domain</code> attribute is identical to <var>host</var>.</p>
        <li data-md="">
         <p>Remove each <var>cookie</var> in <var>cookie list</var> from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
   store</a>.</p>
       </ol>
-      <h4 class="heading settled" data-level="3.4.5" id="clear-dom"><span class="secno">3.4.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> with <var>subdomain state</var> </span><a class="self-link" href="#clear-dom"></a></h4>
+      <h4 class="heading settled" data-level="3.4.5" id="clear-dom"><span class="secno">3.4.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> </span><a class="self-link" href="#clear-dom"></a></h4>
       <ol>
        <li data-md="">
         <p>For each <var>area</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/#the-localstorage-attribute">local storage
   areas</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <a href="#matches-origin">§3.1.3 Does origin match origin to clear and
-    subdomain state</a> returns <a data-link-type="dfn" href="#matches"><code>Matches</code></a> when
-  executed on <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, <var>origin</var>, and <code>subdomain state</code>:</p>
+          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#storage-2">Storage</a></code> object associated
@@ -1702,9 +1592,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   areas</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <a href="#matches-origin">§3.1.3 Does origin match origin to clear and
-    subdomain state</a> returns <a data-link-type="dfn" href="#matches"><code>Matches</code></a> when
-  executed on <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, <var>origin</var>, and <code>subdomain state</code>:</p>
+          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#storage-2">Storage</a></code> object associated
@@ -1716,10 +1604,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   Databases <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <a href="#matches-origin">§3.1.3 Does origin match origin to clear and
-    subdomain state</a> returns <a data-link-type="dfn" href="#matches"><code>Matches</code></a> when
-  executed on <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, <var>origin</var>,
-  and <code>subdomain state</code>:</p>
+          <p>If <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p>Set <var>database</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/IndexedDB/#dfn-delete-pending">delete pending</a> flag to <code>true</code>.</p>
@@ -1738,10 +1623,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   databases <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <a href="#matches-origin">§3.1.3 Does origin match origin to clear and
-    subdomain state</a> returns <a data-link-type="dfn" href="#matches"><code>Matches</code></a> when
-  executed on <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, <var>origin</var>,
-  and <code>subdomain state</code>:</p>
+          <p>If <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p>Delete <var>database</var>.</p>
@@ -1753,9 +1635,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
         <p>For each <var>registration</var> in the user agent’s set of <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#register-algorithm">registered</a> <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registrations</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <a href="#matches-origin">§3.1.3 Does origin match origin to clear and
-    subdomain state</a> returns <a data-link-type="dfn" href="#matches"><code>Matches</code></a> when
-  executed on <var>registration</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-scope-url">scope URL</a>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>, <var>origin</var>, and <code>subdomain state</code>:</p>
+          <p>If <var>registration</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-scope-url">scope URL</a>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p>Execute <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/service-workers/#navigator-service-worker-unregister">unregister()</a></code> on <var>registration</var>.</p>
@@ -1857,26 +1737,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   <h2 class="no-num heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="indexlist">
-   <li><a href="#">*</a><span>, in §2.1.6</span>
+   <li><a href="#">*</a><span>, in §2.1.5</span>
    <li><a href="#cache">cache</a><span>, in §2.1.1</span>
    <li><a href="#dom-storagemanager-clear">clear(options)</a><span>, in §2.2</span>
    <li><a href="#clear-site-data">Clear-Site-Data</a><span>, in §2.1</span>
    <li><a href="#cookies">cookies</a><span>, in §2.1.2</span>
-   <li><a href="#does-not-match">Does Not
-  Match</a><span>, in §3.1.3</span>
-   <li><a href="#exclude-subdomains">Exclude
-  Subdomains</a><span>, in §3.1.2</span>
    <li><a href="#executioncontexts">executionContexts</a><span>, in §2.1.4</span>
-   <li>
-    includeSubdomains
-    <ul>
-     <li><a href="#includesubdomains">definition of</a><span>, in §2.1.5</span>
-     <li><a href="#dom-storageclearoptions-includesubdomains">dict-member for StorageClearOptions</a><span>, in §2.2</span>
-    </ul>
-   <li><a href="#include-subdomains">Include
-  Subdomains</a><span>, in §3.1.2</span>
    <li><a href="#key">key</a><span>, in §2.1</span>
-   <li><a href="#matches">Matches</a><span>, in §3.1.3</span>
    <li><a href="#option">option</a><span>, in §2.1</span>
    <li><a href="#dom-storagemanager-clear-options-options">options</a><span>, in §2.2</span>
    <li><a href="#parameter">parameter</a><span>, in §2.1</span>
@@ -1934,23 +1801,15 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
      <li><a href="https://w3c.github.io/webappsec/specs/mixedcontent/#a-priori-insecure-url">a priori insecure</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-rfc5890">[rfc5890]</a> defines the following terms:
-    <ul>
-     <li><a href="https://tools.ietf.org/html/rfc5890#section-2.2">label</a>
-    </ul>
-   <li>
     <a data-link-type="biblio" href="#biblio-rfc6265">[rfc6265]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a>
-     <li><a href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-match</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-rfc6454">[rfc6454]</a> defines the following terms:
     <ul>
-     <li><a href="https://tools.ietf.org/html/rfc6454#section-2.3">globally unique identifier</a>
      <li><a href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>
-     <li><a href="https://tools.ietf.org/html/rfc6454#section-5">the same</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-rfc7230">[rfc7230]</a> defines the following terms:
@@ -2018,8 +1877,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
    <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://tools.ietf.org/html/rfc3864">Registration Procedures for Message Header Fields</a>. September 2004. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc3864">https://tools.ietf.org/html/rfc3864</a>
    <dt id="biblio-rfc5234"><a class="self-link" href="#biblio-rfc5234"></a>[RFC5234]
    <dd>D. Crocker, Ed.; P. Overell. <a href="https://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>. January 2008. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc5234">https://tools.ietf.org/html/rfc5234</a>
-   <dt id="biblio-rfc5890"><a class="self-link" href="#biblio-rfc5890"></a>[RFC5890]
-   <dd>J. Klensin. <a href="https://tools.ietf.org/html/rfc5890">Internationalized Domain Names for Applications (IDNA): Definitions and Document Framework</a>. August 2010. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc5890">https://tools.ietf.org/html/rfc5890</a>
    <dt id="biblio-rfc6265"><a class="self-link" href="#biblio-rfc6265"></a>[RFC6265]
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
    <dt id="biblio-rfc6454"><a class="self-link" href="#biblio-rfc6454"></a>[RFC6454]
@@ -2052,7 +1909,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
 
 dictionary <a href="#dictdef-storageclearoptions">StorageClearOptions</a> {
   sequence&lt;<a data-link-type="idl-name" href="#enumdef-storagecleartype">StorageClearType</a>> <a data-type="sequence<StorageClearType> " href="#dom-storageclearoptions-types">types</a>;
-  boolean <a data-default="false" data-type="boolean " href="#dom-storageclearoptions-includesubdomains">includeSubdomains</a> = false;
 };
 
 partial interface <a class="idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
@@ -2062,10 +1918,6 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
 </pre>
   <h2 class="no-num heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> The folks at Google who were interested in using this feature are no
-  longer interested in using `includeSubdomains`. Perhaps we should punt it to
-  a "level 2" of this spec if there’s demand? Simplifying the origin
-  implications here might be helpful.<a href="#issue-e4e01624"> ↵ </a></div>
    <div class="issue"> This might live more cleanly in <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a>.<a href="#issue-3153cbda"> ↵ </a></div>
    <div class="issue"> Monkey patching! Talk with Anne.<a href="#issue-3ded38d3"> ↵ </a></div>
    <div class="issue"> Some have suggested that this might not be a restriction we want
