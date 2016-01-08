@@ -14,6 +14,7 @@ Indent: 2
 Level: 1
 Version History: https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html
 Boilerplate: omit conformance, omit feedback-header
+Markup Shorthands: css off, markdown on
 !Participate: <a href="https://github.com/w3c/webappsec-clear-site-data/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-clear-site-data/issues">open issues</a>)
 </pre>
 <pre class="anchors">
@@ -99,7 +100,7 @@ spec: MIX; urlPrefix: https://w3c.github.io/webappsec/specs/mixedcontent/
       text: potentially secure origin
       text: potentially secure url
       text: potentially secure
-spec: SECURE; urlPrefix: https://w3c.github.io/webappsec/specs/powerfulfeatures/
+spec: SECURE-CONTEXTS; urlPrefix: https://w3c.github.io/webappsec/specs/powerfulfeatures/
   type: dfn
     text: secure context
 spec: STORAGE; urlPrefix: https://storage.spec.whatwg.org/
@@ -150,6 +151,24 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
     text: token; url: section-3.2.6
     text: quoted-string; url: section-3.2.6
     text: #rule; url: section-7
+spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html
+  type: grammar
+    text: json-field-value; url: rfc.section.2
+</pre>
+<pre class="biblio">
+{
+  "SECURE-CONTEXTS": {
+    "authors": [ "Mike West", "Yan Zhu" ],
+    "href": "https://w3c.github.io/webappsec-secure-contexts/",
+    "title": "Secure Contexts",
+    "publisher": "W3C"
+  },
+  "HTTP-JFV": {
+    "authors": [ "Julian Reschke" ],
+    "href": "https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html",
+    "title": "A JSON Encoding for HTTP Header Field Values"
+  }
+}
 </pre>
 
 <!--
@@ -180,8 +199,8 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
   Site authors can remove data from a number of storage mechanisms via
   JavaScript, but others are difficult to deal with reliably. Consider cookies,
   for instance, which can be partially cleared via JavaScript access to
-  <code>document.cookie</code>. <code>HttpOnly</code> cookies, however, can only
-  be removed via a number of <code>Set-Cookie</code> headers in an HTTP
+  `document.cookie`. `HttpOnly` cookies, however, can only
+  be removed via a number of `Set-Cookie` headers in an HTTP
   response. This, of course, requires exhaustive knowledge of all the cookies
   set for a host, which can be complicated to ascertain. Cache is still harder;
   no imperative interface to a browser's network cache exists, period.
@@ -197,14 +216,14 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 
   <div class="example">
     A user signs out of Super Secret Social Network via a CSRF-protected POST to
-    <code>https://supersecretsocialnetwork.example.com/logout</code>, and the
+    `https://supersecretsocialnetwork.example.com/logout`, and the
     site author wishes to ensure that locally stored data is removed as a
     result.
 
     They can do so by sending the following HTTP header in the response:
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>*</a>
+      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>cookies</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
     </pre>
   </div>
 
@@ -212,7 +231,7 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 
   <div class="example">
     A user signs out of Megacorp Inc.'s site via a CSRF-protected POST to
-    <code>https://megacorp.example.com/logout</code>. Megacorp has a large
+    `https://megacorp.example.com/logout`. Megacorp has a large
     number of services available as subdomains, so many that it's not entirely
     clear which of them would be safe to clear as a response to a logout action.
     One option would be to simply clear everything, and deal with the fallout.
@@ -240,7 +259,7 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
     preflight, and would return the following header for the actual request:
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>*</a>
+      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>cookies</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
     </pre>
   </div>
 
@@ -248,7 +267,7 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 
   <div class="example">
     A user opts-out of interest-based advertising via a CSRF-protected POST to
-    <code>https://ads-are-awesome.example.com/optout</code>. The site author
+    `https://ads-are-awesome.example.com/optout`. The site author
     wishes to remove DOM-accessible data which might contain tracking
     information, but needs to ensure that the opt-out cookie which the user has
     just received isn't wiped along with it.
@@ -257,7 +276,7 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
     includes all the types except for "<a>cookies</a>":
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>storage</a>; <a>executionContexts</a>; <a>cache</a>
+      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
     </pre>
   </div>
 
@@ -275,7 +294,7 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
     following HTTP header in a response to wipe out local sources of data:
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>*</a>
+      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>cookies</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
     </pre>
 
     Note: Installing a Service Worker guarantees that a request will go out to
@@ -307,151 +326,117 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
   in two ways: an HTTP response header, and a JavaScript API:
 
   <h3 id="header">
-    The <code>Clear-Site-Data</code> HTTP Response Header Field
+    The `Clear-Site-Data` HTTP Response Header Field
   </h3>
 
-  The <dfn><code>Clear-Site-Data</code></dfn> HTTP response header field
+  The <dfn>`Clear-Site-Data`</dfn> HTTP response header field
   sends a signal to the user agent that it ought to remove all data
   of a certain set of types. The header is represented by the following ABNF
   [[!RFC5234]]:
 
-  <pre>
-    Clear-Site-Data = 1#option
-    <dfn>option</dfn> = <a>parameter</a> *( <a>OWS</a> ";" [ <a>OWS</a> <a>parameter</a> ] )
-    <dfn>parameter</dfn> = <a>key</a> [ <a>BWS</a> "=" <a>value</a> ]
-    <dfn>key</dfn> = <a>token</a>
-    <dfn>value</dfn> = <a>token</a> / <a>quoted-string</a>
+  <pre class="abnf" link-type="grammar" dfn-type="grammar">
+    Report-To = <a>json-field-value</a>
+                ; See Section 2 of [[HTTP-JFV]], and Section 2 of [[RFC7159]]
   </pre>
 
-  Note: The <a>BWS</a>, <a>OWS</a>, <a>token</a>, and <a>quoted-string</a> rules
-  as well as the <a>#rule</a> list extension are defined in [[RFC7230]].
+  The header's value is interpreted as an array of JSON objects, as described in
+  Section 4 of [[HTTP-JFV]].
 
-  The <a>Clear-Site-Data</a> header's value is essentially a semicolon-delimited
-  list of "<code>[key]=[value]</code>" pairs which define the kinds of data to
-  be cleared for a given response.
+  Each object in the array represents a clearing action that the user agent MUST
+  undertake, and will be parsed as defined in [[#parsing]].
 
-  The following subsections define an initial set of known <a>parameter</a>
-  components; future versions of this document may define additional
-  <a>parameter</a> components: the ABNF above is intentionally generic and
-  extensible to make room for these future values, and user agents MUST ignore
-  unknown <a>parameter</a> components when parsing the header's value.
+  The following subsections defined the initial set of known members in each
+  JSON object the header's value defines. Future versions of this document may
+  define additional such members, and user agents MUST ignore unknown members
+  when parsing the header.
 
-  <h4 id="cache-parameter">
-    The <code>cache</code> parameter
+  <h4 id="types-member">
+    The `types` member
   </h4>
 
-  The <dfn><code>cache</code></dfn> parameter indicates that the server wishes
-  to remove locally cached data associated with the <a>origin</a> of a
-  particular <a>response</a>'s {{Response/url}}. This includes the <a>network
-  cache</a>, of course, but will also remove data from various other caches
-  which a user agent implements (prerendered pages, script caches, shader
-  caches, etc.).
+  The <dfn>`types`</dfn> member is an array of keywords designating the kinds
+  of data that the server wishes the user agent to remove. The member's value
+  MUST be an array, and that array MUST contain only strings; any other types
+  will result in a parse error.
 
-  The <a>value</a> component of this parameter is currently ignored, if present.
+  The following are the initial set of known types which may be specified in
+  the member's array value. Future versions of this document may define
+  additional types, and user agents MUST ignore unknown types when parsing the
+  header:
 
-  Implementation details are in [[#clear-cache]], as part of the larger
-  [[#clear-response]] and [[#clear-api]] algorithms.
+  :   "<dfn>`cache`</dfn>"
+  ::  The "`cache`" type indicates that the server wishes to remove locally
+      cached data associated with the <a>origin</a> of a particular
+      <a>response</a>'s {{Response/url}}. This includes the <a>network
+      cache</a>, of course, but will also remove data from various other caches
+      which a user agent implements (prerendered pages, script caches, shader
+      caches, etc.).
 
-  <div class="example">
-    When delivered with a response from <code>https://example.com/clear</code>,
-    the following header will cause caches associated with the origin
-    <code>https://example.com</code> to be cleared:
+      Implementation details are in [[#clear-cache]].
 
-    <pre>
-      <a>Clear-Site-Data</a>: <a>cache</a>
-    </pre>
-  </div>
+      <div class="example">
+        When delivered with a response from `https://example.com/clear`,
+        the following header will cause caches associated with the origin
+        `https://example.com`: to be cleared:
 
-  <h4 id="cookies-parameter">
-    The <code>cookies</code> parameter
-  </h4>
+        <pre>
+          <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>" ] }
+        </pre>
+      </div>
 
-  The <dfn><code>cookies</code></dfn> parameter indicates that the server wishes
-  to remove cookies associated with the <a>origin</a> of a particular
-  <a>response</a>'s {{Response/url}}. This includes the <a>network cache</a>, of
-  course, but will also remove data from various other caches which a user agent
-  implements (prerendered pages, script caches, shader caches, etc.).
+  :   "<dfn>`cookies`</dfn>"
+  ::  The "`cookies`" type indicates that the server wishes to remove cookies
+      associated with the <a>origin</a> of a particular <a>response</a>'s
+      {{Response/url}}.
 
-  The <a>value</a> component of this parameter is currently ignored, if present.
+      Implementation details are in [[#clear-cookies]].
 
-  Implementation details are in [[#clear-cache]], as part of the larger
-  [[#clear-response]] and [[#clear-api]] algorithms.
+      <div class="example">
+        When delivered with a response from `https://example.com/clear`,
+        the following header will cause cookies associated with the origin
+        `https://example.com` to be cleared:
 
-  <div class="example">
-    When delivered with a response from <code>https://example.com/clear</code>,
-    the following header will cause cookies associated with the origin
-    <code>https://example.com</code> to be cleared:
+        <pre>
+          <a>Clear-Site-Data</a>: { "<a>types</a>": "<a>cookies</a>" ] }
+        </pre>
+      </div>
 
-    <pre>
-      <a>Clear-Site-Data</a>: <a>cookies</a>
-    </pre>
-  </div>
+  :   "<dfn>`storage`</dfn>"
+  ::  The "`storage`" type indicates that the server wishes to remove
+      locally stored data associated with the <a>origin</a> of a
+      particular <a>response</a>'s {{Response/url}}. This includes storage
+      mechansims such as ({{localStorage}}, {{sessionStorage}}, [[INDEXEDDB]],
+      [[WEBDATABASE]], etc), as well as tangentially related mechainsm such as
+      <a>service worker registrations</a>.
 
-  <h4 id="storage-parameter">
-    The <code>storage</code> parameter
-  </h4>
+      Implementation details are in [[#clear-dom]].
 
-  The <dfn><code>storage</code></dfn> parameter indicates that the server
-  wishes to remove locally stored data associated with the <a>origin</a> of a
-  particular <a>response</a>'s {{Response/url}}. This includes storage
-  mechansims such as ({{localStorage}}, {{sessionStorage}}, [[INDEXEDDB]],
-  [[WEBDATABASE]], etc), as well as tangentially related mechainsm such as
-  <a>service worker registrations</a>.
+      <div class="example">
+        When delivered with a response from `https://example.com/clear`,
+        the following header will cause DOM-accessible storage for the origin 
+        `https://example.com` to be cleared:
 
-  The <a>value</a> component of this parameter is currently ignored, if present.
- 
-  Implementation details are in [[#clear-dom]], as part of the larger
-  [[#clear-response]] and [[#clear-api]] algorithms.
+        <pre>
+          <a>Clear-Site-Data</a>: { "<a>types</a>": "<a>storage</a>" ] }
+        </pre>
+      </div>
 
-  <div class="example">
-    When delivered with a response from <code>https://example.com/clear</code>,
-    the following header will cause DOM-accessible storage for the origin 
-    <code>https://example.com</code> to be cleared:
+  :   "<dfn>`executionContexts`</dfn>"
+  ::  The "`executionContexts`" type indicates that the server wishes to neuter
+      and reload execution contexts currently rendering the <a>origin</a> of a
+      particular <a>response</a>'s {{Response/url}}.
 
-    <pre>
-      <a>Clear-Site-Data</a>: <a>storage</a>
-    </pre>
-  </div>
+      Implementation details are in [[#neuter-contexts]].
 
-  <h4 id="executionContexts-parameter">
-    The <code>executionContexts</code> parameter
-  </h4>
+      <div class="example">
+        When delivered with a response from `https://example.com/clear`,
+        the following header will cause execution contexts displaying the origin 
+        `https://example.com` to be neutered and reloaded:
 
-  The <dfn><code>executionContexts</code></dfn> parameter indicates that the
-  server wishes to neuter and reload execution contexts currently rendering the
-  <a>origin</a> of a particular <a>response</a>'s {{Response/url}}.
-
-  The <a>value</a> component of this parameter is currently ignored, if present.
-
-  Implementation details are in [[#neuter-contexts]], as part of the larger
-  [[#clear-response]] and [[#clear-api]] algorithms.
-
-  <div class="example">
-    When delivered with a response from <code>https://example.com/clear</code>,
-    the following header will cause execution contexts displaying the origin 
-    <code>https://example.com</code> to be neutered and reloaded:
-
-    <pre>
-      <a>Clear-Site-Data</a>: <a>executionContexts</a>
-    </pre>
-  </div>
-
-  <h4 id="wildcard-parameter">
-    The <code>*</code> parameter
-  </h4>
-
-  The <dfn><code>*</code></dfn> parameter is syntactic sugar which includes all
-  storage type parameters. That is:
-  
-  <pre>
-    <a>Clear-Site-Data</a>: <a>*</a>
-  </pre>
-  
-  has the same meaning as:
-  
-  <pre>
-    Clear-Site-Data: <a>cache</a>; <a>cookies</a>; <a>storage</a>; <a>executionContexts</a>
-  </pre>
+        <pre>
+          <a>Clear-Site-Data</a>: <a>executionContexts</a>
+        </pre>
+      </div>
 
   <h3 id="dom-api">JavaScript API</h3>
 
@@ -495,7 +480,7 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
   <dl dfn-for="StorageManager">
     <dt><dfn method lt="clear(options)">clear(options)</dfn></dt>
     <dd>
-      Clears data based on the values in the <var>options</var> argument.
+      Clears data based on the values in the |options| argument.
       Returns a Promise that resolves when clearing is complete. If no
       {{StorageClearOptions/types}} are specified, all data types will be
       cleared.
@@ -510,20 +495,20 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 
   ISSUE: Monkey patching! Talk with Anne.
 
-  If the <a><code>Clear-Site-Data</code></a> header is present in an HTTP
+  If the <a>`Clear-Site-Data`</a> header is present in an HTTP
   <a>response</a>, then data MUST be cleared before rendering the response to
   the user. That is, before step #9 in the current <a>main fetch</a> algorithm,
   execute the following step:
 
-  9.  If <var>response</var>'s <a>header list</a> contains a header named
-      <a><code>Clear-Site-Data</code></a>, then execute [[#clear-response]] on
-      <var>response</var>.
+  9.  If |response|'s <a>header list</a> contains a header named
+      <a>`Clear-Site-Data`</a>, then execute [[#clear-response]] on
+      |response|.
 
-  Note: This happens <em>after</em> <code>Set-Cookie</code> headers are
+  Note: This happens <em>after</em> `Set-Cookie` headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
   removing only certain cookies might leave an application in an indeterminate
   and vulnerable state. Removing specific cookies is best done via expiration 
-  using the <code>Set-Cookie</code> header.
+  using the `Set-Cookie` header.
 <section>
 
 <section>
@@ -532,47 +517,41 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
   <h3 id="parsing">Parsing</h3>
 
   <h4 id="get-types">
-    Which data types ought to be removed for <var>response</var>?
+    Which data types ought to be removed for |response|?
   </h4>
 
-  1.  If <var>response</var> does not contain a
-      <a><code>Clear-Site-Data</code></a> header, return an empty list.
+  1.  If |response| does not contain a <a>`Clear-Site-Data`</a> header, return
+      an empty list.
 
-  2.  Let <var>parameters</var> be the list of <a>parameter</a> components in
-      the value of <var>response</var>'s <a><code>Clear-Site-Data</code></a>
-      header.
+  2.  Let |types| be an empty list.
 
-  3.  If <var>parameters</var> contains a <a>parameter</a> whose <a>key</a> is
-      <a><code>*</code></a>:
+  3.  Let |list| be the result of executing the algorithm defined in Section 4
+      of [[!HTTP-JFV]] on the value of |response|'s <a>`Clear-Site-Data`</a>
+      header. If that algorithm results in an error, return an empty list.
 
-      1. Append <code>cache</code>, <code>cookies</code>,
-         <code>storage</code>, and <code>executionContexts</code> to
-         <var>remove</var>.
+  4.  For each |item| in |list|:
 
-      2. Return <var>remove</var>.
+      1.  If |item| does not have a <a>`types`</a> member, skip to the next
+          |item|.
 
-  3.  Otherwise, let <var>remove</var> be an empty list.
+      2.  For each |type| in |item|'s <a>`types`</a> member's value:
 
-  4.  For each <var>parameter</var> in <var>parameters</var>:
-  
-      1.  If <var>parameter</var>'s <a>key</a> is <a><code>cache</code></a>,
-          <a><code>cookies</code></a>, <a><code>storage</code></a>, or
-          <a><code>executionContexts</code></a>, <a><code>cache</code></a>
-          append <var>parameter</var>'s <a>key</a> to <var>remove</var>.
+          1.  If |type| is <a>`cache`</a>, <a>`cookies`</a>, <a>`storage`</a>,
+              or <a>`executionContexts`</a>, append |type| to |types|.
 
-      2.  Otherwise, ignore <var>parameter</var>.
+              Otherwise, skip to the next |type|.
 
-  5.  Return <var>remove</var>.
+  5.  Return |types|.
 
   <h3 id="clear-response">
-    Clear data for <var>response</var>
+    Clear data for |response|
   </h3>
 
-  Given a <a>response</a> (<var>response</var>), this algorithm parses the
-  <a><code>Clear-Site-Data</code></a> header to determine what needs to be
+  Given a <a>response</a> (|response|), this algorithm parses the
+  <a>`Clear-Site-Data`</a> header to determine what needs to be
   cleared, which origins are affected, and then executes those requests.
 
-  1.  If <var>response</var>'s {{URL}} is <a><i lang="la">a priori</i>
+  1.  If |response|'s {{URL}} is <a><i lang="la">a priori</i>
       insecure</a>, skip the remaining steps of this algorithm.
 
       ISSUE: Some have suggested that this might not be a restriction we want
@@ -580,10 +559,10 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
       <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
       Thomson's public-webappsec post on the topic</a>, for example).
 
-  2.  Let <var>types</var> be the result of [[#get-types]] executed on
-      <var>response</var>.
+  2.  Let |types| be the result of [[#get-types]] executed on
+      |response|.
 
-  3.  Execute [[#clear-internal]] on <var>types</var>, <var>response</var>'s
+  3.  Execute [[#clear-internal]] on |types|, |response|'s
       {{Response/url}}'s <a>origin</a>.
 
   Note: Especially given the cross-context implications, user agents are
@@ -592,130 +571,131 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
   timeline entry indicating success.
 
   <h3 id="clear-api">
-    Clear data for <var>storageRequestOptions</var>
+    Clear data for |options|
   </h3>
 
-  Given a {{StorageClearOptions}} (<var>options</var>), this algorithm
+  Given a {{StorageClearOptions}} (|options|), this algorithm
   determines what needs to be cleared, returns a Promise, and executes the
   request asynchronously.
 
   1.  If the <a>incumbent settings object</a> is not a <a>secure context</a>,
-      return a <code>Promise</code> rejected with
-      <code>NotSupportedError</code>.
+      return a `Promise` rejected with
+      `NotSupportedError`.
 
-  2.  Let <var>promise</var> be a newly created <code>Promise</code> object.
+  2.  Let |promise| be a newly created `Promise` object.
 
-  3.  Return <var>promise</var>, and execute the remaining steps asynchronously.
+  3.  Return |promise|, and execute the remaining steps asynchronously.
 
-  4.  Let <var>types</var> be an empty list.
+  4.  Let |types| be an empty list.
 
-  5.  If <var>options</var>' {{StorageClearOptions/types}} is an empty sequence:
+  5.  If |options|' {{StorageClearOptions/types}} is an empty sequence:
 
-      1. Append <code>cache</code>, <code>cookies</code>,
-         <code>storage</code>, and <code>executionContexts</code> to
-         <var>types</var>.
+      1. Append `cache`, `cookies`,
+         `storage`, and `executionContexts` to
+         |types|.
 
-  6.  Otherwise, for each {{StorageClearType}} <var>type</var> in
-      <var>options</var>' {{StorageClearOptions/types}} property:
+  6.  Otherwise, for each {{StorageClearType}} |type| in
+      |options|' {{StorageClearOptions/types}} property:
 
-      1. Append <var>type</var> to <var>types</var>.
+      1. Append |type| to |types|.
 
-  7.  Execute [[#clear-internal]] on <var>types</var> and the <a>incumbent
+  7.  Execute [[#clear-internal]] on |types| and the <a>incumbent
       settings object</a>'s <a>origin</a>.
 
-  9.  Resolve <var>promise</var> with <code>undefined</code>.
+  9.  Resolve |promise| with `undefined`.
 
   <h3 id="clear-internal">
-    Clear <var>types</var> for <var>origin</var>
+    Clear |types| for |origin|
   </h3>
 
-  1.  If <var>types</var> contains "<code>executionContexts</code>", execute
-      [[#neuter-contexts]] on <var>origin</var>.
+  1.  If |types| contains "`executionContexts`", execute
+      [[#neuter-contexts]] on |origin|.
 
-  2.  If <var>types</var> contains "<code>cookies</code>", execute
-      [[#clear-cookies]] on <var>origin</var>.
+  2.  If |types| contains "`cookies`", execute
+      [[#clear-cookies]] on |origin|.
 
-  3.  If <var>types</var> contains "<code>storage</code>", execute
-      [[#clear-dom]] on <var>origin</var>.
+  3.  If |types| contains "`storage`", execute
+      [[#clear-dom]] on |origin|.
 
-  4.  If <var>types</var> contains "<code>cache</code>", execute
-      [[#clear-cache]] on <var>origin</var>.
+  4.  If |types| contains "`cache`", execute
+      [[#clear-cache]] on |origin|.
 
-  5.  If <var>types</var> contains "<code>executionContexts</code>", execute
-      [[#reload-contexts]] on <var>origin</var>.
+  5.  If |types| contains "`executionContexts`", execute
+      [[#reload-contexts]] on |origin|.
 
   <h4 id="neuter-contexts">
-    Neuter browsing contexts matching <var>origin</var>
+    Neuter browsing contexts matching |origin|
   </h4>
 
-  Given an <a>origin</a> (<var>origin</var>) this algorithm walks through the
+  Given an <a>origin</a> (|origin|) this algorithm walks through the
   set of <a>browsing contexts</a> which the user agent knows about, and
   sandboxes each in order to prevent them from recreating cleared data (from
   in-memory JavaScript variables, for instance). Once data is cleared, the
   affected browsing contexts will be hard-reloaded, as defined in
   [[#reload-contexts]]:
 
-  1.  For each <var>context</var> in the user agent's set of <a>browsing
+  1.  For each |context| in the user agent's set of <a>browsing
       contexts</a>:
 
-      1.  Let <var>document</var> be <var>context</var>'s <a>active
+      1.  Let |document| be |context|'s <a>active
           document</a>.
 
-      2.  While <var>document</var> is <a>an <code>iframe srcdoc</code>
-          document</a>, let <var>document</var> be the <a>active document</a>
-          of <var>document</var>'s <a>browsing context container</a>.
+      2.  While |document| is <a>an `iframe srcdoc`
+          document</a>, let |document| be the <a>active document</a>
+          of |document|'s <a>browsing context container</a>.
 
-      3.  If <var>context</var>'s <a>origin</a> is <var>origin</var>:
+      3.  If |context|'s <a>origin</a> is |origin|:
 
           1.  <a>Parse a sandboxing directive</a> using the empty string as
-              the <var>input</var>, and <var>document</var>'s <a>active
-              sandboxing flag set</a> as the <var>output</var>.
+              the input, and |document|'s <a>active
+              sandboxing flag set</a> as the output.
 
   <h4 id="reload-contexts">
-    Reload browsing contexts matching <var>origin</var>
+    Reload browsing contexts matching |origin|
   </h4>
 
-  Given an <a>origin</a> (<var>origin</var>), this algorithm walks through the
+  Given an <a>origin</a> (|origin|), this algorithm walks through the
   set of <a>browsing contexts</a> which the user agent knows about and reloads
   each of them:
 
-  1.  For each <var>context</var> in the user agent's set of <a>browsing
+  1.  For each |context| in the user agent's set of <a>browsing
       contexts</a>:
 
-      1.  Let <var>document</var> be <var>context</var>'s <a>active
+      1.  Let |document| be |context|'s <a>active
           document</a>.
 
-      2.  While <var>document</var> is <a>an <code>iframe srcdoc</code>
-          document</a>, let <var>document</var> be the <a>active document</a>
-          of <var>document</var>'s <a>browsing context container</a>.
+      2.  While |document| is <a>an `iframe srcdoc`
+          document</a>, let |document| be the <a>active document</a>
+          of |document|'s <a>browsing context container</a>.
 
-      3.  If <var>context</var>'s <a>origin</a> is <var>origin</var>:
+      3.  If |context|'s <a>origin</a> is |origin|:
 
-          1.  Navigate <var>context</var> to <var>document</var>'s {{URL}} with
+          1.  Navigate |context| to |document|'s {{URL}} with
               <a>replacement enabled</a> and <a>exceptions enabled</a>. The
-              <a>source browsing context</a> is <var>context</var>. This is a
+              <a>source browsing context</a> is |context|. This is a
               <a>reload-triggered navigation</a>.
           
   <h4 id="clear-cache">
-    Clear cache for <var>origin</var>
+    Clear cache for |origin|
   </h4>
 
-  Given an <a>origin</a> (<var>origin</var>), this algorithm removes data from
+  Given an <a>origin</a> (|origin|), this algorithm removes data from
   the user agent's local caches that matches the origin.
 
-  1.  Let <var>host</var> be <var>origin</var>'s {{URL/host}},
+  1.  Let |host| be |origin|'s {{URL/host}},
       <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
 
-  3.  Let <var>cache list</var> be the set of entries from the <a>network
-      cache</a> whose <code>target URI</code> {{URL/host}} is identical to
-      <var>host</var> when <a>canonicalized</a> as per Section 5.1.2 of
+  3.  Let |cache list| be the set of entries from the <a>network
+      cache</a> whose `target URI` {{URL/host}} is identical to
+      |host| when <a>canonicalized</a> as per Section 5.1.2 of
       [[!RFC6265]].
 
-  4.  Remove each <var>entry</var> in <var>cache list</var> from the <a>network
-      cache</a>.
+  4.  For each |entry| in |cache list|:
+ 
+      1.  Remove |entry| from the <a>network cache</a>.
 
   5.  If a user agent implements caches beyond a pure <a>network cache</a>, it
-      MUST remove all entries from those caches which match <var>origin</var>.
+      MUST remove all entries from those caches which match |origin|.
 
       ISSUE: We're dealing with the network cache here, as defined in
       [[!RFC7234]], but that's not nearly everything a user agent caches. How
@@ -726,11 +706,11 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
       [[STORAGE]] will make this clearer?
 
   <h4 id="clear-cookies">
-    Clear cookies for <var>origin</var>
+    Clear cookies for |origin|
   </h4>
 
-  Given an <a>origin</a> (<var>origin</var>), this algorithm removes cookies
-  from the user agent's <a>cookie store</a> whose <code>domain</code> attribute
+  Given an <a>origin</a> (|origin|), this algorithm removes cookies
+  from the user agent's <a>cookie store</a> whose `domain` attribute
   matches the origin.
 
   Note: This algorithm assumes that the user agent has implemented a <a>cookie
@@ -738,71 +718,72 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
   ability to retrieve a list of cookies by host, and to remove individual
   cookies.
 
-  1.  Let <var>host</var> be <var>origin</var>'s {{URL/host}},
+  1.  Let |host| be |origin|'s {{URL/host}},
       <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
 
-  2.  Let <var>cookie list</var> be the set of cookies from the <a>cookie
-      store</a> whose <code>domain</code> attribute is identical to <var>host</var>.
+  2.  Let |cookie list| be the set of cookies from the <a>cookie
+      store</a> whose `domain` attribute is identical to |host|.
 
-  3.  Remove each <var>cookie</var> in <var>cookie list</var> from the <a>cookie
-      store</a>.
+  3.  For each |cookie| in |cookie list|:
+  
+      1.  Remove |cookie| from the <a>cookie store</a>.
 
   <h4 id="clear-dom">
-    Clear DOM-accessible storage for <var>origin</var>
+    Clear DOM-accessible storage for |origin|
   </h4>
 
-  1.  For each <var>area</var> in the user agent's set of <a>local storage
+  1.  For each |area| in the user agent's set of <a>local storage
       areas</a> [[!HTML]]:
 
-      1.  If  <var>area</var>'s <a>origin</a> is <var>origin</var>:
+      1.  If  |area|'s <a>origin</a> is |origin|:
 
           1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
-              with <var>area</var>.
+              with |area|.
 
-  2.  For each <var>area</var> in the user agent's set of <a>session storage
+  2.  For each |area| in the user agent's set of <a>session storage
       areas</a> [[!HTML]]:
 
-      1.  If  <var>area</var>'s <a>origin</a> is <var>origin</var>:
+      1.  If  |area|'s <a>origin</a> is |origin|:
 
           1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
-              with <var>area</var>.
+              with |area|.
 
-  3.  For each <var>database</var> in the user agent's set of Indexed
+  3.  For each |database| in the user agent's set of Indexed
       Databases [[!INDEXEDDB]]:
 
-      1.  If  <var>database</var>'s <a>origin</a> is <var>origin</var>:
+      1.  If  |database|'s <a>origin</a> is |origin|:
 
-          1.  Set <var>database</var>'s <a>delete pending</a> flag to
-              <code>true</code>.
+          1.  Set |database|'s <a>delete pending</a> flag to
+              `true`.
 
-          2.  For each <var>connection</var> in the set of all {{IDBDatabase}}
-              objects connected to <var>database</var>:
+          2.  For each |connection| in the set of all {{IDBDatabase}}
+              objects connected to |database|:
 
               1.  Execute the <a>database closing steps</a> on
-                  <var>connection</var>.
+                  |connection|.
 
           3.  Execute the <a>database deletion steps</a> on
-              <var>database</var>, passing in <var>database</var>'s
+              |database|, passing in |database|'s
               <a>origin</a> and name.
 
-  4.  For each <var>database</var> in the user agent's set of WebSQL
+  4.  For each |database| in the user agent's set of WebSQL
       databases [[!WEBDATABASE]]:
 
-      1.  If  <var>database</var>'s <a>origin</a> is <var>origin</var>:
+      1.  If  |database|'s <a>origin</a> is |origin|:
 
-          1. Delete <var>database</var>.
+          1. Delete |database|.
 
              ISSUE: The [[WEBDATABASE]] spec is fairly unhelpful here with
              regard to deletion details.
 
-  5.  For each <var>registration</var> in the user agent's set of
+  5.  For each |registration| in the user agent's set of
       <a>registered</a> <a>service worker registrations</a>:
 
-      1.  If <var>registration</var>'s <a>scope URL</a>'s
-          <a>origin</a> is <var>origin</var>:
+      1.  If |registration|'s <a>scope URL</a>'s
+          <a>origin</a> is |origin|:
 
           1.  Execute {{ServiceWorkerRegistration/unregister()}} on
-              <var>registration</var>.
+              |registration|.
 
   ISSUE: We still need to spell out Filesystems, Dedicated Workers, Shared
   Workers, etc. (This isn't an exhaustive list. We should fix that too.)
@@ -812,11 +793,20 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 </section>
 
 <section>
+  <h2 id="security">Security Considerations</h2>
+
+  <h3 id="incomplete">Incomplete Clearing</h3>
+
+  It is possible that an application could be put into an indeterminate state
+  by clearing only one type of storage. We mitigate that to some extent by
+  clearing all storage options as a block, and by requiring that the header be
+  delivered over a secure connection.
+
   <h2 id="privacy">Privacy Considerations</h2>
 
   <h3 id="user-vs-author">Web developers control the timing.</h3>
 
-  If triggered at appropriate times, <a><code>Clear-Site-Data</code></a> can
+  If triggered at appropriate times, <a>`Clear-Site-Data`</a> can
   increase a user's privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
   is in control of when the clearing event is triggered. Even assuming a
@@ -834,7 +824,7 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 
   <h3 id="remnants">Remnants of data on disk.</h3>
 
-  While <a><code>Clear-Site-Data</code></a> triggers a clearing event in a
+  While <a>`Clear-Site-Data`</a> triggers a clearing event in a
   user's agent, it is difficult to make promises about the state of a user's
   disk after a clearing event takes place. In particular, note that it is up
   to the user agent to ensure that all traces of a site's date is actually
