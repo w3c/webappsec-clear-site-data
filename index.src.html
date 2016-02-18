@@ -34,10 +34,10 @@ spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
     text: context; for: Request; url: concept-request-context
     text: context-frame-type; for: Request; url: concept-request-context-frame-type
     text: header-list; for: Request; url: concept-request-header-list
-spec: INDEXEDDB; urlPrefix: http://www.w3.org/TR/IndexedDB/
+spec: INDEXEDDB; urlPrefix: https://w3c.github.io/IndexedDB/
   type: dfn
-    text: database deletion steps
-    text: database closing steps
+    text: database deletion steps; url: dfn-steps-for-deleting-a-database
+    text: database closing steps; url: dfn-steps-for-closing-a-database-connection
     text: delete pending; url: dfn-delete-pending
   type: interface
     text: IDBDatabase; url: idl-def-IDBDatabase
@@ -753,30 +753,11 @@ spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-reschke-http-
 
       1.  If  |database|'s <a>origin</a> is |origin|:
 
-          1.  Set |database|'s <a>delete pending</a> flag to
-              `true`.
-
-          2.  For each |connection| in the set of all {{IDBDatabase}}
-              objects connected to |database|:
-
-              1.  Execute the <a>database closing steps</a> on
-                  |connection|.
-
-          3.  Execute the <a>database deletion steps</a> on
+          1.  Execute the <a>database deletion steps</a> on
               |database|, passing in |database|'s
               <a>origin</a> and name.
 
-  4.  For each |database| in the user agent's set of WebSQL
-      databases [[!WEBDATABASE]]:
-
-      1.  If  |database|'s <a>origin</a> is |origin|:
-
-          1. Delete |database|.
-
-             ISSUE: The [[WEBDATABASE]] spec is fairly unhelpful here with
-             regard to deletion details.
-
-  5.  For each |registration| in the user agent's set of
+  4.  For each |registration| in the user agent's set of
       <a>registered</a> <a>service worker registrations</a>:
 
       1.  If |registration|'s <a>scope URL</a>'s
@@ -785,11 +766,16 @@ spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-reschke-http-
           1.  Execute {{ServiceWorkerRegistration/unregister()}} on
               |registration|.
 
-  ISSUE: We still need to spell out Filesystems, Dedicated Workers, Shared
-  Workers, etc. (This isn't an exhaustive list. We should fix that too.)
-
-  ISSUE: How do we say something about plugins here? Point out to
-  <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>?
+  5.  For any other script-accessible storage mechanism, the user agent MUST
+      delete any data associated with this origin. This includes (but is not
+      limited to) the following:
+     
+      1.  An origin's WebSQL databases [[!WEBDATABASE]].
+      2.  An origin's filesystems [[!file-system-api]]
+      3.  ChannelID
+      4.  Plugin data (e.g. <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>)
+      5.  Appcache.
+      6.  ISSUE: Moar?
 </section>
 
 <section>
