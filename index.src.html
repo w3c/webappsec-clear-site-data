@@ -753,7 +753,16 @@ spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-reschke-http-
 
       1.  If  |database|'s <a>origin</a> is |origin|:
 
-          1.  Execute the <a>database deletion steps</a> on
+          1.  Set |database|'s <a>delete pending</a> flag to
+              `true`.
+
+          2.  For each |connection| in the set of all {{IDBDatabase}}
+              objects connected to |database|:
+
+              1.  Execute the <a>database closing steps</a> on
+                  |connection|, setting the <i>forced flag</i>.
+
+          3.  Execute the <a>database deletion steps</a> on
               |database|, passing in |database|'s
               <a>origin</a> and name.
 

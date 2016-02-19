@@ -1238,7 +1238,7 @@
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
    <h1 class="p-name no-ref" id="title">Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-02-18">18 February 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-02-19">19 February 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1859,6 +1859,14 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
           <p>If <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
+            <p>Set <var>database</var>’s <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#dfn-delete-pending">delete pending</a> flag to <code>true</code>.</p>
+           <li data-md="">
+            <p>For each <var>connection</var> in the set of all <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/IndexedDB/#idl-def-IDBDatabase">IDBDatabase</a></code> objects connected to <var>database</var>:</p>
+            <ol>
+             <li data-md="">
+              <p>Execute the <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#dfn-steps-for-closing-a-database-connection">database closing steps</a> on <var>connection</var>, setting the <i>forced flag</i>.</p>
+            </ol>
+           <li data-md="">
             <p>Execute the <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#dfn-steps-for-deleting-a-database">database deletion steps</a> on <var>database</var>, passing in <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> and name.</p>
           </ol>
         </ol>
@@ -2046,7 +2054,10 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
    <li>
     <a data-link-type="biblio" href="#biblio-indexeddb">[IndexedDB]</a> defines the following terms:
     <ul>
+     <li><a href="https://w3c.github.io/IndexedDB/#idl-def-IDBDatabase">IDBDatabase</a>
+     <li><a href="https://w3c.github.io/IndexedDB/#dfn-steps-for-closing-a-database-connection">database closing steps</a>
      <li><a href="https://w3c.github.io/IndexedDB/#dfn-steps-for-deleting-a-database">database deletion steps</a>
+     <li><a href="https://w3c.github.io/IndexedDB/#dfn-delete-pending">delete pending</a>
     </ul>
    <li>
     <a data-link-type="biblio" href="#biblio-mix">[MIX]</a> defines the following terms:
