@@ -10,7 +10,7 @@
  *
  * Indices
  *   - .toc for the Table of Contents (<ol class="toc">)
- *     -> <span class="secno"> for the section numbers
+ *     + <span class="secno"> for the section numbers
  *   - #toc for the Table of Contents (<nav id="toc">)
  *   - ul.index for Indices (<a href="#ref">term</a><span>, in §N.M</span>)
  *   - table.index for Index Tables (e.g. for properties or elements)
@@ -34,6 +34,7 @@
  *   - .note       for informative notes             (div, p, span, aside, details)
  *   - .example    for informative examples          (div, p, pre, span)
  *   - .issue      for issues                        (div, p, span)
+ *   - .assertion  for assertions                    (div, p, span)
  *   - .advisement for loud normative statements     (div, p, strong)
  *   - .annoying-warning for spec obsoletion notices (div, aside, details)
  *
@@ -63,8 +64,7 @@
  *     Note that this styling basically doesn't help at all when printing,
  *     since A4 paper isn't much wider than the max-width here.
  *     It's better to design things to fit into a narrower measure if possible.
- *   - back-to-top link:
- *     <p role=navigation id="back-to-top"><a href="#toc"><abbr title="Back to Top">&uarr;</abbr>
+ *   - js-added ToC jump links (see fixup.js)
  *
  ******************************************************************************/
 
@@ -114,11 +114,36 @@
 
 	div.head h2 { margin-bottom: 1.5em;}
 
-	.head > :first-child {
+/** W3C Logo ******************************************************************/
+
+	.head .logo {
 		float: right;
-		margin: 0;
+		margin: 0.4rem 0 0.2rem .4rem;
 	}
 
+	.head img[src*="logos/W3C"] {
+		display: block;
+		border: solid #1a5e9a;
+		border-width: .65rem .7rem .6rem;
+		border-radius: .4rem;
+		background: #1a5e9a;
+		color: white;
+		font-weight: bold;
+	}
+
+	.head a:hover > img[src*="logos/W3C"],
+	.head a:focus > img[src*="logos/W3C"] {
+		opacity: .8;
+	}
+
+	.head a:active > img[src*="logos/W3C"] {
+		background: #c00;
+		border-color: #c00;
+	}
+
+	/* see also additional rules in Link Styling section */
+
+/** Copyright *****************************************************************/
 
 	p.copyright,
 	p.copyright small { font-size: small }
@@ -126,48 +151,60 @@
 /** Back to Top / ToC Toggle **************************************************/
 
 	@media print {
-		#back-to-top,
-		.toc-toggle {
+		#toc-nav {
 			display: none;
 		}
 	}
 	@media not print {
-		#back-to-top,
-		body > #toc-toggle {
+		#toc-nav {
 			position: fixed;
 			z-index: 2;
 			bottom: 0; left: 0;
 			margin: 0;
-			width: 26px;
-			text-align: center;
-			border-top-right-radius: 26px;
+			min-width: 1.33em;
+			border-top-right-radius: 2rem;
 			box-shadow: 0 0 2px;
-			font: 1em monospace;
-			font: 1rem monospace;
+			font-size: 1.5em;
 			color: black;
 		}
-		#back-to-top a,
-		body > #toc-toggle {
+		#toc-nav > a {
 			display: block;
-			width: 22px;
-			height: 22px;
-			padding: 4px 4px 0 0;
+			white-space: nowrap;
+
+			height: 1.33em;
+			padding: .1em 0.3em;
 			margin: 0;
-			border: none;
-			border-top-right-radius: 26px;
-		}
-		#back-to-top :first-child {
-			display: block;
-			padding-bottom: 22px;
-			margin-bottom: -22px;
-		}
-		#back-to-top > a {
+
 			background: white;
 			box-shadow: 0 0 2px;
+			border: none;
+			border-top-right-radius: 1.33em;
+			background: white;
 		}
-		#back-to-top > a:hover,
-		#back-to-top > a:focus {
+		#toc-nav > #toc-jump {
+			padding-bottom: 2em;
+			margin-bottom: -1.9em;
+		}
+
+		#toc-nav > a:hover,
+		#toc-nav > a:focus {
 			background: #f8f8f8;
+		}
+		#toc-nav > a:not(:hover):not(:focus) {
+			color: #707070;
+		}
+
+		/* statusbar gets in the way on keyboard focus; remove once browsers fix */
+		#toc-nav > a[href="#toc"]:not(:hover):focus:last-child {
+			padding-bottom: 1.5rem;
+		}
+
+		#toc-nav:not(:hover) > a:not(:focus) > span + span {
+			/* Ideally this uses :focus-within on #toc-nav */
+			display: none;
+		}
+		#toc-nav > a > span + span {
+			padding-right: 0.2em;
 		}
 
 		#toc-toggle-inline {
@@ -186,14 +223,8 @@
 			left: -1px;
 		}
 
-		.toc-toggle:active,
-		#back-to-top :active {
+		#toc-nav :active {
 			color: #C00;
-		}
-
-		#back-to-top abbr {
-			border: none;
-			text-decoration: none;
 		}
 	}
 
@@ -206,6 +237,8 @@
 			top: 0; bottom: 0;
 			left: 0;
 			width: 23.5em;
+			max-width: 80%;
+			max-width: calc(100% - 2em - 26px);
 			overflow: auto;
 			padding: 0 1em;
 			padding-left: 42px;
@@ -224,8 +257,18 @@
 			color: gray;
 			color: hsla(203,20%,40%,.7);
 		}
-		body.toc-sidebar #back-to-top :first-child {
-			display: none;
+		body.toc-sidebar #toc-jump:not(:focus) {
+			width: 0;
+			height: 0;
+			padding: 0;
+			position: absolute;
+			overflow: hidden;
+		}
+	}
+	/* Hide main scroller when only the ToC is visible anyway */
+	@media screen and (max-width: 28em) {
+		body.toc-sidebar {
+			overflow: hidden;
 		}
 	}
 
@@ -260,8 +303,12 @@
 		}
 		/* See also Overflow section at the bottom */
 
-		body:not(.toc-inline) #back-to-top :first-child {
-			display: none;
+		body:not(.toc-inline) #toc-jump:not(:focus) {
+			width: 0;
+			height: 0;
+			padding: 0;
+			position: absolute;
+			overflow: hidden;
 		}
 	}
 	@media screen and (min-width: 90em) {
@@ -282,6 +329,7 @@
 		font: 100% sans-serif;   /* Reset all font styling to clear out UA styles */
 		font-family: inherit;    /* Inherit the font family. */
 		line-height: 1.2;        /* Keep wrapped headings compact */
+		hyphens: manual;         /* Hyphenated headings look weird */
 	}
 
 	h2, h3, h4, h5, h6 {
@@ -353,27 +401,26 @@
 	}
 
 	dl dd {
-		margin: 0 0 1em 2em;
+		margin: 0 0 .5em 2em;
 	}
 
-	.head dd + dt {
-		margin-top: .5em;
-	}
-
-	.head dd { /* undo for header */
-		margin-bottom: 0;
+	.head dd + dd { /* compact for header */
+		margin-top: -.5em;
 	}
 
 	/* Style for algorithms */
-	ol.algorithm ol:not(.algorithm) {
+	ol.algorithm ol:not(.algorithm),
+	.algorithm > ol ol:not(.algorithm) {
 	 border-left: 0.5em solid #DEF;
 	}
 
 	/* Style for switch/case <dl>s */
-	dl.switch > dd > ol.only {
+	dl.switch > dd > ol.only,
+	dl.switch > dd > .only > ol {
 	 margin-left: 0;
 	}
-	dl.switch > dd > ol.algorithm {
+	dl.switch > dd > ol.algorithm,
+	dl.switch > dd > .algorithm > ol {
 	 margin-left: -2em;
 	}
 	dl.switch {
@@ -489,9 +536,11 @@
 	}
 
 	/* Backout above styling for W3C logo */
-	.head > p:first-child > a {
+	.head .logo,
+	.head .logo a {
 		border: none;
 		text-decoration: none;
+		background: transparent;
 	}
 
 /******************************************************************************/
@@ -549,7 +598,7 @@
 /*                             Colored Boxes                                  */
 /******************************************************************************/
 
-	.issue, .note, .example, .advisement, blockquote {
+	.issue, .note, .example, .assertion, .advisement, blockquote {
 		padding: .5em;
 		border: .5em;
 		border-left-style: solid;
@@ -564,6 +613,7 @@
 	.note,
 	.example,
 	.advisement,
+	.assertion,
 	blockquote {
 		margin: 1em auto;
 	}
@@ -642,6 +692,15 @@
 	details.note[open] > summary {
 		border-bottom: 1px silver solid;
 	}
+
+/** Assertion Box *************************************************************/
+  /*  for assertions in algorithms */
+
+  .assertion {
+		border-color: orange;
+		border-style: none solid;
+		background: #FFEECC;
+  }
 
 /** Advisement Box ************************************************************/
 	/*  for attention-grabbing normative statements */
@@ -740,6 +799,7 @@
 		font-style: italic;
 		font-weight: normal;
 		padding-left: 1em;
+		width: 3em;
 	}
 
 	/* For when values are extra-complex and need formatting for readability */
@@ -782,8 +842,8 @@
 	table.index {
 		margin: 1em auto;
 		border-collapse: collapse;
-		width: 100%;
 		border: hidden;
+		width: 100%;
 	}
 	table.data caption,
 	table.index caption {
@@ -804,11 +864,6 @@
 		border: 0;
 	}
 
-	table.data  thead th[scope="row"],
-	table.index thead th[scope="row"] {
-		text-align: right;
-	}
-
 	table.data  thead,
 	table.index thead,
 	table.data  tbody,
@@ -823,7 +878,6 @@
 
 	table.data  tbody th:first-child,
 	table.index tbody th:first-child  {
-		text-align: right;
 		border-right: 2px solid;
 		border-top: 1px solid silver;
 		padding-right: 1em;
@@ -852,10 +906,7 @@
 
 
 /*
-	a.property {
-		font-weight: bold;
-		color: hsla(203, 90%, 30%,.8);
-	}
+Alternate table alignment rules
 
 	table.data,
 	table.index {
@@ -871,6 +922,8 @@
 	table.index tbody th:first-child  {
 		text-align: right;
 	}
+
+Possible extra rowspan handling
 
 	table.data  tbody th[rowspan]:not([rowspan='1']),
 	table.index tbody th[rowspan]:not([rowspan='1']),
@@ -895,24 +948,9 @@
 
 /** Table of Contents *********************************************************/
 
-	.toc, .toc ol, .toc ul, .toc li {
-		list-style: none; /* Numbers must be inlined into source */
-		/* because generated content isn't search/selectable and markers can't do multilevel yet */
-		margin:  0;
-		padding: 0;
-		line-height: 1.2rem; /* consistent spacing */
-	}
-
-	/* ToC not indented until third level, but font style & margins show hierarchy */
-	.toc > li             { margin: 1.2em 0;   font-weight: bold;   }
-	.toc > li li          { margin: 0;         font-weight: normal; }
-	.toc > li li li       { margin-left:  1em; font-style:  italic; }
-	.toc > li li li li    { margin-left:  1em; font-style:  normal; }
-	.toc > li li li li li { margin-left: 1rem; font-style:  italic; font-size: 85%; }
-
 	.toc a {
 		/* More spacing; use padding to make it part of the click target. */
-		padding-top: 0.1em;
+		padding-top: 0.1rem;
 		/* Larger, more consistently-sized click target */
 		display: block;
 		/* Reverse color scheme */
@@ -927,31 +965,67 @@
 		border-bottom-color: transparent;
 	}
 
-	/* Section numbers in a column of their own */
-	:not(li) > .toc {
-		margin-left: 4em;
+	.toc, .toc ol, .toc ul, .toc li {
+		list-style: none; /* Numbers must be inlined into source */
+		/* because generated content isn't search/selectable and markers can't do multilevel yet */
+		margin:  0;
+		padding: 0;
+		line-height: 1.1rem; /* consistent spacing */
 	}
 
+	/* ToC not indented until third level, but font style & margins show hierarchy */
+	.toc > li             { font-weight: bold;   }
+	.toc > li li          { font-weight: normal; }
+	.toc > li li li       { font-size:   95%;    }
+	.toc > li li li li    { font-size:   90%;    }
+	.toc > li li li li li { font-size:   85%;    }
+
+	.toc > li             { margin: 1.5rem 0;    }
+	.toc > li li          { margin: 0.3rem 0;    }
+	.toc > li li li       { margin-left: 2rem;   }
+
+	/* Section numbers in a column of their own */
 	.toc .secno {
 		float: left;
-		width: 4em;
-		margin-left: -4em;
+		width: 4rem;
 		white-space: nowrap;
-	}
-
-	.toc > li li li .secno {
-		margin-left: -5em;
 	}
 	.toc > li li li li .secno {
 		font-size: 85%;
-		margin-left: -7.06em;
-		margin-left: -6rem;
 	}
 	.toc > li li li li li .secno {
-		margin-left: -8.24em;
-		margin-left: -7rem;
 		font-size: 100%;
 	}
+
+	:not(li) > .toc              { margin-left:  5rem; }
+	.toc .secno                  { margin-left: -5rem; }
+	.toc > li li li .secno       { margin-left: -7rem; }
+	.toc > li li li li .secno    { margin-left: -9rem; }
+	.toc > li li li li li .secno { margin-left: -11rem; }
+
+	/* Tighten up indentation in narrow ToCs */
+	@media (max-width: 30em) {
+		:not(li) > .toc              { margin-left:  4rem; }
+		.toc .secno                  { margin-left: -4rem; }
+		.toc > li li li              { margin-left:  1rem; }
+		.toc > li li li .secno       { margin-left: -5rem; }
+		.toc > li li li li .secno    { margin-left: -6rem; }
+		.toc > li li li li li .secno { margin-left: -7rem; }
+	}
+	@media screen and (min-width: 78em) {
+		body:not(.toc-inline) :not(li) > .toc              { margin-left:  4rem; }
+		body:not(.toc-inline) .toc .secno                  { margin-left: -4rem; }
+		body:not(.toc-inline) .toc > li li li              { margin-left:  1rem; }
+		body:not(.toc-inline) .toc > li li li .secno       { margin-left: -5rem; }
+		body:not(.toc-inline) .toc > li li li li .secno    { margin-left: -6rem; }
+		body:not(.toc-inline) .toc > li li li li li .secno { margin-left: -7rem; }
+	}
+	body.toc-sidebar #toc :not(li) > .toc              { margin-left:  4rem; }
+	body.toc-sidebar #toc .toc .secno                  { margin-left: -4rem; }
+	body.toc-sidebar #toc .toc > li li li              { margin-left:  1rem; }
+	body.toc-sidebar #toc .toc > li li li .secno       { margin-left: -5rem; }
+	body.toc-sidebar #toc .toc > li li li li .secno    { margin-left: -6rem; }
+	body.toc-sidebar #toc .toc > li li li li li .secno { margin-left: -7rem; }
 
 	.toc li {
 		clear: both;
@@ -961,7 +1035,7 @@
 /** Index *********************************************************************/
 
 	/* Index Lists: Layout */
-	ul.index       { margin-left: 0; columns: 15em; -webkit-columns: 15em; -moz-columns: 15em; text-indent: 1em hanging; }
+	ul.index       { margin-left: 0; columns: 15em; text-indent: 1em hanging; }
 	ul.index li    { margin-left: 0; list-style: none; break-inside: avoid; }
 	ul.index li li { margin-left: 1em }
 	ul.index dl    { margin-top: 0; }
@@ -1043,6 +1117,12 @@
 		margin-left: auto;
 		margin-right: auto;
 	}
+	.overlarge > table {
+		/* limit preferred width of table */
+		max-width: 50em;
+		margin-left: auto;
+		margin-right: auto;
+	}
 
 	@media (min-width: 55em) {
 		.overlarge {
@@ -1081,170 +1161,263 @@
 			*/
 		}
 	}
-
-/******************************************************************************/
-/*                                  Bikeshed                                  */
-/******************************************************************************/
-
-	/* Style for paragraphs I know are in MD-genned lists */
-	/* This is a weird hack for me not yet following the commonmark spec
-	   regarding paragraph and lists. */
-	[data-md] > :first-child {
-		margin-top: 0;
-	}
-	[data-md] > :last-child {
-		margin-bottom: 0;
-	}
-
-/** Inline CSS fragments ******************************************************/
-
-	.css.css, .property.property, .descriptor.descriptor {
-		color: #005a9c;
-		font-size: inherit;
-		font-family: inherit;
-	}
-	.css::before, .property::before, .descriptor::before {
-		content: "‘";
-	}
-	.css::after, .property::after, .descriptor::after {
-		content: "’";
-	}
-	.property, .descriptor {
-		/* Don't wrap property and descriptor names */
-		white-space: nowrap;
-	}
-	.type { /* CSS value <type> */
-		font-style: italic;
-	}
-	pre .property::before, pre .property::after {
-		content: "";
-	}
-
-/** Autolinks produced using Bikeshed *****************************************/
-
-	[data-link-type="property"]::before,
-	[data-link-type="propdesc"]::before,
-	[data-link-type="descriptor"]::before,
-	[data-link-type="value"]::before,
-	[data-link-type="function"]::before,
-	[data-link-type="at-rule"]::before,
-	[data-link-type="selector"]::before,
-	[data-link-type="maybe"]::before {
-		content: "‘";
-	}
-	[data-link-type="property"]::after,
-	[data-link-type="propdesc"]::after,
-	[data-link-type="descriptor"]::after,
-	[data-link-type="value"]::after,
-	[data-link-type="function"]::after,
-	[data-link-type="at-rule"]::after,
-	[data-link-type="selector"]::after,
-	[data-link-type="maybe"]::after {
-		content: "’";
-	}
-
-	[data-link-type].production::before,
-	[data-link-type].production::after,
-	.prod [data-link-type]::before,
-	.prod [data-link-type]::after {
-		content: "";
-	}
-
-	[data-link-type=element],
-	[data-link-type=element-attr] {
-		font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
-		font-size: .9em;
-	}
-	[data-link-type=element]::before { content: "<" }
-	[data-link-type=element]::after  { content: ">" }
-
-	[data-link-type=biblio] {
-		white-space: pre;
-	}
-
-/** Self-Links ****************************************************************/
-/* Auto-generated links from an element to its own anchor, for usability */
-
-	.heading, .issue, .note, .example, li, dt {
-		position: relative;
-	}
-	a.self-link {
-		position: absolute;
-		top: 0;
-		left: -2.5em;
-		width: 2em;
-		height: 2em;
-		text-align: center;
-		border: none;
-		transition: opacity .2s;
-		opacity: .5;
-	}
-	a.self-link:hover {
-		opacity: 1;
-	}
-	.heading > a.self-link {
-		font-size: 83%;
-	}
-	li > a.self-link {
-		left: -3.5em;
-	}
-	dfn > a.self-link {
-		top: auto;
-		left: auto;
-		opacity: 0;
-		width: 1.5em;
-		height: 1.5em;
-		background: gray;
-		color: white;
-		font-style: normal;
-		transition: opacity .2s, background-color .2s, color .2s;
-	}
-	dfn:hover > a.self-link {
-		opacity: 1;
-	}
-	dfn > a.self-link:hover {
-		color: black;
-	}
-
-	a.self-link::before            { content: "¶"; }
-	.heading > a.self-link::before { content: "§"; }
-	dfn > a.self-link::before      { content: "#"; }
-
-/** Counters ******************************************************************/
-/* Adds the auto-genned issue/example counters,
-   until Bikeshed fills in manual ones. */
-	.issue:not(.no-marker)::before {
-		content: "Issue " counter(issue);
-	}
-
-	.example:not(.no-marker)::before {
-		content: "Example";
-		content: "Example " counter(example);
-	}
-	.invalid.example:not(.no-marker)::before,
-	.illegal.example:not(.no-marker)::before {
-		content: "Invalid Example";
-		content: "Invalid Example" counter(example);
-	}
-
-
-
-/********************************************
- Remember to remove the logo section when copypasting freshly.
- */
 </style>
   <meta content="Bikeshed 1.0.0" name="generator">
+<style>/* style-md-lists */
+
+            /* This is a weird hack for me not yet following the commonmark spec
+               regarding paragraph and lists. */
+            [data-md] > :first-child {
+                margin-top: 0;
+            }
+            [data-md] > :last-child {
+                margin-bottom: 0;
+            }</style>
+<style>/* style-selflinks */
+
+            .heading, .issue, .note, .example, li, dt {
+                position: relative;
+            }
+            a.self-link {
+                position: absolute;
+                top: 0;
+                left: calc(-1 * (3.5rem - 26px));
+                width: calc(3.5rem - 26px);
+                height: 2em;
+                text-align: center;
+                border: none;
+                transition: opacity .2s;
+                opacity: .5;
+            }
+            a.self-link:hover {
+                opacity: 1;
+            }
+            .heading > a.self-link {
+                font-size: 83%;
+            }
+            li > a.self-link {
+                left: calc(-1 * (3.5rem - 26px) - 2em);
+            }
+            dfn > a.self-link {
+                top: auto;
+                left: auto;
+                opacity: 0;
+                width: 1.5em;
+                height: 1.5em;
+                background: gray;
+                color: white;
+                font-style: normal;
+                transition: opacity .2s, background-color .2s, color .2s;
+            }
+            dfn:hover > a.self-link {
+                opacity: 1;
+            }
+            dfn > a.self-link:hover {
+                color: black;
+            }
+
+            a.self-link::before            { content: "¶"; }
+            .heading > a.self-link::before { content: "§"; }
+            dfn > a.self-link::before      { content: "#"; }</style>
+<style>/* style-counters */
+
+            body {
+                counter-reset: example figure issue;
+            }
+            .issue {
+                counter-increment: issue;
+            }
+            .issue:not(.no-marker)::before {
+                content: "Issue " counter(issue);
+            }
+
+            .example {
+                counter-increment: example;
+            }
+            .example:not(.no-marker)::before {
+                content: "Example " counter(example);
+            }
+            .invalid.example:not(.no-marker)::before,
+            .illegal.example:not(.no-marker)::before {
+                content: "Invalid Example" counter(example);
+            }
+
+            figcaption {
+                counter-increment: figure;
+            }
+            figcaption:not(.no-marker)::before {
+                content: "Figure " counter(figure) " ";
+            }</style>
+<style>/* style-autolinks */
+
+            .css.css, .property.property, .descriptor.descriptor {
+                color: #005a9c;
+                font-size: inherit;
+                font-family: inherit;
+            }
+            .css::before, .property::before, .descriptor::before {
+                content: "‘";
+            }
+            .css::after, .property::after, .descriptor::after {
+                content: "’";
+            }
+            .property, .descriptor {
+                /* Don't wrap property and descriptor names */
+                white-space: nowrap;
+            }
+            .type { /* CSS value <type> */
+                font-style: italic;
+            }
+            pre .property::before, pre .property::after {
+                content: "";
+            }
+            [data-link-type="property"]::before,
+            [data-link-type="propdesc"]::before,
+            [data-link-type="descriptor"]::before,
+            [data-link-type="value"]::before,
+            [data-link-type="function"]::before,
+            [data-link-type="at-rule"]::before,
+            [data-link-type="selector"]::before,
+            [data-link-type="maybe"]::before {
+                content: "‘";
+            }
+            [data-link-type="property"]::after,
+            [data-link-type="propdesc"]::after,
+            [data-link-type="descriptor"]::after,
+            [data-link-type="value"]::after,
+            [data-link-type="function"]::after,
+            [data-link-type="at-rule"]::after,
+            [data-link-type="selector"]::after,
+            [data-link-type="maybe"]::after {
+                content: "’";
+            }
+
+            [data-link-type].production::before,
+            [data-link-type].production::after,
+            .prod [data-link-type]::before,
+            .prod [data-link-type]::after {
+                content: "";
+            }
+
+            [data-link-type=element],
+            [data-link-type=element-attr] {
+                font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+                font-size: .9em;
+            }
+            [data-link-type=element]::before { content: "<" }
+            [data-link-type=element]::after  { content: ">" }
+
+            [data-link-type=biblio] {
+                white-space: pre;
+            }</style>
+<style>/* style-dfn-panel */
+
+        .dfn-panel {
+            position: absolute;
+            z-index: 35;
+            height: auto;
+            width: -webkit-fit-content;
+            width: fit-content;
+            max-width: 300px;
+            max-height: 500px;
+            overflow: auto;
+            padding: 0.5em 0.75em;
+            font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+            background: #DDDDDD;
+            color: black;
+            border: outset 0.2em;
+        }
+        .dfn-panel:not(.on) { display: none; }
+        .dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+        .dfn-panel > b { display: block; }
+        .dfn-panel a { color: black; }
+        .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+        .dfn-panel > b + b { margin-top: 0.25em; }
+        .dfn-panel ul { padding: 0; }
+        .dfn-panel li { list-style: inside; }
+        .dfn-panel.activated {
+            display: inline-block;
+            position: fixed;
+            left: .5em;
+            bottom: 2em;
+            margin: 0 auto;
+            max-width: calc(100vw - 1.5em - .4em - .5em);
+            max-height: 30vh;
+        }
+
+        .dfn-paneled { cursor: pointer; }
+        </style>
+<style>/* style-syntax-highlighting */
+pre.idl.highlight { color: #708090; }
+        .highlight:not(.idl) { background: hsl(24, 20%, 95%); }
+        code.highlight { padding: .1em; border-radius: .3em; }
+        pre.highlight, pre > code.highlight { display: block; padding: 1em; margin: .5em 0; overflow: auto; border-radius: 0; }
+        .highlight .c { color: #708090 } /* Comment */
+        .highlight .k { color: #990055 } /* Keyword */
+        .highlight .l { color: #000000 } /* Literal */
+        .highlight .n { color: #0077aa } /* Name */
+        .highlight .o { color: #999999 } /* Operator */
+        .highlight .p { color: #999999 } /* Punctuation */
+        .highlight .cm { color: #708090 } /* Comment.Multiline */
+        .highlight .cp { color: #708090 } /* Comment.Preproc */
+        .highlight .c1 { color: #708090 } /* Comment.Single */
+        .highlight .cs { color: #708090 } /* Comment.Special */
+        .highlight .kc { color: #990055 } /* Keyword.Constant */
+        .highlight .kd { color: #990055 } /* Keyword.Declaration */
+        .highlight .kn { color: #990055 } /* Keyword.Namespace */
+        .highlight .kp { color: #990055 } /* Keyword.Pseudo */
+        .highlight .kr { color: #990055 } /* Keyword.Reserved */
+        .highlight .kt { color: #990055 } /* Keyword.Type */
+        .highlight .ld { color: #000000 } /* Literal.Date */
+        .highlight .m { color: #000000 } /* Literal.Number */
+        .highlight .s { color: #a67f59 } /* Literal.String */
+        .highlight .na { color: #0077aa } /* Name.Attribute */
+        .highlight .nc { color: #0077aa } /* Name.Class */
+        .highlight .no { color: #0077aa } /* Name.Constant */
+        .highlight .nd { color: #0077aa } /* Name.Decorator */
+        .highlight .ni { color: #0077aa } /* Name.Entity */
+        .highlight .ne { color: #0077aa } /* Name.Exception */
+        .highlight .nf { color: #0077aa } /* Name.Function */
+        .highlight .nl { color: #0077aa } /* Name.Label */
+        .highlight .nn { color: #0077aa } /* Name.Namespace */
+        .highlight .py { color: #0077aa } /* Name.Property */
+        .highlight .nt { color: #669900 } /* Name.Tag */
+        .highlight .nv { color: #222222 } /* Name.Variable */
+        .highlight .ow { color: #999999 } /* Operator.Word */
+        .highlight .mb { color: #000000 } /* Literal.Number.Bin */
+        .highlight .mf { color: #000000 } /* Literal.Number.Float */
+        .highlight .mh { color: #000000 } /* Literal.Number.Hex */
+        .highlight .mi { color: #000000 } /* Literal.Number.Integer */
+        .highlight .mo { color: #000000 } /* Literal.Number.Oct */
+        .highlight .sb { color: #a67f59 } /* Literal.String.Backtick */
+        .highlight .sc { color: #a67f59 } /* Literal.String.Char */
+        .highlight .sd { color: #a67f59 } /* Literal.String.Doc */
+        .highlight .s2 { color: #a67f59 } /* Literal.String.Double */
+        .highlight .se { color: #a67f59 } /* Literal.String.Escape */
+        .highlight .sh { color: #a67f59 } /* Literal.String.Heredoc */
+        .highlight .si { color: #a67f59 } /* Literal.String.Interpol */
+        .highlight .sx { color: #a67f59 } /* Literal.String.Other */
+        .highlight .sr { color: #a67f59 } /* Literal.String.Regex */
+        .highlight .s1 { color: #a67f59 } /* Literal.String.Single */
+        .highlight .ss { color: #a67f59 } /* Literal.String.Symbol */
+        .highlight .vc { color: #0077aa } /* Name.Variable.Class */
+        .highlight .vg { color: #0077aa } /* Name.Variable.Global */
+        .highlight .vi { color: #0077aa } /* Name.Variable.Instance */
+        .highlight .il { color: #000000 } /* Literal.Number.Integer.Long */
+        </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/Icons/w3c_home" width="72"> </a> </p>
-   <h1 class="p-name no-ref" id="title">Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-02-19">19 February 2016</time></span></h2>
+   <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <h1>Clear Site Data</h1>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-07-20">20 July 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
      <dd><a class="u-url" href="https://w3c.github.io/webappsec-clear-site-data/">https://w3c.github.io/webappsec-clear-site-data/</a>
-     <dt>Latest version:
+     <dt>Latest published version:
      <dd><a href="http://www.w3.org/TR/clear-site-data/">http://www.w3.org/TR/clear-site-data/</a>
+     <dt>Previous Versions:
+     <dd><a href="http://www.w3.org/TR/2015/WD-clear-site-data-20150804/" rel="previous">http://www.w3.org/TR/2015/WD-clear-site-data-20150804/</a>
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html">https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html</a>
      <dt>Feedback:
@@ -1397,7 +1570,7 @@ host.</p>
   no imperative interface to a browser’s network cache exists, period.</p>
     <p>This document defines a new mechanism to deal with removing data from these
   and other types of local storage, giving web developers the ability to clear
-  out a user’s local cache of data via the <a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a> HTTP response
+  out a user’s local cache of data via the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-1">Clear-Site-Data</a> HTTP response
   header.</p>
     <h3 class="heading settled" data-level="1.1" id="examples"><span class="secno">1.1. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
     <h4 class="heading settled" data-level="1.1.1" id="example-signout"><span class="secno">1.1.1. </span><span class="content">Signing Out</span><a class="self-link" href="#example-signout"></a></h4>
@@ -1406,7 +1579,7 @@ host.</p>
     site author wishes to ensure that locally stored data is removed as a
     result. 
      <p>They can do so by sending the following HTTP header in the response:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types">types</a>": [ "<a data-link-type="dfn" href="#cache">cache</a>", "<a data-link-type="dfn" href="#cookies">cookies</a>", "<a data-link-type="dfn" href="#storage">storage</a>", "<a data-link-type="dfn" href="#executioncontexts">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-2">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-1">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-1">cache</a>", "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-1">cookies</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-1">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-1">executionContexts</a>" ] }
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.2" id="example-targeted"><span class="secno">1.1.2. </span><span class="content">Targeted Clearing</span><a class="self-link" href="#example-targeted"></a></h4>
@@ -1433,7 +1606,7 @@ host.</p>
 </pre>
      <p>That endpoint would return proper CORS headers in response to that request’s
     preflight, and would return the following header for the actual request:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types">types</a>": [ "<a data-link-type="dfn" href="#cache">cache</a>", "<a data-link-type="dfn" href="#cookies">cookies</a>", "<a data-link-type="dfn" href="#storage">storage</a>", "<a data-link-type="dfn" href="#executioncontexts">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-3">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-2">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-2">cache</a>", "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-2">cookies</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-2">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-2">executionContexts</a>" ] }
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.3" id="example-keepcookies"><span class="secno">1.1.3. </span><span class="content">Keep Critical Cookies</span><a class="self-link" href="#example-keepcookies"></a></h4>
@@ -1443,8 +1616,8 @@ host.</p>
     information, but needs to ensure that the opt-out cookie which the user has
     just received isn’t wiped along with it. 
      <p>They can do so by sending the following HTTP header in the response, which
-    includes all the types except for "<a data-link-type="dfn" href="#cookies">cookies</a>":</p>
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types">types</a>": [ "<a data-link-type="dfn" href="#cache">cache</a>", "<a data-link-type="dfn" href="#storage">storage</a>", "<a data-link-type="dfn" href="#executioncontexts">executionContexts</a>" ] }
+    includes all the types except for "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-3">cookies</a>":</p>
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-4">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-3">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-3">cache</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-3">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-3">executionContexts</a>" ] }
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.4" id="example-killswitch"><span class="secno">1.1.4. </span><span class="content">Kill Switch</span><a class="self-link" href="#example-killswitch"></a></h4>
@@ -1457,7 +1630,7 @@ host.</p>
     state. Perhaps the attackers found a clever persistence mechanism? 
      <p>They can reduce the risk of a persistent client-side XSS by sending the
     following HTTP header in a response to wipe out local sources of data:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types">types</a>": [ "<a data-link-type="dfn" href="#cache">cache</a>", "<a data-link-type="dfn" href="#cookies">cookies</a>", "<a data-link-type="dfn" href="#storage">storage</a>", "<a data-link-type="dfn" href="#executioncontexts">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-5">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-4">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-4">cache</a>", "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-4">cookies</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-4">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-4">executionContexts</a>" ] }
 </pre>
      <p class="note" role="note">Note: Installing a Service Worker guarantees that a request will go out to
     a server every ~24 hours. That update ping would be a wonderful time to send
@@ -1491,7 +1664,7 @@ host.</p>
     <p>Developers may instruct a user agent to clear various types of relevant data
   in two ways: an HTTP response header, and a JavaScript API:</p>
     <h3 class="heading settled" data-level="2.1" id="header"><span class="secno">2.1. </span><span class="content"> The <code>Clear-Site-Data</code> HTTP Response Header Field </span><a class="self-link" href="#header"></a></h3>
-    <p>The <dfn data-dfn-type="dfn" data-noexport="" id="clear-site-data"><code>Clear-Site-Data</code><a class="self-link" href="#clear-site-data"></a></dfn> HTTP response header field
+    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="clear-site-data"><code>Clear-Site-Data</code></dfn> HTTP response header field
   sends a signal to the user agent that it ought to remove all data
   of a certain set of types. The header is represented by the following ABNF <a data-link-type="biblio" href="#biblio-rfc5234">[RFC5234]</a>:</p>
 <pre class="abnf">Report-To = <a data-link-type="grammar" href="https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html#rfc.section.2">json-field-value</a>
@@ -1506,7 +1679,7 @@ host.</p>
   define additional such members, and user agents MUST ignore unknown members
   when parsing the header.</p>
     <h4 class="heading settled" data-level="2.1.1" id="types-member"><span class="secno">2.1.1. </span><span class="content"> The <code>types</code> member </span><a class="self-link" href="#types-member"></a></h4>
-    <p>The <dfn data-dfn-type="dfn" data-noexport="" id="types"><code>types</code><a class="self-link" href="#types"></a></dfn> member is an array of keywords designating the kinds
+    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="types"><code>types</code></dfn> member is an array of keywords designating the kinds
   of data that the server wishes the user agent to remove. The member’s value
   MUST be an array, and that array MUST contain only strings; any other types
   will result in a parse error.</p>
@@ -1516,7 +1689,7 @@ host.</p>
   header:</p>
     <dl>
      <dt data-md="">
-      <p>"<dfn data-dfn-type="dfn" data-noexport="" id="cache"><code>cache</code><a class="self-link" href="#cache"></a></dfn>"</p>
+      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="cache"><code>cache</code></dfn>"</p>
      <dd data-md="">
       <p>The "<code>cache</code>" type indicates that the server wishes to remove locally
   cached data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. This includes the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network
@@ -1527,11 +1700,11 @@ host.</p>
       <div class="example" id="example-0a3225db">
        <a class="self-link" href="#example-0a3225db"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause caches associated with the origin <code>https://example.com</code>: to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types">types</a>": [ "<a data-link-type="dfn" href="#cache">cache</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-6">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-5">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-5">cache</a>" ] }
 </pre>
       </div>
      <dt data-md="">
-      <p>"<dfn data-dfn-type="dfn" data-noexport="" id="cookies"><code>cookies</code><a class="self-link" href="#cookies"></a></dfn>"</p>
+      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="cookies"><code>cookies</code></dfn>"</p>
      <dd data-md="">
       <p>The "<code>cookies</code>" type indicates that the server wishes to remove cookies
   associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>.</p>
@@ -1539,11 +1712,11 @@ host.</p>
       <div class="example" id="example-9bd67aa6">
        <a class="self-link" href="#example-9bd67aa6"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause cookies associated with the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types">types</a>": "<a data-link-type="dfn" href="#cookies">cookies</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-7">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-6">types</a>": "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-5">cookies</a>" ] }
 </pre>
       </div>
      <dt data-md="">
-      <p>"<dfn data-dfn-type="dfn" data-noexport="" id="storage"><code>storage</code><a class="self-link" href="#storage"></a></dfn>"</p>
+      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="storage"><code>storage</code></dfn>"</p>
      <dd data-md="">
       <p>The "<code>storage</code>" type indicates that the server wishes to remove
   locally stored data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
@@ -1553,11 +1726,11 @@ host.</p>
       <div class="example" id="example-f08a8eb9">
        <a class="self-link" href="#example-f08a8eb9"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause DOM-accessible storage for the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types">types</a>": "<a data-link-type="dfn" href="#storage">storage</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-8">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-7">types</a>": "<a data-link-type="dfn" href="#storage" id="ref-for-storage-5">storage</a>" ] }
 </pre>
       </div>
      <dt data-md="">
-      <p>"<dfn data-dfn-type="dfn" data-noexport="" id="executioncontexts"><code>executionContexts</code><a class="self-link" href="#executioncontexts"></a></dfn>"</p>
+      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="executioncontexts"><code>executionContexts</code></dfn>"</p>
      <dd data-md="">
       <p>The "<code>executionContexts</code>" type indicates that the server wishes to neuter
   and reload execution contexts currently rendering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
@@ -1566,7 +1739,7 @@ host.</p>
       <div class="example" id="example-5e0c67a9">
        <a class="self-link" href="#example-5e0c67a9"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause execution contexts displaying the origin <code>https://example.com</code> to be neutered and reloaded: 
-<pre><a data-link-type="dfn" href="#clear-site-data">Clear-Site-Data</a>: <a data-link-type="dfn" href="#executioncontexts">executionContexts</a>
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-9">Clear-Site-Data</a>: <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-5">executionContexts</a>
 </pre>
       </div>
     </dl>
@@ -1576,37 +1749,38 @@ host.</p>
      <a class="self-link" href="#example-ab4fc395"></a> Megacorp, Inc. wants to remove data in response to a user’s activity on
     their site. They can execute the following JavaScript to clear all the
     relevant data for a user: 
-<pre>navigator.storage.<a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear">clear()</a>;
+<pre>navigator.storage.<a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-1">clear()</a>;
 </pre>
      <p>If they only wished to clear the otherwise inaccessible cache for the
     current origin:</p>
 <pre>navigator.storage.<a class="idl-code" data-link-type="method" href="https://html.spec.whatwg.org/multipage/interaction.html#dom-datatransferitemlist-clear">clear</a>({
-  <a class="idl-code" data-link-type="dict-member" href="#dom-storageclearoptions-types">types</a>: [ "cache" ],
+  <a class="idl-code" data-link-type="dict-member" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-1">types</a>: [ "cache" ],
 });
 </pre>
     </div>
-<pre class="idl">enum <dfn class="idl-code" data-dfn-type="enum" data-export="" id="enumdef-storagecleartype">StorageClearType<a class="self-link" href="#enumdef-storagecleartype"></a></dfn> {
-  "cache",
-  "cookies",
-  "storage",
-  "executionContexts"
+<pre class="idl highlight def"><span class="kt">enum</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="enum" data-export="" id="enumdef-storagecleartype">StorageClearType</dfn> {
+  <dfn class="s idl-code" data-dfn-for="StorageClearType" data-dfn-type="enum-value" data-export="" data-lt="&quot;cache&quot;|cache" id="dom-storagecleartype-cache">"cache"<a class="self-link" href="#dom-storagecleartype-cache"></a></dfn>,
+  <dfn class="s idl-code" data-dfn-for="StorageClearType" data-dfn-type="enum-value" data-export="" data-lt="&quot;cookies&quot;|cookies" id="dom-storagecleartype-cookies">"cookies"<a class="self-link" href="#dom-storagecleartype-cookies"></a></dfn>,
+  <dfn class="s idl-code" data-dfn-for="StorageClearType" data-dfn-type="enum-value" data-export="" data-lt="&quot;storage&quot;|storage" id="dom-storagecleartype-storage">"storage"<a class="self-link" href="#dom-storagecleartype-storage"></a></dfn>,
+  <dfn class="s idl-code" data-dfn-for="StorageClearType" data-dfn-type="enum-value" data-export="" data-lt="&quot;executionContexts&quot;|executionContexts" id="dom-storagecleartype-executioncontexts">"executionContexts"<a class="self-link" href="#dom-storagecleartype-executioncontexts"></a></dfn>
 };
 
-dictionary <dfn class="idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-storageclearoptions">StorageClearOptions<a class="self-link" href="#dictdef-storageclearoptions"></a></dfn> {
-  sequence&lt;<a data-link-type="idl-name" href="#enumdef-storagecleartype">StorageClearType</a>> <dfn class="idl-code" data-dfn-for="StorageClearOptions" data-dfn-type="dict-member" data-export="" data-type="sequence<StorageClearType> " id="dom-storageclearoptions-types">types<a class="self-link" href="#dom-storageclearoptions-types"></a></dfn>;
+<span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-storageclearoptions">StorageClearOptions</dfn> {
+  <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#enumdef-storagecleartype" id="ref-for-enumdef-storagecleartype-1">StorageClearType</a>> <dfn class="nv dfn-paneled idl-code" data-dfn-for="StorageClearOptions" data-dfn-type="dict-member" data-export="" data-type="sequence<StorageClearType> " id="dom-storageclearoptions-types">types</dfn>;
 };
 
-partial interface <a class="idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
-  Promise&lt;void> <a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear">clear</a>(<a data-link-type="idl-name" href="#dictdef-storageclearoptions">StorageClearOptions</a> <a class="idl-code" data-link-type="argument" href="#dom-storagemanager-clear-options-options">options</a>);
+<span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-2">clear</a>(<a class="n" data-link-type="idl-name" href="#dictdef-storageclearoptions" id="ref-for-dictdef-storageclearoptions-1">StorageClearOptions</a> <a class="nv idl-code" data-link-type="argument" href="#dom-storagemanager-clear-options-options" id="ref-for-dom-storagemanager-clear-options-options-1">options</a>);
 };
 </pre>
     <dl>
-     <dt><dfn class="idl-code" data-dfn-for="StorageManager" data-dfn-type="method" data-export="" id="dom-storagemanager-clear">clear(options)<a class="self-link" href="#dom-storagemanager-clear"></a></dfn>
+     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="StorageManager" data-dfn-type="method" data-export="" id="dom-storagemanager-clear">clear(options)</dfn>
      <dd>
        Clears data based on the values in the <var>options</var> argument.
-      Returns a Promise that resolves when clearing is complete. If no <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types">types</a></code> are specified, all data types will be
+      Returns a Promise that resolves when clearing is complete. If no <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-2">types</a></code> are specified, all data types will be
       cleared. 
       <table class="argumentdef data">
+       <caption>Arguments for the <a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-3">StorageManager.clear(options)</a> method.</caption>
        <thead>
         <tr>
          <th>Parameter 
@@ -1616,22 +1790,21 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
          <th>Description 
        <tbody>
         <tr>
-         <td><dfn class="idl-code" data-dfn-for="StorageManager/clear(options)" data-dfn-type="argument" data-export="" id="dom-storagemanager-clear-options-options">options<a class="self-link" href="#dom-storagemanager-clear-options-options"></a></dfn> 
+         <td><dfn class="dfn-paneled idl-code" data-dfn-for="StorageManager/clear(options)" data-dfn-type="argument" data-export="" id="dom-storagemanager-clear-options-options">options</dfn> 
          <td> StorageClearOptions 
          <td> <span class="no">✘</span>
          <td> <span class="no">✘</span>
          <td>The data to clear. 
-       <caption>Arguments for the <a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear">StorageManager.clear(options)</a> method.</caption>
       </table>
     </dl>
     <h3 class="heading settled" data-level="2.3" id="fetch-integration"><span class="secno">2.3. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
-    <p>If the <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>, then data MUST be cleared before rendering the response to
+    <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>, then data MUST be cleared before rendering the response to
   the user. That is, before step #9 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a> algorithm,
   execute the following step:</p>
     <ol start="9">
      <li data-md="">
-      <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a>, then execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
+      <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a>, then execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
     </ol>
     <p class="note" role="note">Note: This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
@@ -1645,24 +1818,24 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
       <h4 class="heading settled" data-level="3.1.1" id="get-types"><span class="secno">3.1.1. </span><span class="content"> Which data types ought to be removed for <var>response</var>? </span><a class="self-link" href="#get-types"></a></h4>
       <ol>
        <li data-md="">
-        <p>If <var>response</var> does not contain a <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header, return
+        <p>If <var>response</var> does not contain a <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-12"><code>Clear-Site-Data</code></a> header, return
   an empty list.</p>
        <li data-md="">
         <p>Let <var>types</var> be an empty list.</p>
        <li data-md="">
         <p>Let <var>list</var> be the result of executing the algorithm defined in Section 4
-  of <a data-link-type="biblio" href="#biblio-http-jfv">[HTTP-JFV]</a> on the value of <var>response</var>’s <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header. If that algorithm results in an error, return an empty list.</p>
+  of <a data-link-type="biblio" href="#biblio-http-jfv">[HTTP-JFV]</a> on the value of <var>response</var>’s <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-13"><code>Clear-Site-Data</code></a> header. If that algorithm results in an error, return an empty list.</p>
        <li data-md="">
         <p>For each <var>item</var> in <var>list</var>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>item</var> does not have a <a data-link-type="dfn" href="#types"><code>types</code></a> member, skip to the next <var>item</var>.</p>
+          <p>If <var>item</var> does not have a <a data-link-type="dfn" href="#types" id="ref-for-types-8"><code>types</code></a> member, skip to the next <var>item</var>.</p>
          <li data-md="">
-          <p>For each <var>type</var> in <var>item</var>’s <a data-link-type="dfn" href="#types"><code>types</code></a> member’s value:</p>
+          <p>For each <var>type</var> in <var>item</var>’s <a data-link-type="dfn" href="#types" id="ref-for-types-9"><code>types</code></a> member’s value:</p>
           <ol>
            <li data-md="">
-            <p>If <var>type</var> is <a data-link-type="dfn" href="#cache"><code>cache</code></a>, <a data-link-type="dfn" href="#cookies"><code>cookies</code></a>, <a data-link-type="dfn" href="#storage"><code>storage</code></a>,
-  or <a data-link-type="dfn" href="#executioncontexts"><code>executionContexts</code></a>, append <var>type</var> to <var>types</var>.</p>
+            <p>If <var>type</var> is <a data-link-type="dfn" href="#cache" id="ref-for-cache-6"><code>cache</code></a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-6"><code>cookies</code></a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-6"><code>storage</code></a>,
+  or <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-6"><code>executionContexts</code></a>, append <var>type</var> to <var>types</var>.</p>
             <p>Otherwise, skip to the next <var>type</var>.</p>
           </ol>
         </ol>
@@ -1670,7 +1843,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
         <p>Return <var>types</var>.</p>
       </ol>
       <h3 class="heading settled" data-level="3.2" id="clear-response"><span class="secno">3.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), this algorithm parses the <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> header to determine what needs to be
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), this algorithm parses the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-14"><code>Clear-Site-Data</code></a> header to determine what needs to be
   cleared, which origins are affected, and then executes those requests.</p>
       <ol>
        <li data-md="">
@@ -1688,7 +1861,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   operation can be debugged. This might take the form of a console message or
   timeline entry indicating success.</p>
       <h3 class="heading settled" data-level="3.3" id="clear-api"><span class="secno">3.3. </span><span class="content"> Clear data for <var>options</var> </span><a class="self-link" href="#clear-api"></a></h3>
-      <p>Given a <code class="idl"><a data-link-type="idl" href="#dictdef-storageclearoptions">StorageClearOptions</a></code> (<var>options</var>), this algorithm
+      <p>Given a <code class="idl"><a data-link-type="idl" href="#dictdef-storageclearoptions" id="ref-for-dictdef-storageclearoptions-2">StorageClearOptions</a></code> (<var>options</var>), this algorithm
   determines what needs to be cleared, returns a Promise, and executes the
   request asynchronously.</p>
       <ol>
@@ -1702,13 +1875,13 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
        <li data-md="">
         <p>Let <var>types</var> be an empty list.</p>
        <li data-md="">
-        <p>If <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types">types</a></code> is an empty sequence:</p>
+        <p>If <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-3">types</a></code> is an empty sequence:</p>
         <ol>
          <li data-md="">
           <p>Append <code>cache</code>, <code>cookies</code>, <code>storage</code>, and <code>executionContexts</code> to <var>types</var>.</p>
         </ol>
        <li data-md="">
-        <p>Otherwise, for each <code class="idl"><a data-link-type="idl" href="#enumdef-storagecleartype">StorageClearType</a></code> <var>type</var> in <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types">types</a></code> property:</p>
+        <p>Otherwise, for each <code class="idl"><a data-link-type="idl" href="#enumdef-storagecleartype" id="ref-for-enumdef-storagecleartype-2">StorageClearType</a></code> <var>type</var> in <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-4">types</a></code> property:</p>
         <ol>
          <li data-md="">
           <p>Append <var>type</var> to <var>types</var>.</p>
@@ -1909,7 +2082,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   delivered over a secure connection.</p>
       <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
       <h3 class="heading settled" data-level="5.1" id="user-vs-author"><span class="secno">5.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
-      <p>If triggered at appropriate times, <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> can
+      <p>If triggered at appropriate times, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-15"><code>Clear-Site-Data</code></a> can
   increase a user’s privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
   is in control of when the clearing event is triggered. Even assuming a
@@ -1923,7 +2096,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   developers. Ideally, they will offer significantly more than we can offer at
   a platform level (clearing browsing history, for example).</p>
       <h3 class="heading settled" data-level="5.2" id="remnants"><span class="secno">5.2. </span><span class="content">Remnants of data on disk.</span><a class="self-link" href="#remnants"></a></h3>
-      <p>While <a data-link-type="dfn" href="#clear-site-data"><code>Clear-Site-Data</code></a> triggers a clearing event in a
+      <p>While <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-16"><code>Clear-Site-Data</code></a> triggers a clearing event in a
   user’s agent, it is difficult to make promises about the state of a user’s
   disk after a clearing event takes place. In particular, note that it is up
   to the user agent to ensure that all traces of a site’s date is actually
@@ -1994,15 +2167,40 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
     particular, the algorithms defined in this specification are intended to
     be easy to understand and are not intended to be performant. Implementers
     are encouraged to optimize.</p>
-  <h2 class="no-num heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
-  <h3 class="no-num heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
+<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#cache">cache</a><span>, in §2.1.1</span>
+   <li>
+    cache
+    <ul>
+     <li><a href="#cache">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#dom-storagecleartype-cache">enum-value for StorageClearType</a><span>, in §2.2</span>
+    </ul>
+   <li><a href="#dom-storagecleartype-cache">"cache"</a><span>, in §2.2</span>
    <li><a href="#dom-storagemanager-clear">clear(options)</a><span>, in §2.2</span>
    <li><a href="#clear-site-data">Clear-Site-Data</a><span>, in §2.1</span>
-   <li><a href="#cookies">cookies</a><span>, in §2.1.1</span>
-   <li><a href="#executioncontexts">executionContexts</a><span>, in §2.1.1</span>
-   <li><a href="#storage">storage</a><span>, in §2.1.1</span>
+   <li>
+    cookies
+    <ul>
+     <li><a href="#cookies">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#dom-storagecleartype-cookies">enum-value for StorageClearType</a><span>, in §2.2</span>
+    </ul>
+   <li><a href="#dom-storagecleartype-cookies">"cookies"</a><span>, in §2.2</span>
+   <li>
+    executionContexts
+    <ul>
+     <li><a href="#executioncontexts">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#dom-storagecleartype-executioncontexts">enum-value for StorageClearType</a><span>, in §2.2</span>
+    </ul>
+   <li><a href="#dom-storagecleartype-executioncontexts">"executionContexts"</a><span>, in §2.2</span>
+   <li>
+    storage
+    <ul>
+     <li><a href="#storage">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#dom-storagecleartype-storage">enum-value for StorageClearType</a><span>, in §2.2</span>
+    </ul>
+   <li><a href="#dom-storagecleartype-storage">"storage"</a><span>, in §2.2</span>
    <li><a href="#dictdef-storageclearoptions">StorageClearOptions</a><span>, in §2.2</span>
    <li><a href="#enumdef-storagecleartype">StorageClearType</a><span>, in §2.2</span>
    <li>
@@ -2012,10 +2210,10 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
      <li><a href="#dom-storageclearoptions-types">dict-member for StorageClearOptions</a><span>, in §2.2</span>
     </ul>
   </ul>
-  <h3 class="no-num heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
+  <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
-    <a data-link-type="biblio" href="#biblio-fetch">[FETCH]</a> defines the following terms:
+    <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
      <li><a href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a>
      <li><a href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a>
@@ -2023,7 +2221,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-html">[HTML]</a> defines the following terms:
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><a href="https://html.spec.whatwg.org/multipage/#storage-2">Storage</a>
      <li><a href="https://html.spec.whatwg.org/multipage/#the-localstorage-attribute">local storage area</a>
@@ -2032,7 +2230,7 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
      <li><a href="https://html.spec.whatwg.org/multipage/#dom-sessionstorage">sessionStorage</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-html5">[html5]</a> defines the following terms:
+    <a data-link-type="biblio">[html5]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#active-document">active document</a>
      <li><a href="http://www.w3.org/TR/html5/browsers.html#active-sandboxing-flag-set">active sandboxing flag set</a>
@@ -2047,12 +2245,12 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
      <li><a href="http://www.w3.org/TR/html5/browsers.html#source-browsing-context">source browsing context</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-http-jfv">[HTTP-JFV]</a> defines the following terms:
+    <a data-link-type="biblio">[HTTP-JFV]</a> defines the following terms:
     <ul>
      <li><a href="https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html#rfc.section.2">json-field-value</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-indexeddb">[IndexedDB]</a> defines the following terms:
+    <a data-link-type="biblio">[INDEXEDDB]</a> defines the following terms:
     <ul>
      <li><a href="https://w3c.github.io/IndexedDB/#idl-def-IDBDatabase">IDBDatabase</a>
      <li><a href="https://w3c.github.io/IndexedDB/#dfn-steps-for-closing-a-database-connection">database closing steps</a>
@@ -2060,33 +2258,33 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
      <li><a href="https://w3c.github.io/IndexedDB/#dfn-delete-pending">delete pending</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-mix">[MIX]</a> defines the following terms:
+    <a data-link-type="biblio">[mixed-content]</a> defines the following terms:
     <ul>
      <li><a href="https://w3c.github.io/webappsec/specs/mixedcontent/#a-priori-insecure-url">a priori insecure</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-rfc6265">[rfc6265]</a> defines the following terms:
+    <a data-link-type="biblio">[RFC6265]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-rfc6454">[rfc6454]</a> defines the following terms:
+    <a data-link-type="biblio">[rfc6454]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-rfc7234">[rfc7234]</a> defines the following terms:
+    <a data-link-type="biblio">[RFC7234]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc7234#section-2">network cache</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-secure-contexts">[SECURE-CONTEXTS]</a> defines the following terms:
+    <a data-link-type="biblio">[SECURE-CONTEXTS]</a> defines the following terms:
     <ul>
      <li><a href="https://w3c.github.io/webappsec/specs/powerfulfeatures/#secure-context">secure context</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-service-workers">[service-workers]</a> defines the following terms:
+    <a data-link-type="biblio">[SERVICE-WORKERS]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/service-workers/#register-algorithm">register</a>
      <li><a href="http://www.w3.org/TR/service-workers/#dfn-scope-url">scope url</a>
@@ -2094,88 +2292,88 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
      <li><a href="http://www.w3.org/TR/service-workers/#navigator-service-worker-unregister">unregister()</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a> defines the following terms:
+    <a data-link-type="biblio">[STORAGE]</a> defines the following terms:
     <ul>
      <li><a href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-url">[url]</a> defines the following terms:
+    <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/url/#concept-url">URL</a>
      <li><a href="http://www.w3.org/TR/url/#concept-url-host">host</a>
     </ul>
    <li>
-    <a data-link-type="biblio" href="#biblio-html">[HTML]</a> defines the following terms:
+    <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><a href="https://html.spec.whatwg.org/multipage/interaction.html#dom-datatransferitemlist-clear">clear</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a>
     </ul>
   </ul>
-  <h2 class="no-num heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
-  <h3 class="no-num heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
-   <dt id="biblio-fetch"><a class="self-link" href="#biblio-fetch"></a>[FETCH]
+   <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
-   <dt id="biblio-html"><a class="self-link" href="#biblio-html"></a>[HTML]
+   <dt id="biblio-file-system-api">[FILE-SYSTEM-API]
+   <dd>Eric Uhrhane. <a href="http://dev.w3.org/2009/dap/file-system/file-dir-sys.html">File API: Directories and System</a>. 24 April 2014. NOTE. URL: <a href="http://dev.w3.org/2009/dap/file-system/file-dir-sys.html">http://dev.w3.org/2009/dap/file-system/file-dir-sys.html</a>
+   <dt id="biblio-html">[HTML]
    <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
-   <dt id="biblio-http-jfv"><a class="self-link" href="#biblio-http-jfv"></a>[HTTP-JFV]
+   <dt id="biblio-html5">[HTML5]
+   <dd>Ian Hickson; et al. <a href="https://www.w3.org/html/wg/drafts/html/master/">HTML5</a>. 28 October 2014. REC. URL: <a href="https://www.w3.org/html/wg/drafts/html/master/">https://www.w3.org/html/wg/drafts/html/master/</a>
+   <dt id="biblio-http-jfv">[HTTP-JFV]
    <dd>Julian Reschke. <a href="https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html">A JSON Encoding for HTTP Header Field Values</a>. URL: <a href="https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html">https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html</a>
-   <dt id="biblio-indexeddb"><a class="self-link" href="#biblio-indexeddb"></a>[IndexedDB]
-   <dd>Nikunj Mehta; et al. <a href="http://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://www.w3.org/TR/IndexedDB/">http://www.w3.org/TR/IndexedDB/</a>
-   <dt id="biblio-mix"><a class="self-link" href="#biblio-mix"></a>[MIX]
-   <dd>Mike West. <a href="http://www.w3.org/TR/mixed-content/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="http://www.w3.org/TR/mixed-content/">http://www.w3.org/TR/mixed-content/</a>
-   <dt id="biblio-secure-contexts"><a class="self-link" href="#biblio-secure-contexts"></a>[SECURE-CONTEXTS]
-   <dd>Mike West; Yan Zhu. <a href="https://w3c.github.io/webappsec-secure-contexts/">Secure Contexts</a>. URL: <a href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
-   <dt id="biblio-storage"><a class="self-link" href="#biblio-storage"></a>[STORAGE]
-   <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
-   <dt id="biblio-file-system-api"><a class="self-link" href="#biblio-file-system-api"></a>[FILE-SYSTEM-API]
-   <dd>Eric Uhrhane. <a href="http://www.w3.org/TR/file-system-api/">File API: Directories and System</a>. 24 April 2014. NOTE. URL: <a href="http://www.w3.org/TR/file-system-api/">http://www.w3.org/TR/file-system-api/</a>
-   <dt id="biblio-html5"><a class="self-link" href="#biblio-html5"></a>[HTML5]
-   <dd>Ian Hickson; et al. <a href="http://www.w3.org/TR/html5/">HTML5</a>. 28 October 2014. REC. URL: <a href="http://www.w3.org/TR/html5/">http://www.w3.org/TR/html5/</a>
-   <dt id="biblio-rfc2119"><a class="self-link" href="#biblio-rfc2119"></a>[RFC2119]
+   <dt id="biblio-indexeddb">[INDEXEDDB]
+   <dd>Nikunj Mehta; et al. <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html</a>
+   <dt id="biblio-mixed-content">[MIXED-CONTENT]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">https://w3c.github.io/webappsec/specs/mixedcontent/</a>
+   <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
-   <dt id="biblio-rfc3864"><a class="self-link" href="#biblio-rfc3864"></a>[RFC3864]
+   <dt id="biblio-rfc3864">[RFC3864]
    <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://tools.ietf.org/html/rfc3864">Registration Procedures for Message Header Fields</a>. September 2004. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc3864">https://tools.ietf.org/html/rfc3864</a>
-   <dt id="biblio-rfc5234"><a class="self-link" href="#biblio-rfc5234"></a>[RFC5234]
+   <dt id="biblio-rfc5234">[RFC5234]
    <dd>D. Crocker, Ed.; P. Overell. <a href="https://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>. January 2008. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc5234">https://tools.ietf.org/html/rfc5234</a>
-   <dt id="biblio-rfc6265"><a class="self-link" href="#biblio-rfc6265"></a>[RFC6265]
+   <dt id="biblio-rfc6265">[RFC6265]
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
-   <dt id="biblio-rfc6454"><a class="self-link" href="#biblio-rfc6454"></a>[RFC6454]
+   <dt id="biblio-rfc6454">[RFC6454]
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6454">The Web Origin Concept</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6454">https://tools.ietf.org/html/rfc6454</a>
-   <dt id="biblio-rfc7234"><a class="self-link" href="#biblio-rfc7234"></a>[RFC7234]
+   <dt id="biblio-rfc7234">[RFC7234]
    <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7234">Hypertext Transfer Protocol (HTTP/1.1): Caching</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7234">https://tools.ietf.org/html/rfc7234</a>
-   <dt id="biblio-service-workers"><a class="self-link" href="#biblio-service-workers"></a>[SERVICE-WORKERS]
-   <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="http://www.w3.org/TR/service-workers/">Service Workers</a>. 25 June 2015. WD. URL: <a href="http://www.w3.org/TR/service-workers/">http://www.w3.org/TR/service-workers/</a>
-   <dt id="biblio-url"><a class="self-link" href="#biblio-url"></a>[URL]
-   <dd>Anne van Kesteren; Sam Ruby. <a href="http://www.w3.org/TR/url-1/">URL</a>. 9 December 2014. WD. URL: <a href="http://www.w3.org/TR/url-1/">http://www.w3.org/TR/url-1/</a>
-   <dt id="biblio-webdatabase"><a class="self-link" href="#biblio-webdatabase"></a>[WEBDATABASE]
-   <dd>Ian Hickson. <a href="http://www.w3.org/TR/webdatabase/">Web SQL Database</a>. 18 November 2010. NOTE. URL: <a href="http://www.w3.org/TR/webdatabase/">http://www.w3.org/TR/webdatabase/</a>
+   <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
+   <dd>Mike West; Yan Zhu. <a href="https://w3c.github.io/webappsec-secure-contexts/">Secure Contexts</a>. URL: <a href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
+   <dt id="biblio-service-workers">[SERVICE-WORKERS]
+   <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">Service Workers</a>. 25 June 2015. WD. URL: <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">https://slightlyoff.github.io/ServiceWorker/spec/service_worker/</a>
+   <dt id="biblio-storage">[STORAGE]
+   <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
+   <dt id="biblio-webdatabase">[WEBDATABASE]
+   <dd>Ian Hickson. <a href="https://www.w3.org/TR/webdatabase/">Web SQL Database</a>. 18 November 2010. NOTE. URL: <a href="https://www.w3.org/TR/webdatabase/">https://www.w3.org/TR/webdatabase/</a>
+   <dt id="biblio-whatwg-url">[WHATWG-URL]
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
   </dl>
-  <h3 class="no-num heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
-   <dt id="biblio-csp2"><a class="self-link" href="#biblio-csp2"></a>[CSP2]
-   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="http://www.w3.org/TR/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="http://www.w3.org/TR/CSP2/">http://www.w3.org/TR/CSP2/</a>
-   <dt id="biblio-rfc6919"><a class="self-link" href="#biblio-rfc6919"></a>[RFC6919]
+   <dt id="biblio-csp2">[CSP2]
+   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec/specs/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/CSP2/">https://w3c.github.io/webappsec/specs/CSP2/</a>
+   <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
   </dl>
-  <h2 class="no-num heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
-<pre class="idl">enum <a href="#enumdef-storagecleartype">StorageClearType</a> {
-  "cache",
-  "cookies",
-  "storage",
-  "executionContexts"
+  <h2 class="no-num no-ref heading settled" id="idl-index"><span class="content">IDL Index</span><a class="self-link" href="#idl-index"></a></h2>
+<pre class="idl def"><span class="kt">enum</span> <a class="nv" href="#enumdef-storagecleartype">StorageClearType</a> {
+  <a class="s" href="#dom-storagecleartype-cache">"cache"</a>,
+  <a class="s" href="#dom-storagecleartype-cookies">"cookies"</a>,
+  <a class="s" href="#dom-storagecleartype-storage">"storage"</a>,
+  <a class="s" href="#dom-storagecleartype-executioncontexts">"executionContexts"</a>
 };
 
-dictionary <a href="#dictdef-storageclearoptions">StorageClearOptions</a> {
-  sequence&lt;<a data-link-type="idl-name" href="#enumdef-storagecleartype">StorageClearType</a>> <a data-type="sequence<StorageClearType> " href="#dom-storageclearoptions-types">types</a>;
+<span class="kt">dictionary</span> <a class="nv" href="#dictdef-storageclearoptions">StorageClearOptions</a> {
+  <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#enumdef-storagecleartype">StorageClearType</a>> <a class="nv" data-type="sequence<StorageClearType> " href="#dom-storageclearoptions-types">types</a>;
 };
 
-partial interface <a class="idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
-  Promise&lt;void> <a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear">clear</a>(<a data-link-type="idl-name" href="#dictdef-storageclearoptions">StorageClearOptions</a> <a class="idl-code" data-link-type="argument" href="#dom-storagemanager-clear-options-options">options</a>);
+<span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-storagemanager-clear">clear</a>(<a class="n" data-link-type="idl-name" href="#dictdef-storageclearoptions">StorageClearOptions</a> <a class="nv idl-code" data-link-type="argument" href="#dom-storagemanager-clear-options-options">options</a>);
 };
 
 </pre>
-  <h2 class="no-num heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
+  <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> This might live more cleanly in <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a>.<a href="#issue-3153cbda"> ↵ </a></div>
    <div class="issue"> Monkey patching! Talk with Anne.<a href="#issue-3ded38d3"> ↵ </a></div>
@@ -2189,3 +2387,180 @@ partial interface <a class="idl-code" data-link-type="interface" href="https://s
   bits that aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a> will make this clearer?<a href="#issue-d40aa458"> ↵ </a></div>
    <div class="issue"> Moar?<a href="#issue-b346d876"> ↵ </a></div>
   </div>
+  <aside class="dfn-panel" data-for="clear-site-data">
+   <b><a href="#clear-site-data">#clear-site-data</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-clear-site-data-1">1. Introduction</a>
+    <li><a href="#ref-for-clear-site-data-2">1.1.1. Signing Out</a>
+    <li><a href="#ref-for-clear-site-data-3">1.1.2. Targeted Clearing</a>
+    <li><a href="#ref-for-clear-site-data-4">1.1.3. Keep Critical Cookies</a>
+    <li><a href="#ref-for-clear-site-data-5">1.1.4. Kill Switch</a>
+    <li><a href="#ref-for-clear-site-data-6">2.1.1. 
+    The types member </a> <a href="#ref-for-clear-site-data-7">(2)</a> <a href="#ref-for-clear-site-data-8">(3)</a> <a href="#ref-for-clear-site-data-9">(4)</a>
+    <li><a href="#ref-for-clear-site-data-10">2.3. Fetch Integration</a> <a href="#ref-for-clear-site-data-11">(2)</a>
+    <li><a href="#ref-for-clear-site-data-12">3.1.1. 
+    Which data types ought to be removed for response? </a> <a href="#ref-for-clear-site-data-13">(2)</a>
+    <li><a href="#ref-for-clear-site-data-14">3.2. 
+    Clear data for response </a>
+    <li><a href="#ref-for-clear-site-data-15">5.1. Web developers control the timing.</a>
+    <li><a href="#ref-for-clear-site-data-16">5.2. Remnants of data on disk.</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="types">
+   <b><a href="#types">#types</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-types-1">1.1.1. Signing Out</a>
+    <li><a href="#ref-for-types-2">1.1.2. Targeted Clearing</a>
+    <li><a href="#ref-for-types-3">1.1.3. Keep Critical Cookies</a>
+    <li><a href="#ref-for-types-4">1.1.4. Kill Switch</a>
+    <li><a href="#ref-for-types-5">2.1.1. 
+    The types member </a> <a href="#ref-for-types-6">(2)</a> <a href="#ref-for-types-7">(3)</a>
+    <li><a href="#ref-for-types-8">3.1.1. 
+    Which data types ought to be removed for response? </a> <a href="#ref-for-types-9">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="cache">
+   <b><a href="#cache">#cache</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-cache-1">1.1.1. Signing Out</a>
+    <li><a href="#ref-for-cache-2">1.1.2. Targeted Clearing</a>
+    <li><a href="#ref-for-cache-3">1.1.3. Keep Critical Cookies</a>
+    <li><a href="#ref-for-cache-4">1.1.4. Kill Switch</a>
+    <li><a href="#ref-for-cache-5">2.1.1. 
+    The types member </a>
+    <li><a href="#ref-for-cache-6">3.1.1. 
+    Which data types ought to be removed for response? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="cookies">
+   <b><a href="#cookies">#cookies</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-cookies-1">1.1.1. Signing Out</a>
+    <li><a href="#ref-for-cookies-2">1.1.2. Targeted Clearing</a>
+    <li><a href="#ref-for-cookies-3">1.1.3. Keep Critical Cookies</a>
+    <li><a href="#ref-for-cookies-4">1.1.4. Kill Switch</a>
+    <li><a href="#ref-for-cookies-5">2.1.1. 
+    The types member </a>
+    <li><a href="#ref-for-cookies-6">3.1.1. 
+    Which data types ought to be removed for response? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="storage">
+   <b><a href="#storage">#storage</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-storage-1">1.1.1. Signing Out</a>
+    <li><a href="#ref-for-storage-2">1.1.2. Targeted Clearing</a>
+    <li><a href="#ref-for-storage-3">1.1.3. Keep Critical Cookies</a>
+    <li><a href="#ref-for-storage-4">1.1.4. Kill Switch</a>
+    <li><a href="#ref-for-storage-5">2.1.1. 
+    The types member </a>
+    <li><a href="#ref-for-storage-6">3.1.1. 
+    Which data types ought to be removed for response? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="executioncontexts">
+   <b><a href="#executioncontexts">#executioncontexts</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-executioncontexts-1">1.1.1. Signing Out</a>
+    <li><a href="#ref-for-executioncontexts-2">1.1.2. Targeted Clearing</a>
+    <li><a href="#ref-for-executioncontexts-3">1.1.3. Keep Critical Cookies</a>
+    <li><a href="#ref-for-executioncontexts-4">1.1.4. Kill Switch</a>
+    <li><a href="#ref-for-executioncontexts-5">2.1.1. 
+    The types member </a>
+    <li><a href="#ref-for-executioncontexts-6">3.1.1. 
+    Which data types ought to be removed for response? </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="enumdef-storagecleartype">
+   <b><a href="#enumdef-storagecleartype">#enumdef-storagecleartype</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-enumdef-storagecleartype-1">2.2. JavaScript API</a>
+    <li><a href="#ref-for-enumdef-storagecleartype-2">3.3. 
+    Clear data for options </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dictdef-storageclearoptions">
+   <b><a href="#dictdef-storageclearoptions">#dictdef-storageclearoptions</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dictdef-storageclearoptions-1">2.2. JavaScript API</a>
+    <li><a href="#ref-for-dictdef-storageclearoptions-2">3.3. 
+    Clear data for options </a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-storageclearoptions-types">
+   <b><a href="#dom-storageclearoptions-types">#dom-storageclearoptions-types</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-storageclearoptions-types-1">2.2. JavaScript API</a> <a href="#ref-for-dom-storageclearoptions-types-2">(2)</a>
+    <li><a href="#ref-for-dom-storageclearoptions-types-3">3.3. 
+    Clear data for options </a> <a href="#ref-for-dom-storageclearoptions-types-4">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-storagemanager-clear">
+   <b><a href="#dom-storagemanager-clear">#dom-storagemanager-clear</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-storagemanager-clear-1">2.2. JavaScript API</a> <a href="#ref-for-dom-storagemanager-clear-2">(2)</a> <a href="#ref-for-dom-storagemanager-clear-3">(3)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="dom-storagemanager-clear-options-options">
+   <b><a href="#dom-storagemanager-clear-options-options">#dom-storagemanager-clear-options-options</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-dom-storagemanager-clear-options-options-1">2.2. JavaScript API</a>
+   </ul>
+  </aside>
+<script>/* script-dfn-panel */
+
+        document.body.addEventListener("click", function(e) {
+            var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
+            // Find the dfn element or panel, if any, that was clicked on.
+            var el = e.target;
+            var target;
+            var hitALink = false;
+            while(el.parentElement) {
+                if(el.tagName == "A") {
+                    // Clicking on a link in a <dfn> shouldn't summon the panel
+                    hitALink = true;
+                }
+                if(el.classList.contains("dfn-paneled")) {
+                    target = "dfn";
+                    break;
+                }
+                if(el.classList.contains("dfn-panel")) {
+                    target = "dfn-panel";
+                    break;
+                }
+                el = el.parentElement;
+            }
+            if(target != "dfn-panel") {
+                // Turn off any currently "on" or "activated" panels.
+                queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
+                    el.classList.remove("on");
+                    el.classList.remove("activated");
+                });
+            }
+            if(target == "dfn" && !hitALink) {
+                // open the panel
+                var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
+                if(dfnPanel) {
+                    console.log(dfnPanel);
+                    dfnPanel.classList.add("on");
+                    var rect = el.getBoundingClientRect();
+                    dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
+                    dfnPanel.style.top = window.scrollY + rect.top + "px";
+                    var panelRect = dfnPanel.getBoundingClientRect();
+                    var panelWidth = panelRect.right - panelRect.left;
+                    if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
+                        // Reposition, because the panel is overflowing
+                        dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+                    }
+                } else {
+                    console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
+                }
+            } else if(target == "dfn-panel") {
+                // Switch it to "activated" state, which pins it.
+                el.classList.add("activated");
+                el.style.left = null;
+                el.style.top = null;
+            }
+
+        });
+        </script>
