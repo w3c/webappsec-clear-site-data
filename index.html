@@ -1707,7 +1707,8 @@ host.</p>
       <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="cookies"><code>cookies</code></dfn>"</p>
      <dd data-md="">
       <p>The "<code>cookies</code>" type indicates that the server wishes to remove cookies
-  associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>.</p>
+  associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
+  ID <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and Token Binding <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> are also cleared.</p>
       <p>Implementation details are in <a href="#clear-cookies">§3.4.4 Clear cookies for origin</a>.</p>
       <div class="example" id="example-9bd67aa6">
        <a class="self-link" href="#example-9bd67aa6"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -1979,8 +1980,13 @@ host.</p>
       </ol>
       <h4 class="heading settled" data-level="3.4.4" id="clear-cookies"><span class="secno">3.4.4. </span><span class="content"> Clear cookies for <var>origin</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
       <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), this algorithm removes cookies
-  from the user agent’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a> whose <code>domain</code> attribute
-  matches the origin.</p>
+  from the user agent’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a> whose <code>domain</code> attribute <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-matches</a> <var>origin</var>’s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a>.</p>
+      <p class="note" role="note">Note: We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a>, as
+  cookies ignore the same-origin policy, and there’s a distinct risk that we’d
+  leave applications in an ill-defined state if we only cleared cookies for a
+  particular subdomain. Consider <code>accounts.google.com</code> vs <code>mail.google.com</code>,
+  for instance, both of which have cookies that signal a user’s signed-in
+  status.</p>
       <p class="note" role="note">Note: This algorithm assumes that the user agent has implemented a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
   store</a> (as discussed in Section 5.3 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>), which offers the
   ability to retrieve a list of cookies by host, and to remove individual
@@ -1989,15 +1995,24 @@ host.</p>
        <li data-md="">
         <p>Let <var>host</var> be <var>origin</var>’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url-host">host</a></code>, <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
        <li data-md="">
+        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> of <var>host</var>.</p>
+       <li data-md="">
         <p>Let <var>cookie list</var> be the set of cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
-  store</a> whose <code>domain</code> attribute is identical to <var>host</var>.</p>
+  store</a> whose <code>domain</code> attribute is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-match</a> with <var>registered</var>.</p>
        <li data-md="">
         <p>For each <var>cookie</var> in <var>cookie list</var>:</p>
         <ol>
          <li data-md="">
           <p>Remove <var>cookie</var> from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a>.</p>
         </ol>
+       <li data-md="">
+        <p>Clear related origin-bound Channel IDs <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and
+  tokens <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a>.</p>
+       <li data-md="">
+        <p>Clear related HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>.</p>
       </ol>
+      <p class="issue" id="issue-a4a76269"><a class="self-link" href="#issue-a4a76269"></a> The process of clearing both bound
+  tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">&lt;https://github.com/w3c/webappsec-clear-site-data/issues/2></a></p>
       <h4 class="heading settled" data-level="3.4.5" id="clear-dom"><span class="secno">3.4.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> </span><a class="self-link" href="#clear-dom"></a></h4>
       <ol>
        <li data-md="">
@@ -2263,10 +2278,16 @@ host.</p>
      <li><a href="https://w3c.github.io/webappsec/specs/mixedcontent/#a-priori-insecure-url">a priori insecure</a>
     </ul>
    <li>
+    <a data-link-type="biblio">[PSL]</a> defines the following terms:
+    <ul>
+     <li><a href="https://publicsuffix.org/list/#">registered domain</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[RFC6265]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a>
+     <li><a href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-match</a>
     </ul>
    <li>
     <a data-link-type="biblio">[rfc6454]</a> defines the following terms:
@@ -2312,6 +2333,8 @@ host.</p>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
+   <dt id="biblio-channelid">[CHANNELID]
+   <dd>Dirk Balfanz; Ryan Hamilton. <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid">Transport Layer Security (TLS) Channel IDs</a>. URL: <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid">https://tools.ietf.org/html/draft-balfanz-tls-channelid</a>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-file-system-api">[FILE-SYSTEM-API]
@@ -2326,6 +2349,8 @@ host.</p>
    <dd>Nikunj Mehta; et al. <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html</a>
    <dt id="biblio-mixed-content">[MIXED-CONTENT]
    <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">https://w3c.github.io/webappsec/specs/mixedcontent/</a>
+   <dt id="biblio-psl">[PSL]
+   <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
    <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc3864">[RFC3864]
@@ -2338,12 +2363,16 @@ host.</p>
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6454">The Web Origin Concept</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6454">https://tools.ietf.org/html/rfc6454</a>
    <dt id="biblio-rfc7234">[RFC7234]
    <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7234">Hypertext Transfer Protocol (HTTP/1.1): Caching</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7234">https://tools.ietf.org/html/rfc7234</a>
+   <dt id="biblio-rfc7235">[RFC7235]
+   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7235">https://tools.ietf.org/html/rfc7235</a>
    <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
    <dd>Mike West; Yan Zhu. <a href="https://w3c.github.io/webappsec-secure-contexts/">Secure Contexts</a>. URL: <a href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
    <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">Service Workers</a>. 25 June 2015. WD. URL: <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">https://slightlyoff.github.io/ServiceWorker/spec/service_worker/</a>
    <dt id="biblio-storage">[STORAGE]
    <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
+   <dt id="biblio-tokbind">[TOKBIND]
+   <dd>Andrei Popov; et al. <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol">The Token Binding Protocol Version 1.0</a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol">https://tools.ietf.org/html/draft-ietf-tokbind-protocol</a>
    <dt id="biblio-webdatabase">[WEBDATABASE]
    <dd>Ian Hickson. <a href="https://www.w3.org/TR/webdatabase/">Web SQL Database</a>. 18 November 2010. NOTE. URL: <a href="https://www.w3.org/TR/webdatabase/">https://www.w3.org/TR/webdatabase/</a>
    <dt id="biblio-whatwg-url">[WHATWG-URL]
@@ -2385,6 +2414,8 @@ host.</p>
   Chrome clears out prerendered pages, script caches, WebGL shader caches,
   WebRTC bits and pieces, address bar suggestion caches, various networking
   bits that aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a> will make this clearer?<a href="#issue-d40aa458"> ↵ </a></div>
+   <div class="issue"> The process of clearing both bound
+  tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">&lt;https://github.com/w3c/webappsec-clear-site-data/issues/2></a><a href="#issue-a4a76269"> ↵ </a></div>
    <div class="issue"> Moar?<a href="#issue-b346d876"> ↵ </a></div>
   </div>
   <aside class="dfn-panel" data-for="clear-site-data">

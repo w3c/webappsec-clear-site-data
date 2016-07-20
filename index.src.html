@@ -171,6 +171,18 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     "authors": [ "Julian Reschke" ],
     "href": "https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html",
     "title": "A JSON Encoding for HTTP Header Field Values"
+  },
+  "CHANNELID": {
+    "authors": [ "Dirk Balfanz", "Ryan Hamilton" ],
+    "href": "https://tools.ietf.org/html/draft-balfanz-tls-channelid",
+    "title": "Transport Layer Security (TLS) Channel IDs",
+    "publisher": "IETF"
+  },
+  "TOKBIND": {
+    "authors": [ "Andrei Popov", "Magnus Nystroem", "Dirk Balfanz", "Adam Langley", "Jeff Hodges" ],
+    "href": "https://tools.ietf.org/html/draft-ietf-tokbind-protocol",
+    "title": "The Token Binding Protocol Version 1.0",
+    "publisher": "IETF"
   }
 }
 </pre>
@@ -391,7 +403,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   :   "<dfn>`cookies`</dfn>"
   ::  The "`cookies`" type indicates that the server wishes to remove cookies
       associated with the <a>origin</a> of a particular <a>response</a>'s
-      {{Response/url}}.
+      {{Response/url}}. Along with cookies, HTTP authentication credentials
+      [[!RFC7235]], and origin-bound tokens such as those defined by Channel
+      ID [[!CHANNELID]] and Token Binding [[!TOKBIND]] are also cleared.
 
       Implementation details are in [[#clear-cookies]].
 
@@ -741,6 +755,14 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   4.  For each |cookie| in |cookie list|:
   
       1.  Remove |cookie| from the <a>cookie store</a>.
+
+  5.  Clear related origin-bound Channel IDs [[!CHANNELID]] and
+      tokens [[!TOKBIND]].
+
+  6.  Clear related HTTP authentication credentials [[!RFC7235]].
+
+  ISSUE(w3c/webappsec-clear-site-data#2): The process of clearing both bound
+  tokens/IDs and HTTP authentication is super hand-wavey.
 
   <h4 id="clear-dom">
     Clear DOM-accessible storage for |origin|
