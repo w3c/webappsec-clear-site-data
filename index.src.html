@@ -155,6 +155,9 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-reschke-http-jfv-02.html
   type: grammar
     text: json-field-value; url: rfc.section.2
+spec: PSL; urlPrefix: https://publicsuffix.org/list/
+  type: dfn
+    text: registered domain; url: #
 </pre>
 <pre class="biblio">
 {
@@ -712,7 +715,14 @@ spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-reschke-http-
 
   Given an <a>origin</a> (|origin|), this algorithm removes cookies
   from the user agent's <a>cookie store</a> whose `domain` attribute
-  matches the origin.
+  <a>domain-matches</a> |origin|'s <a>registered domain</a>.
+  
+  Note: We remove all the cookies for an entire <a>registered domain</a>, as
+  cookies ignore the same-origin policy, and there's a distinct risk that we'd
+  leave applications in an ill-defined state if we only cleared cookies for a
+  particular subdomain. Consider `accounts.google.com` vs `mail.google.com`,
+  for instance, both of which have cookies that signal a user's signed-in
+  status.
 
   Note: This algorithm assumes that the user agent has implemented a <a>cookie
   store</a> (as discussed in Section 5.3 of [[!RFC6265]]), which offers the
@@ -722,10 +732,13 @@ spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-reschke-http-
   1.  Let |host| be |origin|'s {{URL/host}},
       <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
 
-  2.  Let |cookie list| be the set of cookies from the <a>cookie
-      store</a> whose `domain` attribute is identical to |host|.
+  2.  Let |registered| be the <a>registered domain</a> of |host|.
 
-  3.  For each |cookie| in |cookie list|:
+  3.  Let |cookie list| be the set of cookies from the <a>cookie
+      store</a> whose `domain` attribute is a <a>domain-match</a> with
+      |registered|.
+
+  4.  For each |cookie| in |cookie list|:
   
       1.  Remove |cookie| from the <a>cookie store</a>.
 
