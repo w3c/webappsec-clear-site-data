@@ -49,9 +49,9 @@
  *   - ::before styled for CSS-generated issue/example/figure numbers:
  *     -> Documents wishing to use this only need to add
  *        figcaption::before,
- *        .caption::before { content: "Figure "  counter(figure);  }
- *        .example::before { content: "Example " counter(example); }
- *        .issue::before   { content: "Issue "   counter(issue);   }
+ *        .caption::before { content: "Figure "  counter(figure) " ";  }
+ *        .example::before { content: "Example " counter(example) " "; }
+ *        .issue::before   { content: "Issue "   counter(issue) " ";   }
  *
  * Header Stuff (ignore, just don't conflict with these classes)
  *   - .head for the header
@@ -414,6 +414,19 @@
 	 border-left: 0.5em solid #DEF;
 	}
 
+	/* Put nice boxes around each algorithm. */
+	[data-algorithm]:not(.heading) {
+	  padding: .5em;
+	  border: thin solid #ddd; border-radius: .5em;
+	  margin: .5em 0;
+	}
+	[data-algorithm]:not(.heading) > :first-child {
+	  margin-top: 0;
+	}
+	[data-algorithm]:not(.heading) > :last-child {
+	  margin-bottom: 0;
+	}
+
 	/* Style for switch/case <dl>s */
 	dl.switch > dd > ol.only,
 	dl.switch > dd > .only > ol {
@@ -457,7 +470,7 @@
 		font-style: normal;
 	}
 	dt dfn code, code.idl {
-		font-size: inherit;
+		font-size: normal;
 	}
 	dfn var {
 		font-style: normal;
@@ -646,7 +659,7 @@
 		padding-right: 1em;
 		text-transform: uppercase;
 	}
-	/* Add .issue::before { content: "Issue " counter(issue); } for autogen numbers,
+	/* Add .issue::before { content: "Issue " counter(issue) " "; } for autogen numbers,
 	   or use class="marker" to mark up the issue number in source. */
 
 /** Example *******************************************************************/
@@ -664,7 +677,7 @@
 		min-width: 7.5em;
 		display: block;
 	}
-	/* Add .example::before { content: "Example " counter(example); } for autogen numbers,
+	/* Add .example::before { content: "Example " counter(example) " "; } for autogen numbers,
 	   or use class="marker" to mark up the example number in source. */
 
 /** Non-normative Note ********************************************************/
@@ -694,13 +707,12 @@
 	}
 
 /** Assertion Box *************************************************************/
-  /*  for assertions in algorithms */
+	/*  for assertions in algorithms */
 
-  .assertion {
-		border-color: orange;
-		border-style: none solid;
-		background: #FFEECC;
-  }
+	.assertion {
+		border-color: #AAA;
+		background: #EEE;
+	}
 
 /** Advisement Box ************************************************************/
 	/*  for attention-grabbing normative statements */
@@ -1407,9 +1419,9 @@ pre.idl.highlight { color: #708090; }
         </style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="http://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-07-20">20 July 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-10-14">14 October 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1417,11 +1429,11 @@ pre.idl.highlight { color: #708090; }
      <dt>Latest published version:
      <dd><a href="http://www.w3.org/TR/clear-site-data/">http://www.w3.org/TR/clear-site-data/</a>
      <dt>Previous Versions:
-     <dd><a href="http://www.w3.org/TR/2015/WD-clear-site-data-20150804/" rel="previous">http://www.w3.org/TR/2015/WD-clear-site-data-20150804/</a>
+     <dd><a href="http://www.w3.org/TR/2016/WD-clear-site-data-20160720/" rel="previous">http://www.w3.org/TR/2016/WD-clear-site-data-20160720/</a>
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html">https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html</a>
      <dt>Feedback:
-     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bclear-site-data%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[clear-site-data] <i data-lt="">… message topic …</i></kbd>” (<a href="http://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bclear-site-data%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[clear-site-data] <i data-lt="">… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
      <dt class="editor">Editor:
      <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
      <dt>Participate:
@@ -1429,7 +1441,7 @@ pre.idl.highlight { color: #708090; }
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="http://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2016 <a href="http://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="http://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="http://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="http://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="http://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="http://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="http://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2016 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
@@ -1446,19 +1458,19 @@ host.</p>
 	Its publication here does not imply endorsement of its contents by W3C.
 	Don’t cite this document other than as work in progress. </p>
    <p> <strong>Changes to this document may be tracked at <a href="https://github.com/w3c/webappsec">https://github.com/w3c/webappsec</a>.</strong> </p>
-   <p> The (<a href="http://lists.w3.org/Archives/Public/public-webappsec/">archived</a>) public mailing list <a href="mailto:public-webappsec@w3.org?Subject=%5Bclear-site-data%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (see <a href="http://www.w3.org/Mail/Request">instructions</a>)
+   <p> The (<a href="https://lists.w3.org/Archives/Public/public-webappsec/">archived</a>) public mailing list <a href="mailto:public-webappsec@w3.org?Subject=%5Bclear-site-data%5D%20PUT%20SUBJECT%20HERE">public-webappsec@w3.org</a> (see <a href="https://www.w3.org/Mail/Request">instructions</a>)
 	is preferred for discussion of this specification.
 	When sending e-mail,
 	please put the text “clear-site-data” in the subject,
 	preferably like this:
 	“[clear-site-data] <em>…summary of comment…</em>” </p>
-   <p> This document was produced by the <a href="http://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
+   <p> This document was produced by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
    <p> This document was produced by a group operating under
-	the <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>.
-	W3C maintains a <a href="http://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
+	the <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/">5 February 2004 W3C Patent Policy</a>.
+	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
-	An individual who has actual knowledge of a patent which the individual believes contains <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="http://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="http://www.w3.org/2015/Process-20150901/" id="w3c_process_revision">1 September 2015 W3C Process Document</a>. </p>
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2015/Process-20150901/" id="w3c_process_revision">1 September 2015 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -1710,10 +1722,10 @@ host.</p>
   associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
   ID <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and Token Binding <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> are also cleared.</p>
       <p>Implementation details are in <a href="#clear-cookies">§3.4.4 Clear cookies for origin</a>.</p>
-      <div class="example" id="example-9bd67aa6">
-       <a class="self-link" href="#example-9bd67aa6"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-c23ab1d6">
+       <a class="self-link" href="#example-c23ab1d6"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause cookies associated with the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-7">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-6">types</a>": "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-5">cookies</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-7">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-6">types</a>": [ "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-5">cookies</a>" ] }
 </pre>
       </div>
      <dt data-md="">
@@ -1724,10 +1736,10 @@ host.</p>
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. This includes storage
   mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registrations</a>.</p>
       <p>Implementation details are in <a href="#clear-dom">§3.4.5 Clear DOM-accessible storage for origin</a>.</p>
-      <div class="example" id="example-f08a8eb9">
-       <a class="self-link" href="#example-f08a8eb9"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-93c6a25b">
+       <a class="self-link" href="#example-93c6a25b"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause DOM-accessible storage for the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-8">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-7">types</a>": "<a data-link-type="dfn" href="#storage" id="ref-for-storage-5">storage</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-8">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-7">types</a>": [ "<a data-link-type="dfn" href="#storage" id="ref-for-storage-5">storage</a>" ] }
 </pre>
       </div>
      <dt data-md="">
@@ -1737,10 +1749,10 @@ host.</p>
   and reload execution contexts currently rendering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>.</p>
       <p>Implementation details are in <a href="#neuter-contexts">§3.4.1 Neuter browsing contexts matching origin</a>.</p>
-      <div class="example" id="example-5e0c67a9">
-       <a class="self-link" href="#example-5e0c67a9"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-7b6db9b1">
+       <a class="self-link" href="#example-7b6db9b1"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause execution contexts displaying the origin <code>https://example.com</code> to be neutered and reloaded: 
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-9">Clear-Site-Data</a>: <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-5">executionContexts</a>
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-9">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-8">types</a>": [ "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-5">executionContexts</a>" ] }
 </pre>
       </div>
     </dl>
@@ -1830,9 +1842,9 @@ host.</p>
         <p>For each <var>item</var> in <var>list</var>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>item</var> does not have a <a data-link-type="dfn" href="#types" id="ref-for-types-8"><code>types</code></a> member, skip to the next <var>item</var>.</p>
+          <p>If <var>item</var> does not have a <a data-link-type="dfn" href="#types" id="ref-for-types-9"><code>types</code></a> member, skip to the next <var>item</var>.</p>
          <li data-md="">
-          <p>For each <var>type</var> in <var>item</var>’s <a data-link-type="dfn" href="#types" id="ref-for-types-9"><code>types</code></a> member’s value:</p>
+          <p>For each <var>type</var> in <var>item</var>’s <a data-link-type="dfn" href="#types" id="ref-for-types-10"><code>types</code></a> member’s value:</p>
           <ol>
            <li data-md="">
             <p>If <var>type</var> is <a data-link-type="dfn" href="#cache" id="ref-for-cache-6"><code>cache</code></a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-6"><code>cookies</code></a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-6"><code>storage</code></a>,
@@ -2239,6 +2251,8 @@ host.</p>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
      <li><a href="https://html.spec.whatwg.org/multipage/#storage-2">Storage</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/interaction.html#dom-datatransferitemlist-clear">clear</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a>
      <li><a href="https://html.spec.whatwg.org/multipage/#the-localstorage-attribute">local storage area</a>
      <li><a href="https://html.spec.whatwg.org/multipage/#dom-localstorage">localStorage</a>
      <li><a href="https://html.spec.whatwg.org/multipage/#the-sessionstorage-attribute">session storage area</a>
@@ -2323,12 +2337,6 @@ host.</p>
      <li><a href="http://www.w3.org/TR/url/#concept-url">URL</a>
      <li><a href="http://www.w3.org/TR/url/#concept-url-host">host</a>
     </ul>
-   <li>
-    <a data-link-type="biblio">[HTML]</a> defines the following terms:
-    <ul>
-     <li><a href="https://html.spec.whatwg.org/multipage/interaction.html#dom-datatransferitemlist-clear">clear</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a>
-    </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
@@ -2348,7 +2356,7 @@ host.</p>
    <dt id="biblio-indexeddb">[INDEXEDDB]
    <dd>Nikunj Mehta; et al. <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html</a>
    <dt id="biblio-mixed-content">[MIXED-CONTENT]
-   <dd>Mike West. <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">Mixed Content</a>. 8 October 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/mixedcontent/">https://w3c.github.io/webappsec/specs/mixedcontent/</a>
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-mixed-content/">Mixed Content</a>. 2 August 2016. CR. URL: <a href="https://w3c.github.io/webappsec-mixed-content/">https://w3c.github.io/webappsec-mixed-content/</a>
    <dt id="biblio-psl">[PSL]
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
@@ -2445,9 +2453,9 @@ host.</p>
     <li><a href="#ref-for-types-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-types-4">1.1.4. Kill Switch</a>
     <li><a href="#ref-for-types-5">2.1.1. 
-    The types member </a> <a href="#ref-for-types-6">(2)</a> <a href="#ref-for-types-7">(3)</a>
-    <li><a href="#ref-for-types-8">3.1.1. 
-    Which data types ought to be removed for response? </a> <a href="#ref-for-types-9">(2)</a>
+    The types member </a> <a href="#ref-for-types-6">(2)</a> <a href="#ref-for-types-7">(3)</a> <a href="#ref-for-types-8">(4)</a>
+    <li><a href="#ref-for-types-9">3.1.1. 
+    Which data types ought to be removed for response? </a> <a href="#ref-for-types-10">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cache">
