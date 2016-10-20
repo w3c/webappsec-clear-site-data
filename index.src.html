@@ -488,7 +488,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     };
 
     dictionary StorageClearOptions {
-      sequence&lt;StorageClearType&gt; types;
+      required sequence&lt;StorageClearType&gt; types;
     };
 
     partial interface StorageManager {
