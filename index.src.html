@@ -27,6 +27,7 @@ spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
     text: response; url: concept-response
     text: header list; for: response; url: concept-header-list
     text: credentials mode; for: Request; url: concept-request-credentials-mode
+    text: response tainting; for: Request; url: concept-request-response-tainting
   type: interface
     text: Request; url: concept-request
   type: attribute
@@ -516,12 +517,15 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   If the <a>`Clear-Site-Data`</a> header is present in an HTTP
   <a>response</a>, then data MUST be cleared before rendering the response to
-  the user. That is, before step #9 in the current <a>main fetch</a> algorithm,
+  the user. That is, before step #12 in the current <a>main fetch</a> algorithm,
   execute the following step:
 
-  9.  If |response|'s <a>header list</a> contains a header named
-      <a>`Clear-Site-Data`</a> and the request's <a>credentials mode</a> permits
-      modifying credentials, then execute [[#clear-response]] on |response|.
+  12.  If |response|'s <a>header list</a> contains a header named
+       <a>`Clear-Site-Data`</a> and
+         - the request's <a>credentials mode</a> is `include`, or
+         - the request's <a>credentials mode</a> is `same-origin` and its
+           <a>response tainting</a> is `basic`
+       then execute [[#clear-response]] on |response|.
 
   Note: This happens <em>after</em> `Set-Cookie` headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as

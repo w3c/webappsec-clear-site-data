@@ -1421,7 +1421,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-10-20">20 October 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-10-21">21 October 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1813,12 +1813,18 @@ host.</p>
     <h3 class="heading settled" data-level="2.3" id="fetch-integration"><span class="secno">2.3. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
     <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>, then data MUST be cleared before rendering the response to
-  the user. That is, before step #9 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a> algorithm,
+  the user. That is, before step #12 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a> algorithm,
   execute the following step:</p>
-    <ol start="9">
+    <ol start="12">
      <li data-md="">
-      <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a> and the request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">credentials mode</a> permits
-  modifying credentials, then execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
+      <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a> and</p>
+      <ul>
+       <li data-md="">
+        <p>the request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">credentials mode</a> is <code>include</code>, or</p>
+       <li data-md="">
+        <p>the request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">credentials mode</a> is <code>same-origin</code> and its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-response-tainting">response tainting</a> is <code>basic</code></p>
+      </ul>
+       then execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>. 
     </ol>
     <p class="note" role="note">Note: This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
@@ -2250,6 +2256,7 @@ host.</p>
      <li><a href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a>
      <li><a href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
+     <li><a href="https://fetch.spec.whatwg.org/#concept-request-response-tainting">response tainting</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>
     </ul>
    <li>
