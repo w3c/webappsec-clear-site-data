@@ -26,8 +26,7 @@ spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
     text: append; url: concept-header-list-append
     text: response; url: concept-response
     text: header list; for: response; url: concept-header-list
-    text: credentials mode; for: Request; url: concept-request-credentials-mode
-    text: response tainting; for: Request; url: concept-request-response-tainting
+    text: HTTP-network fetch; url: http-network-fetch;
   type: interface
     text: Request; url: concept-request
   type: attribute
@@ -515,17 +514,14 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   ISSUE: Monkey patching! Talk with Anne.
 
-  If the <a>`Clear-Site-Data`</a> header is present in an HTTP
-  <a>response</a>, then data MUST be cleared before rendering the response to
-  the user. That is, before step #12 in the current <a>main fetch</a> algorithm,
-  execute the following step:
+  If the <a>`Clear-Site-Data`</a> header is present in an HTTP <a>response</a>
+  received from the network, then data MUST be cleared before rendering the
+  response to the user. That is, after step #14 in the current
+  <a>HTTP-network fetch</a> algorithm, execute the following step:
 
-  12.  If |response|'s <a>header list</a> contains a header named
-       <a>`Clear-Site-Data`</a> and
-         - the request's <a>credentials mode</a> is `include`, or
-         - the request's <a>credentials mode</a> is `same-origin` and its
-           <a>response tainting</a> is `basic`
-       then execute [[#clear-response]] on |response|.
+  15.  If |response|'s `credentials flag` is set, and |response|'s
+       <a>header list</a> contains a header named <a>`Clear-Site-Data`</a>, then
+       execute [[#clear-response]] of [[CLEAR-SITE-DATA]] on |response|.
 
   Note: This happens <em>after</em> `Set-Cookie` headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
@@ -533,7 +529,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the `Set-Cookie` header.
 
-  Note: While the fetch <a>credentials mode</a> is intended to restrict the
+  Note: While the fetch `credentials flag` is intended to restrict the
   modification of cookies, <a>`Clear-Site-Data`</a> applies the same restriction
   to all <a>types</a> for the sake of consistency.
 <section>

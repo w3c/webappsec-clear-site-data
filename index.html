@@ -1421,7 +1421,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-10-21">21 October 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-11-08">8 November 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1812,26 +1812,19 @@ host.</p>
     </dl>
     <h3 class="heading settled" data-level="2.3" id="fetch-integration"><span class="secno">2.3. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
-    <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>, then data MUST be cleared before rendering the response to
-  the user. That is, before step #12 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a> algorithm,
-  execute the following step:</p>
-    <ol start="12">
+    <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> received from the network, then data MUST be cleared before rendering the
+  response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
+    <ol start="15">
      <li data-md="">
-      <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a> and</p>
-      <ul>
-       <li data-md="">
-        <p>the request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">credentials mode</a> is <code>include</code>, or</p>
-       <li data-md="">
-        <p>the request’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">credentials mode</a> is <code>same-origin</code> and its <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-response-tainting">response tainting</a> is <code>basic</code></p>
-      </ul>
-       then execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>. 
+      <p>If <var>response</var>’s <code>credentials flag</code> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a>, then
+   execute <a href="#clear-response">§3.2 Clear data for response</a> of <a data-link-type="biblio" href="#biblio-clear-site-data">[CLEAR-SITE-DATA]</a> on <var>response</var>.</p>
     </ol>
     <p class="note" role="note">Note: This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
   removing only certain cookies might leave an application in an indeterminate
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the <code>Set-Cookie</code> header.</p>
-    <p class="note" role="note">Note: While the fetch <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">credentials mode</a> is intended to restrict the
+    <p class="note" role="note">Note: While the fetch <code>credentials flag</code> is intended to restrict the
   modification of cookies, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-12"><code>Clear-Site-Data</code></a> applies the same restriction
   to all <a data-link-type="dfn" href="#types" id="ref-for-types-9">types</a> for the sake of consistency.</p>
     <section>
@@ -2252,11 +2245,9 @@ host.</p>
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
-     <li><a href="https://fetch.spec.whatwg.org/#concept-request-credentials-mode">credentials mode</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a>
-     <li><a href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a>
+     <li><a href="https://fetch.spec.whatwg.org/#http-network-fetch">http-network fetch</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
-     <li><a href="https://fetch.spec.whatwg.org/#concept-request-response-tainting">response tainting</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>
     </ul>
    <li>
@@ -2400,6 +2391,8 @@ host.</p>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
+   <dt id="biblio-clear-site-data">[CLEAR-SITE-DATA]
+   <dd>Mike West. <a href="https://w3c.github.io/webappsec-clear-site-data/">Clear Site Data</a>. 20 July 2016. WD. URL: <a href="https://w3c.github.io/webappsec-clear-site-data/">https://w3c.github.io/webappsec-clear-site-data/</a>
    <dt id="biblio-csp2">[CSP2]
    <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec/specs/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/CSP2/">https://w3c.github.io/webappsec/specs/CSP2/</a>
    <dt id="biblio-rfc6919">[RFC6919]
