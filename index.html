@@ -1525,6 +1525,7 @@ host.</p>
      <a href="#security"><span class="secno">4</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
       <li><a href="#incomplete"><span class="secno">4.1</span> <span class="content">Incomplete Clearing</span></a>
+      <li><a href="#service-workers"><span class="secno">4.2</span> <span class="content">Service workers</span></a>
      </ol>
     <li>
      <a href="#privacy"><span class="secno">5</span> <span class="content">Privacy Considerations</span></a>
@@ -1816,8 +1817,8 @@ host.</p>
   response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
     <ol start="15">
      <li data-md="">
-      <p>If <var>response</var>’s <code>credentials flag</code> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a>, then
-   execute <a href="#clear-response">§3.2 Clear data for response</a> of <a data-link-type="biblio" href="#biblio-clear-site-data">[CLEAR-SITE-DATA]</a> on <var>response</var>.</p>
+      <p>If <var ignore="">credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a>, then
+   execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
     </ol>
     <p class="note" role="note">Note: This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
@@ -2110,6 +2111,19 @@ host.</p>
   by clearing only one type of storage. We mitigate that to some extent by
   clearing all storage options as a block, and by requiring that the header be
   delivered over a secure connection.</p>
+      <h3 class="heading settled" data-level="4.2" id="service-workers"><span class="secno">4.2. </span><span class="content">Service workers</span><a class="self-link" href="#service-workers"></a></h3>
+      <p>It is imperative that the Clear-Site-Data header is only respected on
+  responses fetched over network, and not those served by a service worker.</p>
+      <p>This is because service workers can return arbitrary responses for resource
+  requests in their scope, including third-party requests. Thus, supporting
+  Clear-Site-Data would give them the ability to clear data for any origin.</p>
+      <p>Note that if a request is sent to a service worker, not handled by it, then
+  restarted with a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#skip-service-worker-flag">skip-service-worker flag</a> and sent to the network, the
+  corresponding response is a network response and can be handled. The previous
+  attempt at obtaining the response from a service worker is irrelevant.</p>
+      <p>Note also that a service worker update is a network response, and is therefore
+  not affected by this restriction. This is important in order to support the
+  use case in <a href="#example-killswitch">§1.1.4 Kill Switch</a>.</p>
       <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
       <h3 class="heading settled" data-level="5.1" id="user-vs-author"><span class="secno">5.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
       <p>If triggered at appropriate times, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-16"><code>Clear-Site-Data</code></a> can
@@ -2248,6 +2262,7 @@ host.</p>
      <li><a href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a>
      <li><a href="https://fetch.spec.whatwg.org/#http-network-fetch">http-network fetch</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
+     <li><a href="https://fetch.spec.whatwg.org/#skip-service-worker-flag">skip-service-worker flag</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>
     </ul>
    <li>
@@ -2379,7 +2394,7 @@ host.</p>
    <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
    <dd>Mike West; Yan Zhu. <a href="https://w3c.github.io/webappsec-secure-contexts/">Secure Contexts</a>. URL: <a href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
-   <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">Service Workers</a>. 25 June 2015. WD. URL: <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">https://slightlyoff.github.io/ServiceWorker/spec/service_worker/</a>
+   <dd>Alex Russell; et al. <a href="https://w3c.github.io/ServiceWorker/v1/">Service Workers 1</a>. 11 October 2016. WD. URL: <a href="https://w3c.github.io/ServiceWorker/v1/">https://w3c.github.io/ServiceWorker/v1/</a>
    <dt id="biblio-storage">[STORAGE]
    <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
    <dt id="biblio-tokbind">[TOKBIND]
@@ -2391,10 +2406,8 @@ host.</p>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
-   <dt id="biblio-clear-site-data">[CLEAR-SITE-DATA]
-   <dd>Mike West. <a href="https://w3c.github.io/webappsec-clear-site-data/">Clear Site Data</a>. 20 July 2016. WD. URL: <a href="https://w3c.github.io/webappsec-clear-site-data/">https://w3c.github.io/webappsec-clear-site-data/</a>
    <dt id="biblio-csp2">[CSP2]
-   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec/specs/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/CSP2/">https://w3c.github.io/webappsec/specs/CSP2/</a>
+   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec-csp/">Content Security Policy Level 2</a>. 8 November 2016. PR. URL: <a href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a>
    <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
   </dl>

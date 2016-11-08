@@ -519,9 +519,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   response to the user. That is, after step #14 in the current
   <a>HTTP-network fetch</a> algorithm, execute the following step:
 
-  15.  If |response|'s `credentials flag` is set, and |response|'s
+  15.  If <var ignore>credentials flag</var> is set, and |response|'s
        <a>header list</a> contains a header named <a>`Clear-Site-Data`</a>, then
-       execute [[#clear-response]] of [[CLEAR-SITE-DATA]] on |response|.
+       execute [[#clear-response]] on |response|.
 
   Note: This happens <em>after</em> `Set-Cookie` headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
@@ -837,6 +837,24 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   by clearing only one type of storage. We mitigate that to some extent by
   clearing all storage options as a block, and by requiring that the header be
   delivered over a secure connection.
+
+  <h3 id="service-workers">Service workers</h3>
+
+  It is imperative that the Clear-Site-Data header is only respected on
+  responses fetched over network, and not those served by a service worker.
+
+  This is because service workers can return arbitrary responses for resource
+  requests in their scope, including third-party requests. Thus, supporting
+  Clear-Site-Data would give them the ability to clear data for any origin.
+
+  Note that if a request is sent to a service worker, not handled by it, then
+  restarted with a <a>skip-service-worker flag</a> and sent to the network, the
+  corresponding response is a network response and can be handled. The previous
+  attempt at obtaining the response from a service worker is irrelevant.
+
+  Note also that a service worker update is a network response, and is therefore
+  not affected by this restriction. This is important in order to support the
+  use case in [[#example-killswitch]].
 
   <h2 id="privacy">Privacy Considerations</h2>
 
