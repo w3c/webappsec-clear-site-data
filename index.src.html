@@ -26,6 +26,7 @@ spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
     text: append; url: concept-header-list-append
     text: response; url: concept-response
     text: header list; for: response; url: concept-header-list
+    text: HTTP-network fetch; url: http-network-fetch;
   type: interface
     text: Request; url: concept-request
   type: attribute
@@ -513,20 +514,24 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   ISSUE: Monkey patching! Talk with Anne.
 
-  If the <a>`Clear-Site-Data`</a> header is present in an HTTP
-  <a>response</a>, then data MUST be cleared before rendering the response to
-  the user. That is, before step #9 in the current <a>main fetch</a> algorithm,
-  execute the following step:
+  If the <a>`Clear-Site-Data`</a> header is present in an HTTP <a>response</a>
+  received from the network, then data MUST be cleared before rendering the
+  response to the user. That is, after step #14 in the current
+  <a>HTTP-network fetch</a> algorithm, execute the following step:
 
-  9.  If |response|'s <a>header list</a> contains a header named
-      <a>`Clear-Site-Data`</a>, then execute [[#clear-response]] on
-      |response|.
+  15.  If <var ignore>credentials flag</var> is set, and |response|'s
+       <a>header list</a> contains a header named <a>`Clear-Site-Data`</a>, then
+       execute [[#clear-response]] on |response|.
 
   Note: This happens <em>after</em> `Set-Cookie` headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
   removing only certain cookies might leave an application in an indeterminate
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the `Set-Cookie` header.
+
+  Note: While the fetch `credentials flag` is intended to restrict the
+  modification of cookies, <a>`Clear-Site-Data`</a> applies the same restriction
+  to all <a>types</a> for the sake of consistency.
 <section>
 
 <section>
@@ -832,6 +837,24 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   by clearing only one type of storage. We mitigate that to some extent by
   clearing all storage options as a block, and by requiring that the header be
   delivered over a secure connection.
+
+  <h3 id="service-workers">Service workers</h3>
+
+  It is imperative that the Clear-Site-Data header is only respected on
+  responses fetched over network, and not those served by a service worker.
+
+  This is because service workers can return arbitrary responses for resource
+  requests in their scope, including third-party requests. Thus, supporting
+  Clear-Site-Data would give them the ability to clear data for any origin.
+
+  Note that if a request is sent to a service worker, not handled by it, then
+  restarted with a <a>skip-service-worker flag</a> and sent to the network, the
+  corresponding response is a network response and can be handled. The previous
+  attempt at obtaining the response from a service worker is irrelevant.
+
+  Note also that a service worker update is a network response, and is therefore
+  not affected by this restriction. This is important in order to support the
+  use case in [[#example-killswitch]].
 
   <h2 id="privacy">Privacy Considerations</h2>
 

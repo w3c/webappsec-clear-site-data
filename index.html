@@ -1421,7 +1421,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-10-14">14 October 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-11-08">8 November 2016</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1525,6 +1525,7 @@ host.</p>
      <a href="#security"><span class="secno">4</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
       <li><a href="#incomplete"><span class="secno">4.1</span> <span class="content">Incomplete Clearing</span></a>
+      <li><a href="#service-workers"><span class="secno">4.2</span> <span class="content">Service workers</span></a>
      </ol>
     <li>
      <a href="#privacy"><span class="secno">5</span> <span class="content">Privacy Considerations</span></a>
@@ -1812,18 +1813,21 @@ host.</p>
     </dl>
     <h3 class="heading settled" data-level="2.3" id="fetch-integration"><span class="secno">2.3. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
-    <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>, then data MUST be cleared before rendering the response to
-  the user. That is, before step #9 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a> algorithm,
-  execute the following step:</p>
-    <ol start="9">
+    <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> received from the network, then data MUST be cleared before rendering the
+  response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
+    <ol start="15">
      <li data-md="">
-      <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a>, then execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
+      <p>If <var ignore="">credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a>, then
+   execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
     </ol>
     <p class="note" role="note">Note: This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
   removing only certain cookies might leave an application in an indeterminate
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the <code>Set-Cookie</code> header.</p>
+    <p class="note" role="note">Note: While the fetch <code>credentials flag</code> is intended to restrict the
+  modification of cookies, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-12"><code>Clear-Site-Data</code></a> applies the same restriction
+  to all <a data-link-type="dfn" href="#types" id="ref-for-types-9">types</a> for the sake of consistency.</p>
     <section>
      <section>
       <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
@@ -1831,20 +1835,20 @@ host.</p>
       <h4 class="heading settled" data-level="3.1.1" id="get-types"><span class="secno">3.1.1. </span><span class="content"> Which data types ought to be removed for <var>response</var>? </span><a class="self-link" href="#get-types"></a></h4>
       <ol>
        <li data-md="">
-        <p>If <var>response</var> does not contain a <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-12"><code>Clear-Site-Data</code></a> header, return
+        <p>If <var>response</var> does not contain a <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-13"><code>Clear-Site-Data</code></a> header, return
   an empty list.</p>
        <li data-md="">
         <p>Let <var>types</var> be an empty list.</p>
        <li data-md="">
         <p>Let <var>list</var> be the result of executing the algorithm defined in Section 4
-  of <a data-link-type="biblio" href="#biblio-http-jfv">[HTTP-JFV]</a> on the value of <var>response</var>’s <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-13"><code>Clear-Site-Data</code></a> header. If that algorithm results in an error, return an empty list.</p>
+  of <a data-link-type="biblio" href="#biblio-http-jfv">[HTTP-JFV]</a> on the value of <var>response</var>’s <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-14"><code>Clear-Site-Data</code></a> header. If that algorithm results in an error, return an empty list.</p>
        <li data-md="">
         <p>For each <var>item</var> in <var>list</var>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>item</var> does not have a <a data-link-type="dfn" href="#types" id="ref-for-types-9"><code>types</code></a> member, skip to the next <var>item</var>.</p>
+          <p>If <var>item</var> does not have a <a data-link-type="dfn" href="#types" id="ref-for-types-10"><code>types</code></a> member, skip to the next <var>item</var>.</p>
          <li data-md="">
-          <p>For each <var>type</var> in <var>item</var>’s <a data-link-type="dfn" href="#types" id="ref-for-types-10"><code>types</code></a> member’s value:</p>
+          <p>For each <var>type</var> in <var>item</var>’s <a data-link-type="dfn" href="#types" id="ref-for-types-11"><code>types</code></a> member’s value:</p>
           <ol>
            <li data-md="">
             <p>If <var>type</var> is <a data-link-type="dfn" href="#cache" id="ref-for-cache-6"><code>cache</code></a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-6"><code>cookies</code></a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-6"><code>storage</code></a>,
@@ -1856,7 +1860,7 @@ host.</p>
         <p>Return <var>types</var>.</p>
       </ol>
       <h3 class="heading settled" data-level="3.2" id="clear-response"><span class="secno">3.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), this algorithm parses the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-14"><code>Clear-Site-Data</code></a> header to determine what needs to be
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), this algorithm parses the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-15"><code>Clear-Site-Data</code></a> header to determine what needs to be
   cleared, which origins are affected, and then executes those requests.</p>
       <ol>
        <li data-md="">
@@ -2107,9 +2111,22 @@ host.</p>
   by clearing only one type of storage. We mitigate that to some extent by
   clearing all storage options as a block, and by requiring that the header be
   delivered over a secure connection.</p>
+      <h3 class="heading settled" data-level="4.2" id="service-workers"><span class="secno">4.2. </span><span class="content">Service workers</span><a class="self-link" href="#service-workers"></a></h3>
+      <p>It is imperative that the Clear-Site-Data header is only respected on
+  responses fetched over network, and not those served by a service worker.</p>
+      <p>This is because service workers can return arbitrary responses for resource
+  requests in their scope, including third-party requests. Thus, supporting
+  Clear-Site-Data would give them the ability to clear data for any origin.</p>
+      <p>Note that if a request is sent to a service worker, not handled by it, then
+  restarted with a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#skip-service-worker-flag">skip-service-worker flag</a> and sent to the network, the
+  corresponding response is a network response and can be handled. The previous
+  attempt at obtaining the response from a service worker is irrelevant.</p>
+      <p>Note also that a service worker update is a network response, and is therefore
+  not affected by this restriction. This is important in order to support the
+  use case in <a href="#example-killswitch">§1.1.4 Kill Switch</a>.</p>
       <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
       <h3 class="heading settled" data-level="5.1" id="user-vs-author"><span class="secno">5.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
-      <p>If triggered at appropriate times, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-15"><code>Clear-Site-Data</code></a> can
+      <p>If triggered at appropriate times, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-16"><code>Clear-Site-Data</code></a> can
   increase a user’s privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
   is in control of when the clearing event is triggered. Even assuming a
@@ -2123,7 +2140,7 @@ host.</p>
   developers. Ideally, they will offer significantly more than we can offer at
   a platform level (clearing browsing history, for example).</p>
       <h3 class="heading settled" data-level="5.2" id="remnants"><span class="secno">5.2. </span><span class="content">Remnants of data on disk.</span><a class="self-link" href="#remnants"></a></h3>
-      <p>While <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-16"><code>Clear-Site-Data</code></a> triggers a clearing event in a
+      <p>While <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-17"><code>Clear-Site-Data</code></a> triggers a clearing event in a
   user’s agent, it is difficult to make promises about the state of a user’s
   disk after a clearing event takes place. In particular, note that it is up
   to the user agent to ensure that all traces of a site’s date is actually
@@ -2243,8 +2260,9 @@ host.</p>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
      <li><a href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a>
-     <li><a href="https://fetch.spec.whatwg.org/#main-fetch">main fetch</a>
+     <li><a href="https://fetch.spec.whatwg.org/#http-network-fetch">http-network fetch</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
+     <li><a href="https://fetch.spec.whatwg.org/#skip-service-worker-flag">skip-service-worker flag</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>
     </ul>
    <li>
@@ -2376,7 +2394,7 @@ host.</p>
    <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
    <dd>Mike West; Yan Zhu. <a href="https://w3c.github.io/webappsec-secure-contexts/">Secure Contexts</a>. URL: <a href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
-   <dd>Alex Russell; Jungkee Song; Jake Archibald. <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">Service Workers</a>. 25 June 2015. WD. URL: <a href="https://slightlyoff.github.io/ServiceWorker/spec/service_worker/">https://slightlyoff.github.io/ServiceWorker/spec/service_worker/</a>
+   <dd>Alex Russell; et al. <a href="https://w3c.github.io/ServiceWorker/v1/">Service Workers 1</a>. 11 October 2016. WD. URL: <a href="https://w3c.github.io/ServiceWorker/v1/">https://w3c.github.io/ServiceWorker/v1/</a>
    <dt id="biblio-storage">[STORAGE]
    <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
    <dt id="biblio-tokbind">[TOKBIND]
@@ -2389,7 +2407,7 @@ host.</p>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-csp2">[CSP2]
-   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec/specs/CSP2/">Content Security Policy Level 2</a>. 21 July 2015. CR. URL: <a href="https://w3c.github.io/webappsec/specs/CSP2/">https://w3c.github.io/webappsec/specs/CSP2/</a>
+   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec-csp/">Content Security Policy Level 2</a>. 8 November 2016. PR. URL: <a href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a>
    <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
   </dl>
@@ -2436,13 +2454,13 @@ host.</p>
     <li><a href="#ref-for-clear-site-data-5">1.1.4. Kill Switch</a>
     <li><a href="#ref-for-clear-site-data-6">2.1.1. 
     The types member </a> <a href="#ref-for-clear-site-data-7">(2)</a> <a href="#ref-for-clear-site-data-8">(3)</a> <a href="#ref-for-clear-site-data-9">(4)</a>
-    <li><a href="#ref-for-clear-site-data-10">2.3. Fetch Integration</a> <a href="#ref-for-clear-site-data-11">(2)</a>
-    <li><a href="#ref-for-clear-site-data-12">3.1.1. 
-    Which data types ought to be removed for response? </a> <a href="#ref-for-clear-site-data-13">(2)</a>
-    <li><a href="#ref-for-clear-site-data-14">3.2. 
+    <li><a href="#ref-for-clear-site-data-10">2.3. Fetch Integration</a> <a href="#ref-for-clear-site-data-11">(2)</a> <a href="#ref-for-clear-site-data-12">(3)</a>
+    <li><a href="#ref-for-clear-site-data-13">3.1.1. 
+    Which data types ought to be removed for response? </a> <a href="#ref-for-clear-site-data-14">(2)</a>
+    <li><a href="#ref-for-clear-site-data-15">3.2. 
     Clear data for response </a>
-    <li><a href="#ref-for-clear-site-data-15">5.1. Web developers control the timing.</a>
-    <li><a href="#ref-for-clear-site-data-16">5.2. Remnants of data on disk.</a>
+    <li><a href="#ref-for-clear-site-data-16">5.1. Web developers control the timing.</a>
+    <li><a href="#ref-for-clear-site-data-17">5.2. Remnants of data on disk.</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="types">
@@ -2454,8 +2472,9 @@ host.</p>
     <li><a href="#ref-for-types-4">1.1.4. Kill Switch</a>
     <li><a href="#ref-for-types-5">2.1.1. 
     The types member </a> <a href="#ref-for-types-6">(2)</a> <a href="#ref-for-types-7">(3)</a> <a href="#ref-for-types-8">(4)</a>
-    <li><a href="#ref-for-types-9">3.1.1. 
-    Which data types ought to be removed for response? </a> <a href="#ref-for-types-10">(2)</a>
+    <li><a href="#ref-for-types-9">2.3. Fetch Integration</a>
+    <li><a href="#ref-for-types-10">3.1.1. 
+    Which data types ought to be removed for response? </a> <a href="#ref-for-types-11">(2)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cache">
