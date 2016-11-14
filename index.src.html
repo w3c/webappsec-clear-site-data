@@ -502,7 +502,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       Clears data based on the values in the |options| argument.
       Returns a Promise that resolves when clearing is complete. If no
       {{StorageClearOptions/types}} are specified, all data types will be
-      cleared.
+      cleared. When {{clear()}} is called, the user agent MUST execute the
+      algorithm defined in [[#clear-api]] on |options|.
 
       <pre class="argumentdef" for="StorageManager/clear(options)">
         options: The data to clear.
