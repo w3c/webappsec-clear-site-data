@@ -388,7 +388,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       which a user agent implements (prerendered pages, script caches, shader
       caches, etc.).
 
-      Implementation details are in [[#clear-cache]].
+      Implementation details are in <a>clear cache</a>.
 
       <div class="example">
         When delivered with a response from `https://example.com/clear`,
@@ -407,7 +407,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       [[!RFC7235]], and origin-bound tokens such as those defined by Channel
       ID [[!CHANNELID]] and Token Binding [[!TOKBIND]] are also cleared.
 
-      Implementation details are in [[#clear-cookies]].
+      Implementation details are in <a>clear cookies</a>.
 
       <div class="example">
         When delivered with a response from `https://example.com/clear`,
@@ -427,7 +427,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       [[WEBDATABASE]], etc), as well as tangentially related mechainsm such as
       <a>service worker registrations</a>.
 
-      Implementation details are in [[#clear-dom]].
+      Implementation details are in <a>clear storage</a>.
 
       <div class="example">
         When delivered with a response from `https://example.com/clear`,
@@ -444,7 +444,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       and reload execution contexts currently rendering the <a>origin</a> of a
       particular <a>response</a>'s {{Response/url}}.
 
-      Implementation details are in [[#neuter-contexts]].
+      Implementation details are in <a>neuter contexts</a>.
 
       <div class="example">
         When delivered with a response from `https://example.com/clear`,
@@ -502,7 +502,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       Returns a Promise that resolves when clearing is complete. If no
       {{StorageClearOptions/types}} are specified, all data types will be
       cleared. When {{clear()}} is called, the user agent MUST execute the
-      algorithm defined in [[#clear-api]] on |options|.
+      <a>clear data for |options|</a> algorithm on |options|.
 
       <pre class="argumentdef" for="StorageManager/clear(options)">
         options: The data to clear.
@@ -520,8 +520,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   execute the following step:
 
   9.  If |response|'s <a>header list</a> contains a header named
-      <a>`Clear-Site-Data`</a>, then execute [[#clear-response]] on
-      |response|.
+      <a>`Clear-Site-Data`</a>, then execute <a>clear data for |response|</a>
+      algorithm on |response|.
 
   Note: This happens <em>after</em> `Set-Cookie` headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
@@ -535,9 +535,12 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   <h3 id="parsing">Parsing</h3>
 
-  <h4 id="get-types">
+  <h4 id="algorithm-get-types" algorithm="get types">
     Which data types ought to be removed for |response|?
   </h4>
+
+  The |types| which ought to be removed are determined as the result of running
+  the <dfn>get types</dfn> algorithm on |response|.
 
   1.  If |response| does not contain a <a>`Clear-Site-Data`</a> header, return
       an empty list.
@@ -562,13 +565,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   5.  Return |types|.
 
-  <h3 id="clear-response">
+  <h3 id="algorithm-clear-response" algorithm="clear data for |response|">
     Clear data for |response|
   </h3>
 
-  Given a <a>response</a> (|response|), this algorithm parses the
-  <a>`Clear-Site-Data`</a> header to determine what needs to be
-  cleared, which origins are affected, and then executes those requests.
+  Given a <a>response</a> (|response|), the <dfn>clear data for |response|</dfn>
+  algorithm parses the <a>`Clear-Site-Data`</a> header to determine what needs
+  to be cleared, which origins are affected, and then executes those requests.
 
   1.  If |response|'s {{URL}} is <a><i lang="la">a priori</i>
       insecure</a>, skip the remaining steps of this algorithm.
@@ -578,10 +581,10 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
       Thomson's public-webappsec post on the topic</a>, for example).
 
-  2.  Let |types| be the result of [[#get-types]] executed on
+  2.  Let |types| be the result of <a>get types</a> executed on
       |response|.
 
-  3.  Execute [[#clear-internal]] on |types|, |response|'s
+  3.  Execute <a>internal clear</a> on |types|, |response|'s
       {{Response/url}}'s <a>origin</a>.
 
   Note: Especially given the cross-context implications, user agents are
@@ -589,13 +592,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   operation can be debugged. This might take the form of a console message or
   timeline entry indicating success.
 
-  <h3 id="clear-api">
+  <h3 id="algorithm-clear-api" algorithm="clear data for |options|">
     Clear data for |options|
   </h3>
 
-  Given a {{StorageClearOptions}} (|options|), this algorithm
-  determines what needs to be cleared, returns a Promise, and executes the
-  request asynchronously.
+  Given a {{StorageClearOptions}} (|options|), the <dfn>clear data for
+  |options|</dfn> algorithm determines what needs to be cleared, returns
+  a Promise, and executes the request asynchronously.
 
   1.  If the <a>incumbent settings object</a> is not a <a>secure context</a>,
       return a `Promise` rejected with
@@ -618,40 +621,43 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
       1. Append |type| to |types|.
 
-  7.  Execute [[#clear-internal]] on |types| and the <a>incumbent
+  7.  Execute <a>internal clear</a> on |types| and the <a>incumbent
       settings object</a>'s <a>origin</a>.
 
   9.  Resolve |promise| with `undefined`.
 
-  <h3 id="clear-internal">
+  <h3 id="algorithm-clear-internal" algorithm="internal clear">
     Clear |types| for |origin|
   </h3>
 
+  The <dfn>internal clear</dfn> algorithm executes specialized clearing
+  algorithms for individual types contained in |types|.
+
   1.  If |types| contains "`executionContexts`", execute
-      [[#neuter-contexts]] on |origin|.
+      <a>neuter contexts</a> on |origin|.
 
   2.  If |types| contains "`cookies`", execute
-      [[#clear-cookies]] on |origin|.
+      <a>clear cookies</a> on |origin|.
 
   3.  If |types| contains "`storage`", execute
-      [[#clear-dom]] on |origin|.
+      <a>clear storage</a> on |origin|.
 
   4.  If |types| contains "`cache`", execute
-      [[#clear-cache]] on |origin|.
+      <a>clear cache</a> on |origin|.
 
   5.  If |types| contains "`executionContexts`", execute
-      [[#reload-contexts]] on |origin|.
+      <a>reload contexts</a> on |origin|.
 
-  <h4 id="neuter-contexts">
+  <h4 id="algorithm-neuter-contexts" algorithm="neuter contexts">
     Neuter browsing contexts matching |origin|
   </h4>
 
-  Given an <a>origin</a> (|origin|) this algorithm walks through the
-  set of <a>browsing contexts</a> which the user agent knows about, and
-  sandboxes each in order to prevent them from recreating cleared data (from
-  in-memory JavaScript variables, for instance). Once data is cleared, the
-  affected browsing contexts will be hard-reloaded, as defined in
-  [[#reload-contexts]]:
+  Given an <a>origin</a> (|origin|) the <dfn>neuter contexts</dfn> algorithm
+  walks through the set of <a>browsing contexts</a> which the user agent knows
+  about, and sandboxes each in order to prevent them from recreating cleared
+  data (from in-memory JavaScript variables, for instance). Once data is
+  cleared, the affected browsing contexts will be hard-reloaded, as defined in
+  <a>reload contexts</a>:
 
   1.  For each |context| in the user agent's set of <a>browsing
       contexts</a>:
@@ -669,13 +675,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
               the input, and |document|'s <a>active
               sandboxing flag set</a> as the output.
 
-  <h4 id="reload-contexts">
+  <h4 id="algorithm-reload-contexts" algorithm="reload contexts">
     Reload browsing contexts matching |origin|
   </h4>
 
-  Given an <a>origin</a> (|origin|), this algorithm walks through the
-  set of <a>browsing contexts</a> which the user agent knows about and reloads
-  each of them:
+  Given an <a>origin</a> (|origin|), the <dfn>reload contexts</dfn> algorithm
+  walks through the set of <a>browsing contexts</a> which the user agent knows
+  about and reloads each of them:
 
   1.  For each |context| in the user agent's set of <a>browsing
       contexts</a>:
@@ -694,12 +700,12 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
               <a>source browsing context</a> is |context|. This is a
               <a>reload-triggered navigation</a>.
           
-  <h4 id="clear-cache">
+  <h4 id="algorithm-clear-cache" algorithm="clear cache">
     Clear cache for |origin|
   </h4>
 
-  Given an <a>origin</a> (|origin|), this algorithm removes data from
-  the user agent's local caches that matches the origin.
+  Given an <a>origin</a> (|origin|), the <dfn>clear cache</dfn> algorithm
+  removes data from the user agent's local caches that matches the origin.
 
   1.  Let |host| be |origin|'s {{URL/host}},
       <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
@@ -724,13 +730,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       bits that aren't representations (HSTS/HPKP, SCDH, etc.). Perhaps
       [[STORAGE]] will make this clearer?
 
-  <h4 id="clear-cookies">
+  <h4 id="algorithm-clear-cookies" algorithm="clear cookies">
     Clear cookies for |origin|
   </h4>
 
-  Given an <a>origin</a> (|origin|), this algorithm removes cookies
-  from the user agent's <a>cookie store</a> whose `domain` attribute
-  <a>domain-matches</a> |origin|'s <a>registered domain</a>.
+  Given an <a>origin</a> (|origin|), the <dfn>clear cookies</dfn> algorithm
+  removes cookies from the user agent's <a>cookie store</a> whose `domain`
+  attribute <a>domain-matches</a> |origin|'s <a>registered domain</a>.
   
   Note: We remove all the cookies for an entire <a>registered domain</a>, as
   cookies ignore the same-origin policy, and there's a distinct risk that we'd
@@ -765,9 +771,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   ISSUE(w3c/webappsec-clear-site-data#2): The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey.
 
-  <h4 id="clear-dom">
+  <h4 id="algorithm-clear-storage" algorithm="clear storage">
     Clear DOM-accessible storage for |origin|
   </h4>
+
+  Given an <a>origin</a> (|origin|), the <dfn>clear storage</dfn> algorithm
+  removes data from the user agent's DOM-accessible storage backends that
+  matches the origin.
 
   1.  For each |area| in the user agent's set of <a>local storage
       areas</a> [[!HTML]]:
