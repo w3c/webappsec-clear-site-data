@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clear-Site-Data demo</title>
+    <style>
+      body {
+        font-family: 'sans-serif';
+        margin: auto;
+        width: 800px;
+      }
+
+      div {
+        float: left;
+        margin-right: 50px;
+        width: 210px;
+      }
+
+      select {
+        height: 200px;
+        padding-bottom: 5px;
+        width: 100%;
+      }
+
+      #header {
+        font-family: 'Courier New';
+      }
+
+      .indent {
+        display: inline-block;
+        padding-left: 2em;
+      }
+    </style>
+    <script>
+      // Helper functions. ----------------------------------------------------
+
+      // Remove all child nodes from |element|.
+      function clearElement(element) {
+        while (element.lastChild)
+          element.removeChild(element.lastChild);
+      }
+
+      // Add an <option> child with |text| to |element|
+      function addOption(element, text) {
+        var child = document.createElement('option');
+        child.innerText = text;
+        element.appendChild(child);
+      }
+
+      // Generate a random 5-char string.
+      function randomString() {
+        var result = "";
+        for (var i = 0; i < 5; i++)
+          result += String.fromCharCode(97 + Math.floor(Math.random() * 26));
+        return result;
+      }
+
+      // Cookies. -------------------------------------------------------------
+
+      // Populate the "cookies" box with cookies visible to this origin.
+      function showCookies() {
+        var cookies = document.cookie.split(/;\ */);
+        var element = document.getElementById("cookies");
+        clearElement(element);
+
+        for (var i = 0; i < cookies.length; i++)
+          addOption(element, cookies[i]);
+      }
+
+      // Add a cookie.
+      function addCookie() {
+        document.cookie = randomString() + "=" + randomString();
+        showCookies();
+      }
+
+      // Storage. -------------------------------------------------------------
+
+      // Populate the "storage" box with key-value pairs found in
+      // the local storage.
+      function showStorage() {
+        var element = document.getElementById("storage");
+        clearElement(element);
+
+        for (var i = 0; i < localStorage.length; i++) {
+          var key = localStorage.key(i);
+          addOption(element, key + "=" + localStorage.getItem(key));
+        }
+      }
+
+      // Add an entry to a local storage.
+      function addStorage() {
+        localStorage.setItem(randomString(), randomString());
+        showStorage();
+      }
+
+      // Cache. ---------------------------------------------------------------
+
+      var next_index_to_request = 0;
+
+      // Populate the "cache" box with resources named '?resource=<number>'
+      // found in the cache.
+      function showCache() {
+        var element = document.getElementById("cache");
+        clearElement(element);
+
+        var fetch_options = {
+          'cache': 'force-cache',
+          'headers': new Headers({ 'cache-control': 'only-if-cached' }),
+        };
+
+        function tryFetching(index) {
+          fetch('?resource=' + index, fetch_options)
+              .then(function(response) {
+                return response.text();
+              }).then(function(response) {
+                addOption(element, '?resource=' + index);
+                tryFetching(index + 1);
+              }).catch(function() {
+                // The resource was not found in the cache.
+                next_index_to_request = index;
+              });
+        }
+
+        tryFetching(0);
+      }
+
+      // Fetch a unique resource and cache it.
+      function addCache() {
+        fetch('?resource=' + next_index_to_request++,
+              { 'cache': 'force-cache' });
+
+        showCache();
+      }
+
+      // Init. ----------------------------------------------------------------
+
+      window.onload = function() {
+        document.getElementById("origin").innerText = window.location.origin;
+
+        showCookies();
+        showStorage();
+        showCache();
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Clear-Site-Data demo</h1>
+
+    <p>
+      The boxes below display your cookies, local storage, and cache for
+      <span id="origin"></span>. If the three buckets are empty, you can use
+      the buttons under them to add random data. Note that we cannot directly
+      read the cache, only try loading certain resources; therefore, we can
+      only show the cache entries added by our button. Note also that local
+      storage is used as an example; the "storage" type of the header refers
+      to many other types of storage as well.
+    </p>
+
+    <div>
+      <h2>Cookies</h2>
+      <select id="cookies" size="10"></select>
+      <input type="button" value="Add cookie" onclick="addCookie();">
+    </div>
+
+    <div>
+      <h2>Local storage</h2>
+      <select id="storage" size="10"></select>
+      <input type="button" value="Add storage entry" onclick="addStorage();">
+    </div>
+
+    <div>
+      <h2>Cache</h2>
+      <select id="cache" size="10"></select>
+      <input type="button" value="Cache a resource" onclick="addCache();">
+    </div>
+
+    <div>
+      <form action="/" method="post">
+        <h2>Clear-Site-Data</h2>
+        <h3>Request header:</h3>
+        <p id="header">
+          Clear-Site-Data: {<br>
+          <span class="indent">
+            'types': {
+            <span class="indent">
+              <input type="checkbox" name="types" value="cookies">Cookies<br>
+              <input type="checkbox" name="types" value="storage">Storage<br>
+              <input type="checkbox" name="types" value="cache">Cache<br>
+            </span><br>
+            }
+          </span>
+          }
+        </p>
+        <input type="submit" value="Request header">
+      </form>
+    </div>
+
+  </body>
+</html>
