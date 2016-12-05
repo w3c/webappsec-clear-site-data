@@ -184,6 +184,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     "href": "https://tools.ietf.org/html/draft-ietf-tokbind-protocol",
     "title": "The Token Binding Protocol Version 1.0",
     "publisher": "IETF"
+  },
+  "FLASH": {
+    "authors": [ "Adobe Systems Incorporated" ],
+    "href": "http://www.adobe.com/software/flash/about/",
+    "title": "Adobe Flash Player"
   }
 }
 </pre>
@@ -766,6 +771,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   6.  Clear related HTTP authentication credentials [[!RFC7235]].
 
+  7.  If a Flash [[!FLASH]] plugin is present, clear its local shared objects
+      (LSOs) for |registered|.
+
   ISSUE(w3c/webappsec-clear-site-data#2): The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey.
 
@@ -822,10 +830,10 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
      
       1.  An origin's WebSQL databases [[!WEBDATABASE]].
       2.  An origin's filesystems [[!file-system-api]]
-      3.  ChannelID
-      4.  Plugin data (e.g. <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>)
-      5.  Appcache.
-      6.  ISSUE: Moar?
+      3.  Plugin data (e.g. <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>),
+          except Flash [[!FLASH]] LSOs (see step #7 in [[#clear-cookies]]).
+      4.  Appcache.
+      5.  ISSUE: Moar?
 </section>
 
 <section>
