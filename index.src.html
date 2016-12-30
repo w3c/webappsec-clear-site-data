@@ -24,6 +24,7 @@ spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
     text: fetching
     text: main fetch
     text: append; url: concept-header-list-append
+    text: skip-service-worker flag; for: request; url: skip-service-worker-flag
     text: response; url: concept-response
     text: header list; for: response; url: concept-header-list
     text: HTTP-network fetch; url: http-network-fetch;
@@ -124,6 +125,7 @@ spec: SERVICE-WORKERS; urlPrefix: http://www.w3.org/TR/service-workers/
     text: register; url: register-algorithm
     text: scope url; url: dfn-scope-url
     text: service worker registration; url: dfn-service-worker-registration
+    text: FetchEvent; url: fetch-event-section
   type: method
     text: unregister(); for: ServiceWorkerRegistration; url: navigator-service-worker-unregister
 spec: RFC5234; urlPrefix: https://tools.ietf.org/html/rfc5234
@@ -582,10 +584,28 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
       Thomson's public-webappsec post on the topic</a>, for example).
 
-  2.  Let |types| be the result of [[#get-types]] executed on
+  2.  If |response| was returned by a service worker <a>FetchEvent</a>, skip
+      the remaining steps of this algorithm.
+
+      <div class = "note">
+        Note: Service workers can return arbitrary responses for third-party
+        resource requests in their scope. Supporting `Clear-Site-Data` would
+        thus give them the ability to delete data for any third party.
+
+        If a request is sent to a service worker, not handled by it, then
+        restarted with a <a>skip-service-worker flag</a> and sent to the
+        network, the corresponding response is a network response and can be
+        handled. The previous attempt at obtaining the response from a service
+        worker is irrelevant.
+
+        Note also that a service worker update is a network response, and is
+        therefore not affected by this restriction either.
+      </div>
+
+  3.  Let |types| be the result of [[#get-types]] executed on
       |response|.
 
-  3.  Execute [[#clear-internal]] on |types|, |response|'s
+  4.  Execute [[#clear-internal]] on |types|, |response|'s
       {{Response/url}}'s <a>origin</a>.
 
   Note: Especially given the cross-context implications, user agents are
