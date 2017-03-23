@@ -27,6 +27,7 @@ spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
     text: response; url: concept-response
     text: header list; for: response; url: concept-header-list
     text: HTTP-network fetch; url: http-network-fetch;
+    text: extracting header list values
   type: interface
     text: Request; url: concept-request
   type: attribute
@@ -345,19 +346,19 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   <pre class="abnf" link-type="grammar" dfn-type="grammar">
     Clear-Site-Data = "Clear-Site-Data" ":" <a>clear-site-data-value</a>
-    <dfn>clear-site-data-value</dfn> = OWS 1#(<a>type</a> OWS)
-    <dfn>type</dfn> = atom
+    <dfn>clear-site-data-value</dfn> = OWS 1#((<a>data-type</a> | <a>extension-type</a>) OWS)
+    <dfn>data-type</dfn> = "<dfn>cache</dfn>" | "<dfn>cookies</dfn>" | "<dfn>storage</dfn>" | "<dfn>executionContext</dfn>"
+    <dfn>extension-type</dfn> = 1*(ALPHA | "-")
   </pre>
 
-  The header's value is interpreted as an array of atoms.
+  [[#fetch-integration]] and [[#parsing]] describe how the
+  <a>Clear-Site-Data</a> header is processed.
 
-  Each atom in the array represents a data type that the user agent MUST
-  clear, and will be parsed as defined in [[#parsing]].
-
-  The following are the initial set of known types which may be specified as
-  the array's elements. Future versions of this document may define
-  additional types, and user agents MUST ignore unknown types when parsing the
-  header:
+  The <a grammar>data-type</a> grammar defines an initial set of known data
+  types which can be cleared using this API. See their descriptions below.
+  Future versions of the header can support additional datatypes, which MUST
+  comply with the <a grammar>extension-type</a> grammar. User agents MUST
+  ignore unknown <a grammar>extension-type</a>s whhen parsing the header.
 
   :   "<dfn>`cache`</dfn>"
   ::  The "`cache`" type indicates that the server wishes to remove locally
@@ -516,23 +517,21 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     Which data types ought to be removed for |response|?
   </h4>
 
-  1.  If |response| does not contain a <a>`Clear-Site-Data`</a> header, return
-      an empty list.
+  1.  Let |types| be an empty list.
 
-  2.  Let |recognizedTypes| be an empty list.
+  2.  Let |header| be the result of [=extracting header list values=] given
+      `Clear-Site-Data` and |response|'s [=response/header list=].
 
-  3.  If the value of the <a>`Clear-Site-Data`</a> header is a valid
-      <a grammar>clear-site-data-value</a>, let |types| be the list of all
-      occurences of <a grammar>type</a> in it. Otherwise, return an empty list.
+  3.  If |header| is `null`, return failure.
 
-  4.  For each |type| in |types|:
+  4.  For each |type| in |header|:
 
         1.  If |type| is <a>`cache`</a>, <a>`cookies`</a>, <a>`storage`</a>,
-            or <a>`executionContexts`</a>, append |type| to |recognizedTypes|.
+            or <a>`executionContexts`</a>, append |type| to |types|.
 
             Otherwise, skip to the next |type|.
 
-  5.  Return |recognizedTypes|.
+  5.  Return |types|.
 
   <h3 id="clear-response">
     Clear data for |response|
@@ -565,7 +564,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     Clear data for |types|
   </h3>
 
-  Given a {{StorageClearTypes}} (|types|), this algorithm
+  Given a {{StorageClearTypes}} (|input-types|), this algorithm
   determines what needs to be cleared, returns a Promise, and executes the
   request asynchronously.
 
@@ -577,19 +576,19 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   3.  Return |promise|, and execute the remaining steps asynchronously.
 
-  4.  Let |recognizedTypes| be an empty list.
+  4.  Let |types| be an empty list.
 
-  5.  If |types| is an empty sequence:
+  5.  If |input-types| is an empty sequence:
 
       1. Append `cache`, `cookies`,
          `storage`, and `executionContexts` to
-         |recognizedTypes|.
+         |types|.
 
-  6.  Otherwise, for each {{StorageClearType}} |type| in |types|:
+  6.  Otherwise, for each {{StorageClearType}} |type| in |input-types|:
 
-      1. Append |type| to |recognizedTypes|.
+      1. Append |type| to |types|.
 
-  7.  Execute [[#clear-internal]] on |recognizedTypes| and the <a>incumbent
+  7.  Execute [[#clear-internal]] on |types| and the <a>incumbent
       settings object</a>'s <a>origin</a>.
 
   9.  Resolve |promise| with `undefined`.
