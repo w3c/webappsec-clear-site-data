@@ -418,7 +418,7 @@
 	[data-algorithm]:not(.heading) {
 	  padding: .5em;
 	  border: thin solid #ddd; border-radius: .5em;
-	  margin: .5em 0;
+	  margin: .5em calc(-0.5em - 1px);
 	}
 	[data-algorithm]:not(.heading) > :first-child {
 	  margin-top: 0;
@@ -968,6 +968,8 @@ Possible extra rowspan handling
 		/* Reverse color scheme */
 		color: black;
 		border-color: #3980B5;
+		border-bottom-width: 3px !important;
+		margin-bottom: 0px !important;
 	}
 	.toc a:visited {
 		border-color: #054572;
@@ -1174,7 +1176,7 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed 1.0.0" name="generator">
+  <meta content="Bikeshed version a65093ce3e69a8d01029b4650499d152cd9bd39a" name="generator">
 <style>/* style-md-lists */
 
             /* This is a weird hack for me not yet following the commonmark spec
@@ -1421,7 +1423,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2016-11-08">8 November 2016</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-03-23">23 March 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1441,7 +1443,7 @@ pre.idl.highlight { color: #708090; }
     </dl>
    </div>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2016 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2017 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
@@ -1470,7 +1472,7 @@ host.</p>
 	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
 	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy-20040205/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2015/Process-20150901/" id="w3c_process_revision">1 September 2015 W3C Process Document</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2017/Process-20170301/" id="w3c_process_revision">1 March 2017 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -1493,11 +1495,7 @@ host.</p>
     <li>
      <a href="#clearing"><span class="secno">2</span> <span class="content">Clearing Site Data</span></a>
      <ol class="toc">
-      <li>
-       <a href="#header"><span class="secno">2.1</span> <span class="content"> The <code>Clear-Site-Data</code> HTTP Response Header Field </span></a>
-       <ol class="toc">
-        <li><a href="#types-member"><span class="secno">2.1.1</span> <span class="content"> The <code>types</code> member </span></a>
-       </ol>
+      <li><a href="#header"><span class="secno">2.1</span> <span class="content"> The <code>Clear-Site-Data</code> HTTP Response Header Field </span></a>
       <li><a href="#dom-api"><span class="secno">2.2</span> <span class="content">JavaScript API</span></a>
       <li><a href="#fetch-integration"><span class="secno">2.3</span> <span class="content">Fetch Integration</span></a>
      </ol>
@@ -1510,7 +1508,7 @@ host.</p>
         <li><a href="#get-types"><span class="secno">3.1.1</span> <span class="content"> Which data types ought to be removed for <var>response</var>? </span></a>
        </ol>
       <li><a href="#clear-response"><span class="secno">3.2</span> <span class="content"> Clear data for <var>response</var> </span></a>
-      <li><a href="#clear-api"><span class="secno">3.3</span> <span class="content"> Clear data for <var>options</var> </span></a>
+      <li><a href="#clear-api"><span class="secno">3.3</span> <span class="content"> Clear data for <var>types</var> </span></a>
       <li>
        <a href="#clear-internal"><span class="secno">3.4</span> <span class="content"> Clear <var>types</var> for <var>origin</var> </span></a>
        <ol class="toc">
@@ -1587,17 +1585,17 @@ host.</p>
   header.</p>
     <h3 class="heading settled" data-level="1.1" id="examples"><span class="secno">1.1. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
     <h4 class="heading settled" data-level="1.1.1" id="example-signout"><span class="secno">1.1.1. </span><span class="content">Signing Out</span><a class="self-link" href="#example-signout"></a></h4>
-    <div class="example" id="example-ea58a939">
-     <a class="self-link" href="#example-ea58a939"></a> A user signs out of Super Secret Social Network via a CSRF-protected POST to <code>https://supersecretsocialnetwork.example.com/logout</code>, and the
+    <div class="example" id="example-2e598aca">
+     <a class="self-link" href="#example-2e598aca"></a> A user signs out of Super Secret Social Network via a CSRF-protected POST to <code>https://supersecretsocialnetwork.example.com/logout</code>, and the
     site author wishes to ensure that locally stored data is removed as a
     result. 
      <p>They can do so by sending the following HTTP header in the response:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-2">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-1">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-1">cache</a>", "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-1">cookies</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-1">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-1">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-2">Clear-Site-Data</a>: <a data-link-type="dfn" href="#cache" id="ref-for-cache-1">cache</a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-1">cookies</a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-1">storage</a>, <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-1">executionContexts</a>
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.2" id="example-targeted"><span class="secno">1.1.2. </span><span class="content">Targeted Clearing</span><a class="self-link" href="#example-targeted"></a></h4>
-    <div class="example" id="example-1e48ac5a">
-     <a class="self-link" href="#example-1e48ac5a"></a> A user signs out of Megacorp Inc.'s site via a CSRF-protected POST to <code>https://megacorp.example.com/logout</code>. Megacorp has a large
+    <div class="example" id="example-ca7142ff">
+     <a class="self-link" href="#example-ca7142ff"></a> A user signs out of Megacorp Inc.'s site via a CSRF-protected POST to <code>https://megacorp.example.com/logout</code>. Megacorp has a large
     number of services available as subdomains, so many that it’s not entirely
     clear which of them would be safe to clear as a response to a logout action.
     One option would be to simply clear everything, and deal with the fallout.
@@ -1619,23 +1617,23 @@ host.</p>
 </pre>
      <p>That endpoint would return proper CORS headers in response to that request’s
     preflight, and would return the following header for the actual request:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-3">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-2">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-2">cache</a>", "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-2">cookies</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-2">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-2">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-3">Clear-Site-Data</a>: <a data-link-type="dfn" href="#cache" id="ref-for-cache-2">cache</a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-2">cookies</a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-2">storage</a>, <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-2">executionContexts</a>
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.3" id="example-keepcookies"><span class="secno">1.1.3. </span><span class="content">Keep Critical Cookies</span><a class="self-link" href="#example-keepcookies"></a></h4>
-    <div class="example" id="example-9bc7528b">
-     <a class="self-link" href="#example-9bc7528b"></a> A user opts-out of interest-based advertising via a CSRF-protected POST to <code>https://ads-are-awesome.example.com/optout</code>. The site author
+    <div class="example" id="example-410d65e1">
+     <a class="self-link" href="#example-410d65e1"></a> A user opts-out of interest-based advertising via a CSRF-protected POST to <code>https://ads-are-awesome.example.com/optout</code>. The site author
     wishes to remove DOM-accessible data which might contain tracking
     information, but needs to ensure that the opt-out cookie which the user has
     just received isn’t wiped along with it. 
      <p>They can do so by sending the following HTTP header in the response, which
     includes all the types except for "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-3">cookies</a>":</p>
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-4">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-3">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-3">cache</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-3">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-3">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-4">Clear-Site-Data</a>: <a data-link-type="dfn" href="#cache" id="ref-for-cache-3">cache</a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-3">storage</a>, <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-3">executionContexts</a>
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.4" id="example-killswitch"><span class="secno">1.1.4. </span><span class="content">Kill Switch</span><a class="self-link" href="#example-killswitch"></a></h4>
-    <div class="example" id="example-efc41c41">
-     <a class="self-link" href="#example-efc41c41"></a> Super Secret Social Network’s developers learn that the site was vulnerable
+    <div class="example" id="example-1f68632c">
+     <a class="self-link" href="#example-1f68632c"></a> Super Secret Social Network’s developers learn that the site was vulnerable
     to cross-site scripting attacks which allowed malicious parties to inject
     arbitrary code into its origin. They fixed the site, and added a strong
     Content Security Policy <a data-link-type="biblio" href="#biblio-csp2">[CSP2]</a> to mitigate the risk going forward, but
@@ -1643,9 +1641,9 @@ host.</p>
     state. Perhaps the attackers found a clever persistence mechanism? 
      <p>They can reduce the risk of a persistent client-side XSS by sending the
     following HTTP header in a response to wipe out local sources of data:</p>
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-5">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-4">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-4">cache</a>", "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-4">cookies</a>", "<a data-link-type="dfn" href="#storage" id="ref-for-storage-4">storage</a>", "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-4">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-5">Clear-Site-Data</a>: <a data-link-type="dfn" href="#cache" id="ref-for-cache-4">cache</a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-4">cookies</a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-4">storage</a>, <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-4">executionContexts</a>
 </pre>
-     <p class="note" role="note">Note: Installing a Service Worker guarantees that a request will go out to
+     <p class="note" role="note"><span>Note:</span> Installing a Service Worker guarantees that a request will go out to
     a server every ~24 hours. That update ping would be a wonderful time to send
     a header like this one in case of catastrophe. <a data-link-type="biblio" href="#biblio-service-workers">[SERVICE-WORKERS]</a></p>
     </div>
@@ -1656,7 +1654,7 @@ host.</p>
     <ol>
      <li data-md="">
       <p>Data stored in an origin’s client-side storage mechanisms like <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>,
-  WebSQL, Filesystem, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-localstorage">localStorage</a></code>, and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-sessionstorage">sessionStorage</a></code> is cleared.</p>
+  WebSQL, Filesystem, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a></code>, and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a></code> is cleared.</p>
      <li data-md="">
       <p>Cookies for an origin’s host are removed <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
      <li data-md="">
@@ -1680,96 +1678,82 @@ host.</p>
     <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="clear-site-data"><code>Clear-Site-Data</code></dfn> HTTP response header field
   sends a signal to the user agent that it ought to remove all data
   of a certain set of types. The header is represented by the following ABNF <a data-link-type="biblio" href="#biblio-rfc5234">[RFC5234]</a>:</p>
-<pre class="abnf">Report-To = <a data-link-type="grammar" href="https://greenbytes.de/tech/webdav/draft-ietf-httpbis-jfv-02.html#rfc.section.2">json-field-value</a>
-            ; See Section 2 of [[HTTP-JFV]], and Section 2 of [[RFC7159]]
+<pre class="abnf">Clear-Site-Data = 1#( <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-1">data-type</a> | <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-1">extension-type</a> )
+<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-data-type">data-type</dfn> = "<dfn data-dfn-type="grammar" data-export="" id="grammardef-cache">cache<a class="self-link" href="#grammardef-cache"></a></dfn>" | "<dfn data-dfn-type="grammar" data-export="" id="grammardef-cookies">cookies<a class="self-link" href="#grammardef-cookies"></a></dfn>" | "<dfn data-dfn-type="grammar" data-export="" id="grammardef-storage">storage<a class="self-link" href="#grammardef-storage"></a></dfn>" | "<dfn data-dfn-type="grammar" data-export="" id="grammardef-executioncontext">executionContext<a class="self-link" href="#grammardef-executioncontext"></a></dfn>"
+<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-extension-type">extension-type</dfn> = 1*( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">ALPHA</a> | "-")
+; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230#section-7">#rule</a> is defined in Section 7 of RFC 7230.
+; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">ALPHA</a> is defined in Appendix B.1 of RFC 5234.
 </pre>
-    <p>The header’s value is interpreted as an array of JSON objects, as described in
-  Section 4 of <a data-link-type="biblio" href="#biblio-http-jfv">[HTTP-JFV]</a>.</p>
-    <p>Each object in the array represents a clearing action that the user agent MUST
-  undertake, and will be parsed as defined in <a href="#parsing">§3.1 Parsing</a>.</p>
-    <p>The following subsections defined the initial set of known members in each
-  JSON object the header’s value defines. Future versions of this document may
-  define additional such members, and user agents MUST ignore unknown members
-  when parsing the header.</p>
-    <h4 class="heading settled" data-level="2.1.1" id="types-member"><span class="secno">2.1.1. </span><span class="content"> The <code>types</code> member </span><a class="self-link" href="#types-member"></a></h4>
-    <p>The <dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="types"><code>types</code></dfn> member is an array of keywords designating the kinds
-  of data that the server wishes the user agent to remove. The member’s value
-  MUST be an array, and that array MUST contain only strings; any other types
-  will result in a parse error.</p>
-    <p>The following are the initial set of known types which may be specified in
-  the member’s array value. Future versions of this document may define
-  additional types, and user agents MUST ignore unknown types when parsing the
-  header:</p>
+    <p><a href="#fetch-integration">§2.3 Fetch Integration</a> and <a href="#parsing">§3.1 Parsing</a> describe how the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-6">Clear-Site-Data</a> header is processed.</p>
+    <p>The <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-2">data-type</a> grammar defines an initial set of known data
+  types which can be cleared using this API. See their descriptions below.
+  Future versions of the header can support additional datatypes, which MUST
+  comply with the <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-2">extension-type</a> grammar. User agents MUST
+  ignore unknown <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-3">extension-type</a>s whhen parsing the header.</p>
     <dl>
-     <dt data-md="">
-      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="cache"><code>cache</code></dfn>"</p>
+     <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="cache"><code>cache</code></dfn>"
      <dd data-md="">
       <p>The "<code>cache</code>" type indicates that the server wishes to remove locally
-  cached data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. This includes the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network
+  cached data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-response-url">url</a></code>. This includes the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network
   cache</a>, of course, but will also remove data from various other caches
   which a user agent implements (prerendered pages, script caches, shader
   caches, etc.).</p>
       <p>Implementation details are in <a href="#clear-cache">§3.4.3 Clear cache for origin</a>.</p>
-      <div class="example" id="example-0a3225db">
-       <a class="self-link" href="#example-0a3225db"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-450540d9">
+       <a class="self-link" href="#example-450540d9"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause caches associated with the origin <code>https://example.com</code>: to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-6">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-5">types</a>": [ "<a data-link-type="dfn" href="#cache" id="ref-for-cache-5">cache</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-7">Clear-Site-Data</a>: <a data-link-type="dfn" href="#cache" id="ref-for-cache-5">cache</a>
 </pre>
       </div>
-     <dt data-md="">
-      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="cookies"><code>cookies</code></dfn>"</p>
+     <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="cookies"><code>cookies</code></dfn>"
      <dd data-md="">
       <p>The "<code>cookies</code>" type indicates that the server wishes to remove cookies
-  associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
+  associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-response-url">url</a></code>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
   ID <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and Token Binding <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> are also cleared.</p>
       <p>Implementation details are in <a href="#clear-cookies">§3.4.4 Clear cookies for origin</a>.</p>
-      <div class="example" id="example-c23ab1d6">
-       <a class="self-link" href="#example-c23ab1d6"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-78732282">
+       <a class="self-link" href="#example-78732282"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause cookies associated with the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-7">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-6">types</a>": [ "<a data-link-type="dfn" href="#cookies" id="ref-for-cookies-5">cookies</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-8">Clear-Site-Data</a>: <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-5">cookies</a>
 </pre>
       </div>
-     <dt data-md="">
-      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="storage"><code>storage</code></dfn>"</p>
+     <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="storage"><code>storage</code></dfn>"
      <dd data-md="">
       <p>The "<code>storage</code>" type indicates that the server wishes to remove
   locally stored data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
-  particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>. This includes storage
-  mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registrations</a>.</p>
+  particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-response-url">url</a></code>. This includes storage
+  mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registrations</a>.</p>
       <p>Implementation details are in <a href="#clear-dom">§3.4.5 Clear DOM-accessible storage for origin</a>.</p>
-      <div class="example" id="example-93c6a25b">
-       <a class="self-link" href="#example-93c6a25b"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-fbe614fd">
+       <a class="self-link" href="#example-fbe614fd"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause DOM-accessible storage for the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-8">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-7">types</a>": [ "<a data-link-type="dfn" href="#storage" id="ref-for-storage-5">storage</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-9">Clear-Site-Data</a>: <a data-link-type="dfn" href="#storage" id="ref-for-storage-5">storage</a>
 </pre>
       </div>
-     <dt data-md="">
-      <p>"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="executioncontexts"><code>executionContexts</code></dfn>"</p>
+     <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="dfn" data-noexport="" id="executioncontexts"><code>executionContexts</code></dfn>"
      <dd data-md="">
       <p>The "<code>executionContexts</code>" type indicates that the server wishes to neuter
   and reload execution contexts currently rendering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
-  particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>.</p>
+  particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-response-url">url</a></code>.</p>
       <p>Implementation details are in <a href="#neuter-contexts">§3.4.1 Neuter browsing contexts matching origin</a>.</p>
-      <div class="example" id="example-7b6db9b1">
-       <a class="self-link" href="#example-7b6db9b1"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-5e0c67a9">
+       <a class="self-link" href="#example-5e0c67a9"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause execution contexts displaying the origin <code>https://example.com</code> to be neutered and reloaded: 
-<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-9">Clear-Site-Data</a>: { "<a data-link-type="dfn" href="#types" id="ref-for-types-8">types</a>": [ "<a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-5">executionContexts</a>" ] }
+<pre><a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10">Clear-Site-Data</a>: <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-5">executionContexts</a>
 </pre>
       </div>
     </dl>
     <h3 class="heading settled" data-level="2.2" id="dom-api"><span class="secno">2.2. </span><span class="content">JavaScript API</span><a class="self-link" href="#dom-api"></a></h3>
     <p class="issue" id="issue-3153cbda"><a class="self-link" href="#issue-3153cbda"></a> This might live more cleanly in <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a>.</p>
-    <div class="example" id="example-ab4fc395">
-     <a class="self-link" href="#example-ab4fc395"></a> Megacorp, Inc. wants to remove data in response to a user’s activity on
+    <div class="example" id="example-479a9ae7">
+     <a class="self-link" href="#example-479a9ae7"></a> Megacorp, Inc. wants to remove data in response to a user’s activity on
     their site. They can execute the following JavaScript to clear all the
     relevant data for a user: 
 <pre>navigator.storage.<a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-1">clear()</a>;
 </pre>
      <p>If they only wished to clear the otherwise inaccessible cache for the
     current origin:</p>
-<pre>navigator.storage.<a class="idl-code" data-link-type="method" href="https://html.spec.whatwg.org/multipage/interaction.html#dom-datatransferitemlist-clear">clear</a>({
-  <a class="idl-code" data-link-type="dict-member" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-1">types</a>: [ "cache" ],
-});
+<pre>navigator.storage.<a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-2">clear</a>([ "cache" ]);
 </pre>
     </div>
 <pre class="idl highlight def"><span class="kt">enum</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="enum" data-export="" id="enumdef-storagecleartype">StorageClearType</dfn> {
@@ -1779,22 +1763,20 @@ host.</p>
   <dfn class="s idl-code" data-dfn-for="StorageClearType" data-dfn-type="enum-value" data-export="" data-lt="&quot;executionContexts&quot;|executionContexts" id="dom-storagecleartype-executioncontexts">"executionContexts"<a class="self-link" href="#dom-storagecleartype-executioncontexts"></a></dfn>
 };
 
-<span class="kt">dictionary</span> <dfn class="nv dfn-paneled idl-code" data-dfn-type="dictionary" data-export="" id="dictdef-storageclearoptions">StorageClearOptions</dfn> {
-  <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#enumdef-storagecleartype" id="ref-for-enumdef-storagecleartype-1">StorageClearType</a>> <dfn class="nv dfn-paneled idl-code" data-dfn-for="StorageClearOptions" data-dfn-type="dict-member" data-export="" data-type="sequence<StorageClearType> " id="dom-storageclearoptions-types">types</dfn>;
-};
+<span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#enumdef-storagecleartype" id="ref-for-enumdef-storagecleartype-1">StorageClearType</a>> <dfn class="nv dfn-paneled idl-code" data-dfn-type="typedef" data-export="" id="typedefdef-storagecleartypes">StorageClearTypes</dfn>;
 
 <span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
-  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-2">clear</a>(<a class="n" data-link-type="idl-name" href="#dictdef-storageclearoptions" id="ref-for-dictdef-storageclearoptions-1">StorageClearOptions</a> <a class="nv idl-code" data-link-type="argument" href="#dom-storagemanager-clear-options-options" id="ref-for-dom-storagemanager-clear-options-options-1">options</a>);
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-3">clear</a>(<a class="n" data-link-type="idl-name" href="#typedefdef-storagecleartypes" id="ref-for-typedefdef-storagecleartypes-1">StorageClearTypes</a> <a class="nv idl-code" data-link-type="argument" href="#dom-storagemanager-clear-types-types" id="ref-for-dom-storagemanager-clear-types-types-1">types</a>);
 };
 </pre>
     <dl>
-     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="StorageManager" data-dfn-type="method" data-export="" id="dom-storagemanager-clear">clear(options)</dfn>
+     <dt><dfn class="dfn-paneled idl-code" data-dfn-for="StorageManager" data-dfn-type="method" data-export="" id="dom-storagemanager-clear">clear(types)</dfn>
      <dd>
-       Clears data based on the values in the <var>options</var> argument.
-      Returns a Promise that resolves when clearing is complete. If no <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-2">types</a></code> are specified, all data types will be
-      cleared. 
+       Clears data based on the values in the <var>types</var> argument.
+      Returns a Promise that resolves when clearing is complete. If no
+      types are specified, all data will be cleared. 
       <table class="argumentdef data">
-       <caption>Arguments for the <a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-3">StorageManager.clear(options)</a> method.</caption>
+       <caption>Arguments for the <a class="idl-code" data-link-type="method" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-4">StorageManager.clear(types)</a> method.</caption>
        <thead>
         <tr>
          <th>Parameter 
@@ -1804,30 +1786,30 @@ host.</p>
          <th>Description 
        <tbody>
         <tr>
-         <td><dfn class="dfn-paneled idl-code" data-dfn-for="StorageManager/clear(options)" data-dfn-type="argument" data-export="" id="dom-storagemanager-clear-options-options">options</dfn> 
-         <td> StorageClearOptions 
+         <td><dfn class="dfn-paneled idl-code" data-dfn-for="StorageManager/clear(types)" data-dfn-type="argument" data-export="" id="dom-storagemanager-clear-types-types">types</dfn> 
+         <td> StorageClearTypes 
          <td> <span class="no">✘</span>
          <td> <span class="no">✘</span>
-         <td>The data to clear. 
+         <td>The data types to clear. 
       </table>
     </dl>
     <h3 class="heading settled" data-level="2.3" id="fetch-integration"><span class="secno">2.3. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
-    <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-10"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> received from the network, then data MUST be cleared before rendering the
-  response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
+    <p>If the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> received from the network, then data MUST be cleared before rendering the
+  response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
     <ol start="15">
      <li data-md="">
-      <p>If <var ignore="">credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-11"><code>Clear-Site-Data</code></a>, then
+      <p>If <var>credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-header-list">header list</a> contains a header named <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-12"><code>Clear-Site-Data</code></a>, then
    execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
     </ol>
-    <p class="note" role="note">Note: This happens <em>after</em> <code>Set-Cookie</code> headers are
+    <p class="note" role="note"><span>Note:</span> This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
   removing only certain cookies might leave an application in an indeterminate
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the <code>Set-Cookie</code> header.</p>
-    <p class="note" role="note">Note: While the fetch <code>credentials flag</code> is intended to restrict the
-  modification of cookies, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-12"><code>Clear-Site-Data</code></a> applies the same restriction
-  to all <a data-link-type="dfn" href="#types" id="ref-for-types-9">types</a> for the sake of consistency.</p>
+    <p class="note" role="note"><span>Note:</span> While the fetch <code>credentials flag</code> is intended to restrict the
+  modification of cookies, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-13"><code>Clear-Site-Data</code></a> applies the same restriction
+  to all types for the sake of consistency.</p>
     <section>
      <section>
       <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
@@ -1835,32 +1817,24 @@ host.</p>
       <h4 class="heading settled" data-level="3.1.1" id="get-types"><span class="secno">3.1.1. </span><span class="content"> Which data types ought to be removed for <var>response</var>? </span><a class="self-link" href="#get-types"></a></h4>
       <ol>
        <li data-md="">
-        <p>If <var>response</var> does not contain a <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-13"><code>Clear-Site-Data</code></a> header, return
-  an empty list.</p>
-       <li data-md="">
         <p>Let <var>types</var> be an empty list.</p>
        <li data-md="">
-        <p>Let <var>list</var> be the result of executing the algorithm defined in Section 4
-  of <a data-link-type="biblio" href="#biblio-http-jfv">[HTTP-JFV]</a> on the value of <var>response</var>’s <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-14"><code>Clear-Site-Data</code></a> header. If that algorithm results in an error, return an empty list.</p>
+        <p>Let <var>header</var> be the result of <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#extract-header-list-values">extracting header list values</a> given <code>Clear-Site-Data</code> and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-header-list">header list</a>.</p>
        <li data-md="">
-        <p>For each <var>item</var> in <var>list</var>:</p>
+        <p>If <var>header</var> is <code>null</code> or failure, return an empty list.</p>
+       <li data-md="">
+        <p>For each <var>type</var> in <var>header</var>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>item</var> does not have a <a data-link-type="dfn" href="#types" id="ref-for-types-10"><code>types</code></a> member, skip to the next <var>item</var>.</p>
-         <li data-md="">
-          <p>For each <var>type</var> in <var>item</var>’s <a data-link-type="dfn" href="#types" id="ref-for-types-11"><code>types</code></a> member’s value:</p>
-          <ol>
-           <li data-md="">
-            <p>If <var>type</var> is <a data-link-type="dfn" href="#cache" id="ref-for-cache-6"><code>cache</code></a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-6"><code>cookies</code></a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-6"><code>storage</code></a>,
+          <p>If <var>type</var> is <a data-link-type="dfn" href="#cache" id="ref-for-cache-6"><code>cache</code></a>, <a data-link-type="dfn" href="#cookies" id="ref-for-cookies-6"><code>cookies</code></a>, <a data-link-type="dfn" href="#storage" id="ref-for-storage-6"><code>storage</code></a>,
   or <a data-link-type="dfn" href="#executioncontexts" id="ref-for-executioncontexts-6"><code>executionContexts</code></a>, append <var>type</var> to <var>types</var>.</p>
-            <p>Otherwise, skip to the next <var>type</var>.</p>
-          </ol>
+          <p>Otherwise, skip to the next <var>type</var>.</p>
         </ol>
        <li data-md="">
         <p>Return <var>types</var>.</p>
       </ol>
       <h3 class="heading settled" data-level="3.2" id="clear-response"><span class="secno">3.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), this algorithm parses the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-15"><code>Clear-Site-Data</code></a> header to determine what needs to be
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), this algorithm parses the <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-14"><code>Clear-Site-Data</code></a> header to determine what needs to be
   cleared, which origins are affected, and then executes those requests.</p>
       <ol>
        <li data-md="">
@@ -1871,19 +1845,19 @@ host.</p>
        <li data-md="">
         <p>Let <var>types</var> be the result of <a href="#get-types">§3.1.1 Which data types ought to be removed for response?</a> executed on <var>response</var>.</p>
        <li data-md="">
-        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin</a> on <var>types</var>, <var>response</var>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a></code>'s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>.</p>
+        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin</a> on <var>types</var>, <var>response</var>’s <code class="idl"><a data-link-type="idl" href="https://fetch.spec.whatwg.org/#dom-response-url">url</a></code>'s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>.</p>
       </ol>
-      <p class="note" role="note">Note: Especially given the cross-context implications, user agents are
+      <p class="note" role="note"><span>Note:</span> Especially given the cross-context implications, user agents are
   are encouraged to give web developers some mechanism by which the clearing
   operation can be debugged. This might take the form of a console message or
   timeline entry indicating success.</p>
-      <h3 class="heading settled" data-level="3.3" id="clear-api"><span class="secno">3.3. </span><span class="content"> Clear data for <var>options</var> </span><a class="self-link" href="#clear-api"></a></h3>
-      <p>Given a <code class="idl"><a data-link-type="idl" href="#dictdef-storageclearoptions" id="ref-for-dictdef-storageclearoptions-2">StorageClearOptions</a></code> (<var>options</var>), this algorithm
+      <h3 class="heading settled" data-level="3.3" id="clear-api"><span class="secno">3.3. </span><span class="content"> Clear data for <var>types</var> </span><a class="self-link" href="#clear-api"></a></h3>
+      <p>Given a <code class="idl"><a data-link-type="idl" href="#typedefdef-storagecleartypes" id="ref-for-typedefdef-storagecleartypes-2">StorageClearTypes</a></code> (<var>input-types</var>), this algorithm
   determines what needs to be cleared, returns a Promise, and executes the
   request asynchronously.</p>
       <ol>
        <li data-md="">
-        <p>If the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec/specs/powerfulfeatures/#secure-context">secure context</a>,
+        <p>If the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#incumbent-settings-object">incumbent settings object</a> is not a <a data-link-type="dfn" href="https://w3c.github.io/webappsec-secure-contexts/#secure-context">secure context</a>,
   return a <code>Promise</code> rejected with <code>NotSupportedError</code>.</p>
        <li data-md="">
         <p>Let <var>promise</var> be a newly created <code>Promise</code> object.</p>
@@ -1892,19 +1866,19 @@ host.</p>
        <li data-md="">
         <p>Let <var>types</var> be an empty list.</p>
        <li data-md="">
-        <p>If <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-3">types</a></code> is an empty sequence:</p>
+        <p>If <var>input-types</var> is an empty sequence:</p>
         <ol>
          <li data-md="">
           <p>Append <code>cache</code>, <code>cookies</code>, <code>storage</code>, and <code>executionContexts</code> to <var>types</var>.</p>
         </ol>
        <li data-md="">
-        <p>Otherwise, for each <code class="idl"><a data-link-type="idl" href="#enumdef-storagecleartype" id="ref-for-enumdef-storagecleartype-2">StorageClearType</a></code> <var>type</var> in <var>options</var>’ <code class="idl"><a data-link-type="idl" href="#dom-storageclearoptions-types" id="ref-for-dom-storageclearoptions-types-4">types</a></code> property:</p>
+        <p>Otherwise, for each <code class="idl"><a data-link-type="idl" href="#enumdef-storagecleartype" id="ref-for-enumdef-storagecleartype-2">StorageClearType</a></code> <var>type</var> in <var>input-types</var>:</p>
         <ol>
          <li data-md="">
           <p>Append <var>type</var> to <var>types</var>.</p>
         </ol>
        <li data-md="">
-        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin</a> on <var>types</var> and the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent
+        <p>Execute <a href="#clear-internal">§3.4 Clear types for origin</a> on <var>types</var> and the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#incumbent-settings-object">incumbent
   settings object</a>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>.</p>
        <li data-md="">
         <p>Resolve <var>promise</var> with <code>undefined</code>.</p>
@@ -1924,49 +1898,50 @@ host.</p>
       </ol>
       <h4 class="heading settled" data-level="3.4.1" id="neuter-contexts"><span class="secno">3.4.1. </span><span class="content"> Neuter browsing contexts matching <var>origin</var> </span><a class="self-link" href="#neuter-contexts"></a></h4>
       <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) this algorithm walks through the
-  set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing contexts</a> which the user agent knows about, and
+  set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing contexts</a> which the user agent knows about, and
   sandboxes each in order to prevent them from recreating cleared data (from
   in-memory JavaScript variables, for instance). Once data is cleared, the
   affected browsing contexts will be hard-reloaded, as defined in <a href="#reload-contexts">§3.4.2 Reload browsing contexts matching origin</a>:</p>
       <ol>
        <li data-md="">
-        <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
+        <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing
   contexts</a>:</p>
         <ol>
          <li data-md="">
-          <p>Let <var>document</var> be <var>context</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#active-document">active
+          <p>Let <var>document</var> be <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active
   document</a>.</p>
          <li data-md="">
-          <p>While <var>document</var> is <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an <code>iframe srcdoc</code> document</a>, let <var>document</var> be the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#active-document">active document</a> of <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context-container">browsing context container</a>.</p>
+          <p>While <var>document</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/embedded-content.html#an-iframe-srcdoc-document">an <code>iframe srcdoc</code> document</a>, let <var>document</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a> of <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container">browsing context container</a>.</p>
          <li data-md="">
           <p>If <var>context</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
-            <p><a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#sandboxing:parse-a-sandboxing-directive">Parse a sandboxing directive</a> using the empty string as
-  the input, and <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#active-sandboxing-flag-set">active
+            <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive">Parse a sandboxing directive</a> using the empty string as
+  the input, and <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-sandboxing-flag-set">active
   sandboxing flag set</a> as the output.</p>
           </ol>
         </ol>
       </ol>
       <h4 class="heading settled" data-level="3.4.2" id="reload-contexts"><span class="secno">3.4.2. </span><span class="content"> Reload browsing contexts matching <var>origin</var> </span><a class="self-link" href="#reload-contexts"></a></h4>
       <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), this algorithm walks through the
-  set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing contexts</a> which the user agent knows about and reloads
+  set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing contexts</a> which the user agent knows about and reloads
   each of them:</p>
       <ol>
        <li data-md="">
-        <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing
+        <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing
   contexts</a>:</p>
         <ol>
          <li data-md="">
-          <p>Let <var>document</var> be <var>context</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#active-document">active
+          <p>Let <var>document</var> be <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active
   document</a>.</p>
          <li data-md="">
-          <p>While <var>document</var> is <a data-link-type="dfn" href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an <code>iframe srcdoc</code> document</a>, let <var>document</var> be the <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#active-document">active document</a> of <var>document</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#browsing-context-container">browsing context container</a>.</p>
+          <p>While <var>document</var> is <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/embedded-content.html#an-iframe-srcdoc-document">an <code>iframe srcdoc</code> document</a>, let <var>document</var> be the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a> of <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container">browsing context container</a>.</p>
          <li data-md="">
           <p>If <var>context</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
-            <p>Navigate <var>context</var> to <var>document</var>’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url">URL</a></code> with <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#replacement-enabled">replacement enabled</a> and <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#exceptions-enabled">exceptions enabled</a>. The <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#source-browsing-context">source browsing context</a> is <var>context</var>. This is a <a data-link-type="dfn" href="http://www.w3.org/TR/html5/browsers.html#reload-triggered-navigation">reload-triggered navigation</a>.</p>
+            <p>Navigate <var>context</var> to <var>document</var>’s <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/url/#concept-url">URL</a></code> with <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#replacement-enabled">replacement enabled</a> and the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#exceptions-enabled">exceptions enabled flag</a> set. The <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#source-browsing-context">source browsing context</a> is <var>context</var>.
+  This is a <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#reload-triggered-navigation">reload-triggered navigation</a>.</p>
           </ol>
         </ol>
       </ol>
@@ -1997,13 +1972,13 @@ host.</p>
       <h4 class="heading settled" data-level="3.4.4" id="clear-cookies"><span class="secno">3.4.4. </span><span class="content"> Clear cookies for <var>origin</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
       <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), this algorithm removes cookies
   from the user agent’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a> whose <code>domain</code> attribute <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-matches</a> <var>origin</var>’s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a>.</p>
-      <p class="note" role="note">Note: We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a>, as
+      <p class="note" role="note"><span>Note:</span> We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a>, as
   cookies ignore the same-origin policy, and there’s a distinct risk that we’d
   leave applications in an ill-defined state if we only cleared cookies for a
   particular subdomain. Consider <code>accounts.google.com</code> vs <code>mail.google.com</code>,
   for instance, both of which have cookies that signal a user’s signed-in
   status.</p>
-      <p class="note" role="note">Note: This algorithm assumes that the user agent has implemented a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
+      <p class="note" role="note"><span>Note:</span> This algorithm assumes that the user agent has implemented a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
   store</a> (as discussed in Section 5.3 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>), which offers the
   ability to retrieve a list of cookies by host, and to remove individual
   cookies.</p>
@@ -2032,26 +2007,26 @@ host.</p>
       <h4 class="heading settled" data-level="3.4.5" id="clear-dom"><span class="secno">3.4.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> </span><a class="self-link" href="#clear-dom"></a></h4>
       <ol>
        <li data-md="">
-        <p>For each <var>area</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/#the-localstorage-attribute">local storage
+        <p>For each <var>area</var> in the user agent’s set of <a class="idl-code" data-link-type="attribute" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">local storage
   areas</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</p>
         <ol>
          <li data-md="">
           <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
-            <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#storage-2">Storage</a></code> object associated
+            <p>Execute <code class="idl"><a data-link-type="idl" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-5">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a></code> object associated
   with <var>area</var>.</p>
           </ol>
         </ol>
        <li data-md="">
-        <p>For each <var>area</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/#the-sessionstorage-attribute">session storage
+        <p>For each <var>area</var> in the user agent’s set of <a class="idl-code" data-link-type="attribute" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">session storage
   areas</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</p>
         <ol>
          <li data-md="">
           <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
-            <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/#storage-2">Storage</a></code> object associated
+            <p>Execute <code class="idl"><a data-link-type="idl" href="#dom-storagemanager-clear" id="ref-for-dom-storagemanager-clear-6">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a></code> object associated
   with <var>area</var>.</p>
           </ol>
         </ol>
@@ -2118,15 +2093,15 @@ host.</p>
   requests in their scope, including third-party requests. Thus, supporting
   Clear-Site-Data would give them the ability to clear data for any origin.</p>
       <p>Note that if a request is sent to a service worker, not handled by it, then
-  restarted with a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#skip-service-worker-flag">skip-service-worker flag</a> and sent to the network, the
-  corresponding response is a network response and can be handled. The previous
-  attempt at obtaining the response from a service worker is irrelevant.</p>
+  restarted with a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#request-service-workers-mode">service-workers mode</a> of "<code>none</code>" and sent to the network, the
+  corresponding response is a network response and can be handled. The previous attempt at obtaining
+  the response from a service worker is irrelevant.</p>
       <p>Note also that a service worker update is a network response, and is therefore
   not affected by this restriction. This is important in order to support the
   use case in <a href="#example-killswitch">§1.1.4 Kill Switch</a>.</p>
       <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
       <h3 class="heading settled" data-level="5.1" id="user-vs-author"><span class="secno">5.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
-      <p>If triggered at appropriate times, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-16"><code>Clear-Site-Data</code></a> can
+      <p>If triggered at appropriate times, <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-15"><code>Clear-Site-Data</code></a> can
   increase a user’s privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
   is in control of when the clearing event is triggered. Even assuming a
@@ -2140,7 +2115,7 @@ host.</p>
   developers. Ideally, they will offer significantly more than we can offer at
   a platform level (clearing browsing history, for example).</p>
       <h3 class="heading settled" data-level="5.2" id="remnants"><span class="secno">5.2. </span><span class="content">Remnants of data on disk.</span><a class="self-link" href="#remnants"></a></h3>
-      <p>While <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-17"><code>Clear-Site-Data</code></a> triggers a clearing event in a
+      <p>While <a data-link-type="dfn" href="#clear-site-data" id="ref-for-clear-site-data-16"><code>Clear-Site-Data</code></a> triggers a clearing event in a
   user’s agent, it is difficult to make promises about the state of a user’s
   disk after a clearing event takes place. In particular, note that it is up
   to the user agent to ensure that all traces of a site’s date is actually
@@ -2218,83 +2193,70 @@ host.</p>
    <li>
     cache
     <ul>
-     <li><a href="#cache">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#grammardef-cache">(grammar)</a><span>, in §2.1</span>
+     <li><a href="#cache">definition of</a><span>, in §2.1</span>
      <li><a href="#dom-storagecleartype-cache">enum-value for StorageClearType</a><span>, in §2.2</span>
     </ul>
    <li><a href="#dom-storagecleartype-cache">"cache"</a><span>, in §2.2</span>
-   <li><a href="#dom-storagemanager-clear">clear(options)</a><span>, in §2.2</span>
    <li><a href="#clear-site-data">Clear-Site-Data</a><span>, in §2.1</span>
+   <li><a href="#dom-storagemanager-clear">clear(types)</a><span>, in §2.2</span>
    <li>
     cookies
     <ul>
-     <li><a href="#cookies">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#grammardef-cookies">(grammar)</a><span>, in §2.1</span>
+     <li><a href="#cookies">definition of</a><span>, in §2.1</span>
      <li><a href="#dom-storagecleartype-cookies">enum-value for StorageClearType</a><span>, in §2.2</span>
     </ul>
    <li><a href="#dom-storagecleartype-cookies">"cookies"</a><span>, in §2.2</span>
+   <li><a href="#grammardef-data-type">data-type</a><span>, in §2.1</span>
+   <li><a href="#grammardef-executioncontext">executionContext</a><span>, in §2.1</span>
    <li>
     executionContexts
     <ul>
-     <li><a href="#executioncontexts">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#executioncontexts">definition of</a><span>, in §2.1</span>
      <li><a href="#dom-storagecleartype-executioncontexts">enum-value for StorageClearType</a><span>, in §2.2</span>
     </ul>
    <li><a href="#dom-storagecleartype-executioncontexts">"executionContexts"</a><span>, in §2.2</span>
+   <li><a href="#grammardef-extension-type">extension-type</a><span>, in §2.1</span>
    <li>
     storage
     <ul>
-     <li><a href="#storage">definition of</a><span>, in §2.1.1</span>
+     <li><a href="#grammardef-storage">(grammar)</a><span>, in §2.1</span>
+     <li><a href="#storage">definition of</a><span>, in §2.1</span>
      <li><a href="#dom-storagecleartype-storage">enum-value for StorageClearType</a><span>, in §2.2</span>
     </ul>
    <li><a href="#dom-storagecleartype-storage">"storage"</a><span>, in §2.2</span>
-   <li><a href="#dictdef-storageclearoptions">StorageClearOptions</a><span>, in §2.2</span>
    <li><a href="#enumdef-storagecleartype">StorageClearType</a><span>, in §2.2</span>
-   <li>
-    types
-    <ul>
-     <li><a href="#types">definition of</a><span>, in §2.1.1</span>
-     <li><a href="#dom-storageclearoptions-types">dict-member for StorageClearOptions</a><span>, in §2.2</span>
-    </ul>
+   <li><a href="#typedefdef-storagecleartypes">StorageClearTypes</a><span>, in §2.2</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
-     <li><a href="https://fetch.spec.whatwg.org/#concept-header-list">header list</a>
-     <li><a href="https://fetch.spec.whatwg.org/#http-network-fetch">http-network fetch</a>
+     <li><a href="https://fetch.spec.whatwg.org/#extract-header-list-values">extracting header list values</a>
+     <li><a href="https://fetch.spec.whatwg.org/#concept-response-header-list">header list</a>
+     <li><a href="https://fetch.spec.whatwg.org/#concept-http-network-fetch">http-network fetch</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
-     <li><a href="https://fetch.spec.whatwg.org/#skip-service-worker-flag">skip-service-worker flag</a>
-     <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>
+     <li><a href="https://fetch.spec.whatwg.org/#request-service-workers-mode">service-workers mode</a>
+     <li><a href="https://fetch.spec.whatwg.org/#dom-response-url">url</a>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><a href="https://html.spec.whatwg.org/multipage/#storage-2">Storage</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/interaction.html#dom-datatransferitemlist-clear">clear</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/#the-localstorage-attribute">local storage area</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/#dom-localstorage">localStorage</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/#the-sessionstorage-attribute">session storage area</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/#dom-sessionstorage">sessionStorage</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[html5]</a> defines the following terms:
-    <ul>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#active-document">active document</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#active-sandboxing-flag-set">active sandboxing flag set</a>
-     <li><a href="http://www.w3.org/TR/html5/embedded-content-0.html#an-iframe-srcdoc-document">an iframe srcdoc document</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context">browsing context</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#browsing-context-container">browsing context container</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#exceptions-enabled">exceptions enabled</a>
-     <li><a href="http://www.w3.org/TR/html5/webappapis.html#incumbent-settings-object">incumbent settings object</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#sandboxing:parse-a-sandboxing-directive">parse a sandboxing directive</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#reload-triggered-navigation">reload-triggered navigation</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#replacement-enabled">replacement enabled</a>
-     <li><a href="http://www.w3.org/TR/html5/browsers.html#source-browsing-context">source browsing context</a>
-    </ul>
-   <li>
-    <a data-link-type="biblio">[HTTP-JFV]</a> defines the following terms:
-    <ul>
-     <li><a href="https://greenbytes.de/tech/webdav/draft-ietf-httpbis-jfv-02.html#rfc.section.2">json-field-value</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#active-sandboxing-flag-set">active sandboxing flag set</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/embedded-content.html#an-iframe-srcdoc-document">an iframe srcdoc document</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing context</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context-container">browsing context container</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#exceptions-enabled">exceptions enabled flag</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#incumbent-settings-object">incumbent settings object</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive">parse a sandboxing directive</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#reload-triggered-navigation">reload-triggered navigation</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#replacement-enabled">replacement enabled</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#source-browsing-context">source browsing context</a>
     </ul>
    <li>
     <a data-link-type="biblio">[INDEXEDDB]</a> defines the following terms:
@@ -2315,6 +2277,11 @@ host.</p>
      <li><a href="https://publicsuffix.org/list/#">registered domain</a>
     </ul>
    <li>
+    <a data-link-type="biblio">[RFC5234]</a> defines the following terms:
+    <ul>
+     <li><a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">alpha</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[RFC6265]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a>
@@ -2327,14 +2294,19 @@ host.</p>
      <li><a href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>
     </ul>
    <li>
+    <a data-link-type="biblio">[rfc7230]</a> defines the following terms:
+    <ul>
+     <li><a href="https://tools.ietf.org/html/rfc7230#section-7">#rule</a>
+    </ul>
+   <li>
     <a data-link-type="biblio">[RFC7234]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc7234#section-2">network cache</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[SECURE-CONTEXTS]</a> defines the following terms:
+    <a data-link-type="biblio">[secure-contexts]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/webappsec/specs/powerfulfeatures/#secure-context">secure context</a>
+     <li><a href="https://w3c.github.io/webappsec-secure-contexts/#secure-context">secure context</a>
     </ul>
    <li>
     <a data-link-type="biblio">[SERVICE-WORKERS]</a> defines the following terms:
@@ -2350,7 +2322,7 @@ host.</p>
      <li><a href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[WHATWG-URL]</a> defines the following terms:
+    <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
      <li><a href="http://www.w3.org/TR/url/#concept-url">URL</a>
      <li><a href="http://www.w3.org/TR/url/#concept-url-host">host</a>
@@ -2364,17 +2336,13 @@ host.</p>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-file-system-api">[FILE-SYSTEM-API]
-   <dd>Eric Uhrhane. <a href="http://dev.w3.org/2009/dap/file-system/file-dir-sys.html">File API: Directories and System</a>. 24 April 2014. NOTE. URL: <a href="http://dev.w3.org/2009/dap/file-system/file-dir-sys.html">http://dev.w3.org/2009/dap/file-system/file-dir-sys.html</a>
+   <dd>Eric Uhrhane. <a href="https://www.w3.org/TR/file-system-api/">File API: Directories and System</a>. URL: <a href="https://www.w3.org/TR/file-system-api/">https://www.w3.org/TR/file-system-api/</a>
    <dt id="biblio-html">[HTML]
-   <dd>Ian Hickson. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
-   <dt id="biblio-html5">[HTML5]
-   <dd>Ian Hickson; et al. <a href="https://www.w3.org/html/wg/drafts/html/master/">HTML5</a>. 28 October 2014. REC. URL: <a href="https://www.w3.org/html/wg/drafts/html/master/">https://www.w3.org/html/wg/drafts/html/master/</a>
-   <dt id="biblio-http-jfv">[HTTP-JFV]
-   <dd>Julian Reschke. <a href="https://greenbytes.de/tech/webdav/draft-ietf-httpbis-jfv-02.html">A JSON Encoding for HTTP Header Field Values</a>. URL: <a href="https://greenbytes.de/tech/webdav/draft-ietf-httpbis-jfv-02.html">https://greenbytes.de/tech/webdav/draft-ietf-httpbis-jfv-02.html</a>
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-indexeddb">[INDEXEDDB]
-   <dd>Nikunj Mehta; et al. <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html">http://dvcs.w3.org/hg/IndexedDB/raw-file/tip/Overview.html</a>
+   <dd>Nikunj Mehta; et al. <a href="https://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
    <dt id="biblio-mixed-content">[MIXED-CONTENT]
-   <dd>Mike West. <a href="https://w3c.github.io/webappsec-mixed-content/">Mixed Content</a>. 2 August 2016. CR. URL: <a href="https://w3c.github.io/webappsec-mixed-content/">https://w3c.github.io/webappsec-mixed-content/</a>
+   <dd>Mike West. <a href="https://www.w3.org/TR/mixed-content/">Mixed Content</a>. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
    <dt id="biblio-psl">[PSL]
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
    <dt id="biblio-rfc2119">[RFC2119]
@@ -2387,27 +2355,29 @@ host.</p>
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6265">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6265">https://tools.ietf.org/html/rfc6265</a>
    <dt id="biblio-rfc6454">[RFC6454]
    <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6454">The Web Origin Concept</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6454">https://tools.ietf.org/html/rfc6454</a>
+   <dt id="biblio-rfc7230">[RFC7230]
+   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7230">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7230">https://tools.ietf.org/html/rfc7230</a>
    <dt id="biblio-rfc7234">[RFC7234]
    <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7234">Hypertext Transfer Protocol (HTTP/1.1): Caching</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7234">https://tools.ietf.org/html/rfc7234</a>
    <dt id="biblio-rfc7235">[RFC7235]
    <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7235">https://tools.ietf.org/html/rfc7235</a>
    <dt id="biblio-secure-contexts">[SECURE-CONTEXTS]
-   <dd>Mike West; Yan Zhu. <a href="https://w3c.github.io/webappsec-secure-contexts/">Secure Contexts</a>. URL: <a href="https://w3c.github.io/webappsec-secure-contexts/">https://w3c.github.io/webappsec-secure-contexts/</a>
+   <dd>Mike West. <a href="https://www.w3.org/TR/secure-contexts/">Secure Contexts</a>. URL: <a href="https://www.w3.org/TR/secure-contexts/">https://www.w3.org/TR/secure-contexts/</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
-   <dd>Alex Russell; et al. <a href="https://w3c.github.io/ServiceWorker/v1/">Service Workers 1</a>. 11 October 2016. WD. URL: <a href="https://w3c.github.io/ServiceWorker/v1/">https://w3c.github.io/ServiceWorker/v1/</a>
+   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
    <dt id="biblio-storage">[STORAGE]
    <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
    <dt id="biblio-tokbind">[TOKBIND]
    <dd>Andrei Popov; et al. <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol">The Token Binding Protocol Version 1.0</a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol">https://tools.ietf.org/html/draft-ietf-tokbind-protocol</a>
+   <dt id="biblio-url">[URL]
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
    <dt id="biblio-webdatabase">[WEBDATABASE]
    <dd>Ian Hickson. <a href="https://www.w3.org/TR/webdatabase/">Web SQL Database</a>. 18 November 2010. NOTE. URL: <a href="https://www.w3.org/TR/webdatabase/">https://www.w3.org/TR/webdatabase/</a>
-   <dt id="biblio-whatwg-url">[WHATWG-URL]
-   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-csp2">[CSP2]
-   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://w3c.github.io/webappsec-csp/">Content Security Policy Level 2</a>. 8 November 2016. PR. URL: <a href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a>
+   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://www.w3.org/TR/CSP2/">Content Security Policy Level 2</a>. URL: <a href="https://www.w3.org/TR/CSP2/">https://www.w3.org/TR/CSP2/</a>
    <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
   </dl>
@@ -2419,12 +2389,10 @@ host.</p>
   <a class="s" href="#dom-storagecleartype-executioncontexts">"executionContexts"</a>
 };
 
-<span class="kt">dictionary</span> <a class="nv" href="#dictdef-storageclearoptions">StorageClearOptions</a> {
-  <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#enumdef-storagecleartype">StorageClearType</a>> <a class="nv" data-type="sequence<StorageClearType> " href="#dom-storageclearoptions-types">types</a>;
-};
+<span class="kt">typedef</span> <span class="kt">sequence</span>&lt;<a class="n" data-link-type="idl-name" href="#enumdef-storagecleartype">StorageClearType</a>> <a class="nv" href="#typedefdef-storagecleartypes">StorageClearTypes</a>;
 
 <span class="kt">partial</span> <span class="kt">interface</span> <a class="nv idl-code" data-link-type="interface" href="https://storage.spec.whatwg.org/#storagemanager">StorageManager</a> {
-  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-storagemanager-clear">clear</a>(<a class="n" data-link-type="idl-name" href="#dictdef-storageclearoptions">StorageClearOptions</a> <a class="nv idl-code" data-link-type="argument" href="#dom-storagemanager-clear-options-options">options</a>);
+  <span class="kt">Promise</span>&lt;<span class="kt">void</span>> <a class="nv idl-code" data-link-type="method" href="#dom-storagemanager-clear">clear</a>(<a class="n" data-link-type="idl-name" href="#typedefdef-storagecleartypes">StorageClearTypes</a> <a class="nv idl-code" data-link-type="argument" href="#dom-storagemanager-clear-types-types">types</a>);
 };
 
 </pre>
@@ -2452,29 +2420,27 @@ host.</p>
     <li><a href="#ref-for-clear-site-data-3">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-clear-site-data-4">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-clear-site-data-5">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-clear-site-data-6">2.1.1. 
-    The types member </a> <a href="#ref-for-clear-site-data-7">(2)</a> <a href="#ref-for-clear-site-data-8">(3)</a> <a href="#ref-for-clear-site-data-9">(4)</a>
-    <li><a href="#ref-for-clear-site-data-10">2.3. Fetch Integration</a> <a href="#ref-for-clear-site-data-11">(2)</a> <a href="#ref-for-clear-site-data-12">(3)</a>
-    <li><a href="#ref-for-clear-site-data-13">3.1.1. 
-    Which data types ought to be removed for response? </a> <a href="#ref-for-clear-site-data-14">(2)</a>
-    <li><a href="#ref-for-clear-site-data-15">3.2. 
+    <li><a href="#ref-for-clear-site-data-6">2.1. 
+    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-clear-site-data-7">(2)</a> <a href="#ref-for-clear-site-data-8">(3)</a> <a href="#ref-for-clear-site-data-9">(4)</a> <a href="#ref-for-clear-site-data-10">(5)</a>
+    <li><a href="#ref-for-clear-site-data-11">2.3. Fetch Integration</a> <a href="#ref-for-clear-site-data-12">(2)</a> <a href="#ref-for-clear-site-data-13">(3)</a>
+    <li><a href="#ref-for-clear-site-data-14">3.2. 
     Clear data for response </a>
-    <li><a href="#ref-for-clear-site-data-16">5.1. Web developers control the timing.</a>
-    <li><a href="#ref-for-clear-site-data-17">5.2. Remnants of data on disk.</a>
+    <li><a href="#ref-for-clear-site-data-15">5.1. Web developers control the timing.</a>
+    <li><a href="#ref-for-clear-site-data-16">5.2. Remnants of data on disk.</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="types">
-   <b><a href="#types">#types</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="grammardef-data-type">
+   <b><a href="#grammardef-data-type">#grammardef-data-type</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-types-1">1.1.1. Signing Out</a>
-    <li><a href="#ref-for-types-2">1.1.2. Targeted Clearing</a>
-    <li><a href="#ref-for-types-3">1.1.3. Keep Critical Cookies</a>
-    <li><a href="#ref-for-types-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-types-5">2.1.1. 
-    The types member </a> <a href="#ref-for-types-6">(2)</a> <a href="#ref-for-types-7">(3)</a> <a href="#ref-for-types-8">(4)</a>
-    <li><a href="#ref-for-types-9">2.3. Fetch Integration</a>
-    <li><a href="#ref-for-types-10">3.1.1. 
-    Which data types ought to be removed for response? </a> <a href="#ref-for-types-11">(2)</a>
+    <li><a href="#ref-for-grammardef-data-type-1">2.1. 
+    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-data-type-2">(2)</a>
+   </ul>
+  </aside>
+  <aside class="dfn-panel" data-for="grammardef-extension-type">
+   <b><a href="#grammardef-extension-type">#grammardef-extension-type</a></b><b>Referenced in:</b>
+   <ul>
+    <li><a href="#ref-for-grammardef-extension-type-1">2.1. 
+    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-extension-type-2">(2)</a> <a href="#ref-for-grammardef-extension-type-3">(3)</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="cache">
@@ -2484,8 +2450,8 @@ host.</p>
     <li><a href="#ref-for-cache-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-cache-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-cache-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-cache-5">2.1.1. 
-    The types member </a>
+    <li><a href="#ref-for-cache-5">2.1. 
+    The Clear-Site-Data HTTP Response Header Field </a>
     <li><a href="#ref-for-cache-6">3.1.1. 
     Which data types ought to be removed for response? </a>
    </ul>
@@ -2497,8 +2463,8 @@ host.</p>
     <li><a href="#ref-for-cookies-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-cookies-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-cookies-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-cookies-5">2.1.1. 
-    The types member </a>
+    <li><a href="#ref-for-cookies-5">2.1. 
+    The Clear-Site-Data HTTP Response Header Field </a>
     <li><a href="#ref-for-cookies-6">3.1.1. 
     Which data types ought to be removed for response? </a>
    </ul>
@@ -2510,8 +2476,8 @@ host.</p>
     <li><a href="#ref-for-storage-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-storage-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-storage-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-storage-5">2.1.1. 
-    The types member </a>
+    <li><a href="#ref-for-storage-5">2.1. 
+    The Clear-Site-Data HTTP Response Header Field </a>
     <li><a href="#ref-for-storage-6">3.1.1. 
     Which data types ought to be removed for response? </a>
    </ul>
@@ -2523,8 +2489,8 @@ host.</p>
     <li><a href="#ref-for-executioncontexts-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-executioncontexts-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-executioncontexts-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-executioncontexts-5">2.1.1. 
-    The types member </a>
+    <li><a href="#ref-for-executioncontexts-5">2.1. 
+    The Clear-Site-Data HTTP Response Header Field </a>
     <li><a href="#ref-for-executioncontexts-6">3.1.1. 
     Which data types ought to be removed for response? </a>
    </ul>
@@ -2534,35 +2500,29 @@ host.</p>
    <ul>
     <li><a href="#ref-for-enumdef-storagecleartype-1">2.2. JavaScript API</a>
     <li><a href="#ref-for-enumdef-storagecleartype-2">3.3. 
-    Clear data for options </a>
+    Clear data for types </a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dictdef-storageclearoptions">
-   <b><a href="#dictdef-storageclearoptions">#dictdef-storageclearoptions</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="typedefdef-storagecleartypes">
+   <b><a href="#typedefdef-storagecleartypes">#typedefdef-storagecleartypes</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dictdef-storageclearoptions-1">2.2. JavaScript API</a>
-    <li><a href="#ref-for-dictdef-storageclearoptions-2">3.3. 
-    Clear data for options </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="dom-storageclearoptions-types">
-   <b><a href="#dom-storageclearoptions-types">#dom-storageclearoptions-types</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-storageclearoptions-types-1">2.2. JavaScript API</a> <a href="#ref-for-dom-storageclearoptions-types-2">(2)</a>
-    <li><a href="#ref-for-dom-storageclearoptions-types-3">3.3. 
-    Clear data for options </a> <a href="#ref-for-dom-storageclearoptions-types-4">(2)</a>
+    <li><a href="#ref-for-typedefdef-storagecleartypes-1">2.2. JavaScript API</a>
+    <li><a href="#ref-for-typedefdef-storagecleartypes-2">3.3. 
+    Clear data for types </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="dom-storagemanager-clear">
    <b><a href="#dom-storagemanager-clear">#dom-storagemanager-clear</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-storagemanager-clear-1">2.2. JavaScript API</a> <a href="#ref-for-dom-storagemanager-clear-2">(2)</a> <a href="#ref-for-dom-storagemanager-clear-3">(3)</a>
+    <li><a href="#ref-for-dom-storagemanager-clear-1">2.2. JavaScript API</a> <a href="#ref-for-dom-storagemanager-clear-2">(2)</a> <a href="#ref-for-dom-storagemanager-clear-3">(3)</a> <a href="#ref-for-dom-storagemanager-clear-4">(4)</a>
+    <li><a href="#ref-for-dom-storagemanager-clear-5">3.4.5. 
+    Clear DOM-accessible storage for origin </a> <a href="#ref-for-dom-storagemanager-clear-6">(2)</a>
    </ul>
   </aside>
-  <aside class="dfn-panel" data-for="dom-storagemanager-clear-options-options">
-   <b><a href="#dom-storagemanager-clear-options-options">#dom-storagemanager-clear-options-options</a></b><b>Referenced in:</b>
+  <aside class="dfn-panel" data-for="dom-storagemanager-clear-types-types">
+   <b><a href="#dom-storagemanager-clear-types-types">#dom-storagemanager-clear-types-types</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-dom-storagemanager-clear-options-options-1">2.2. JavaScript API</a>
+    <li><a href="#ref-for-dom-storagemanager-clear-types-types-1">2.2. JavaScript API</a>
    </ul>
   </aside>
 <script>/* script-dfn-panel */

@@ -18,25 +18,16 @@ Boilerplate: omit conformance, omit feedback-header
 Markup Shorthands: css off, markdown on
 !Participate: <a href="https://github.com/w3c/webappsec-clear-site-data/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-clear-site-data/issues">open issues</a>)
 </pre>
+<pre class="link-defaults">
+spec:html; type:dfn; for:/; text:browsing context
+spec:fetch; type:dfn; for:/; text:response
+spec:fetch; type:dfn; for:/; text:http-network fetch
+
+<!-- Needs to be exported -->
+spec:html; type:dfn; for:/; text:active sandboxing flag set
+spec:html; type:dfn; for:/; text:reload-triggered navigation
+</pre>
 <pre class="anchors">
-spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
-  type: dfn
-    text: fetching
-    text: main fetch
-    text: append; url: concept-header-list-append
-    text: response; url: concept-response
-    text: header list; for: response; url: concept-header-list
-    text: HTTP-network fetch; url: http-network-fetch;
-    text: extracting header list values
-  type: interface
-    text: Request; url: concept-request
-  type: attribute
-    text: url; for: Request; url: concept-request-url
-    text: url; for: Response; url: concept-response-url
-    text: client; for: Request; url: concept-request-client
-    text: context; for: Request; url: concept-request-context
-    text: context-frame-type; for: Request; url: concept-request-context-frame-type
-    text: header-list; for: Request; url: concept-request-header-list
 spec: INDEXEDDB; urlPrefix: https://w3c.github.io/IndexedDB/
   type: dfn
     text: database deletion steps; url: dfn-steps-for-deleting-a-database
@@ -44,52 +35,6 @@ spec: INDEXEDDB; urlPrefix: https://w3c.github.io/IndexedDB/
     text: delete pending; url: dfn-delete-pending
   type: interface
     text: IDBDatabase; url: idl-def-IDBDatabase
-spec: HTML5; urlPrefix: http://www.w3.org/TR/html5/
-  type: dfn
-    urlPrefix: embedded-content-0.html
-      text: an iframe srcdoc document
-    urlPrefix: browsers.html
-      text: ancestor browsing context
-      text: active document
-      text: browsing context
-      text: browsing context container
-      text: creating a new document object; url: create-a-document-object
-      text: nested browsing context
-      text: active sandboxing flag set
-      text: parse a sandboxing directive; url: sandboxing:parse-a-sandboxing-directive
-      text: replacement enabled
-      text: exceptions enabled
-      text: source browsing context
-      text: reload-triggered navigation; url: reload-triggered-navigation
-    urlPrefix: webappapis.html
-      text: environment settings object; url: settings-object
-      text: incumbent settings object
-      text: responsible document
-      text: responsible browsing context
-      text: relevant settings object for a script
-    urlPrefix: infrastructure.html
-      text: split on spaces; url: split-a-string-on-spaces
-  type: interface
-    urlPrefix: browsers.html
-      text: Location
-  type: method
-    urlPrefix: browsers.html
-      text: reload(); for: Location; url: dom-location-reload
-spec: HTML; urlPrefix: https://html.spec.whatwg.org/multipage/
-  urlPRefix: webstorage.html
-    type: dfn
-      text: local storage area; url: the-localstorage-attribute
-      text: session storage area; url: the-sessionstorage-attribute
-    type: attribute
-      text: localStorage; for: WindowLocalStorage; url: dom-localstorage
-      text: sessionStorage; for: WindowSessionStorage; url: dom-sessionstorage
-    type: interface
-      text: Storage; url: storage-2
-  urlPrefix: workers.html
-    type: dfn
-      text: set up a worker environment settings object
-    type: interface
-      text: SharedWorkers
 spec: MIX; urlPrefix: https://w3c.github.io/webappsec/specs/mixedcontent/
   type: dfn
     text: embedding document
@@ -103,9 +48,6 @@ spec: MIX; urlPrefix: https://w3c.github.io/webappsec/specs/mixedcontent/
       text: potentially secure origin
       text: potentially secure url
       text: potentially secure
-spec: SECURE-CONTEXTS; urlPrefix: https://w3c.github.io/webappsec/specs/powerfulfeatures/
-  type: dfn
-    text: secure context
 spec: STORAGE; urlPrefix: https://storage.spec.whatwg.org/
   type: interface
     text: StorageManager
@@ -155,12 +97,6 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 </pre>
 <pre class="biblio">
 {
-  "SECURE-CONTEXTS": {
-    "authors": [ "Mike West", "Yan Zhu" ],
-    "href": "https://w3c.github.io/webappsec-secure-contexts/",
-    "title": "Secure Contexts",
-    "publisher": "W3C"
-  },
   "CHANNELID": {
     "authors": [ "Dirk Balfanz", "Ryan Hamilton" ],
     "href": "https://tools.ietf.org/html/draft-balfanz-tls-channelid",
@@ -442,14 +378,14 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     relevant data for a user:
 
     <pre>
-      navigator.storage.<a method>clear()</a>;
+      navigator.storage.<a method for="StorageManager">clear()</a>;
     </pre>
 
     If they only wished to clear the otherwise inaccessible cache for the
     current origin:
 
     <pre>
-      navigator.storage.<a method>clear</a>([ "cache" ]);
+      navigator.storage.<a method for="StorageManager" lt="clear()">clear</a>([ "cache" ]);
     </pre>
   </div>
 
@@ -468,7 +404,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     };
   </pre>
   <dl dfn-for="StorageManager">
-    <dt><dfn method lt="clear(types)">clear(types)</dfn></dt>
+    <dt><dfn method>clear(types)</dfn></dt>
     <dd>
       Clears data based on the values in the |types| argument.
       Returns a Promise that resolves when clearing is complete. If no
@@ -490,7 +426,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   <a>HTTP-network fetch</a> algorithm, execute the following step:
 
   15.  If <var ignore>credentials flag</var> is set, and |response|'s
-       <a>header list</a> contains a header named <a>`Clear-Site-Data`</a>, then
+       [=response/header list=] contains a header named <a>`Clear-Site-Data`</a>, then
        execute [[#clear-response]] on |response|.
 
   Note: This happens <em>after</em> `Set-Cookie` headers are
@@ -655,10 +591,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
       3.  If |context|'s <a>origin</a> is |origin|:
 
-          1.  Navigate |context| to |document|'s {{URL}} with
-              <a>replacement enabled</a> and <a>exceptions enabled</a>. The
-              <a>source browsing context</a> is |context|. This is a
-              <a>reload-triggered navigation</a>.
+          1.  Navigate |context| to |document|'s {{URL}} with <a>replacement enabled</a> and the
+              <a>exceptions enabled flag</a> set. The <a>source browsing context</a> is |context|.
+              This is a <a>reload-triggered navigation</a>.
           
   <h4 id="clear-cache">
     Clear cache for |origin|
@@ -735,20 +670,20 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     Clear DOM-accessible storage for |origin|
   </h4>
 
-  1.  For each |area| in the user agent's set of <a>local storage
+  1.  For each |area| in the user agent's set of <a lt="localStorage" attribute>local storage
       areas</a> [[!HTML]]:
 
       1.  If  |area|'s <a>origin</a> is |origin|:
 
-          1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
+          1.  Execute {{StorageManager/clear()}} on the {{StorageManager}} object associated
               with |area|.
 
-  2.  For each |area| in the user agent's set of <a>session storage
+  2.  For each |area| in the user agent's set of <a lt="sessionStorage" attribute>session storage
       areas</a> [[!HTML]]:
 
       1.  If  |area|'s <a>origin</a> is |origin|:
 
-          1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
+          1.  Execute {{StorageManager/clear()}} on the {{StorageManager}} object associated
               with |area|.
 
   3.  For each |database| in the user agent's set of Indexed
@@ -810,9 +745,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   Clear-Site-Data would give them the ability to clear data for any origin.
 
   Note that if a request is sent to a service worker, not handled by it, then
-  restarted with a <a>skip-service-worker flag</a> and sent to the network, the
-  corresponding response is a network response and can be handled. The previous
-  attempt at obtaining the response from a service worker is irrelevant.
+  restarted with a [=request/service-workers mode=] of "`none`" and sent to the network, the
+  corresponding response is a network response and can be handled. The previous attempt at obtaining
+  the response from a service worker is irrelevant.
 
   Note also that a service worker update is a network response, and is therefore
   not affected by this restriction. This is important in order to support the
