@@ -27,6 +27,7 @@ spec: FETCH; urlPrefix: https://fetch.spec.whatwg.org/
     text: response; url: concept-response
     text: header list; for: response; url: concept-header-list
     text: HTTP-network fetch; url: http-network-fetch;
+    text: extracting header list values
   type: interface
     text: Request; url: concept-request
   type: attribute
@@ -127,9 +128,8 @@ spec: SERVICE-WORKERS; urlPrefix: http://www.w3.org/TR/service-workers/
   type: method
     text: unregister(); for: ServiceWorkerRegistration; url: navigator-service-worker-unregister
 spec: RFC5234; urlPrefix: https://tools.ietf.org/html/rfc5234
-  type: dfn
-    text: VCHAR; url: appendix-B.1
-    text: WSP; url: appendix-B.1
+  type: grammar
+    text: ALPHA; url: appendix-B.1
 spec: RFC5890; urlPrefix: https://tools.ietf.org/html/rfc5890
   type: dfn
     text: label; url: section-2.2
@@ -147,15 +147,8 @@ spec: RFC7234; urlPrefix: https://tools.ietf.org/html/rfc7234
   type: dfn
     text: network cache; url: section-2
 spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
-  type: dfn
-    text: OWS; url: section-3.2.3
-    text: BWS; url: section-3.2.3
-    text: token; url: section-3.2.6
-    text: quoted-string; url: section-3.2.6
-    text: #rule; url: section-7
-spec: HTTP-JFV; urlPrefix: https://greenbytes.de/tech/webdav/draft-ietf-httpbis-jfv-02.html
   type: grammar
-    text: json-field-value; url: rfc.section.2
+    text: #rule; url: section-7
 spec: PSL; urlPrefix: https://publicsuffix.org/list/
   type: dfn
     text: registered domain; url: #
@@ -167,11 +160,6 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     "href": "https://w3c.github.io/webappsec-secure-contexts/",
     "title": "Secure Contexts",
     "publisher": "W3C"
-  },
-  "HTTP-JFV": {
-    "authors": [ "Julian Reschke" ],
-    "href": "https://greenbytes.de/tech/webdav/draft-ietf-httpbis-jfv-02.html",
-    "title": "A JSON Encoding for HTTP Header Field Values"
   },
   "CHANNELID": {
     "authors": [ "Dirk Balfanz", "Ryan Hamilton" ],
@@ -240,7 +228,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     They can do so by sending the following HTTP header in the response:
 
     <pre>
-      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>cookies</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
+      <a>Clear-Site-Data</a>: <a>cache</a>, <a>cookies</a>, <a>storage</a>, <a>executionContexts</a>
     </pre>
   </div>
 
@@ -276,7 +264,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     preflight, and would return the following header for the actual request:
 
     <pre>
-      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>cookies</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
+      <a>Clear-Site-Data</a>: <a>cache</a>, <a>cookies</a>, <a>storage</a>, <a>executionContexts</a>
     </pre>
   </div>
 
@@ -293,7 +281,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     includes all the types except for "<a>cookies</a>":
 
     <pre>
-      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
+      <a>Clear-Site-Data</a>: <a>cache</a>, <a>storage</a>, <a>executionContexts</a>
     </pre>
   </div>
 
@@ -311,7 +299,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     following HTTP header in a response to wipe out local sources of data:
 
     <pre>
-      <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>", "<a>cookies</a>", "<a>storage</a>", "<a>executionContexts</a>" ] }
+      <a>Clear-Site-Data</a>: <a>cache</a>, <a>cookies</a>, <a>storage</a>, <a>executionContexts</a>
     </pre>
 
     Note: Installing a Service Worker guarantees that a request will go out to
@@ -352,34 +340,21 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   [[!RFC5234]]:
 
   <pre class="abnf" link-type="grammar" dfn-type="grammar">
-    Report-To = <a>json-field-value</a>
-                ; See Section 2 of [[HTTP-JFV]], and Section 2 of [[RFC7159]]
+    Clear-Site-Data = 1#( <a>data-type</a> | <a>extension-type</a> )
+    <dfn>data-type</dfn> = "<dfn>cache</dfn>" | "<dfn>cookies</dfn>" | "<dfn>storage</dfn>" | "<dfn>executionContext</dfn>"
+    <dfn>extension-type</dfn> = 1*( <a>ALPHA</a> | "-")
+    ; <a>#rule</a> is defined in Section 7 of RFC 7230.
+    ; <a>ALPHA</a> is defined in Appendix B.1 of RFC 5234.
   </pre>
 
-  The header's value is interpreted as an array of JSON objects, as described in
-  Section 4 of [[HTTP-JFV]].
+  [[#fetch-integration]] and [[#parsing]] describe how the
+  <a>Clear-Site-Data</a> header is processed.
 
-  Each object in the array represents a clearing action that the user agent MUST
-  undertake, and will be parsed as defined in [[#parsing]].
-
-  The following subsections defined the initial set of known members in each
-  JSON object the header's value defines. Future versions of this document may
-  define additional such members, and user agents MUST ignore unknown members
-  when parsing the header.
-
-  <h4 id="types-member">
-    The `types` member
-  </h4>
-
-  The <dfn>`types`</dfn> member is an array of keywords designating the kinds
-  of data that the server wishes the user agent to remove. The member's value
-  MUST be an array, and that array MUST contain only strings; any other types
-  will result in a parse error.
-
-  The following are the initial set of known types which may be specified in
-  the member's array value. Future versions of this document may define
-  additional types, and user agents MUST ignore unknown types when parsing the
-  header:
+  The <a grammar>data-type</a> grammar defines an initial set of known data
+  types which can be cleared using this API. See their descriptions below.
+  Future versions of the header can support additional datatypes, which MUST
+  comply with the <a grammar>extension-type</a> grammar. User agents MUST
+  ignore unknown <a grammar>extension-type</a>s whhen parsing the header.
 
   :   "<dfn>`cache`</dfn>"
   ::  The "`cache`" type indicates that the server wishes to remove locally
@@ -397,7 +372,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com`: to be cleared:
 
         <pre>
-          <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cache</a>" ] }
+          <a>Clear-Site-Data</a>: <a>cache</a>
         </pre>
       </div>
 
@@ -416,7 +391,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be cleared:
 
         <pre>
-          <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>cookies</a>" ] }
+          <a>Clear-Site-Data</a>: <a>cookies</a>
         </pre>
       </div>
 
@@ -436,7 +411,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be cleared:
 
         <pre>
-          <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>storage</a>" ] }
+          <a>Clear-Site-Data</a>: <a>storage</a>
         </pre>
       </div>
 
@@ -453,7 +428,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be neutered and reloaded:
 
         <pre>
-          <a>Clear-Site-Data</a>: { "<a>types</a>": [ "<a>executionContexts</a>" ] }
+          <a>Clear-Site-Data</a>: <a>executionContexts</a>
         </pre>
       </div>
 
@@ -474,9 +449,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     current origin:
 
     <pre>
-      navigator.storage.<a method>clear</a>({
-        <a dict-member>types</a>: [ "cache" ],
-      });
+      navigator.storage.<a method>clear</a>([ "cache" ]);
     </pre>
   </div>
 
@@ -488,24 +461,21 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       "executionContexts"
     };
 
-    dictionary StorageClearOptions {
-      required sequence&lt;StorageClearType&gt; types;
-    };
+    typedef sequence&lt;StorageClearType&gt; StorageClearTypes;
 
     partial interface StorageManager {
-      Promise&lt;void&gt; clear(StorageClearOptions options);
+      Promise&lt;void&gt; clear(StorageClearTypes types);
     };
   </pre>
   <dl dfn-for="StorageManager">
-    <dt><dfn method lt="clear(options)">clear(options)</dfn></dt>
+    <dt><dfn method lt="clear(types)">clear(types)</dfn></dt>
     <dd>
-      Clears data based on the values in the |options| argument.
+      Clears data based on the values in the |types| argument.
       Returns a Promise that resolves when clearing is complete. If no
-      {{StorageClearOptions/types}} are specified, all data types will be
-      cleared.
+      types are specified, all data will be cleared.
 
-      <pre class="argumentdef" for="StorageManager/clear(options)">
-        options: The data to clear.
+      <pre class="argumentdef" for="StorageManager/clear(types)">
+        types: The data types to clear.
       </pre>
     </dd>
   </dl>
@@ -531,7 +501,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   Note: While the fetch `credentials flag` is intended to restrict the
   modification of cookies, <a>`Clear-Site-Data`</a> applies the same restriction
-  to all <a>types</a> for the sake of consistency.
+  to all types for the sake of consistency.
 <section>
 
 <section>
@@ -543,26 +513,19 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     Which data types ought to be removed for |response|?
   </h4>
 
-  1.  If |response| does not contain a <a>`Clear-Site-Data`</a> header, return
-      an empty list.
+  1.  Let |types| be an empty list.
 
-  2.  Let |types| be an empty list.
+  2.  Let |header| be the result of [=extracting header list values=] given
+      `Clear-Site-Data` and |response|'s [=response/header list=].
 
-  3.  Let |list| be the result of executing the algorithm defined in Section 4
-      of [[!HTTP-JFV]] on the value of |response|'s <a>`Clear-Site-Data`</a>
-      header. If that algorithm results in an error, return an empty list.
+  3.  If |header| is `null` or failure, return an empty list.
 
-  4.  For each |item| in |list|:
+  4.  For each |type| in |header|:
 
-      1.  If |item| does not have a <a>`types`</a> member, skip to the next
-          |item|.
+        1.  If |type| is <a>`cache`</a>, <a>`cookies`</a>, <a>`storage`</a>,
+            or <a>`executionContexts`</a>, append |type| to |types|.
 
-      2.  For each |type| in |item|'s <a>`types`</a> member's value:
-
-          1.  If |type| is <a>`cache`</a>, <a>`cookies`</a>, <a>`storage`</a>,
-              or <a>`executionContexts`</a>, append |type| to |types|.
-
-              Otherwise, skip to the next |type|.
+            Otherwise, skip to the next |type|.
 
   5.  Return |types|.
 
@@ -594,10 +557,10 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   timeline entry indicating success.
 
   <h3 id="clear-api">
-    Clear data for |options|
+    Clear data for |types|
   </h3>
 
-  Given a {{StorageClearOptions}} (|options|), this algorithm
+  Given a {{StorageClearTypes}} (|input-types|), this algorithm
   determines what needs to be cleared, returns a Promise, and executes the
   request asynchronously.
 
@@ -611,14 +574,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   4.  Let |types| be an empty list.
 
-  5.  If |options|' {{StorageClearOptions/types}} is an empty sequence:
+  5.  If |input-types| is an empty sequence:
 
       1. Append `cache`, `cookies`,
          `storage`, and `executionContexts` to
          |types|.
 
-  6.  Otherwise, for each {{StorageClearType}} |type| in
-      |options|' {{StorageClearOptions/types}} property:
+  6.  Otherwise, for each {{StorageClearType}} |type| in |input-types|:
 
       1. Append |type| to |types|.
 
