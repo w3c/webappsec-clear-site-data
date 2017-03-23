@@ -51,14 +51,6 @@ spec: MIX; urlPrefix: https://w3c.github.io/webappsec/specs/mixedcontent/
 spec: STORAGE; urlPrefix: https://storage.spec.whatwg.org/
   type: interface
     text: StorageManager
-spec: URL; urlPrefix: http://www.w3.org/TR/url/
-  type: interface
-    text: URL; url: concept-url
-  type: attribute
-    text: host; for: URL; url: concept-url-host
-    text: path; for: URL; url: concept-url-path
-    text: port; for: URL; url: concept-url-port
-    text: scheme; for: URL; url: concept-url-scheme
 spec: WORKERS; urlPrefix: http://www.w3.org/TR/workers/
   type: interface
     text: Worker
@@ -295,7 +287,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   :   "<dfn>`cache`</dfn>"
   ::  The "`cache`" type indicates that the server wishes to remove locally
       cached data associated with the <a>origin</a> of a particular
-      <a>response</a>'s {{Response/url}}. This includes the <a>network
+      <a>response</a>'s [=response/url=]. This includes the <a>network
       cache</a>, of course, but will also remove data from various other caches
       which a user agent implements (prerendered pages, script caches, shader
       caches, etc.).
@@ -315,7 +307,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   :   "<dfn>`cookies`</dfn>"
   ::  The "`cookies`" type indicates that the server wishes to remove cookies
       associated with the <a>origin</a> of a particular <a>response</a>'s
-      {{Response/url}}. Along with cookies, HTTP authentication credentials
+      [=response/url=]. Along with cookies, HTTP authentication credentials
       [[!RFC7235]], and origin-bound tokens such as those defined by Channel
       ID [[!CHANNELID]] and Token Binding [[!TOKBIND]] are also cleared.
 
@@ -334,7 +326,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   :   "<dfn>`storage`</dfn>"
   ::  The "`storage`" type indicates that the server wishes to remove
       locally stored data associated with the <a>origin</a> of a
-      particular <a>response</a>'s {{Response/url}}. This includes storage
+      particular <a>response</a>'s [=response/url=]. This includes storage
       mechansims such as ({{localStorage}}, {{sessionStorage}}, [[INDEXEDDB]],
       [[WEBDATABASE]], etc), as well as tangentially related mechainsm such as
       <a>service worker registrations</a>.
@@ -354,7 +346,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   :   "<dfn>`executionContexts`</dfn>"
   ::  The "`executionContexts`" type indicates that the server wishes to neuter
       and reload execution contexts currently rendering the <a>origin</a> of a
-      particular <a>response</a>'s {{Response/url}}.
+      particular <a>response</a>'s [=response/url=].
 
       Implementation details are in [[#neuter-contexts]].
 
@@ -473,7 +465,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   <a>`Clear-Site-Data`</a> header to determine what needs to be
   cleared, which origins are affected, and then executes those requests.
 
-  1.  If |response|'s {{URL}} is <a><i lang="la">a priori</i>
+  1.  If |response|'s [=response/url=] is <a><i lang="la">a priori</i>
       insecure</a>, skip the remaining steps of this algorithm.
 
       ISSUE: Some have suggested that this might not be a restriction we want
@@ -485,7 +477,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       |response|.
 
   3.  Execute [[#clear-internal]] on |types|, |response|'s
-      {{Response/url}}'s <a>origin</a>.
+      [=response/url=]'s [=url/origin=].
 
   Note: Especially given the cross-context implications, user agents are
   are encouraged to give web developers some mechanism by which the clearing
@@ -591,7 +583,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
       3.  If |context|'s <a>origin</a> is |origin|:
 
-          1.  Navigate |context| to |document|'s {{URL}} with <a>replacement enabled</a> and the
+          1.  Navigate |context| to |document|'s [=Document/URL=] with <a>replacement enabled</a> and the
               <a>exceptions enabled flag</a> set. The <a>source browsing context</a> is |context|.
               This is a <a>reload-triggered navigation</a>.
           
@@ -602,12 +594,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   Given an <a>origin</a> (|origin|), this algorithm removes data from
   the user agent's local caches that matches the origin.
 
-  1.  Let |host| be |origin|'s {{URL/host}},
+  1.  Let |host| be |origin|'s [=origin/host=]
       <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
 
-  3.  Let |cache list| be the set of entries from the <a>network
-      cache</a> whose `target URI` {{URL/host}} is identical to
-      |host| when <a>canonicalized</a> as per Section 5.1.2 of
+  3.  Let |cache list| be the set of entries from the <a>network cache</a> whose `target URI`
+      [=url/host=] is identical to |host| when <a>canonicalized</a> as per Section 5.1.2 of
       [[!RFC6265]].
 
   4.  For each |entry| in |cache list|:
@@ -645,7 +636,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   ability to retrieve a list of cookies by host, and to remove individual
   cookies.
 
-  1.  Let |host| be |origin|'s {{URL/host}},
+  1.  Let |host| be |origin|'s [=origin/host=]
       <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
 
   2.  Let |registered| be the <a>registered domain</a> of |host|.
