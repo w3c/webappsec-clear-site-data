@@ -128,9 +128,8 @@ spec: SERVICE-WORKERS; urlPrefix: http://www.w3.org/TR/service-workers/
   type: method
     text: unregister(); for: ServiceWorkerRegistration; url: navigator-service-worker-unregister
 spec: RFC5234; urlPrefix: https://tools.ietf.org/html/rfc5234
-  type: dfn
-    text: VCHAR; url: appendix-B.1
-    text: WSP; url: appendix-B.1
+  type: grammar
+    text: ALPHA; url: appendix-B.1
 spec: RFC5890; urlPrefix: https://tools.ietf.org/html/rfc5890
   type: dfn
     text: label; url: section-2.2
@@ -148,11 +147,7 @@ spec: RFC7234; urlPrefix: https://tools.ietf.org/html/rfc7234
   type: dfn
     text: network cache; url: section-2
 spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
-  type: dfn
-    text: OWS; url: section-3.2.3
-    text: BWS; url: section-3.2.3
-    text: token; url: section-3.2.6
-    text: quoted-string; url: section-3.2.6
+  type: grammar
     text: #rule; url: section-7
 spec: PSL; urlPrefix: https://publicsuffix.org/list/
   type: dfn
@@ -345,10 +340,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   [[!RFC5234]]:
 
   <pre class="abnf" link-type="grammar" dfn-type="grammar">
-    Clear-Site-Data = "Clear-Site-Data" ":" <a>clear-site-data-value</a>
-    <dfn>clear-site-data-value</dfn> = OWS 1#((<a>data-type</a> | <a>extension-type</a>) OWS)
+    Clear-Site-Data = 1#( <a>data-type</a> | <a>extension-type</a> )
     <dfn>data-type</dfn> = "<dfn>cache</dfn>" | "<dfn>cookies</dfn>" | "<dfn>storage</dfn>" | "<dfn>executionContext</dfn>"
-    <dfn>extension-type</dfn> = 1*(ALPHA | "-")
+    <dfn>extension-type</dfn> = 1*( <a>ALPHA</a> | "-")
+    ; <a>#rule</a> is defined in Section 7 of RFC 7230.
+    ; <a>ALPHA</a> is defined in Appendix B.1 of RFC 5234.
   </pre>
 
   [[#fetch-integration]] and [[#parsing]] describe how the
@@ -522,7 +518,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   2.  Let |header| be the result of [=extracting header list values=] given
       `Clear-Site-Data` and |response|'s [=response/header list=].
 
-  3.  If |header| is `null`, return failure.
+  3.  If |header| is `null` or failure, return an empty list.
 
   4.  For each |type| in |header|:
 
