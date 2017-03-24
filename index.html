@@ -1998,6 +1998,9 @@ host.</p>
         <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> associated with <var>origin</var>.</p>
        <li data-md="">
         <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry">proxy-authentication entries</a> associated with <var>origin</var>.</p>
+       <li data-md="">
+        <p>If a Flash <a data-link-type="biblio" href="#biblio-flash">[FLASH]</a> plugin is present, clear its local shared objects
+  (LSOs) for <var>registered</var>.</p>
       </ol>
       <p class="issue" id="issue-a4a76269"><a class="self-link" href="#issue-a4a76269"></a> The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">&lt;https://github.com/w3c/webappsec-clear-site-data/issues/2></a></p>
@@ -2053,9 +2056,8 @@ host.</p>
          <li data-md="">
           <p>An origin’s filesystems <a data-link-type="biblio" href="#biblio-file-system-api">[file-system-api]</a></p>
          <li data-md="">
-          <p>ChannelID</p>
-         <li data-md="">
-          <p>Plugin data (e.g. <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>)</p>
+          <p>Plugin data (e.g. <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>),
+  such as Flash <a data-link-type="biblio" href="#biblio-flash">[FLASH]</a> LSOs.</p>
          <li data-md="">
           <p>Appcache.</p>
          <li data-md="">
@@ -2333,6 +2335,8 @@ host.</p>
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-file-system-api">[FILE-SYSTEM-API]
    <dd>Eric Uhrhane. <a href="https://www.w3.org/TR/file-system-api/">File API: Directories and System</a>. URL: <a href="https://www.w3.org/TR/file-system-api/">https://www.w3.org/TR/file-system-api/</a>
+   <dt id="biblio-flash">[FLASH]
+   <dd>Adobe Systems Incorporated. <a href="http://www.adobe.com/software/flash/about/">Adobe Flash Player</a>. URL: <a href="http://www.adobe.com/software/flash/about/">http://www.adobe.com/software/flash/about/</a>
    <dt id="biblio-html">[HTML]
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-indexeddb">[INDEXEDDB]
