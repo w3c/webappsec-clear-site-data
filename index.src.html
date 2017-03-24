@@ -69,11 +69,6 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     "href": "https://tools.ietf.org/html/draft-ietf-tokbind-protocol",
     "title": "The Token Binding Protocol Version 1.0",
     "publisher": "IETF"
-  },
-  "FLASH": {
-    "authors": [ "Adobe Systems Incorporated" ],
-    "href": "http://www.adobe.com/software/flash/about/",
-    "title": "Adobe Flash Player"
   }
 }
 </pre>
@@ -243,7 +238,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   <pre class="abnf" link-type="grammar" dfn-type="grammar">
     Clear-Site-Data = 1#( <a>data-type</a> | <a>extension-type</a> )
-    <dfn>data-type</dfn> = "<dfn>cache</dfn>" | "<dfn>cookies</dfn>" | "<dfn>storage</dfn>" | "<dfn>executionContext</dfn>"
+    <dfn>data-type</dfn> = "<dfn>cache</dfn>" | "<dfn>cookies</dfn>" | "<dfn>storage</dfn>" | "<dfn>executionContexts</dfn>"
     <dfn>extension-type</dfn> = 1*( <a>ALPHA</a> | "-")
     ; <a>#rule</a> is defined in Section 7 of RFC 7230.
     ; <a>ALPHA</a> is defined in Appendix B.1 of RFC 5234.
@@ -322,8 +317,6 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       and reload execution contexts currently rendering the <a>origin</a> of a
       particular <a>response</a>'s [=response/url=].
 
-      Implementation details are in [[#neuter-contexts]].
-
       <div class="example">
         When delivered with a response from `https://example.com/clear`,
         the following header will cause execution contexts displaying the origin 
@@ -361,190 +354,183 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 <section>
   <h2 id="algorithms">Algorithms</h2>
 
-  <h3 id="parsing">Parsing</h3>
+  <h3 id="parsing" algorithm>Parsing</h3>
 
-  <h4 id="get-types">
-    Which data types ought to be removed for |response|?
-  </h4>
+  Given a [=response=], the user agent can <dfn abstract-op local-lt="parse response">parse
+  |response|'s `Clear-Site-Data` header</dfn>, returning a list of <a grammar>`data-type`</a>
+  tokens, as follows:
 
-  1.  Let |types| be an empty list.
+  <ol class="algorithm">
+    1.  Let |types| be an empty list.
 
-  2.  Let |header| be the result of [=extracting header list values=] given
-      `Clear-Site-Data` and |response|'s [=response/header list=].
+    2.  Let |header| be the result of [=extracting header list values=] given `Clear-Site-Data` and
+        |response|'s [=response/header list=].
 
-  3.  If |header| is `null` or failure, return an empty list.
+    3.  If |header| is `null` or failure, return an empty list.
 
-  4.  For each |type| in |header|:
+    4.  For each |type| in |header|:
 
-        1.  If |type| is <a>`cache`</a>, <a>`cookies`</a>, <a>`storage`</a>,
-            or <a>`executionContexts`</a>, append |type| to |types|.
+        1.  If |type| matches the <a grammar>`data-type`</a> grammar, append |type| to |types|.
 
-            Otherwise, skip to the next |type|.
+    5.  Return |types|.
+  </ol>
 
-  5.  Return |types|.
-
-  <h3 id="clear-response">
+  <h3 id="clear-response" algorithm>
     Clear data for |response|
   </h3>
 
-  Given a <a>response</a> (|response|), this algorithm parses the
-  <a>`Clear-Site-Data`</a> header to determine what needs to be
-  cleared, which origins are affected, and then executes those requests.
+  Given a [=response=] (|response|), the user agent can <dfn abstract-op>clear site data for
+  |response|</dfn> as follows:
 
-  1.  If |response|'s [=response/url=] is not an <a><i lang="la">a priori</i> authenticated URL</a>,
-      then [=iteration/break=].
+  <ol class="algorithm">
+    1.  If |response|'s [=response/url=] is not an <a><i lang="la">a priori</i> authenticated
+        URL</a>, then [=iteration/break=].
 
-      ISSUE: Some have suggested that this might not be a restriction we want
-      (see
-      <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
-      Thomson's public-webappsec post on the topic</a>, for example).
+        ISSUE: Some have suggested that this might not be a restriction we want (see
+        <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
+        Thomson's public-webappsec post on the topic</a>, for example).
 
-  2.  Let |types| be the result of [[#get-types]] executed on
-      |response|.
+    2.  Let |types| be the result of <a lt="parse response" abstract-op>parsing |response|'s
+        `Clear-Site-Data` header</a>.
 
-  3.  Execute [[#clear-internal]] on |types|, |response|'s
-      [=response/url=]'s [=url/origin=].
+    3.  Let |origin| be |response|'s [=response/url=]'s [=url/origin=].
 
-  Note: Especially given the cross-context implications, user agents are
-  are encouraged to give web developers some mechanism by which the clearing
-  operation can be debugged. This might take the form of a console message or
-  timeline entry indicating success.
+    4.  Let |browsing contexts| be the result of <a lt="prepare" abstract-op>preparing to clear
+        data</a> for |origin| and |types|.
 
-  <h3 id="clear-internal">
-    Clear |types| for |origin|
-  </h3>
+    5.  For each |type| in |types|:
+   
+        1.  Switch on |type| and execute the associated algorithm:
 
-  1.  If |types| contains "`executionContexts`", execute
-      [[#neuter-contexts]] on |origin|.
+            :   "<a grammar>`cache`</a>"
+            ::  <a lt="clear cache" abstract-op>Clear cache for |origin|</a>.
+            :   "<a grammar>`cookies`</a>"
+            ::  <a lt="clear cookies" abstract-op>Clear cookies for |origin|</a>.
+            :   "<a grammar>`storage`</a>"
+            ::  <a lt="clear storage" abstract-op>Clear DOM-accessible storage for |origin|</a>.
 
-  2.  If |types| contains "`cookies`", execute
-      [[#clear-cookies]] on |origin|.
+    6.  <a lt="reload" abstract-op>Reload |browsing contexts|</a>.
+  </ol>
 
-  3.  If |types| contains "`storage`", execute
-      [[#clear-dom]] on |origin|.
+  Note: User agents are are encouraged to give web developers some mechanism by which the clearing
+  operation can be debugged. This might take the form of a console message or timeline entry
+  indicating success.
 
-  4.  If |types| contains "`cache`", execute
-      [[#clear-cache]] on |origin|.
-
-  5.  If |types| contains "`executionContexts`", execute
-      [[#reload-contexts]] on |origin|.
-
-  <h4 id="neuter-contexts">
-    Neuter browsing contexts matching |origin|
+  <h4 id="prepare" algorithm>
+    Prepare to clear |origin|'s data
   </h4>
 
-  Given an <a>origin</a> (|origin|) this algorithm walks through the
-  set of <a>browsing contexts</a> which the user agent knows about, and
-  sandboxes each in order to prevent them from recreating cleared data (from
-  in-memory JavaScript variables, for instance). Once data is cleared, the
-  affected browsing contexts will be hard-reloaded, as defined in
-  [[#reload-contexts]]:
+  Given an [=origin=] (|origin|) and a list of <a grammar>`data-type`</a> tokens (|types|), the user
+  agent can <dfn local-lt="prepare" abstract-op>prepare to clear |origin|'s data</dfn> by executing
+  the following steps. The algorithm returns a list of [=browsing contexts=] which have been
+  sandboxed in order to prevent them from recreating cleared data from in-memory JavaScript
+  variables.
 
-  1.  For each |context| in the user agent's set of <a>browsing
-      contexts</a>:
+  <ol class="algorithm">
+    1.  Let |sandboxed| be an empty list.
 
-      1.  Let |document| be |context|'s <a>active
-          document</a>.
+    2.  If |types| does not [=list/contain=] "<a grammar>`executionContexts`</a>", return
+        |sandboxed|.
 
-      2.  While |document| is <a>an `iframe srcdoc`
-          document</a>, let |document| be the <a>active document</a>
-          of |document|'s <a>browsing context container</a>.
+    3.  For each |context| in the user agent's set of [=browsing contexts=]:
 
-      3.  If |context|'s <a>origin</a> is |origin|:
+        1.  Let |document| be |context|'s [=active document=].
 
-          1.  <a>Parse a sandboxing directive</a> using the empty string as
-              the input, and |document|'s <a>active
-              sandboxing flag set</a> as the output.
+        2.  If |document|'s [=relevant settings object=]'s [=environment settings object/origin=]
+            is not |origin|, [=iteration/continue=].
+
+        3.  [=Parse a sandboxing directive=] using the empty string as the input, and |document|'s
+            [=active sandboxing flag set=] as the output.
+
+        4.  [=list/append|Append=] |context| to |sandboxed|.
+
+    4.  Return |sandboxed|.
+  </ol>
 
   <h4 id="reload-contexts">
-    Reload browsing contexts matching |origin|
+    Reload |browsing contexts|
   </h4>
 
-  Given an <a>origin</a> (|origin|), this algorithm walks through the
-  set of <a>browsing contexts</a> which the user agent knows about and reloads
-  each of them:
+  Given a list of [=browsing contexts=] (|contexts|), the user agent can
+  <dfn local-lt="reload" abstract-op>reload browsing contexts</dfn> as follows:
 
-  1.  For each |context| in the user agent's set of <a>browsing
-      contexts</a>:
+  <ol class="algorithm">
+    1.  For each |context| in |contexts|:
 
-      1.  Let |document| be |context|'s <a>active
-          document</a>.
+        1.  Execute |context|'s [=active document=]'s [=relevant settings object=]'s [=environment
+            settings object/global object=]'s {{Location}} object's {{Location/reload()}}.
 
-      2.  While |document| is <a>an `iframe srcdoc`
-          document</a>, let |document| be the <a>active document</a>
-          of |document|'s <a>browsing context container</a>.
-
-      3.  If |context|'s <a>origin</a> is |origin|:
-
-          1.  Navigate |context| to |document|'s [=Document/URL=] with <a>replacement enabled</a> and the
-              <a>exceptions enabled flag</a> set. The <a>source browsing context</a> is |context|.
-              This is a <a>reload-triggered navigation</a>.
-          
+            ISSUE: This is the simplest thing, but it's probably reaching a little too far into the
+            documents and mucking with their context. I probably just need to break down and
+            copy/paste the relevant bits from HTML.
+  </ol>
+           
   <h4 id="clear-cache">
     Clear cache for |origin|
   </h4>
 
-  Given an <a>origin</a> (|origin|), this algorithm removes data from
-  the user agent's local caches that matches the origin.
+  Given an <a>origin</a> (|origin|), the user agent can
+  <dfn local-lt="clear cache" abstract-op>clear cache for |origin|</dfn> as follows:
 
-  1.  Let |host| be |origin|'s [=origin/host=]
-      <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
+  <ol class="algorithm">
+    1.  Let |host| be |origin|'s [=origin/host=].
 
-  3.  Let |cache list| be the set of entries from the <a>network cache</a> whose `target URI`
-      [=url/host=] is identical to |host|.
+    2.  Let |cache list| be the set of entries from the <a>network cache</a> whose `target URI`
+        [=url/host=] is identical to |host|.
 
-  4.  For each |entry| in |cache list|:
- 
-      1.  Remove |entry| from the <a>network cache</a>.
+    3.  For each |entry| in |cache list|:
+   
+        1.  Remove |entry| from the <a>network cache</a>.
 
-  5.  If a user agent implements caches beyond a pure <a>network cache</a>, it
-      MUST remove all entries from those caches which match |origin|.
+    4.  If a user agent implements caches beyond a pure <a>network cache</a>, it MUST remove all
+        entries from those caches which match |origin|.
 
-      ISSUE: We're dealing with the network cache here, as defined in
-      [[!RFC7234]], but that's not nearly everything a user agent caches. How
-      hand-wavey with the vendor-specific section can we be? For instance,
-      Chrome clears out prerendered pages, script caches, WebGL shader caches,
-      WebRTC bits and pieces, address bar suggestion caches, various networking
-      bits that aren't representations (HSTS/HPKP, SCDH, etc.). Perhaps
-      [[STORAGE]] will make this clearer?
+        ISSUE: We're dealing with the network cache here, as defined in [[!RFC7234]], but that's not
+        nearly everything a user agent caches. How hand-wavey with the vendor-specific section can
+        we be? For instance, Chrome clears out prerendered pages, script caches, WebGL shader
+        caches, WebRTC bits and pieces, address bar suggestion caches, various networking bits that
+        aren't representations (HSTS/HPKP, SCDH, etc.). Perhaps [[STORAGE]] will make this clearer?
+  </ol>
 
   <h4 id="clear-cookies">
     Clear cookies for |origin|
   </h4>
 
-  Given an <a>origin</a> (|origin|), this algorithm removes cookies
-  from the user agent's <a>cookie store</a> whose `domain` attribute
-  <a>domain-matches</a> |origin|'s <a>registered domain</a>.
+  Given an <a>origin</a> (|origin|), the user agent can
+  <dfn local-lt="clear cookies" abstract-op>clear cookies for |origin|</dfn> as follows:
   
-  Note: We remove all the cookies for an entire <a>registered domain</a>, as
-  cookies ignore the same-origin policy, and there's a distinct risk that we'd
-  leave applications in an ill-defined state if we only cleared cookies for a
-  particular subdomain. Consider `accounts.google.com` vs `mail.google.com`,
-  for instance, both of which have cookies that signal a user's signed-in
-  status.
+  Note: We remove all the cookies for an entire <a>registered domain</a>, as cookies ignore the
+  same-origin policy, and there's a distinct risk that we'd leave applications in an ill-defined
+  state if we only cleared cookies for a particular subdomain. Consider `accounts.google.com` vs
+  `mail.google.com`, for instance, both of which have cookies that signal a user's signed-in status.
 
-  Note: This algorithm assumes that the user agent has implemented a <a>cookie
-  store</a> (as discussed in Section 5.3 of [[!RFC6265]]), which offers the
-  ability to retrieve a list of cookies by host, and to remove individual
-  cookies.
+  Note: This algorithm assumes that the user agent has implemented a <a>cookie store</a> (as
+  discussed in Section 5.3 of [[!RFC6265]]), which offers the ability to retrieve a list of cookies
+  by host, and to remove individual cookies.
 
-  1.  Let |registered| be the <a>registered domain</a> of |origin|'s [=origin/host=].
+  <ol class="algorithm">
+    1.  Let |registered| be the <a>registered domain</a> of |origin|'s [=origin/host=].
 
-  2.  Let |cookie list| be the set of cookies from the <a>cookie
-      store</a> whose `domain` attribute is a <a>domain-match</a> with
-      |registered|.
+    2.  Let |cookie list| be the set of cookies from the <a>cookie
+        store</a> whose `domain` attribute is a <a>domain-match</a> with
+        |registered|.
 
-  3.  For each |cookie| in |cookie list|:
-  
-      1.  Remove |cookie| from the <a>cookie store</a>.
+    3.  For each |cookie| in |cookie list|:
+    
+        1.  Remove |cookie| from the <a>cookie store</a>.
 
-  4.  Clear any Channel IDs [[!CHANNELID]] and bound tokens [[!TOKBIND]] associated with |origin|.
+    4.  If the user agent supports other forms of cookie-like storage, these MUST also be cleared
+        for [=origins=] whose [=origin/host=]'s <a>registered domain</a> is |registered|.
 
-  5.  Clear [=authentication entries=] and [=proxy-authentication entries=] associated with
-      |origin|.
+        Note: For example, if the user agent supports Flash, its local stored objects will be
+        cleared via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>.
 
-  6.  If a Flash [[!FLASH]] plugin is present, clear its local shared objects
-      (LSOs) for |registered|.
+    5.  Clear any Channel IDs [[!CHANNELID]] and bound tokens [[!TOKBIND]] associated with
+        [=origins=] whose [=origin/host=]'s <a>registered domain</a> is |registered|.
+
+    6.  Clear [=authentication entries=] and [=proxy-authentication entries=] associated with
+        [=origins=] whose [=origin/host=]'s <a>registered domain</a> is |registered|.
+  </ol>
 
   ISSUE(w3c/webappsec-clear-site-data#2): The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey.
@@ -553,42 +539,47 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     Clear DOM-accessible storage for |origin|
   </h4>
 
-  1.  For each |area| in the user agent's set of <a lt="localStorage" attribute>local storage
-      areas</a> [[!HTML]]:
+  Given an <a>origin</a> (|origin|), the user agent can
+  <dfn local-lt="clear storage" abstract-op>clear DOM-accessible storage for |origin|</dfn> as
+  follows:
 
-      1.  If  |area|'s <a>origin</a> is |origin|:
+  <ol class="algorithm">
+    1.  For each |area| in the user agent's set of <a lt="localStorage" attribute>local storage
+        areas</a> [[!HTML]]:
 
-          1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
-              with |area|.
+        1.  If  |area|'s <a>origin</a> is |origin|:
 
-  2.  For each |area| in the user agent's set of <a lt="sessionStorage" attribute>session storage
-      areas</a> [[!HTML]]:
+            1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
+                with |area|.
 
-      1.  If  |area|'s <a>origin</a> is |origin|:
+    2.  For each |area| in the user agent's set of <a lt="sessionStorage" attribute>session storage
+        areas</a> [[!HTML]]:
 
-          1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
-              with |area|.
+        1.  If  |area|'s <a>origin</a> is |origin|:
 
-  3.  For each |database| in the set of [=databases=] for |origin| [[!INDEXEDDB]]:
+            1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
+                with |area|.
 
-      1.  [=delete a database|Delete=] |database|.
+    3.  For each |database| in the set of [=databases=] for |origin| [[!INDEXEDDB]]:
 
-  4.  For each |registration| in the user agent's set of <a>service worker registrations</a>:
+        1.  [=delete a database|Delete=] |database|.
 
-      1.  If |registration|'s <a>scope URL</a>'s [=url/origin=] is |origin|:
+    4.  For each |registration| in the user agent's set of <a>service worker registrations</a>:
 
-          1.  Execute {{ServiceWorkerRegistration/unregister()}} on |registration|.
+        1.  If |registration|'s <a>scope URL</a>'s [=url/origin=] is |origin|:
 
-  5.  For any other script-accessible storage mechanism, the user agent MUST
-      delete any data associated with this origin. This includes (but is not
-      limited to) the following:
-     
-      1.  An origin's WebSQL databases [[!WEBDATABASE]].
-      2.  An origin's filesystems [[!file-system-api]]
-      3.  Plugin data (e.g. <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>),
-          such as Flash [[!FLASH]] LSOs.
-      4.  Appcache.
-      5.  ISSUE: Moar?
+            1.  Execute {{ServiceWorkerRegistration/unregister()}} on |registration|.
+
+    5.  For any other script-accessible storage mechanism, the user agent MUST
+        delete any data associated with this origin. This includes (but is not
+        limited to) the following:
+       
+        1.  An origin's WebSQL databases [[!WEBDATABASE]].
+        2.  An origin's filesystems [[!file-system-api]]
+        3.  Plugin data (e.g. Flash via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>),
+        4.  Appcache.
+        5.  ISSUE: Moar?
+  </ol>
 </section>
 
 <section>
