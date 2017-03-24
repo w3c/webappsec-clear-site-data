@@ -1984,9 +1984,7 @@ host.</p>
   cookies.</p>
       <ol>
        <li data-md="">
-        <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a> <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
-       <li data-md="">
-        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> of <var>host</var>.</p>
+        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> of <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a>.</p>
        <li data-md="">
         <p>Let <var>cookie list</var> be the set of cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
   store</a> whose <code>domain</code> attribute is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-match</a> with <var>registered</var>.</p>
@@ -1997,10 +1995,9 @@ host.</p>
           <p>Remove <var>cookie</var> from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a>.</p>
         </ol>
        <li data-md="">
-        <p>Clear related origin-bound Channel IDs <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and
-  tokens <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a>.</p>
+        <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> associated with <var>origin</var>.</p>
        <li data-md="">
-        <p>Clear related HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>.</p>
+        <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry">proxy-authentication entries</a> associated with <var>origin</var>.</p>
       </ol>
       <p class="issue" id="issue-a4a76269"><a class="self-link" href="#issue-a4a76269"></a> The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">&lt;https://github.com/w3c/webappsec-clear-site-data/issues/2></a></p>
@@ -2226,9 +2223,11 @@ host.</p>
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
+     <li><a href="https://fetch.spec.whatwg.org/#authentication-entry">authentication entry</a>
      <li><a href="https://fetch.spec.whatwg.org/#extract-header-list-values">extracting header list values</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-header-list">header list</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-http-network-fetch">http-network fetch</a>
+     <li><a href="https://fetch.spec.whatwg.org/#proxy-authentication-entry">proxy-authentication entry</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response">response</a>
      <li><a href="https://fetch.spec.whatwg.org/#request-service-workers-mode">service-workers mode</a>
      <li><a href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>

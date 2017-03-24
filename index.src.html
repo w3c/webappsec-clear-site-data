@@ -604,23 +604,20 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   ability to retrieve a list of cookies by host, and to remove individual
   cookies.
 
-  1.  Let |host| be |origin|'s [=origin/host=]
-      <a>canonicalized</a> as per Section 5.1.2 of [[!RFC6265]].
+  1.  Let |registered| be the <a>registered domain</a> of |origin|'s [=origin/host=].
 
-  2.  Let |registered| be the <a>registered domain</a> of |host|.
-
-  3.  Let |cookie list| be the set of cookies from the <a>cookie
+  2.  Let |cookie list| be the set of cookies from the <a>cookie
       store</a> whose `domain` attribute is a <a>domain-match</a> with
       |registered|.
 
-  4.  For each |cookie| in |cookie list|:
+  3.  For each |cookie| in |cookie list|:
   
       1.  Remove |cookie| from the <a>cookie store</a>.
 
-  5.  Clear related origin-bound Channel IDs [[!CHANNELID]] and
-      tokens [[!TOKBIND]].
+  4.  Clear any Channel IDs [[!CHANNELID]] and bound tokens [[!TOKBIND]] associated with |origin|.
 
-  6.  Clear related HTTP authentication credentials [[!RFC7235]].
+  5.  Clear [=authentication entries=] and [=proxy-authentication entries=] associated with
+      |origin|.
 
   ISSUE(w3c/webappsec-clear-site-data#2): The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey.
