@@ -109,7 +109,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   This document defines a new mechanism to deal with removing data from these
   and other types of local storage, giving web developers the ability to clear
-  out a user's local cache of data via the <a>Clear-Site-Data</a> HTTP response
+  out a user's local cache of data via the <a http-header>Clear-Site-Data</a> HTTP response
   header.
 
   <h3 id="examples">Examples</h3>
@@ -125,7 +125,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     They can do so by sending the following HTTP header in the response:
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>cache</a>, <a>cookies</a>, <a>storage</a>, <a>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>cookies</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
     </pre>
   </div>
 
@@ -161,7 +161,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     preflight, and would return the following header for the actual request:
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>cache</a>, <a>cookies</a>, <a>storage</a>, <a>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>cookies</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
     </pre>
   </div>
 
@@ -175,10 +175,10 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     just received isn't wiped along with it.
 
     They can do so by sending the following HTTP header in the response, which
-    includes all the types except for "<a>cookies</a>":
+    includes all the types except for "<a grammar>cookies</a>":
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>cache</a>, <a>storage</a>, <a>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
     </pre>
   </div>
 
@@ -196,7 +196,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     following HTTP header in a response to wipe out local sources of data:
 
     <pre>
-      <a>Clear-Site-Data</a>: <a>cache</a>, <a>cookies</a>, <a>storage</a>, <a>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>cookies</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
     </pre>
 
     Note: Installing a Service Worker guarantees that a request will go out to
@@ -231,21 +231,20 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     The `Clear-Site-Data` HTTP Response Header Field
   </h3>
 
-  The <dfn>`Clear-Site-Data`</dfn> HTTP response header field
-  sends a signal to the user agent that it ought to remove all data
-  of a certain set of types. The header is represented by the following ABNF
-  [[!RFC5234]]:
+  The <dfn http-header>`Clear-Site-Data`</dfn> HTTP response header field sends a signal to the
+  user agent that it ought to remove all data of a certain set of types. The header is
+  represented by the following ABNF [[!RFC5234]]:
 
   <pre class="abnf" link-type="grammar" dfn-type="grammar">
     Clear-Site-Data = 1#( <a>data-type</a> | <a>extension-type</a> )
-    <dfn>data-type</dfn> = "<dfn>cache</dfn>" | "<dfn>cookies</dfn>" | "<dfn>storage</dfn>" | "<dfn>executionContexts</dfn>"
+    <dfn>data-type</dfn> = "<a>cache</a>" | "<a>cookies</a>" | "<a>storage</a>" | "<a>executionContexts</a>"
     <dfn>extension-type</dfn> = 1*( <a>ALPHA</a> | "-")
     ; <a>#rule</a> is defined in Section 7 of RFC 7230.
     ; <a>ALPHA</a> is defined in Appendix B.1 of RFC 5234.
   </pre>
 
   [[#fetch-integration]] and [[#parsing]] describe how the
-  <a>Clear-Site-Data</a> header is processed.
+  <a http-header>Clear-Site-Data</a> header is processed.
 
   The <a grammar>data-type</a> grammar defines an initial set of known data
   types which can be cleared using this mechanism. See their descriptions below.
@@ -253,7 +252,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   comply with the <a grammar>extension-type</a> grammar. User agents MUST
   ignore unknown <a grammar>extension-type</a>s whhen parsing the header.
 
-  :   "<dfn>`cache`</dfn>"
+  :   "<dfn grammar>`cache`</dfn>"
   ::  The "`cache`" type indicates that the server wishes to remove locally
       cached data associated with the <a>origin</a> of a particular
       <a>response</a>'s [=response/url=]. This includes the <a>network
@@ -269,11 +268,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com`: to be cleared:
 
         <pre>
-          <a>Clear-Site-Data</a>: <a>cache</a>
+          <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>
         </pre>
       </div>
 
-  :   "<dfn>`cookies`</dfn>"
+  :   "<dfn grammar>`cookies`</dfn>"
   ::  The "`cookies`" type indicates that the server wishes to remove cookies
       associated with the <a>origin</a> of a particular <a>response</a>'s
       [=response/url=]. Along with cookies, HTTP authentication credentials
@@ -288,11 +287,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be cleared:
 
         <pre>
-          <a>Clear-Site-Data</a>: <a>cookies</a>
+          <a http-header>Clear-Site-Data</a>: <a grammar>cookies</a>
         </pre>
       </div>
 
-  :   "<dfn>`storage`</dfn>"
+  :   "<dfn grammar>`storage`</dfn>"
   ::  The "`storage`" type indicates that the server wishes to remove
       locally stored data associated with the <a>origin</a> of a
       particular <a>response</a>'s [=response/url=]. This includes storage
@@ -308,11 +307,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be cleared:
 
         <pre>
-          <a>Clear-Site-Data</a>: <a>storage</a>
+          <a http-header>Clear-Site-Data</a>: <a grammar>storage</a>
         </pre>
       </div>
 
-  :   "<dfn>`executionContexts`</dfn>"
+  :   "<dfn grammar>`executionContexts`</dfn>"
   ::  The "`executionContexts`" type indicates that the server wishes to neuter
       and reload execution contexts currently rendering the <a>origin</a> of a
       particular <a>response</a>'s [=response/url=].
@@ -323,7 +322,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be neutered and reloaded:
 
         <pre>
-          <a>Clear-Site-Data</a>: <a>executionContexts</a>
+          <a http-header>Clear-Site-Data</a>: <a grammar>executionContexts</a>
         </pre>
       </div>
 
@@ -331,13 +330,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   ISSUE: Monkey patching! Talk with Anne.
 
-  If the <a>`Clear-Site-Data`</a> header is present in an HTTP <a>response</a>
+  If the <a http-header>`Clear-Site-Data`</a> header is present in an HTTP <a>response</a>
   received from the network, then data MUST be cleared before rendering the
   response to the user. That is, after step #14 in the current
   <a>HTTP-network fetch</a> algorithm, execute the following step:
 
   15.  If <var ignore>credentials flag</var> is set, and |response|'s
-       [=response/header list=] contains a header named <a>`Clear-Site-Data`</a>, then
+       [=response/header list=] contains a header named <a http-header>`Clear-Site-Data`</a>, then
        execute [[#clear-response]] on |response|.
 
   Note: This happens <em>after</em> `Set-Cookie` headers are
@@ -347,7 +346,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   using the `Set-Cookie` header.
 
   Note: While the fetch `credentials flag` is intended to restrict the
-  modification of cookies, <a>`Clear-Site-Data`</a> applies the same restriction
+  modification of cookies, <a http-header>`Clear-Site-Data`</a> applies the same restriction
   to all types for the sake of consistency.
 <section>
 
@@ -614,7 +613,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   <h3 id="user-vs-author">Web developers control the timing.</h3>
 
-  If triggered at appropriate times, <a>`Clear-Site-Data`</a> can
+  If triggered at appropriate times, <a http-header>`Clear-Site-Data`</a> can
   increase a user's privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
   is in control of when the clearing event is triggered. Even assuming a
@@ -632,7 +631,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   <h3 id="remnants">Remnants of data on disk.</h3>
 
-  While <a>`Clear-Site-Data`</a> triggers a clearing event in a
+  While <a http-header>`Clear-Site-Data`</a> triggers a clearing event in a
   user's agent, it is difficult to make promises about the state of a user's
   disk after a clearing event takes place. In particular, note that it is up
   to the user agent to ensure that all traces of a site's date is actually
