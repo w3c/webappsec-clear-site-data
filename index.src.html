@@ -230,7 +230,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   <h2 id="clearing">Clearing Site Data</h2>
 
   Developers may instruct a user agent to clear various types of relevant data
-  in two ways: an HTTP response header, and a JavaScript API:
+  by delivering a `Clear-Site-Data` HTTP response header in response to a request.
 
   <h3 id="header">
     The `Clear-Site-Data` HTTP Response Header Field
@@ -253,7 +253,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   <a>Clear-Site-Data</a> header is processed.
 
   The <a grammar>data-type</a> grammar defines an initial set of known data
-  types which can be cleared using this API. See their descriptions below.
+  types which can be cleared using this mechanism. See their descriptions below.
   Future versions of the header can support additional datatypes, which MUST
   comply with the <a grammar>extension-type</a> grammar. User agents MUST
   ignore unknown <a grammar>extension-type</a>s whhen parsing the header.
@@ -334,54 +334,6 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         </pre>
       </div>
 
-  <h3 id="dom-api">JavaScript API</h3>
-
-  ISSUE: This might live more cleanly in [[STORAGE]].
-
-  <div class="example">
-    Megacorp, Inc. wants to remove data in response to a user's activity on
-    their site. They can execute the following JavaScript to clear all the
-    relevant data for a user:
-
-    <pre>
-      navigator.storage.<a method for="StorageManager">clear()</a>;
-    </pre>
-
-    If they only wished to clear the otherwise inaccessible cache for the
-    current origin:
-
-    <pre>
-      navigator.storage.<a method for="StorageManager" lt="clear()">clear</a>([ "cache" ]);
-    </pre>
-  </div>
-
-  <pre class="idl">
-    enum StorageClearType {
-      "cache",
-      "cookies",
-      "storage",
-      "executionContexts"
-    };
-
-    typedef sequence&lt;StorageClearType&gt; StorageClearTypes;
-
-    partial interface StorageManager {
-      Promise&lt;void&gt; clear(StorageClearTypes types);
-    };
-  </pre>
-  <dl dfn-for="StorageManager">
-    <dt><dfn method>clear(types)</dfn></dt>
-    <dd>
-      Clears data based on the values in the |types| argument.
-      Returns a Promise that resolves when clearing is complete. If no
-      types are specified, all data will be cleared.
-
-      <pre class="argumentdef" for="StorageManager/clear(types)">
-        types: The data types to clear.
-      </pre>
-    </dd>
-  </dl>
-
   <h3 id="fetch-integration">Fetch Integration</h3>
 
   ISSUE: Monkey patching! Talk with Anne.
@@ -457,39 +409,6 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   are encouraged to give web developers some mechanism by which the clearing
   operation can be debugged. This might take the form of a console message or
   timeline entry indicating success.
-
-  <h3 id="clear-api">
-    Clear data for |types|
-  </h3>
-
-  Given a {{StorageClearTypes}} (|input-types|), this algorithm
-  determines what needs to be cleared, returns a Promise, and executes the
-  request asynchronously.
-
-  1.  If the <a>incumbent settings object</a> is not a <a>secure context</a>,
-      return a `Promise` rejected with
-      `NotSupportedError`.
-
-  2.  Let |promise| be a newly created `Promise` object.
-
-  3.  Return |promise|, and execute the remaining steps asynchronously.
-
-  4.  Let |types| be an empty list.
-
-  5.  If |input-types| is an empty sequence:
-
-      1. Append `cache`, `cookies`,
-         `storage`, and `executionContexts` to
-         |types|.
-
-  6.  Otherwise, for each {{StorageClearType}} |type| in |input-types|:
-
-      1. Append |type| to |types|.
-
-  7.  Execute [[#clear-internal]] on |types| and the <a>incumbent
-      settings object</a>'s <a>origin</a>.
-
-  9.  Resolve |promise| with `undefined`.
 
   <h3 id="clear-internal">
     Clear |types| for |origin|
@@ -639,7 +558,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
       1.  If  |area|'s <a>origin</a> is |origin|:
 
-          1.  Execute {{StorageManager/clear()}} on the {{StorageManager}} object associated
+          1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
               with |area|.
 
   2.  For each |area| in the user agent's set of <a lt="sessionStorage" attribute>session storage
@@ -647,7 +566,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
       1.  If  |area|'s <a>origin</a> is |origin|:
 
-          1.  Execute {{StorageManager/clear()}} on the {{StorageManager}} object associated
+          1.  Execute {{Storage/clear()}} on the {{Storage}} object associated
               with |area|.
 
   3.  For each |database| in the set of [=databases=] for |origin| [[!INDEXEDDB]]:
