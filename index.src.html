@@ -26,41 +26,10 @@ spec:fetch; type:dfn; for:/; text:http-network fetch
 <!-- Needs to be exported -->
 spec:html; type:dfn; for:/; text:active sandboxing flag set
 spec:html; type:dfn; for:/; text:reload-triggered navigation
+spec:indexeddb; type:dfn; for:/; text:database
+spec:indexeddb; type:dfn; for:/; text:delete a database
 </pre>
 <pre class="anchors">
-spec: INDEXEDDB; urlPrefix: https://w3c.github.io/IndexedDB/
-  type: dfn
-    text: database deletion steps; url: dfn-steps-for-deleting-a-database
-    text: database closing steps; url: dfn-steps-for-closing-a-database-connection
-    text: delete pending; url: dfn-delete-pending
-  type: interface
-    text: IDBDatabase; url: idl-def-IDBDatabase
-spec: MIX; urlPrefix: https://w3c.github.io/webappsec/specs/mixedcontent/
-  type: dfn
-    text: embedding document
-    text: strict mode
-    text: block-all-mixed-content
-    url: a-priori-insecure-url
-      text: a priori insecure origin
-      text: a priori insecure url
-      text: a priori insecure
-    url: potentially-secure-origin
-      text: potentially secure origin
-      text: potentially secure url
-      text: potentially secure
-spec: STORAGE; urlPrefix: https://storage.spec.whatwg.org/
-  type: interface
-    text: StorageManager
-spec: WORKERS; urlPrefix: http://www.w3.org/TR/workers/
-  type: interface
-    text: Worker
-spec: SERVICE-WORKERS; urlPrefix: http://www.w3.org/TR/service-workers/
-  type: dfn
-    text: register; url: register-algorithm
-    text: scope url; url: dfn-scope-url
-    text: service worker registration; url: dfn-service-worker-registration
-  type: method
-    text: unregister(); for: ServiceWorkerRegistration; url: navigator-service-worker-unregister
 spec: RFC5234; urlPrefix: https://tools.ietf.org/html/rfc5234
   type: grammar
     text: ALPHA; url: appendix-B.1
@@ -465,8 +434,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   <a>`Clear-Site-Data`</a> header to determine what needs to be
   cleared, which origins are affected, and then executes those requests.
 
-  1.  If |response|'s [=response/url=] is <a><i lang="la">a priori</i>
-      insecure</a>, skip the remaining steps of this algorithm.
+  1.  If |response|'s [=response/url=] is not an <a><i lang="la">a priori</i> authenticated URL</a>,
+      then [=iteration/break=].
 
       ISSUE: Some have suggested that this might not be a restriction we want
       (see
@@ -676,32 +645,15 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
           1.  Execute {{StorageManager/clear()}} on the {{StorageManager}} object associated
               with |area|.
 
-  3.  For each |database| in the user agent's set of Indexed
-      Databases [[!INDEXEDDB]]:
+  3.  For each |database| in the set of [=databases=] for |origin| [[!INDEXEDDB]]:
 
-      1.  If  |database|'s <a>origin</a> is |origin|:
+      1.  [=delete a database|Delete=] |database|.
 
-          1.  Set |database|'s <a>delete pending</a> flag to
-              `true`.
+  4.  For each |registration| in the user agent's set of <a>service worker registrations</a>:
 
-          2.  For each |connection| in the set of all {{IDBDatabase}}
-              objects connected to |database|:
+      1.  If |registration|'s <a>scope URL</a>'s [=url/origin=] is |origin|:
 
-              1.  Execute the <a>database closing steps</a> on
-                  |connection|, setting the <i>forced flag</i>.
-
-          3.  Execute the <a>database deletion steps</a> on
-              |database|, passing in |database|'s
-              <a>origin</a> and name.
-
-  4.  For each |registration| in the user agent's set of
-      <a>registered</a> <a>service worker registrations</a>:
-
-      1.  If |registration|'s <a>scope URL</a>'s
-          <a>origin</a> is |origin|:
-
-          1.  Execute {{ServiceWorkerRegistration/unregister()}} on
-              |registration|.
+          1.  Execute {{ServiceWorkerRegistration/unregister()}} on |registration|.
 
   5.  For any other script-accessible storage mechanism, the user agent MUST
       delete any data associated with this origin. This includes (but is not

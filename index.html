@@ -1423,7 +1423,7 @@ pre.idl.highlight { color: #708090; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-03-23">23 March 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-03-24">24 March 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1722,7 +1722,7 @@ host.</p>
       <p>The "<code>storage</code>" type indicates that the server wishes to remove
   locally stored data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>. This includes storage
-  mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registrations</a>.</p>
+  mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration">service worker registrations</a>.</p>
       <p>Implementation details are in <a href="#clear-dom">§3.4.5 Clear DOM-accessible storage for origin</a>.</p>
       <div class="example" id="example-fbe614fd">
        <a class="self-link" href="#example-fbe614fd"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -1838,7 +1838,8 @@ host.</p>
   cleared, which origins are affected, and then executes those requests.</p>
       <ol>
        <li data-md="">
-        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a> is <a data-link-type="dfn" href="https://w3c.github.io/webappsec/specs/mixedcontent/#a-priori-insecure-url"><i lang="la">a priori</i> insecure</a>, skip the remaining steps of this algorithm.</p>
+        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated URL</a>,
+  then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break">break</a>.</p>
         <p class="issue" id="issue-6ab3e863"><a class="self-link" href="#issue-6ab3e863"></a> Some have suggested that this might not be a restriction we want
   (see <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
   Thomson’s public-webappsec post on the topic</a>, for example).</p>
@@ -1952,7 +1953,7 @@ host.</p>
        <li data-md="">
         <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a> <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
        <li data-md="">
-        <p>Let <var>cache list</var> be the set of entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network cache</a> whose <code>target URI</code> <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host">host</a> is identical to <var>host</var> when <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.2">canonicalized</a> as per Section 5.1.2 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
+        <p>Let <var>cache list</var> be the set of entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network cache</a> whose <code>target URI</code> <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host">host</a> is identical to <var>host</var>.</p>
        <li data-md="">
         <p>For each <var>entry</var> in <var>cache list</var>:</p>
         <ol>
@@ -2030,32 +2031,19 @@ host.</p>
           </ol>
         </ol>
        <li data-md="">
-        <p>For each <var>database</var> in the user agent’s set of Indexed
-  Databases <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>:</p>
+        <p>For each <var>database</var> in the set of <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#database">databases</a> for <var>origin</var> <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
-          <ol>
-           <li data-md="">
-            <p>Set <var>database</var>’s <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#dfn-delete-pending">delete pending</a> flag to <code>true</code>.</p>
-           <li data-md="">
-            <p>For each <var>connection</var> in the set of all <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/IndexedDB/#idl-def-IDBDatabase">IDBDatabase</a></code> objects connected to <var>database</var>:</p>
-            <ol>
-             <li data-md="">
-              <p>Execute the <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#dfn-steps-for-closing-a-database-connection">database closing steps</a> on <var>connection</var>, setting the <i>forced flag</i>.</p>
-            </ol>
-           <li data-md="">
-            <p>Execute the <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#dfn-steps-for-deleting-a-database">database deletion steps</a> on <var>database</var>, passing in <var>database</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> and name.</p>
-          </ol>
+          <p><a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#delete-a-database">Delete</a> <var>database</var>.</p>
         </ol>
        <li data-md="">
-        <p>For each <var>registration</var> in the user agent’s set of <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#register-algorithm">registered</a> <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registrations</a>:</p>
+        <p>For each <var>registration</var> in the user agent’s set of <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration">service worker registrations</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>registration</var>’s <a data-link-type="dfn" href="http://www.w3.org/TR/service-workers/#dfn-scope-url">scope URL</a>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> is <var>origin</var>:</p>
+          <p>If <var>registration</var>’s <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-scope-url">scope URL</a>’s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
-            <p>Execute <code class="idl"><a data-link-type="idl" href="http://www.w3.org/TR/service-workers/#navigator-service-worker-unregister">unregister()</a></code> on <var>registration</var>.</p>
+            <p>Execute <code class="idl"><a data-link-type="idl" href="https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister">unregister()</a></code> on <var>registration</var>.</p>
           </ol>
         </ol>
        <li data-md="">
@@ -2264,17 +2252,20 @@ host.</p>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#source-browsing-context">source browsing context</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[INDEXEDDB]</a> defines the following terms:
+    <a data-link-type="biblio">[IndexedDB-2]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/IndexedDB/#idl-def-IDBDatabase">IDBDatabase</a>
-     <li><a href="https://w3c.github.io/IndexedDB/#dfn-steps-for-closing-a-database-connection">database closing steps</a>
-     <li><a href="https://w3c.github.io/IndexedDB/#dfn-steps-for-deleting-a-database">database deletion steps</a>
-     <li><a href="https://w3c.github.io/IndexedDB/#dfn-delete-pending">delete pending</a>
+     <li><a href="https://w3c.github.io/IndexedDB/#database">database</a>
+     <li><a href="https://w3c.github.io/IndexedDB/#delete-a-database">delete a database</a>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[INFRA]</a> defines the following terms:
+    <ul>
+     <li><a href="https://infra.spec.whatwg.org/#iteration-break">break</a>
     </ul>
    <li>
     <a data-link-type="biblio">[mixed-content]</a> defines the following terms:
     <ul>
-     <li><a href="https://w3c.github.io/webappsec/specs/mixedcontent/#a-priori-insecure-url">a priori insecure</a>
+     <li><a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">a priori authenticated url</a>
     </ul>
    <li>
     <a data-link-type="biblio">[PSL]</a> defines the following terms:
@@ -2316,10 +2307,9 @@ host.</p>
    <li>
     <a data-link-type="biblio">[SERVICE-WORKERS]</a> defines the following terms:
     <ul>
-     <li><a href="http://www.w3.org/TR/service-workers/#register-algorithm">register</a>
-     <li><a href="http://www.w3.org/TR/service-workers/#dfn-scope-url">scope url</a>
-     <li><a href="http://www.w3.org/TR/service-workers/#dfn-service-worker-registration">service worker registration</a>
-     <li><a href="http://www.w3.org/TR/service-workers/#navigator-service-worker-unregister">unregister()</a>
+     <li><a href="https://w3c.github.io/ServiceWorker/#dfn-scope-url">scope url</a>
+     <li><a href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration">service worker registration</a>
+     <li><a href="https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister">unregister()</a>
     </ul>
    <li>
     <a data-link-type="biblio">[STORAGE]</a> defines the following terms:
@@ -2348,6 +2338,10 @@ host.</p>
    <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-indexeddb">[INDEXEDDB]
    <dd>Nikunj Mehta; et al. <a href="https://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
+   <dt id="biblio-indexeddb-2">[IndexedDB-2]
+   <dd>Ali Alabbas; Joshua Bell. <a href="https://www.w3.org/TR/IndexedDB-2/">Indexed Database API 2.0</a>. URL: <a href="https://www.w3.org/TR/IndexedDB-2/">https://www.w3.org/TR/IndexedDB-2/</a>
+   <dt id="biblio-infra">[INFRA]
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-mixed-content">[MIXED-CONTENT]
    <dd>Mike West. <a href="https://www.w3.org/TR/mixed-content/">Mixed Content</a>. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
    <dt id="biblio-psl">[PSL]
