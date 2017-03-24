@@ -569,14 +569,20 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
             1.  Execute {{ServiceWorkerRegistration/unregister()}} on |registration|.
 
-    5.  For any other script-accessible storage mechanism, the user agent MUST
+    5.  For each |appcache| in the user agent's set of [=application caches=]:
+
+        1.  If |appcache|'s [=application cache group=] is identified by an URL whose [=url/origin=]
+            is |origin|:
+
+            1.  Discard |appcache|.
+
+    6.  For any other script-accessible storage mechanism, the user agent MUST
         delete any data associated with this origin. This includes (but is not
         limited to) the following:
        
         1.  An origin's WebSQL databases [[!WEBDATABASE]].
         2.  An origin's filesystems [[!file-system-api]]
         3.  Plugin data (e.g. Flash via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>),
-        4.  Appcache.
         5.  ISSUE: Moar?
   </ol>
 </section>
