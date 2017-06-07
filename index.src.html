@@ -270,7 +270,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com`: to be cleared:
 
         <pre>
-          <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>
+          <a http-header>Clear-Site-Data</a>: "<a grammar>cache</a>"
         </pre>
       </div>
 
@@ -286,10 +286,12 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       <div class="example">
         When delivered with a response from `https://example.com/clear`,
         the following header will cause cookies associated with the origin
-        `https://example.com` to be cleared:
+        `https://example.com` to be cleared, as well as cookies on any origin in
+        the same registered domain (e.g. `https://www.example.com/` and
+        `https://more.subdomains.example.com/`).
 
         <pre>
-          <a http-header>Clear-Site-Data</a>: <a grammar>cookies</a>
+          <a http-header>Clear-Site-Data</a>: "<a grammar>cookies</a>"
         </pre>
       </div>
 
@@ -309,7 +311,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be cleared:
 
         <pre>
-          <a http-header>Clear-Site-Data</a>: <a grammar>storage</a>
+          <a http-header>Clear-Site-Data</a>: "<a grammar>storage</a>"
         </pre>
       </div>
 
@@ -324,7 +326,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         `https://example.com` to be neutered and reloaded:
 
         <pre>
-          <a http-header>Clear-Site-Data</a>: <a grammar>executionContexts</a>
+          <a http-header>Clear-Site-Data</a>: "<a grammar>executionContexts</a>"
         </pre>
       </div>
 

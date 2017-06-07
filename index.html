@@ -1634,10 +1634,10 @@ host.</p>
   which a user agent implements (prerendered pages, script caches, shader
   caches, etc.).</p>
       <p>Implementation details are in <a href="#clear-cache">§3.2.3 Clear cache for origin</a>.</p>
-      <div class="example" id="example-bea168f8">
-       <a class="self-link" href="#example-bea168f8"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-f74a3235">
+       <a class="self-link" href="#example-f74a3235"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause caches associated with the origin <code>https://example.com</code>: to be cleared: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-7">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-6">cache</a>
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-7">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-6">cache</a>"
 </pre>
       </div>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-cookies"><code>cookies</code></dfn>"
@@ -1646,10 +1646,11 @@ host.</p>
   associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
   ID <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and Token Binding <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> are also cleared.</p>
       <p>Implementation details are in <a href="#clear-cookies">§3.2.4 Clear cookies for origin</a>.</p>
-      <div class="example" id="example-98535477">
-       <a class="self-link" href="#example-98535477"></a> When delivered with a response from <code>https://example.com/clear</code>,
-    the following header will cause cookies associated with the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-8">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-6">cookies</a>
+      <div class="example" id="example-54e5f977">
+       <a class="self-link" href="#example-54e5f977"></a> When delivered with a response from <code>https://example.com/clear</code>,
+    the following header will cause cookies associated with the origin <code>https://example.com</code> to be cleared, as well as cookies on any origin in
+    the same registered domain (e.g. <code>https://www.example.com/</code> and <code>https://more.subdomains.example.com/</code>). 
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-8">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-6">cookies</a>"
 </pre>
       </div>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-storage"><code>storage</code></dfn>"
@@ -1659,10 +1660,10 @@ host.</p>
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>. This includes storage
   mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration">service worker registrations</a>.</p>
       <p>Implementation details are in <a href="#clear-dom">§3.2.5 Clear DOM-accessible storage for origin</a>.</p>
-      <div class="example" id="example-c60dd769">
-       <a class="self-link" href="#example-c60dd769"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-cc066205">
+       <a class="self-link" href="#example-cc066205"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause DOM-accessible storage for the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-9">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-6">storage</a>
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-9">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-6">storage</a>"
 </pre>
       </div>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-executioncontexts"><code>executionContexts</code></dfn>"
@@ -1670,10 +1671,10 @@ host.</p>
       <p>The "<code>executionContexts</code>" type indicates that the server wishes to neuter
   and reload execution contexts currently rendering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>.</p>
-      <div class="example" id="example-47f3f834">
-       <a class="self-link" href="#example-47f3f834"></a> When delivered with a response from <code>https://example.com/clear</code>,
+      <div class="example" id="example-b8b629a3">
+       <a class="self-link" href="#example-b8b629a3"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause execution contexts displaying the origin <code>https://example.com</code> to be neutered and reloaded: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-10">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-6">executionContexts</a>
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-10">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-6">executionContexts</a>"
 </pre>
       </div>
     </dl>
