@@ -1176,7 +1176,8 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version a65093ce3e69a8d01029b4650499d152cd9bd39a" name="generator">
+  <meta content="Bikeshed version 34209db86579ed3f0e75afb470f2788a2646155f" name="generator">
+  <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
 <style>/* style-md-lists */
 
             /* This is a weird hack for me not yet following the commonmark spec
@@ -1365,7 +1366,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-03-24">24 March 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-06-07">7 June 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1373,7 +1374,7 @@ Possible extra rowspan handling
      <dt>Latest published version:
      <dd><a href="http://www.w3.org/TR/clear-site-data/">http://www.w3.org/TR/clear-site-data/</a>
      <dt>Previous Versions:
-     <dd><a href="http://www.w3.org/TR/2016/WD-clear-site-data-20160720/" rel="previous">http://www.w3.org/TR/2016/WD-clear-site-data-20160720/</a>
+     <dd><a href="http://www.w3.org/TR/2016/WD-clear-site-data-20160720/" rel="prev">http://www.w3.org/TR/2016/WD-clear-site-data-20160720/</a>
      <dt>Version History:
      <dd><a href="https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html">https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html</a>
      <dt>Feedback:
@@ -1388,8 +1389,8 @@ Possible extra rowspan handling
    <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2017 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="http://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
-  <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
   <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>This document defines an imperative mechanism which allows web developers to
 
 instruct a user agent to clear a site’s locally stored data related to a
@@ -1519,17 +1520,17 @@ host.</p>
   header.</p>
     <h3 class="heading settled" data-level="1.1" id="examples"><span class="secno">1.1. </span><span class="content">Examples</span><a class="self-link" href="#examples"></a></h3>
     <h4 class="heading settled" data-level="1.1.1" id="example-signout"><span class="secno">1.1.1. </span><span class="content">Signing Out</span><a class="self-link" href="#example-signout"></a></h4>
-    <div class="example" id="example-e3cb6883">
-     <a class="self-link" href="#example-e3cb6883"></a> A user signs out of Super Secret Social Network via a CSRF-protected POST to <code>https://supersecretsocialnetwork.example.com/logout</code>, and the
+    <div class="example" id="example-49c6d404">
+     <a class="self-link" href="#example-49c6d404"></a> A user signs out of Super Secret Social Network via a CSRF-protected POST to <code>https://supersecretsocialnetwork.example.com/logout</code>, and the
     site author wishes to ensure that locally stored data is removed as a
     result. 
      <p>They can do so by sending the following HTTP header in the response:</p>
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-2">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-1">cache</a>, <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-1">cookies</a>, <a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-1">storage</a>, <a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-1">executionContexts</a>
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-2">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-1">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-1">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-1">storage</a>", "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-1">executionContexts</a>"
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.2" id="example-targeted"><span class="secno">1.1.2. </span><span class="content">Targeted Clearing</span><a class="self-link" href="#example-targeted"></a></h4>
-    <div class="example" id="example-e1528204">
-     <a class="self-link" href="#example-e1528204"></a> A user signs out of Megacorp Inc.'s site via a CSRF-protected POST to <code>https://megacorp.example.com/logout</code>. Megacorp has a large
+    <div class="example" id="example-46539dbc">
+     <a class="self-link" href="#example-46539dbc"></a> A user signs out of Megacorp Inc.'s site via a CSRF-protected POST to <code>https://megacorp.example.com/logout</code>. Megacorp has a large
     number of services available as subdomains, so many that it’s not entirely
     clear which of them would be safe to clear as a response to a logout action.
     One option would be to simply clear everything, and deal with the fallout.
@@ -1551,31 +1552,31 @@ host.</p>
 </pre>
      <p>That endpoint would return proper CORS headers in response to that request’s
     preflight, and would return the following header for the actual request:</p>
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-3">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-2">cache</a>, <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-2">cookies</a>, <a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-2">storage</a>, <a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-2">executionContexts</a>
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-3">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-2">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-2">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-2">storage</a>", "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-2">executionContexts</a>"
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.3" id="example-keepcookies"><span class="secno">1.1.3. </span><span class="content">Keep Critical Cookies</span><a class="self-link" href="#example-keepcookies"></a></h4>
-    <div class="example" id="example-3bef6667">
-     <a class="self-link" href="#example-3bef6667"></a> A user opts-out of interest-based advertising via a CSRF-protected POST to <code>https://ads-are-awesome.example.com/optout</code>. The site author
+    <div class="example" id="example-d9204fbb">
+     <a class="self-link" href="#example-d9204fbb"></a> A user opts-out of interest-based advertising via a CSRF-protected POST to <code>https://ads-are-awesome.example.com/optout</code>. The site author
     wishes to remove DOM-accessible data which might contain tracking
     information, but needs to ensure that the opt-out cookie which the user has
     just received isn’t wiped along with it. 
      <p>They can do so by sending the following HTTP header in the response, which
     includes all the types except for "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-3">cookies</a>":</p>
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-4">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-3">cache</a>, <a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-3">storage</a>, <a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-3">executionContexts</a>
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-4">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-3">cache</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-3">storage</a>", "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-3">executionContexts</a>"
 </pre>
     </div>
     <h4 class="heading settled" data-level="1.1.4" id="example-killswitch"><span class="secno">1.1.4. </span><span class="content">Kill Switch</span><a class="self-link" href="#example-killswitch"></a></h4>
-    <div class="example" id="example-eaa7c49a">
-     <a class="self-link" href="#example-eaa7c49a"></a> Super Secret Social Network’s developers learn that the site was vulnerable
+    <div class="example" id="example-d2647715">
+     <a class="self-link" href="#example-d2647715"></a> Super Secret Social Network’s developers learn that the site was vulnerable
     to cross-site scripting attacks which allowed malicious parties to inject
     arbitrary code into its origin. They fixed the site, and added a strong
-    Content Security Policy <a data-link-type="biblio" href="#biblio-csp2">[CSP2]</a> to mitigate the risk going forward, but
+    Content Security Policy <a data-link-type="biblio" href="#biblio-csp">[CSP]</a> to mitigate the risk going forward, but
     they can’t be entirely sure that clients are really back to a trustworthy
     state. Perhaps the attackers found a clever persistence mechanism? 
      <p>They can reduce the risk of a persistent client-side XSS by sending the
     following HTTP header in a response to wipe out local sources of data:</p>
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-5">Clear-Site-Data</a>: <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-4">cache</a>, <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-4">cookies</a>, <a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-4">storage</a>, <a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-4">executionContexts</a>
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-5">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-4">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-4">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-4">storage</a>", "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-4">executionContexts</a>"
 </pre>
      <p class="note" role="note"><span>Note:</span> Installing a Service Worker guarantees that a request will go out to
     a server every ~24 hours. That update ping would be a wonderful time to send
@@ -1612,11 +1613,11 @@ host.</p>
     <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export="" id="http-headerdef-clear-site-data"><code>Clear-Site-Data</code></dfn> HTTP response header field sends a signal to the
   user agent that it ought to remove all data of a certain set of types. The header is
   represented by the following ABNF <a data-link-type="biblio" href="#biblio-rfc5234">[RFC5234]</a>:</p>
-<pre class="abnf">Clear-Site-Data = 1#( <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-1">data-type</a> | <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-1">extension-type</a> )
+<pre class="abnf">Clear-Site-Data = 1#( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">DQUOTE</a> ( <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-1">data-type</a> | <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-1">extension-type</a> ) <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">DQUOTE</a> )
 <dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-data-type">data-type</dfn> = "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-5">cache</a>" | "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-5">cookies</a>" | "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-5">storage</a>" | "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-5">executionContexts</a>"
 <dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-extension-type">extension-type</dfn> = 1*( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">ALPHA</a> | "-")
 ; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230#section-7">#rule</a> is defined in Section 7 of RFC 7230.
-; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">ALPHA</a> is defined in Appendix B.1 of RFC 5234.
+; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">DQUOTE</a> and <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">ALPHA</a> are defined in Appendix B.1 of RFC 5234.
 </pre>
     <p><a href="#fetch-integration">§2.2 Fetch Integration</a> and <a href="#parsing">§3.1 Parsing</a> describe how the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-6">Clear-Site-Data</a> header is processed.</p>
     <p>The <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-2">data-type</a> grammar defines an initial set of known data
@@ -1676,6 +1677,12 @@ host.</p>
 </pre>
       </div>
     </dl>
+    <p class="note" role="note"><span>Note:</span> The syntax defined here is compatible with future extensions to this document which might
+  add more granular filtering mechanisms to the types we’ve defined. For example, it’s likely that
+  "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-7"><code>cookies</code></a>" will need to grow a mechanism to prevent deletion of specific cookie
+  values. Wrapping all of the type names in double-quotes means that we can easily shift from
+  simple splitting-strings-on-commas processing to something more complicated (like processing the
+  header value as JSON) without losing backwards compatibility.</p>
     <h3 class="heading settled" data-level="2.2" id="fetch-integration"><span class="secno">2.2. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
     <p>If the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-11"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> received from the network, then data MUST be cleared before rendering the
@@ -1706,22 +1713,32 @@ host.</p>
        <li data-md="">
         <p>If <var>header</var> is <code>null</code> or failure, return an empty list.</p>
        <li data-md="">
-        <p>For each <var>type</var> in <var>header</var>:</p>
-        <ol>
-         <li data-md="">
-          <p>If <var>type</var> matches the <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-4"><code>data-type</code></a> grammar, append <var>type</var> to <var>types</var>.</p>
-        </ol>
+        <p>For each <var>type</var> in <var>header</var>, execute the first matching statement, if any, switching on <var>type</var>:</p>
+        <dl>
+         <dt data-md="">`<code>"cache"</code>`
+         <dd data-md="">
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-7">cache</a>" to <var>types</var>.</p>
+         <dt data-md="">`<code>"cookies"</code>`
+         <dd data-md="">
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-8">cookies</a>" to <var>types</var>.</p>
+         <dt data-md="">`<code>"storage"</code>`
+         <dd data-md="">
+          <p>Append "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-7">storage</a>" to <var>types</var>.</p>
+         <dt data-md="">`<code>"executionContexts"</code>`
+         <dd data-md="">
+          <p>Append "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-7">executionContexts</a>" to <var>types</var>.</p>
+        </dl>
        <li data-md="">
         <p>Return <var>types</var>.</p>
       </ol>
+      <p class="note" role="note"><span>Note:</span> All of the existing values can be handled with the simple switch above. If and when more
+  complex type definitions are created, the parser will likely shift over to JSON entirely.</p>
       <h3 class="heading settled algorithm" data-algorithm="Clear data for response" data-level="3.2" id="clear-response"><span class="secno">3.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
       <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), the user agent can <dfn data-dfn-type="abstract-op" data-export="" data-lt="clear site data for response" id="abstract-opdef-clear-site-data-for-response">clear site data for <var>response</var><a class="self-link" href="#abstract-opdef-clear-site-data-for-response"></a></dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md="">
         <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url"><i lang="la">a priori</i> authenticated
   URL</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break">break</a>.</p>
-        <p class="issue" id="issue-b26c64a4"><a class="self-link" href="#issue-b26c64a4"></a> Some have suggested that this might not be a restriction we want (see <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
-  Thomson’s public-webappsec post on the topic</a>, for example).</p>
        <li data-md="">
         <p>Let <var>types</var> be the result of <a data-link-type="abstract-op" href="#abstract-opdef-parse-responses-clear-site-data-header" id="ref-for-abstract-opdef-parse-responses-clear-site-data-header-1">parsing <var>response</var>’s <code>Clear-Site-Data</code> header</a>.</p>
        <li data-md="">
@@ -1733,27 +1750,27 @@ host.</p>
         <p>For each <var>type</var> in <var>types</var>:</p>
         <ol>
          <li data-md="">
-          <p>Switch on <var>type</var> and execute the associated algorithm:</p>
+          <p>Execute the first matching statement, if any, switching on <var>type</var>:</p>
           <dl>
-           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-7"><code>cache</code></a>"
+           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-8"><code>cache</code></a>"
            <dd data-md="">
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cache-for-origin" id="ref-for-abstract-opdef-clear-cache-for-origin-1">Clear cache for <var>origin</var></a>.</p>
-           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-7"><code>cookies</code></a>"
+           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-9"><code>cookies</code></a>"
            <dd data-md="">
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cookies-for-origin" id="ref-for-abstract-opdef-clear-cookies-for-origin-1">Clear cookies for <var>origin</var></a>.</p>
-           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-7"><code>storage</code></a>"
+           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-8"><code>storage</code></a>"
            <dd data-md="">
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-dom-accessible-storage-for-origin" id="ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin-1">Clear DOM-accessible storage for <var>origin</var></a>.</p>
           </dl>
         </ol>
        <li data-md="">
-        <p><a data-link-type="abstract-op" href="#abstract-opdef-reload-browsing-contexts" id="ref-for-abstract-opdef-reload-browsing-contexts-1">Reload <var>browsing contexts</var></a>.</p>
+        <p>If <var>types</var> contains "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-8">executionContexts</a>", then <a data-link-type="abstract-op" href="#abstract-opdef-reload-browsing-contexts" id="ref-for-abstract-opdef-reload-browsing-contexts-1">Reload <var>browsing contexts</var></a>.</p>
       </ol>
       <p class="note" role="note"><span>Note:</span> User agents are are encouraged to give web developers some mechanism by which the clearing
   operation can be debugged. This might take the form of a console message or timeline entry
   indicating success.</p>
       <h4 class="heading settled algorithm" data-algorithm="Prepare to clear origin’s data" data-level="3.2.1" id="prepare"><span class="secno">3.2.1. </span><span class="content"> Prepare to clear <var>origin</var>’s data </span><a class="self-link" href="#prepare"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a list of <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-5"><code>data-type</code></a> tokens (<var>types</var>), the user
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a list of <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-4"><code>data-type</code></a> tokens (<var>types</var>), the user
   agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="prepare" id="abstract-opdef-prepare-to-clear-origins-data">prepare to clear <var>origin</var>’s data</dfn> by executing
   the following steps. The algorithm returns a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing contexts</a> which have been
   sandboxed in order to prevent them from recreating cleared data from in-memory JavaScript
@@ -1762,7 +1779,7 @@ host.</p>
        <li data-md="">
         <p>Let <var>sandboxed</var> be an empty list.</p>
        <li data-md="">
-        <p>If <var>types</var> does not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain">contain</a> "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-7"><code>executionContexts</code></a>", return <var>sandboxed</var>.</p>
+        <p>If <var>types</var> does not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain">contain</a> "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-9"><code>executionContexts</code></a>", return <var>sandboxed</var>.</p>
        <li data-md="">
         <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing contexts</a>:</p>
         <ol>
@@ -2109,6 +2126,7 @@ host.</p>
     <a data-link-type="biblio">[RFC5234]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">alpha</a>
+     <li><a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">dquote</a>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC6265]</a> defines the following terms:
@@ -2193,8 +2211,8 @@ host.</p>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
-   <dt id="biblio-csp2">[CSP2]
-   <dd>Mike West; Adam Barth; Daniel Veditz. <a href="https://www.w3.org/TR/CSP2/">Content Security Policy Level 2</a>. URL: <a href="https://www.w3.org/TR/CSP2/">https://www.w3.org/TR/CSP2/</a>
+   <dt id="biblio-csp">[CSP]
+   <dd>Mike West. <a href="https://www.w3.org/TR/CSP3/">Content Security Policy Level 3</a>. URL: <a href="https://www.w3.org/TR/CSP3/">https://www.w3.org/TR/CSP3/</a>
    <dt id="biblio-rfc6919">[RFC6919]
    <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
    <dt id="biblio-storage">[STORAGE]
@@ -2203,8 +2221,6 @@ host.</p>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
    <div class="issue"> Monkey patching! Talk with Anne.<a href="#issue-3ded38d3"> ↵ </a></div>
-   <div class="issue"> Some have suggested that this might not be a restriction we want (see <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
-  Thomson’s public-webappsec post on the topic</a>, for example).<a href="#issue-b26c64a4"> ↵ </a></div>
    <div class="issue"> This is the simplest thing, but it’s probably reaching a little too far into the
   documents and mucking with their context. I probably just need to break down and
   copy/paste the relevant bits from HTML.<a href="#issue-808c351f"> ↵ </a></div>
@@ -2237,8 +2253,8 @@ host.</p>
    <ul>
     <li><a href="#ref-for-grammardef-data-type-1">2.1. 
     The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-data-type-2">(2)</a>
-    <li><a href="#ref-for-grammardef-data-type-3">3.1. Parsing</a> <a href="#ref-for-grammardef-data-type-4">(2)</a>
-    <li><a href="#ref-for-grammardef-data-type-5">3.2.1. 
+    <li><a href="#ref-for-grammardef-data-type-3">3.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-data-type-4">3.2.1. 
     Prepare to clear origin’s data </a>
    </ul>
   </aside>
@@ -2258,7 +2274,8 @@ host.</p>
     <li><a href="#ref-for-grammardef-cache-4">1.1.4. Kill Switch</a>
     <li><a href="#ref-for-grammardef-cache-5">2.1. 
     The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-cache-6">(2)</a>
-    <li><a href="#ref-for-grammardef-cache-7">3.2. 
+    <li><a href="#ref-for-grammardef-cache-7">3.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-cache-8">3.2. 
     Clear data for response </a>
    </ul>
   </aside>
@@ -2270,8 +2287,9 @@ host.</p>
     <li><a href="#ref-for-grammardef-cookies-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-grammardef-cookies-4">1.1.4. Kill Switch</a>
     <li><a href="#ref-for-grammardef-cookies-5">2.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-cookies-6">(2)</a>
-    <li><a href="#ref-for-grammardef-cookies-7">3.2. 
+    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-cookies-6">(2)</a> <a href="#ref-for-grammardef-cookies-7">(3)</a>
+    <li><a href="#ref-for-grammardef-cookies-8">3.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-cookies-9">3.2. 
     Clear data for response </a>
    </ul>
   </aside>
@@ -2284,7 +2302,8 @@ host.</p>
     <li><a href="#ref-for-grammardef-storage-4">1.1.4. Kill Switch</a>
     <li><a href="#ref-for-grammardef-storage-5">2.1. 
     The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-storage-6">(2)</a>
-    <li><a href="#ref-for-grammardef-storage-7">3.2. 
+    <li><a href="#ref-for-grammardef-storage-7">3.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-storage-8">3.2. 
     Clear data for response </a>
    </ul>
   </aside>
@@ -2297,7 +2316,10 @@ host.</p>
     <li><a href="#ref-for-grammardef-executioncontexts-4">1.1.4. Kill Switch</a>
     <li><a href="#ref-for-grammardef-executioncontexts-5">2.1. 
     The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-executioncontexts-6">(2)</a>
-    <li><a href="#ref-for-grammardef-executioncontexts-7">3.2.1. 
+    <li><a href="#ref-for-grammardef-executioncontexts-7">3.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-executioncontexts-8">3.2. 
+    Clear data for response </a>
+    <li><a href="#ref-for-grammardef-executioncontexts-9">3.2.1. 
     Prepare to clear origin’s data </a>
    </ul>
   </aside>
