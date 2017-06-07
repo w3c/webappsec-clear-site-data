@@ -25,6 +25,7 @@ spec:fetch; type:dfn; for:/; text:http-network fetch
 
 <!-- Needs to be exported -->
 spec:html; type:dfn; for:/; text:active sandboxing flag set
+spec:html; type:dfn; for:/; text:application cache group
 spec:html; type:dfn; for:/; text:reload-triggered navigation
 spec:indexeddb; type:dfn; for:/; text:database
 spec:indexeddb; type:dfn; for:/; text:delete a database
@@ -384,10 +385,6 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   <ol class="algorithm">
     1.  If |response|'s [=response/url=] is not an <a><i lang="la">a priori</i> authenticated
         URL</a>, then [=iteration/break=].
-
-        ISSUE: Some have suggested that this might not be a restriction we want (see
-        <a href="https://lists.w3.org/Archives/Public/public-webappsec/2015Jun/0032.html">Martin
-        Thomson's public-webappsec post on the topic</a>, for example).
 
     2.  Let |types| be the result of <a lt="parse response" abstract-op>parsing |response|'s
         `Clear-Site-Data` header</a>.

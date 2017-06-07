@@ -1890,6 +1890,16 @@ host.</p>
           </ol>
         </ol>
        <li data-md="">
+        <p>For each <var>appcache</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache">application caches</a>:</p>
+        <ol>
+         <li data-md="">
+          <p>If <var>appcache</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache-group">application cache group</a> is identified by an URL whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> is <var>origin</var>:</p>
+          <ol>
+           <li data-md="">
+            <p>Discard <var>appcache</var>.</p>
+          </ol>
+        </ol>
+       <li data-md="">
         <p>For any other script-accessible storage mechanism, the user agent MUST
   delete any data associated with this origin. This includes (but is not
   limited to) the following:</p>
@@ -1900,8 +1910,6 @@ host.</p>
           <p>An origin’s filesystems <a data-link-type="biblio" href="#biblio-file-system-api">[file-system-api]</a></p>
          <li data-md="">
           <p>Plugin data (e.g. Flash via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>),</p>
-         <li data-md="">
-          <p>Appcache.</p>
          <li data-md="">
           <p class="issue" id="issue-b346d876"><a class="self-link" href="#issue-b346d876"></a> Moar?</p>
         </ol>
@@ -2060,6 +2068,8 @@ host.</p>
      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#storage-2">Storage</a>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#active-sandboxing-flag-set">active sandboxing flag set</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache">application cache</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache-group">application cache group</a>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing context</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">global object</a>
