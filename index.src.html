@@ -34,6 +34,7 @@ spec:indexeddb; type:dfn; for:/; text:delete a database
 spec: RFC5234; urlPrefix: https://tools.ietf.org/html/rfc5234
   type: grammar
     text: ALPHA; url: appendix-B.1
+    text: DQUOTE; url: appendix-B.1
 spec: RFC5890; urlPrefix: https://tools.ietf.org/html/rfc5890
   type: dfn
     text: label; url: section-2.2
@@ -126,7 +127,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     They can do so by sending the following HTTP header in the response:
 
     <pre>
-      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>cookies</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: "<a grammar>cache</a>", "<a grammar>cookies</a>", "<a grammar>storage</a>", "<a grammar>executionContexts</a>"
     </pre>
   </div>
 
@@ -162,7 +163,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     preflight, and would return the following header for the actual request:
 
     <pre>
-      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>cookies</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: "<a grammar>cache</a>", "<a grammar>cookies</a>", "<a grammar>storage</a>", "<a grammar>executionContexts</a>"
     </pre>
   </div>
 
@@ -179,7 +180,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     includes all the types except for "<a grammar>cookies</a>":
 
     <pre>
-      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: "<a grammar>cache</a>", "<a grammar>storage</a>", "<a grammar>executionContexts</a>"
     </pre>
   </div>
 
@@ -197,7 +198,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     following HTTP header in a response to wipe out local sources of data:
 
     <pre>
-      <a http-header>Clear-Site-Data</a>: <a grammar>cache</a>, <a grammar>cookies</a>, <a grammar>storage</a>, <a grammar>executionContexts</a>
+      <a http-header>Clear-Site-Data</a>: "<a grammar>cache</a>", "<a grammar>cookies</a>", "<a grammar>storage</a>", "<a grammar>executionContexts</a>"
     </pre>
 
     Note: Installing a Service Worker guarantees that a request will go out to
@@ -237,11 +238,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   represented by the following ABNF [[!RFC5234]]:
 
   <pre class="abnf" link-type="grammar" dfn-type="grammar">
-    Clear-Site-Data = 1#( <a>data-type</a> | <a>extension-type</a> )
+    Clear-Site-Data = 1#( <a>DQUOTE</a> ( <a>data-type</a> | <a>extension-type</a> ) <a>DQUOTE</a> )
     <dfn>data-type</dfn> = "<a>cache</a>" | "<a>cookies</a>" | "<a>storage</a>" | "<a>executionContexts</a>"
     <dfn>extension-type</dfn> = 1*( <a>ALPHA</a> | "-")
     ; <a>#rule</a> is defined in Section 7 of RFC 7230.
-    ; <a>ALPHA</a> is defined in Appendix B.1 of RFC 5234.
+    ; <a>DQUOTE</a> and <a>ALPHA</a> are defined in Appendix B.1 of RFC 5234.
   </pre>
 
   [[#fetch-integration]] and [[#parsing]] describe how the
@@ -327,6 +328,13 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         </pre>
       </div>
 
+  Note: The syntax defined here is compatible with future extensions to this document which might
+  add more granular filtering mechanisms to the types we've defined. For example, it's likely that
+  "<a grammar>`cookies`</a>" will need to grow a mechanism to prevent deletion of specific cookie
+  values. Wrapping all of the type names in double-quotes means that we can easily shift from
+  simple splitting-strings-on-commas processing to something more complicated (like processing the
+  header value as JSON) without losing backwards compatibility.
+
   <h3 id="fetch-integration">Fetch Integration</h3>
 
   ISSUE: Monkey patching! Talk with Anne.
@@ -368,12 +376,23 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
     3.  If |header| is `null` or failure, return an empty list.
 
-    4.  For each |type| in |header|:
+    4.  For each |type| in |header|, execute the first matching statement, if any, switching on
+        |type|:
 
-        1.  If |type| matches the <a grammar>`data-type`</a> grammar, append |type| to |types|.
+        :   \``"cache"`\`
+        ::  Append "<a grammar>cache</a>" to |types|.
+        :   \``"cookies"`\`
+        ::  Append "<a grammar>cookies</a>" to |types|.
+        :   \``"storage"`\`
+        ::  Append "<a grammar>storage</a>" to |types|.
+        :   \``"executionContexts"`\`
+        ::  Append "<a grammar>executionContexts</a>" to |types|.
 
     5.  Return |types|.
   </ol>
+
+  Note: All of the existing values can be handled with the simple switch above. If and when more
+  complex type definitions are created, the parser will likely shift over to JSON entirely.
 
   <h3 id="clear-response" algorithm>
     Clear data for |response|
@@ -396,7 +415,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
     5.  For each |type| in |types|:
    
-        1.  Switch on |type| and execute the associated algorithm:
+        1.  Execute the first matching statement, if any, switching on |type|:
 
             :   "<a grammar>`cache`</a>"
             ::  <a lt="clear cache" abstract-op>Clear cache for |origin|</a>.
@@ -405,7 +424,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
             :   "<a grammar>`storage`</a>"
             ::  <a lt="clear storage" abstract-op>Clear DOM-accessible storage for |origin|</a>.
 
-    6.  <a lt="reload" abstract-op>Reload |browsing contexts|</a>.
+    6.  If |types| contains "<a grammar>executionContexts</a>", then
+        <a lt="reload" abstract-op>Reload |browsing contexts|</a>.
   </ol>
 
   Note: User agents are are encouraged to give web developers some mechanism by which the clearing
