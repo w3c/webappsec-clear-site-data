@@ -21,13 +21,17 @@
         width: 100%;
       }
 
-      #header {
+      #request {
+        width: 100%;
+      }
+
+      #request p {
         font-family: 'Courier New';
       }
 
-      .indent {
-        display: inline-block;
-        padding-left: 2em;
+      #request input {
+        position: relative;
+        top: 2px;
       }
     </style>
     <script>
@@ -173,22 +177,12 @@
       <input type="button" value="Cache a resource" onclick="addCache();">
     </div>
 
-    <div>
+    <div id="request">
       <form action="/" method="post">
         <h2>Clear-Site-Data</h2>
         <h3>Request header:</h3>
-        <p id="header">
-          Clear-Site-Data: {<br>
-          <span class="indent">
-            'types': {
-            <span class="indent">
-              <input type="checkbox" name="types" value="cookies">Cookies<br>
-              <input type="checkbox" name="types" value="storage">Storage<br>
-              <input type="checkbox" name="types" value="cache">Cache<br>
-            </span><br>
-            }
-          </span>
-          }
+        <p>
+          Clear-Site-Data:&nbsp;<input type="checkbox" name="types" value="cookies">"cookies",&nbsp;<input type="checkbox" name="types" value="storage">"storage",&nbsp;<input type="checkbox" name="types" value="cache">"cache"
         </p>
         <input type="submit" value="Request header">
       </form>
