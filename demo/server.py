@@ -36,7 +36,7 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     self.send_response(200)  # OK
     self.send_header('Content-Type', 'text/html');
-    self.send_header('Clear-Site-Data', '{ "types": [ %s ] }' % datatypes)
+    self.send_header('Clear-Site-Data', datatypes)
     self.end_headers()
 
     self.wfile.write(file('index.html').read())
