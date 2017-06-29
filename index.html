@@ -1176,7 +1176,7 @@ Possible extra rowspan handling
 		}
 	}
 </style>
-  <meta content="Bikeshed version 34209db86579ed3f0e75afb470f2788a2646155f" name="generator">
+  <meta content="Bikeshed version bab6032cf8759f7d2fb1341d02aa48484a5a3187" name="generator">
   <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
 <style>/* style-md-lists */
 
@@ -1366,7 +1366,7 @@ Possible extra rowspan handling
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-06-07">7 June 2017</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2017-06-29">29 June 2017</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -1435,44 +1435,45 @@ host.</p>
        </ol>
       <li><a href="#goals"><span class="secno">1.2</span> <span class="content">Goals</span></a>
      </ol>
+    <li><a href="#infra"><span class="secno">2</span> <span class="content">Infrastructure</span></a>
     <li>
-     <a href="#clearing"><span class="secno">2</span> <span class="content">Clearing Site Data</span></a>
+     <a href="#clearing"><span class="secno">3</span> <span class="content">Clearing Site Data</span></a>
      <ol class="toc">
-      <li><a href="#header"><span class="secno">2.1</span> <span class="content"> The <code>Clear-Site-Data</code> HTTP Response Header Field </span></a>
-      <li><a href="#fetch-integration"><span class="secno">2.2</span> <span class="content">Fetch Integration</span></a>
+      <li><a href="#header"><span class="secno">3.1</span> <span class="content"> The <code>Clear-Site-Data</code> HTTP Response Header Field </span></a>
+      <li><a href="#fetch-integration"><span class="secno">3.2</span> <span class="content">Fetch Integration</span></a>
      </ol>
     <li>
-     <a href="#algorithms"><span class="secno">3</span> <span class="content">Algorithms</span></a>
+     <a href="#algorithms"><span class="secno">4</span> <span class="content">Algorithms</span></a>
      <ol class="toc">
-      <li><a href="#parsing"><span class="secno">3.1</span> <span class="content">Parsing</span></a>
+      <li><a href="#parsing"><span class="secno">4.1</span> <span class="content">Parsing</span></a>
       <li>
-       <a href="#clear-response"><span class="secno">3.2</span> <span class="content"> Clear data for <var>response</var> </span></a>
+       <a href="#clear-response"><span class="secno">4.2</span> <span class="content"> Clear data for <var>response</var> </span></a>
        <ol class="toc">
-        <li><a href="#prepare"><span class="secno">3.2.1</span> <span class="content"> Prepare to clear <var>origin</var>’s data </span></a>
-        <li><a href="#reload-contexts"><span class="secno">3.2.2</span> <span class="content"> Reload <var>browsing contexts</var> </span></a>
-        <li><a href="#clear-cache"><span class="secno">3.2.3</span> <span class="content"> Clear cache for <var>origin</var> </span></a>
-        <li><a href="#clear-cookies"><span class="secno">3.2.4</span> <span class="content"> Clear cookies for <var>origin</var> </span></a>
-        <li><a href="#clear-dom"><span class="secno">3.2.5</span> <span class="content"> Clear DOM-accessible storage for <var>origin</var> </span></a>
+        <li><a href="#prepare"><span class="secno">4.2.1</span> <span class="content"> Prepare to clear <var>origin</var>’s data </span></a>
+        <li><a href="#reload-contexts"><span class="secno">4.2.2</span> <span class="content"> Reload <var>browsing contexts</var> </span></a>
+        <li><a href="#clear-cache"><span class="secno">4.2.3</span> <span class="content"> Clear cache for <var>origin</var> </span></a>
+        <li><a href="#clear-cookies"><span class="secno">4.2.4</span> <span class="content"> Clear cookies for <var>origin</var> </span></a>
+        <li><a href="#clear-dom"><span class="secno">4.2.5</span> <span class="content"> Clear DOM-accessible storage for <var>origin</var> </span></a>
        </ol>
      </ol>
     <li>
-     <a href="#security"><span class="secno">4</span> <span class="content">Security Considerations</span></a>
+     <a href="#security"><span class="secno">5</span> <span class="content">Security Considerations</span></a>
      <ol class="toc">
-      <li><a href="#incomplete"><span class="secno">4.1</span> <span class="content">Incomplete Clearing</span></a>
-      <li><a href="#service-workers"><span class="secno">4.2</span> <span class="content">Service workers</span></a>
+      <li><a href="#incomplete"><span class="secno">5.1</span> <span class="content">Incomplete Clearing</span></a>
+      <li><a href="#service-workers"><span class="secno">5.2</span> <span class="content">Service workers</span></a>
      </ol>
     <li>
-     <a href="#privacy"><span class="secno">5</span> <span class="content">Privacy Considerations</span></a>
+     <a href="#privacy"><span class="secno">6</span> <span class="content">Privacy Considerations</span></a>
      <ol class="toc">
-      <li><a href="#user-vs-author"><span class="secno">5.1</span> <span class="content">Web developers control the timing.</span></a>
-      <li><a href="#remnants"><span class="secno">5.2</span> <span class="content">Remnants of data on disk.</span></a>
+      <li><a href="#user-vs-author"><span class="secno">6.1</span> <span class="content">Web developers control the timing.</span></a>
+      <li><a href="#remnants"><span class="secno">6.2</span> <span class="content">Remnants of data on disk.</span></a>
      </ol>
     <li>
-     <a href="#iana-considerations"><span class="secno">6</span> <span class="content">IANA Considerations</span></a>
+     <a href="#iana-considerations"><span class="secno">7</span> <span class="content">IANA Considerations</span></a>
      <ol class="toc">
-      <li><a href="#iana-clear-site-data"><span class="secno">6.1</span> <span class="content"> Clear-Site-Data </span></a>
+      <li><a href="#iana-clear-site-data"><span class="secno">7.1</span> <span class="content"> Clear-Site-Data </span></a>
      </ol>
-    <li><a href="#acknowledgements"><span class="secno">7</span> <span class="content">Acknowledgements</span></a>
+    <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
     <li>
      <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
      <ol class="toc">
@@ -1606,25 +1607,28 @@ host.</p>
     </ol>
    </section>
    <section>
-    <h2 class="heading settled" data-level="2" id="clearing"><span class="secno">2. </span><span class="content">Clearing Site Data</span><a class="self-link" href="#clearing"></a></h2>
+    <h2 class="heading settled" data-level="2" id="infra"><span class="secno">2. </span><span class="content">Infrastructure</span><a class="self-link" href="#infra"></a></h2>
+    <p>This document uses ABNF grammar to specify syntax, as defined in <a data-link-type="biblio" href="#biblio-rfc5234">[RFC5234]</a> and updated in <a data-link-type="biblio" href="#biblio-rfc7405">[RFC7405]</a>, along with the <code>#rule</code> extension defined in <a href="https://tools.ietf.org/html/rfc7230#section-7">Section 7</a> of <a data-link-type="biblio" href="#biblio-rfc7230">[RFC7230]</a>, and the <code>quoted-string</code> rule defined in <a href="https://tools.ietf.org/html/rfc7230#section-3.2.6">Section 3.2.6</a> of the same
+  document.</p>
+    <p>This document depends on the Infra Standard for a number of foundational concepts used in its
+  algorithms and prose <a data-link-type="biblio" href="#biblio-infra">[INFRA]</a>.</p>
+   </section>
+   <section>
+    <h2 class="heading settled" data-level="3" id="clearing"><span class="secno">3. </span><span class="content">Clearing Site Data</span><a class="self-link" href="#clearing"></a></h2>
     <p>Developers may instruct a user agent to clear various types of relevant data
   by delivering a <code>Clear-Site-Data</code> HTTP response header in response to a request.</p>
-    <h3 class="heading settled" data-level="2.1" id="header"><span class="secno">2.1. </span><span class="content"> The <code>Clear-Site-Data</code> HTTP Response Header Field </span><a class="self-link" href="#header"></a></h3>
+    <h3 class="heading settled" data-level="3.1" id="header"><span class="secno">3.1. </span><span class="content"> The <code>Clear-Site-Data</code> HTTP Response Header Field </span><a class="self-link" href="#header"></a></h3>
     <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export="" id="http-headerdef-clear-site-data"><code>Clear-Site-Data</code></dfn> HTTP response header field sends a signal to the
   user agent that it ought to remove all data of a certain set of types. The header is
-  represented by the following ABNF <a data-link-type="biblio" href="#biblio-rfc5234">[RFC5234]</a>:</p>
-<pre class="abnf">Clear-Site-Data = 1#( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">DQUOTE</a> ( <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-1">data-type</a> | <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-1">extension-type</a> ) <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">DQUOTE</a> )
-<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-data-type">data-type</dfn> = "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-5">cache</a>" | "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-5">cookies</a>" | "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-5">storage</a>" | "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-5">executionContexts</a>"
-<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-extension-type">extension-type</dfn> = 1*( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">ALPHA</a> | "-")
+  represented by the following grammar:</p>
+<pre class="abnf">Clear-Site-Data = 1#( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6">quoted-string</a> )
 ; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230#section-7">#rule</a> is defined in Section 7 of RFC 7230.
-; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">DQUOTE</a> and <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc5234#appendix-B.1">ALPHA</a> are defined in Appendix B.1 of RFC 5234.
 </pre>
-    <p><a href="#fetch-integration">§2.2 Fetch Integration</a> and <a href="#parsing">§3.1 Parsing</a> describe how the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-6">Clear-Site-Data</a> header is processed.</p>
-    <p>The <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-2">data-type</a> grammar defines an initial set of known data
-  types which can be cleared using this mechanism. See their descriptions below.
-  Future versions of the header can support additional datatypes, which MUST
-  comply with the <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-2">extension-type</a> grammar. User agents MUST
-  ignore unknown <a data-link-type="grammar" href="#grammardef-extension-type" id="ref-for-grammardef-extension-type-3">extension-type</a>s whhen parsing the header.</p>
+    <p><a href="#fetch-integration">§3.2 Fetch Integration</a> and <a href="#parsing">§4.1 Parsing</a> describe how the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-6">Clear-Site-Data</a> header is processed.</p>
+    <p>This document defines an initial set of known data types which can be cleared using this
+  mechanism. See their descriptions below. Future versions of the header can support
+  additional datatypes, which MUST comply with the <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6">quoted-string</a> grammar. User agents
+  MUST ignore unknown types when parsing the header.</p>
     <dl>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-cache"><code>cache</code></dfn>"
      <dd data-md="">
@@ -1633,11 +1637,11 @@ host.</p>
   cache</a>, of course, but will also remove data from various other caches
   which a user agent implements (prerendered pages, script caches, shader
   caches, etc.).</p>
-      <p>Implementation details are in <a href="#clear-cache">§3.2.3 Clear cache for origin</a>.</p>
+      <p>Implementation details are in <a href="#clear-cache">§4.2.3 Clear cache for origin</a>.</p>
       <div class="example" id="example-f74a3235">
        <a class="self-link" href="#example-f74a3235"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause caches associated with the origin <code>https://example.com</code>: to be cleared: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-7">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-6">cache</a>"
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-7">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-5">cache</a>"
 </pre>
       </div>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-cookies"><code>cookies</code></dfn>"
@@ -1645,12 +1649,12 @@ host.</p>
       <p>The "<code>cookies</code>" type indicates that the server wishes to remove cookies
   associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
   ID <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and Token Binding <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> are also cleared.</p>
-      <p>Implementation details are in <a href="#clear-cookies">§3.2.4 Clear cookies for origin</a>.</p>
+      <p>Implementation details are in <a href="#clear-cookies">§4.2.4 Clear cookies for origin</a>.</p>
       <div class="example" id="example-54e5f977">
        <a class="self-link" href="#example-54e5f977"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause cookies associated with the origin <code>https://example.com</code> to be cleared, as well as cookies on any origin in
     the same registered domain (e.g. <code>https://www.example.com/</code> and <code>https://more.subdomains.example.com/</code>). 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-8">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-6">cookies</a>"
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-8">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-5">cookies</a>"
 </pre>
       </div>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-storage"><code>storage</code></dfn>"
@@ -1659,11 +1663,11 @@ host.</p>
   locally stored data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> of a
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url">url</a>. This includes storage
   mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration">service worker registrations</a>.</p>
-      <p>Implementation details are in <a href="#clear-dom">§3.2.5 Clear DOM-accessible storage for origin</a>.</p>
+      <p>Implementation details are in <a href="#clear-dom">§4.2.5 Clear DOM-accessible storage for origin</a>.</p>
       <div class="example" id="example-cc066205">
        <a class="self-link" href="#example-cc066205"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause DOM-accessible storage for the origin <code>https://example.com</code> to be cleared: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-9">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-6">storage</a>"
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-9">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-5">storage</a>"
 </pre>
       </div>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-executioncontexts"><code>executionContexts</code></dfn>"
@@ -1674,24 +1678,24 @@ host.</p>
       <div class="example" id="example-b8b629a3">
        <a class="self-link" href="#example-b8b629a3"></a> When delivered with a response from <code>https://example.com/clear</code>,
     the following header will cause execution contexts displaying the origin <code>https://example.com</code> to be neutered and reloaded: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-10">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-6">executionContexts</a>"
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-10">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-5">executionContexts</a>"
 </pre>
       </div>
     </dl>
     <p class="note" role="note"><span>Note:</span> The syntax defined here is compatible with future extensions to this document which might
   add more granular filtering mechanisms to the types we’ve defined. For example, it’s likely that
-  "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-7"><code>cookies</code></a>" will need to grow a mechanism to prevent deletion of specific cookie
+  "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-6"><code>cookies</code></a>" will need to grow a mechanism to prevent deletion of specific cookie
   values. Wrapping all of the type names in double-quotes means that we can easily shift from
   simple splitting-strings-on-commas processing to something more complicated (like processing the
   header value as JSON) without losing backwards compatibility.</p>
-    <h3 class="heading settled" data-level="2.2" id="fetch-integration"><span class="secno">2.2. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
+    <h3 class="heading settled" data-level="3.2" id="fetch-integration"><span class="secno">3.2. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
     <p>If the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-11"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> received from the network, then data MUST be cleared before rendering the
   response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
     <ol start="15">
      <li data-md="">
       <p>If <var>credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-header-list">header list</a> contains a header named <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-12"><code>Clear-Site-Data</code></a>, then
-   execute <a href="#clear-response">§3.2 Clear data for response</a> on <var>response</var>.</p>
+   execute <a href="#clear-response">§4.2 Clear data for response</a> on <var>response</var>.</p>
     </ol>
     <p class="note" role="note"><span>Note:</span> This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
@@ -1703,9 +1707,9 @@ host.</p>
   to all types for the sake of consistency.</p>
     <section>
      <section>
-      <h2 class="heading settled" data-level="3" id="algorithms"><span class="secno">3. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
-      <h3 class="heading settled algorithm" data-algorithm="Parsing" data-level="3.1" id="parsing"><span class="secno">3.1. </span><span class="content">Parsing</span><a class="self-link" href="#parsing"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>, the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="parse response" data-lt="parse response’s Clear-Site-Data header" id="abstract-opdef-parse-responses-clear-site-data-header">parse <var>response</var>’s <code>Clear-Site-Data</code> header</dfn>, returning a list of <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-3"><code>data-type</code></a> tokens, as follows:</p>
+      <h2 class="heading settled" data-level="4" id="algorithms"><span class="secno">4. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
+      <h3 class="heading settled algorithm" data-algorithm="Parsing" data-level="4.1" id="parsing"><span class="secno">4.1. </span><span class="content">Parsing</span><a class="self-link" href="#parsing"></a></h3>
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a>, the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="parse response" data-lt="parse response’s Clear-Site-Data header" id="abstract-opdef-parse-responses-clear-site-data-header">parse <var>response</var>’s <code>Clear-Site-Data</code> header</dfn>, returning a list of types, as follows:</p>
       <ol class="algorithm">
        <li data-md="">
         <p>Let <var>types</var> be an empty list.</p>
@@ -1718,23 +1722,23 @@ host.</p>
         <dl>
          <dt data-md="">`<code>"cache"</code>`
          <dd data-md="">
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-7">cache</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-6">cache</a>" to <var>types</var>.</p>
          <dt data-md="">`<code>"cookies"</code>`
          <dd data-md="">
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-8">cookies</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-7">cookies</a>" to <var>types</var>.</p>
          <dt data-md="">`<code>"storage"</code>`
          <dd data-md="">
-          <p>Append "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-7">storage</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-6">storage</a>" to <var>types</var>.</p>
          <dt data-md="">`<code>"executionContexts"</code>`
          <dd data-md="">
-          <p>Append "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-7">executionContexts</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-6">executionContexts</a>" to <var>types</var>.</p>
         </dl>
        <li data-md="">
         <p>Return <var>types</var>.</p>
       </ol>
       <p class="note" role="note"><span>Note:</span> All of the existing values can be handled with the simple switch above. If and when more
   complex type definitions are created, the parser will likely shift over to JSON entirely.</p>
-      <h3 class="heading settled algorithm" data-algorithm="Clear data for response" data-level="3.2" id="clear-response"><span class="secno">3.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
+      <h3 class="heading settled algorithm" data-algorithm="Clear data for response" data-level="4.2" id="clear-response"><span class="secno">4.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
       <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response">response</a> (<var>response</var>), the user agent can <dfn data-dfn-type="abstract-op" data-export="" data-lt="clear site data for response" id="abstract-opdef-clear-site-data-for-response">clear site data for <var>response</var><a class="self-link" href="#abstract-opdef-clear-site-data-for-response"></a></dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md="">
@@ -1753,26 +1757,25 @@ host.</p>
          <li data-md="">
           <p>Execute the first matching statement, if any, switching on <var>type</var>:</p>
           <dl>
-           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-8"><code>cache</code></a>"
+           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache-7"><code>cache</code></a>"
            <dd data-md="">
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cache-for-origin" id="ref-for-abstract-opdef-clear-cache-for-origin-1">Clear cache for <var>origin</var></a>.</p>
-           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-9"><code>cookies</code></a>"
+           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies-8"><code>cookies</code></a>"
            <dd data-md="">
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cookies-for-origin" id="ref-for-abstract-opdef-clear-cookies-for-origin-1">Clear cookies for <var>origin</var></a>.</p>
-           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-8"><code>storage</code></a>"
+           <dt data-md="">"<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage-7"><code>storage</code></a>"
            <dd data-md="">
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-dom-accessible-storage-for-origin" id="ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin-1">Clear DOM-accessible storage for <var>origin</var></a>.</p>
           </dl>
         </ol>
        <li data-md="">
-        <p>If <var>types</var> contains "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-8">executionContexts</a>", then <a data-link-type="abstract-op" href="#abstract-opdef-reload-browsing-contexts" id="ref-for-abstract-opdef-reload-browsing-contexts-1">Reload <var>browsing contexts</var></a>.</p>
+        <p>If <var>types</var> contains "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-7">executionContexts</a>", then <a data-link-type="abstract-op" href="#abstract-opdef-reload-browsing-contexts" id="ref-for-abstract-opdef-reload-browsing-contexts-1">Reload <var>browsing contexts</var></a>.</p>
       </ol>
       <p class="note" role="note"><span>Note:</span> User agents are are encouraged to give web developers some mechanism by which the clearing
   operation can be debugged. This might take the form of a console message or timeline entry
   indicating success.</p>
-      <h4 class="heading settled algorithm" data-algorithm="Prepare to clear origin’s data" data-level="3.2.1" id="prepare"><span class="secno">3.2.1. </span><span class="content"> Prepare to clear <var>origin</var>’s data </span><a class="self-link" href="#prepare"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a list of <a data-link-type="grammar" href="#grammardef-data-type" id="ref-for-grammardef-data-type-4"><code>data-type</code></a> tokens (<var>types</var>), the user
-  agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="prepare" id="abstract-opdef-prepare-to-clear-origins-data">prepare to clear <var>origin</var>’s data</dfn> by executing
+      <h4 class="heading settled algorithm" data-algorithm="Prepare to clear origin’s data" data-level="4.2.1" id="prepare"><span class="secno">4.2.1. </span><span class="content"> Prepare to clear <var>origin</var>’s data </span><a class="self-link" href="#prepare"></a></h4>
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>) and a list of types (<var>types</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="prepare" id="abstract-opdef-prepare-to-clear-origins-data">prepare to clear <var>origin</var>’s data</dfn> by executing
   the following steps. The algorithm returns a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing contexts</a> which have been
   sandboxed in order to prevent them from recreating cleared data from in-memory JavaScript
   variables.</p>
@@ -1780,7 +1783,7 @@ host.</p>
        <li data-md="">
         <p>Let <var>sandboxed</var> be an empty list.</p>
        <li data-md="">
-        <p>If <var>types</var> does not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain">contain</a> "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-9"><code>executionContexts</code></a>", return <var>sandboxed</var>.</p>
+        <p>If <var>types</var> does not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain">contain</a> "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts-8"><code>executionContexts</code></a>", return <var>sandboxed</var>.</p>
        <li data-md="">
         <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing contexts</a>:</p>
         <ol>
@@ -1789,31 +1792,31 @@ host.</p>
          <li data-md="">
           <p>If <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">origin</a> is not <var>origin</var>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue">continue</a>.</p>
          <li data-md="">
-          <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive">Parse a sandboxing directive</a> using the empty string as the input, and <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-sandboxing-flag-set">active sandboxing flag set</a> as the output.</p>
+          <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive">Parse a sandboxing directive</a> using the empty string as the input, and <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set">active sandboxing flag set</a> as the output.</p>
          <li data-md="">
           <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append">Append</a> <var>context</var> to <var>sandboxed</var>.</p>
         </ol>
        <li data-md="">
         <p>Return <var>sandboxed</var>.</p>
       </ol>
-      <h4 class="heading settled" data-level="3.2.2" id="reload-contexts"><span class="secno">3.2.2. </span><span class="content"> Reload <var>browsing contexts</var> </span><a class="self-link" href="#reload-contexts"></a></h4>
+      <h4 class="heading settled" data-level="4.2.2" id="reload-contexts"><span class="secno">4.2.2. </span><span class="content"> Reload <var>browsing contexts</var> </span><a class="self-link" href="#reload-contexts"></a></h4>
       <p>Given a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing contexts</a> (<var>contexts</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="reload" id="abstract-opdef-reload-browsing-contexts">reload browsing contexts</dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md="">
         <p>For each <var>context</var> in <var>contexts</var>:</p>
         <ol>
          <li data-md="">
-          <p>Execute <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">global object</a>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsers.html#location">Location</a></code> object’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/browsers.html#dom-location-reload">reload()</a></code>.</p>
+          <p>Execute <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">global object</a>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/history.html#location">Location</a></code> object’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/history.html#dom-location-reload">reload()</a></code>.</p>
           <p class="issue" id="issue-808c351f"><a class="self-link" href="#issue-808c351f"></a> This is the simplest thing, but it’s probably reaching a little too far into the
   documents and mucking with their context. I probably just need to break down and
   copy/paste the relevant bits from HTML.</p>
         </ol>
       </ol>
-      <h4 class="heading settled" data-level="3.2.3" id="clear-cache"><span class="secno">3.2.3. </span><span class="content"> Clear cache for <var>origin</var> </span><a class="self-link" href="#clear-cache"></a></h4>
+      <h4 class="heading settled" data-level="4.2.3" id="clear-cache"><span class="secno">4.2.3. </span><span class="content"> Clear cache for <var>origin</var> </span><a class="self-link" href="#clear-cache"></a></h4>
       <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="clear cache" id="abstract-opdef-clear-cache-for-origin">clear cache for <var>origin</var></dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md="">
-        <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a>.</p>
+        <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">host</a>.</p>
        <li data-md="">
         <p>Let <var>cache list</var> be the set of entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2">network cache</a> whose <code>target URI</code> <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host">host</a> is identical to <var>host</var>.</p>
        <li data-md="">
@@ -1831,7 +1834,7 @@ host.</p>
   caches, WebRTC bits and pieces, address bar suggestion caches, various networking bits that
   aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a> will make this clearer?</p>
       </ol>
-      <h4 class="heading settled" data-level="3.2.4" id="clear-cookies"><span class="secno">3.2.4. </span><span class="content"> Clear cookies for <var>origin</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
+      <h4 class="heading settled" data-level="4.2.4" id="clear-cookies"><span class="secno">4.2.4. </span><span class="content"> Clear cookies for <var>origin</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
       <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="clear cookies" id="abstract-opdef-clear-cookies-for-origin">clear cookies for <var>origin</var></dfn> as follows:</p>
       <p class="note" role="note"><span>Note:</span> We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a>, as cookies ignore the
   same-origin policy, and there’s a distinct risk that we’d leave applications in an ill-defined
@@ -1841,7 +1844,7 @@ host.</p>
   by host, and to remove individual cookies.</p>
       <ol class="algorithm">
        <li data-md="">
-        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> of <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a>.</p>
+        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> of <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">host</a>.</p>
        <li data-md="">
         <p>Let <var>cookie list</var> be the set of cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie
   store</a> whose <code>domain</code> attribute is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3">domain-match</a> with <var>registered</var>.</p>
@@ -1853,17 +1856,17 @@ host.</p>
         </ol>
        <li data-md="">
         <p>If the user agent supports other forms of cookie-like storage, these MUST also be cleared
-  for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> is <var>registered</var>.</p>
+  for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> is <var>registered</var>.</p>
         <p class="note" role="note"><span>Note:</span> For example, if the user agent supports Flash, its local stored objects will be
   cleared via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>.</p>
        <li data-md="">
-        <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> is <var>registered</var>.</p>
+        <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> is <var>registered</var>.</p>
        <li data-md="">
-        <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry">proxy-authentication entries</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> is <var>registered</var>.</p>
+        <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry">proxy-authentication entries</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#">registered domain</a> is <var>registered</var>.</p>
       </ol>
       <p class="issue" id="issue-a4a76269"><a class="self-link" href="#issue-a4a76269"></a> The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">&lt;https://github.com/w3c/webappsec-clear-site-data/issues/2></a></p>
-      <h4 class="heading settled" data-level="3.2.5" id="clear-dom"><span class="secno">3.2.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> </span><a class="self-link" href="#clear-dom"></a></h4>
+      <h4 class="heading settled" data-level="4.2.5" id="clear-dom"><span class="secno">4.2.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> </span><a class="self-link" href="#clear-dom"></a></h4>
       <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export="" data-local-lt="clear storage" id="abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for <var>origin</var></dfn> as
   follows:</p>
       <ol class="algorithm">
@@ -1908,10 +1911,10 @@ host.</p>
           </ol>
         </ol>
        <li data-md="">
-        <p>For each <var>appcache</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache">application caches</a>:</p>
+        <p>For each <var>appcache</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/offline.html#application-cache">application caches</a>:</p>
         <ol>
          <li data-md="">
-          <p>If <var>appcache</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache-group">application cache group</a> is identified by an URL whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> is <var>origin</var>:</p>
+          <p>If <var>appcache</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/offline.html#application-cache-group">application cache group</a> is identified by an URL whose <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md="">
             <p>Discard <var>appcache</var>.</p>
@@ -1934,13 +1937,13 @@ host.</p>
       </ol>
      </section>
      <section>
-      <h2 class="heading settled" data-level="4" id="security"><span class="secno">4. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
-      <h3 class="heading settled" data-level="4.1" id="incomplete"><span class="secno">4.1. </span><span class="content">Incomplete Clearing</span><a class="self-link" href="#incomplete"></a></h3>
+      <h2 class="heading settled" data-level="5" id="security"><span class="secno">5. </span><span class="content">Security Considerations</span><a class="self-link" href="#security"></a></h2>
+      <h3 class="heading settled" data-level="5.1" id="incomplete"><span class="secno">5.1. </span><span class="content">Incomplete Clearing</span><a class="self-link" href="#incomplete"></a></h3>
       <p>It is possible that an application could be put into an indeterminate state
   by clearing only one type of storage. We mitigate that to some extent by
   clearing all storage options as a block, and by requiring that the header be
   delivered over a secure connection.</p>
-      <h3 class="heading settled" data-level="4.2" id="service-workers"><span class="secno">4.2. </span><span class="content">Service workers</span><a class="self-link" href="#service-workers"></a></h3>
+      <h3 class="heading settled" data-level="5.2" id="service-workers"><span class="secno">5.2. </span><span class="content">Service workers</span><a class="self-link" href="#service-workers"></a></h3>
       <p>It is imperative that the Clear-Site-Data header is only respected on
   responses fetched over network, and not those served by a service worker.</p>
       <p>This is because service workers can return arbitrary responses for resource
@@ -1953,8 +1956,8 @@ host.</p>
       <p>Note also that a service worker update is a network response, and is therefore
   not affected by this restriction. This is important in order to support the
   use case in <a href="#example-killswitch">§1.1.4 Kill Switch</a>.</p>
-      <h2 class="heading settled" data-level="5" id="privacy"><span class="secno">5. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
-      <h3 class="heading settled" data-level="5.1" id="user-vs-author"><span class="secno">5.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
+      <h2 class="heading settled" data-level="6" id="privacy"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
+      <h3 class="heading settled" data-level="6.1" id="user-vs-author"><span class="secno">6.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
       <p>If triggered at appropriate times, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-14"><code>Clear-Site-Data</code></a> can
   increase a user’s privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
@@ -1968,7 +1971,7 @@ host.</p>
   words) offer the same functionality to users that they offer to web
   developers. Ideally, they will offer significantly more than we can offer at
   a platform level (clearing browsing history, for example).</p>
-      <h3 class="heading settled" data-level="5.2" id="remnants"><span class="secno">5.2. </span><span class="content">Remnants of data on disk.</span><a class="self-link" href="#remnants"></a></h3>
+      <h3 class="heading settled" data-level="6.2" id="remnants"><span class="secno">6.2. </span><span class="content">Remnants of data on disk.</span><a class="self-link" href="#remnants"></a></h3>
       <p>While <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data-15"><code>Clear-Site-Data</code></a> triggers a clearing event in a
   user’s agent, it is difficult to make promises about the state of a user’s
   disk after a clearing event takes place. In particular, note that it is up
@@ -1984,10 +1987,10 @@ host.</p>
   still subject to a number of limitations at the edges.</p>
      </section>
      <section>
-      <h2 class="heading settled" data-level="6" id="iana-considerations"><span class="secno">6. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana-considerations"></a></h2>
+      <h2 class="heading settled" data-level="7" id="iana-considerations"><span class="secno">7. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana-considerations"></a></h2>
       <p>The permanent message header field registry should be updated
   with the following registration: <a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a></p>
-      <h3 class="heading settled" data-level="6.1" id="iana-clear-site-data"><span class="secno">6.1. </span><span class="content"> Clear-Site-Data </span><a class="self-link" href="#iana-clear-site-data"></a></h3>
+      <h3 class="heading settled" data-level="7.1" id="iana-clear-site-data"><span class="secno">7.1. </span><span class="content"> Clear-Site-Data </span><a class="self-link" href="#iana-clear-site-data"></a></h3>
       <dl>
        <dt>Header field name
        <dd>Clear-Site-Data
@@ -1998,10 +2001,10 @@ host.</p>
        <dt>Author/Change controller
        <dd>W3C
        <dt>Specification document
-       <dd>This specification (See <a href="#header">§2.1 The Clear-Site-Data HTTP Response Header Field</a>)
+       <dd>This specification (See <a href="#header">§3.1 The Clear-Site-Data HTTP Response Header Field</a>)
       </dl>
       <section>
-       <h2 class="heading settled" data-level="7" id="acknowledgements"><span class="secno">7. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
+       <h2 class="heading settled" data-level="8" id="acknowledgements"><span class="secno">8. </span><span class="content">Acknowledgements</span><a class="self-link" href="#acknowledgements"></a></h2>
        <p>Michal Zalewski proposed a variant of this concept, and Mark Knichel helped
   refine the details.</p>
       </section>
@@ -2044,26 +2047,24 @@ host.</p>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#grammardef-cache">cache</a><span>, in §2.1</span>
-   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache</a><span>, in §3.2.3</span>
-   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache for origin</a><span>, in §3.2.3</span>
-   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies</a><span>, in §3.2.4</span>
-   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies for origin</a><span>, in §3.2.4</span>
-   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for origin</a><span>, in §3.2.5</span>
-   <li><a href="#http-headerdef-clear-site-data">Clear-Site-Data</a><span>, in §2.1</span>
-   <li><a href="#abstract-opdef-clear-site-data-for-response">clear site data for response</a><span>, in §3.2</span>
-   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear storage</a><span>, in §3.2.5</span>
-   <li><a href="#grammardef-cookies">cookies</a><span>, in §2.1</span>
-   <li><a href="#grammardef-data-type">data-type</a><span>, in §2.1</span>
-   <li><a href="#grammardef-executioncontexts">executionContexts</a><span>, in §2.1</span>
-   <li><a href="#grammardef-extension-type">extension-type</a><span>, in §2.1</span>
-   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response</a><span>, in §3.1</span>
-   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response’s Clear-Site-Data header</a><span>, in §3.1</span>
-   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare</a><span>, in §3.2.1</span>
-   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare to clear origin’s data</a><span>, in §3.2.1</span>
-   <li><a href="#abstract-opdef-reload-browsing-contexts">reload</a><span>, in §3.2.2</span>
-   <li><a href="#abstract-opdef-reload-browsing-contexts">reload browsing contexts</a><span>, in §3.2.2</span>
-   <li><a href="#grammardef-storage">storage</a><span>, in §2.1</span>
+   <li><a href="#grammardef-cache">cache</a><span>, in §3.1</span>
+   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache</a><span>, in §4.2.3</span>
+   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache for origin</a><span>, in §4.2.3</span>
+   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies</a><span>, in §4.2.4</span>
+   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies for origin</a><span>, in §4.2.4</span>
+   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for origin</a><span>, in §4.2.5</span>
+   <li><a href="#http-headerdef-clear-site-data">Clear-Site-Data</a><span>, in §3.1</span>
+   <li><a href="#abstract-opdef-clear-site-data-for-response">clear site data for response</a><span>, in §4.2</span>
+   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear storage</a><span>, in §4.2.5</span>
+   <li><a href="#grammardef-cookies">cookies</a><span>, in §3.1</span>
+   <li><a href="#grammardef-executioncontexts">executionContexts</a><span>, in §3.1</span>
+   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response</a><span>, in §4.1</span>
+   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response’s Clear-Site-Data header</a><span>, in §4.1</span>
+   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare</a><span>, in §4.2.1</span>
+   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare to clear origin’s data</a><span>, in §4.2.1</span>
+   <li><a href="#abstract-opdef-reload-browsing-contexts">reload</a><span>, in §4.2.2</span>
+   <li><a href="#abstract-opdef-reload-browsing-contexts">reload browsing contexts</a><span>, in §4.2.2</span>
+   <li><a href="#grammardef-storage">storage</a><span>, in §3.1</span>
   </ul>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
@@ -2082,21 +2083,21 @@ host.</p>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#location">Location</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/history.html#location">Location</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#storage-2">Storage</a>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">active document</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#active-sandboxing-flag-set">active sandboxing flag set</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache">application cache</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#application-cache-group">application cache group</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/origin.html#active-sandboxing-flag-set">active sandboxing flag set</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/offline.html#application-cache">application cache</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/offline.html#application-cache-group">application cache group</a>
      <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">browsing context</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">clear()</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">global object</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host">host</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">host</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">localStorage</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">origin</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive">parse a sandboxing directive</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive">parse a sandboxing directive</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">relevant settings object</a>
-     <li><a href="https://html.spec.whatwg.org/multipage/browsers.html#dom-location-reload">reload()</a>
+     <li><a href="https://html.spec.whatwg.org/multipage/history.html#dom-location-reload">reload()</a>
      <li><a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">sessionStorage</a>
     </ul>
    <li>
@@ -2124,12 +2125,6 @@ host.</p>
      <li><a href="https://publicsuffix.org/list/#">registered domain</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[RFC5234]</a> defines the following terms:
-    <ul>
-     <li><a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">alpha</a>
-     <li><a href="https://tools.ietf.org/html/rfc5234#appendix-B.1">dquote</a>
-    </ul>
-   <li>
     <a data-link-type="biblio">[RFC6265]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc6265#section-5.3">cookie store</a>
@@ -2141,9 +2136,10 @@ host.</p>
      <li><a href="https://tools.ietf.org/html/rfc6454#section-3.2">origin</a>
     </ul>
    <li>
-    <a data-link-type="biblio">[rfc7230]</a> defines the following terms:
+    <a data-link-type="biblio">[RFC7230]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc7230#section-7">#rule</a>
+     <li><a href="https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6">quoted-string</a>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC7234]</a> defines the following terms:
@@ -2201,6 +2197,8 @@ host.</p>
    <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7234">Hypertext Transfer Protocol (HTTP/1.1): Caching</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7234">https://tools.ietf.org/html/rfc7234</a>
    <dt id="biblio-rfc7235">[RFC7235]
    <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://tools.ietf.org/html/rfc7235">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>. June 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7235">https://tools.ietf.org/html/rfc7235</a>
+   <dt id="biblio-rfc7405">[RFC7405]
+   <dd>P. Kyzivat. <a href="https://tools.ietf.org/html/rfc7405">Case-Sensitive String Support in ABNF</a>. December 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7405">https://tools.ietf.org/html/rfc7405</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
    <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
    <dt id="biblio-tokbind">[TOKBIND]
@@ -2242,28 +2240,11 @@ host.</p>
     <li><a href="#ref-for-http-headerdef-clear-site-data-3">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-http-headerdef-clear-site-data-4">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-http-headerdef-clear-site-data-5">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data-6">2.1. 
+    <li><a href="#ref-for-http-headerdef-clear-site-data-6">3.1. 
     The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-http-headerdef-clear-site-data-7">(2)</a> <a href="#ref-for-http-headerdef-clear-site-data-8">(3)</a> <a href="#ref-for-http-headerdef-clear-site-data-9">(4)</a> <a href="#ref-for-http-headerdef-clear-site-data-10">(5)</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data-11">2.2. Fetch Integration</a> <a href="#ref-for-http-headerdef-clear-site-data-12">(2)</a> <a href="#ref-for-http-headerdef-clear-site-data-13">(3)</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data-14">5.1. Web developers control the timing.</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data-15">5.2. Remnants of data on disk.</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="grammardef-data-type">
-   <b><a href="#grammardef-data-type">#grammardef-data-type</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-grammardef-data-type-1">2.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-data-type-2">(2)</a>
-    <li><a href="#ref-for-grammardef-data-type-3">3.1. Parsing</a>
-    <li><a href="#ref-for-grammardef-data-type-4">3.2.1. 
-    Prepare to clear origin’s data </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="grammardef-extension-type">
-   <b><a href="#grammardef-extension-type">#grammardef-extension-type</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-grammardef-extension-type-1">2.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-extension-type-2">(2)</a> <a href="#ref-for-grammardef-extension-type-3">(3)</a>
+    <li><a href="#ref-for-http-headerdef-clear-site-data-11">3.2. Fetch Integration</a> <a href="#ref-for-http-headerdef-clear-site-data-12">(2)</a> <a href="#ref-for-http-headerdef-clear-site-data-13">(3)</a>
+    <li><a href="#ref-for-http-headerdef-clear-site-data-14">6.1. Web developers control the timing.</a>
+    <li><a href="#ref-for-http-headerdef-clear-site-data-15">6.2. Remnants of data on disk.</a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="grammardef-cache">
@@ -2273,10 +2254,10 @@ host.</p>
     <li><a href="#ref-for-grammardef-cache-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-grammardef-cache-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-grammardef-cache-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-cache-5">2.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-cache-6">(2)</a>
-    <li><a href="#ref-for-grammardef-cache-7">3.1. Parsing</a>
-    <li><a href="#ref-for-grammardef-cache-8">3.2. 
+    <li><a href="#ref-for-grammardef-cache-5">3.1. 
+    The Clear-Site-Data HTTP Response Header Field </a>
+    <li><a href="#ref-for-grammardef-cache-6">4.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-cache-7">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
@@ -2287,10 +2268,10 @@ host.</p>
     <li><a href="#ref-for-grammardef-cookies-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-grammardef-cookies-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-grammardef-cookies-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-cookies-5">2.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-cookies-6">(2)</a> <a href="#ref-for-grammardef-cookies-7">(3)</a>
-    <li><a href="#ref-for-grammardef-cookies-8">3.1. Parsing</a>
-    <li><a href="#ref-for-grammardef-cookies-9">3.2. 
+    <li><a href="#ref-for-grammardef-cookies-5">3.1. 
+    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-cookies-6">(2)</a>
+    <li><a href="#ref-for-grammardef-cookies-7">4.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-cookies-8">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
@@ -2301,10 +2282,10 @@ host.</p>
     <li><a href="#ref-for-grammardef-storage-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-grammardef-storage-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-grammardef-storage-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-storage-5">2.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-storage-6">(2)</a>
-    <li><a href="#ref-for-grammardef-storage-7">3.1. Parsing</a>
-    <li><a href="#ref-for-grammardef-storage-8">3.2. 
+    <li><a href="#ref-for-grammardef-storage-5">3.1. 
+    The Clear-Site-Data HTTP Response Header Field </a>
+    <li><a href="#ref-for-grammardef-storage-6">4.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-storage-7">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
@@ -2315,54 +2296,54 @@ host.</p>
     <li><a href="#ref-for-grammardef-executioncontexts-2">1.1.2. Targeted Clearing</a>
     <li><a href="#ref-for-grammardef-executioncontexts-3">1.1.3. Keep Critical Cookies</a>
     <li><a href="#ref-for-grammardef-executioncontexts-4">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-executioncontexts-5">2.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-executioncontexts-6">(2)</a>
-    <li><a href="#ref-for-grammardef-executioncontexts-7">3.1. Parsing</a>
-    <li><a href="#ref-for-grammardef-executioncontexts-8">3.2. 
+    <li><a href="#ref-for-grammardef-executioncontexts-5">3.1. 
+    The Clear-Site-Data HTTP Response Header Field </a>
+    <li><a href="#ref-for-grammardef-executioncontexts-6">4.1. Parsing</a>
+    <li><a href="#ref-for-grammardef-executioncontexts-7">4.2. 
     Clear data for response </a>
-    <li><a href="#ref-for-grammardef-executioncontexts-9">3.2.1. 
+    <li><a href="#ref-for-grammardef-executioncontexts-8">4.2.1. 
     Prepare to clear origin’s data </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-parse-responses-clear-site-data-header">
    <b><a href="#abstract-opdef-parse-responses-clear-site-data-header">#abstract-opdef-parse-responses-clear-site-data-header</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-parse-responses-clear-site-data-header-1">3.2. 
+    <li><a href="#ref-for-abstract-opdef-parse-responses-clear-site-data-header-1">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-prepare-to-clear-origins-data">
    <b><a href="#abstract-opdef-prepare-to-clear-origins-data">#abstract-opdef-prepare-to-clear-origins-data</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-prepare-to-clear-origins-data-1">3.2. 
+    <li><a href="#ref-for-abstract-opdef-prepare-to-clear-origins-data-1">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-reload-browsing-contexts">
    <b><a href="#abstract-opdef-reload-browsing-contexts">#abstract-opdef-reload-browsing-contexts</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-reload-browsing-contexts-1">3.2. 
+    <li><a href="#ref-for-abstract-opdef-reload-browsing-contexts-1">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-clear-cache-for-origin">
    <b><a href="#abstract-opdef-clear-cache-for-origin">#abstract-opdef-clear-cache-for-origin</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-clear-cache-for-origin-1">3.2. 
+    <li><a href="#ref-for-abstract-opdef-clear-cache-for-origin-1">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-clear-cookies-for-origin">
    <b><a href="#abstract-opdef-clear-cookies-for-origin">#abstract-opdef-clear-cookies-for-origin</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-clear-cookies-for-origin-1">3.2. 
+    <li><a href="#ref-for-abstract-opdef-clear-cookies-for-origin-1">4.2. 
     Clear data for response </a>
    </ul>
   </aside>
   <aside class="dfn-panel" data-for="abstract-opdef-clear-dom-accessible-storage-for-origin">
    <b><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">#abstract-opdef-clear-dom-accessible-storage-for-origin</a></b><b>Referenced in:</b>
    <ul>
-    <li><a href="#ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin-1">3.2. 
+    <li><a href="#ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin-1">4.2. 
     Clear data for response </a>
    </ul>
   </aside>

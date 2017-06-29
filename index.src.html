@@ -31,10 +31,6 @@ spec:indexeddb; type:dfn; for:/; text:database
 spec:indexeddb; type:dfn; for:/; text:delete a database
 </pre>
 <pre class="anchors">
-spec: RFC5234; urlPrefix: https://tools.ietf.org/html/rfc5234
-  type: grammar
-    text: ALPHA; url: appendix-B.1
-    text: DQUOTE; url: appendix-B.1
 spec: RFC5890; urlPrefix: https://tools.ietf.org/html/rfc5890
   type: dfn
     text: label; url: section-2.2
@@ -54,6 +50,7 @@ spec: RFC7234; urlPrefix: https://tools.ietf.org/html/rfc7234
 spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
   type: grammar
     text: #rule; url: section-7
+    text: quoted-string; url: https://tools.ietf.org/html/rfc7230#section-3.2.6
 spec: PSL; urlPrefix: https://publicsuffix.org/list/
   type: dfn
     text: registered domain; url: #
@@ -224,6 +221,20 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 </section>
 
 <section>
+  <h2 id="infra">Infrastructure</h2>
+
+  This document uses ABNF grammar to specify syntax, as defined in [[!RFC5234]] and updated in
+  [[!RFC7405]], along with the `#rule` extension defined in
+  <a href="https://tools.ietf.org/html/rfc7230#section-7">Section 7</a> of [[!RFC7230]], and the
+  `quoted-string` rule defined in
+  <a href="https://tools.ietf.org/html/rfc7230#section-3.2.6">Section 3.2.6</a> of the same
+  document.
+
+  This document depends on the Infra Standard for a number of foundational concepts used in its
+  algorithms and prose [[!INFRA]].
+</section>
+
+<section>
   <h2 id="clearing">Clearing Site Data</h2>
 
   Developers may instruct a user agent to clear various types of relevant data
@@ -235,24 +246,20 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
 
   The <dfn http-header>`Clear-Site-Data`</dfn> HTTP response header field sends a signal to the
   user agent that it ought to remove all data of a certain set of types. The header is
-  represented by the following ABNF [[!RFC5234]]:
+  represented by the following grammar:
 
   <pre class="abnf" link-type="grammar" dfn-type="grammar">
-    Clear-Site-Data = 1#( <a>DQUOTE</a> ( <a>data-type</a> | <a>extension-type</a> ) <a>DQUOTE</a> )
-    <dfn>data-type</dfn> = "<a>cache</a>" | "<a>cookies</a>" | "<a>storage</a>" | "<a>executionContexts</a>"
-    <dfn>extension-type</dfn> = 1*( <a>ALPHA</a> | "-")
+    Clear-Site-Data = 1#( <a>quoted-string</a> )
     ; <a>#rule</a> is defined in Section 7 of RFC 7230.
-    ; <a>DQUOTE</a> and <a>ALPHA</a> are defined in Appendix B.1 of RFC 5234.
   </pre>
 
   [[#fetch-integration]] and [[#parsing]] describe how the
   <a http-header>Clear-Site-Data</a> header is processed.
 
-  The <a grammar>data-type</a> grammar defines an initial set of known data
-  types which can be cleared using this mechanism. See their descriptions below.
-  Future versions of the header can support additional datatypes, which MUST
-  comply with the <a grammar>extension-type</a> grammar. User agents MUST
-  ignore unknown <a grammar>extension-type</a>s whhen parsing the header.
+  This document defines an initial set of known data types which can be cleared using this
+  mechanism. See their descriptions below. Future versions of the header can support
+  additional datatypes, which MUST comply with the <a grammar>quoted-string</a> grammar. User agents
+  MUST ignore unknown types when parsing the header.
 
   :   "<dfn grammar>`cache`</dfn>"
   ::  The "`cache`" type indicates that the server wishes to remove locally
@@ -367,8 +374,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   <h3 id="parsing" algorithm>Parsing</h3>
 
   Given a [=response=], the user agent can <dfn abstract-op local-lt="parse response">parse
-  |response|'s `Clear-Site-Data` header</dfn>, returning a list of <a grammar>`data-type`</a>
-  tokens, as follows:
+  |response|'s `Clear-Site-Data` header</dfn>, returning a list of types, as follows:
 
   <ol class="algorithm">
     1.  Let |types| be an empty list.
@@ -438,8 +444,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     Prepare to clear |origin|'s data
   </h4>
 
-  Given an [=origin=] (|origin|) and a list of <a grammar>`data-type`</a> tokens (|types|), the user
-  agent can <dfn local-lt="prepare" abstract-op>prepare to clear |origin|'s data</dfn> by executing
+  Given an [=origin=] (|origin|) and a list of types (|types|), the user agent can
+  <dfn local-lt="prepare" abstract-op>prepare to clear |origin|'s data</dfn> by executing
   the following steps. The algorithm returns a list of [=browsing contexts=] which have been
   sandboxed in order to prevent them from recreating cleared data from in-memory JavaScript
   variables.
