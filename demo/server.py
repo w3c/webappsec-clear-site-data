@@ -1,7 +1,7 @@
-import BaseHTTPServer
+import http.server
 import re
 
-class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
+class RequestHandler(http.server.BaseHTTPRequestHandler):
   def do_GET(self):
     # Cache-Control: only-if-cached indicates that the browser should never
     # fetch the resource over network. Unfortunately, this is not widely
@@ -21,14 +21,14 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       return
 
     # Otherwise, just serve index.html, as that is the only page we have.
-    self.wfile.write(file('index.html').read())
+    self.wfile.write(open('index.html', "r").read().encode())
 
   def do_POST(self):
     # Serve index.html as usual, but with Clear-Site-Data as instructed
     # through the POST attributes.
 
     # Input: "types=cookies&types=cache"
-    post_data = self.rfile.read(int(self.headers['Content-Length']))
+    post_data = self.rfile.read(int(self.headers['Content-Length'])).decode("utf-8")
     # Transformation: ['cookies', 'cache']
     datatypes = re.findall('types=([^&]+)', post_data)
     # Output: '"cookies","cache"'
@@ -39,9 +39,9 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Clear-Site-Data', datatypes)
     self.end_headers()
 
-    self.wfile.write(file('index.html').read())
+    self.wfile.write(open('index.html', "r").read().encode())
 
 
 if __name__ == "__main__":
-  httpd = BaseHTTPServer.HTTPServer(('', 8000), RequestHandler)
+  httpd = http.server.HTTPServer(('', 8000), RequestHandler)
   httpd.serve_forever()
