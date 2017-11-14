@@ -281,6 +281,11 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         </pre>
       </div>
 
+      Note: Caches are typically not organized by origin, but rather by URL and
+      timestamp. This means that in practice, clearing cache by origin might
+      have to be implemented using a linear scan. For large caches, this makes
+      it a prohibitively expensive operation.
+
   :   "<dfn grammar>`cookies`</dfn>"
   ::  The "`cookies`" type indicates that the server wishes to remove cookies
       associated with the <a>origin</a> of a particular <a>response</a>'s
