@@ -337,6 +337,39 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         </pre>
       </div>
 
+  :   "<dfn grammar>`*`</dfn>"
+  ::  The "`*`" (wildcard) pseudotype indicates that the server has the same
+      effect as specifying all types.
+
+      <div class="example">
+        When delivered with a response from `https://example.com/clear`,
+        the following header will cause all cookies, caches, and DOM-accessible
+        storage associated with the origin `https://example.com` to be cleared,
+        as well as execution contexts for the same origin to be neutered and
+        reloaded:
+
+        <pre>
+          <a http-header>Clear-Site-Data</a>: "<a grammar>*</a>"
+        </pre>
+      </div>
+
+      <div class="note">
+        <p>
+          Note: The wildcard is forward-compatible in the sense that if more
+          datatypes are added in future versions of this header, they will also
+          be covered by it.
+        </p>
+        <p>
+          DO use the wildcard if the intention is to perform a broad cleanup,
+          i.e. clear all data associated with an origin that the header knows
+          about.
+        </p>
+        <p>
+          DO NOT use the wildcard as a shorthand for the four types listed
+          above, as this meaning might change.
+        </p>
+      </div>
+
   Note: The syntax defined here is compatible with future extensions to this document which might
   add more granular filtering mechanisms to the types we've defined. For example, it's likely that
   "<a grammar>`cookies`</a>" will need to grow a mechanism to prevent deletion of specific cookie
@@ -395,6 +428,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         ::  Append "<a grammar>storage</a>" to |types|.
         :   \``"executionContexts"`\`
         ::  Append "<a grammar>executionContexts</a>" to |types|.
+        :   \``"*"`\`
+        ::  Append "<a grammar>cache</a>", "<a grammar>cookies</a>", "<a grammar>storage</a>",
+            and "<a grammar>executionContexts</a>" to |types|.
 
     5.  Return |types|.
   </ol>
