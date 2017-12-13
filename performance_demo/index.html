@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clear-Site-Data performance demo</title>
+    <style>
+      .box {
+        border: 1px solid black;
+        float: left;
+        margin: 0 50px 50px 0;
+        padding: 1em;
+        width: 200px;
+      }
+
+      .box h2 {
+        display: inline;
+        margin: 0;
+      }
+
+      .box .content {
+        height: 250px;
+        padding-top: 1em;
+        overflow-y: auto;
+      }
+
+      .spinner {
+        float: right;
+        visibility: hidden;
+      }
+
+      .spinner::after {
+        content: "Loading ...";
+      }
+
+      fieldset {
+        border-width: 0;
+        padding-left: 0;
+      }
+
+      img, iframe {
+        height: 20px;
+        width: 20px;
+      }
+
+      li {
+        padding-bottom: 1em;
+      }
+
+      iframe, img {
+        /* The red background will be visible if the element fails to load.
+           If the load succeeds, a document or image with green color will
+           be shown instead. */
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Clear-Site-Data performance demo</h1>
+
+    <p id="intro">
+      This is a demonstration of the Clear-Site-Data header's performance
+      under heavy load.
+
+      Use the tools below to:
+      <ol>
+        <li>
+          Load resources that set cookies, storage entries, and will presumably be cached.<br>
+          You can choose those resources to be images or iframes, to test navigations and subresource loads.<br>
+          Note that adding storage entries only works with iframes, as it requires running JavaScript.
+        </li>
+        <li>Load resources that are returned with the Clear-Site-Data header, instructing the user agent to delete cookies, storage, and cache.</li>
+        <li>Load resources that do both.</li>
+      </ol>
+    </p>
+
+    <div class="box">
+      <h2>Load resources</h2>
+      <form class="content">
+        <fieldset>
+          <input type="radio" name="type" value="add"
+              id="type-add" />
+          <label for="type-add">Add resources</label><br>
+          <input type="radio" name="type" value="clear"
+              id="type-clear" />
+          <label for="type-clear">Clear-Site-Data</label><br>
+          <input type="radio" name="type" value="both"
+              id="type-both" />
+          <label for="type-both">Both</label><br>
+        </fieldset>
+        <fieldset>
+          <input type="radio" name="format" value="img" id="format-img" />
+          <label for="format-img">&lt;img&gt;</label><br>
+          <input type="radio" name="format" value="iframe" id="format-iframe" />
+          <label for="format-iframe">&lt;iframe&gt;</label><br>
+        </fieldset>
+        <fieldset>
+          <label for="amount">Amount</label>
+          <input type="text" id="amount" />
+        </fieldset>
+        <input type="button" id="button" value="Load">
+      </form>
+    </div>
+
+    <div class="box">
+      <h2>Images</h2>
+      <div class="spinner" id="spinner-img"></div>
+      <div id="box-img" class="content"></div>
+    </div>
+
+    <div class="box">
+      <h2>Iframes</h2>
+      <div class="spinner" id="spinner-iframe"></div>
+      <div id="box-iframe" class="content"></div>
+    </div>
+
+    <div class="box">
+      <h2>Cookies</h2>
+      <div class="content">
+        <table id="table-cookies"></table>
+      </div>
+    </div>
+
+    <div class="box">
+      <h2>Storage</h2>
+      <div class="content">
+        <table id="table-storage"></table>
+      </div>
+    </div>
+
+    <script>
+      var resourcesInProgress = {
+        "img": 0,
+        "iframe": 0
+      }
+      
+      function showSpinner(format, show) {
+        document.getElementById("spinner-" + format).style.visibility =
+            show ? "visible" : "hidden";
+      }
+
+      function listCookiesAndStorage() {
+        var cookiesTable = document.getElementById("table-cookies");
+        var cookies = document.cookie.split(";");
+        var cookiesTableContent = ""
+        for (var i = 0; i < cookies.length; i++)
+          cookiesTableContent += "<tr><td>" + cookies[i] + "</td></tr>";
+        cookiesTable.innerHTML = cookiesTableContent;
+        
+        var storageTable = document.getElementById("table-storage");
+        storageTableContent = "";
+        for (var i = 0; i < localStorage.length; i++) {
+          storageTableContent +=
+              "<tr><td>" + window.localStorage.key(i) + "</td></tr>";
+        }
+        storageTable.innerHTML = storageTableContent;
+      }
+
+      function fetchResources() {
+        // Number of resources to fetch.
+        var amountField = document.getElementById("amount");
+        var amount = Number(amountField.value);
+        if (amount > 0) {
+          amountField.style = "color: black;";
+          amount = parseInt(amount, 10);
+        } else {
+          amountField.style = "color: red;";
+          return;
+        }
+
+        // Format of the resource (iframe or img).
+        var format =
+            document.querySelector("input[name=format]:checked").value;
+
+        // Construct the resource URL.
+        var url =
+            "resource?type=" +
+            document.querySelector("input[name=type]:checked").value +
+            "&format=" + format;
+
+        // Fetch the resources.
+        showSpinner(format, true);
+        for (var i = 0; i < amount; i++) {
+          resourcesInProgress[format]++;
+          var element = document.createElement(format);
+          document.getElementById("box-" + format).appendChild(element);
+          element.addEventListener("load", function() {
+            listCookiesAndStorage();
+            if (!--resourcesInProgress[format])
+              showSpinner(format, false);
+          });
+          element.src = url + "&cache_buster=" + Math.random();
+        }
+      }
+
+      // Initialize.
+      document.getElementById("button").addEventListener(
+          "click", fetchResources);
+      document.querySelectorAll("input[type=radio]:first-child").forEach(
+          function(radio) { radio.checked = true; });
+      document.getElementById("amount").value = 10;
+      listCookiesAndStorage();
+    </script>
+
+  </body>
+</html>
