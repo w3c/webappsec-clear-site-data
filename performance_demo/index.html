@@ -17,7 +17,7 @@
       }
 
       .box .content {
-        height: 250px;
+        height: 300px;
         padding-top: 1em;
         overflow-y: auto;
       }
@@ -85,6 +85,17 @@
           <input type="radio" name="type" value="both"
               id="type-both" />
           <label for="type-both">Both</label><br>
+        </fieldset>
+        <fieldset>
+          <input type="checkbox" name="clear" value="cookies"
+              id="clear-cookies" checked />
+          <label for="clear-cookies">Cookies</label><br>
+          <input type="checkbox" name="clear" value="storage"
+              id="clear-storage" checked />
+          <label for="clear-storage">Storage</label><br>
+          <input type="checkbox" name="clear" value="cache"
+              id="clear-cache" checked />
+          <label for="clear-cache">Cache</label><br>
         </fieldset>
         <fieldset>
           <input type="radio" name="format" value="img" id="format-img" />
@@ -170,10 +181,16 @@
         var format =
             document.querySelector("input[name=format]:checked").value;
 
+        // Get the data types to clear.
+        var dataTypes = Array.prototype.map.call(
+            document.querySelectorAll("input[name=clear]:checked"),
+            function(element) { return element.value; }).join(",");
+
         // Construct the resource URL.
         var url =
             "resource?type=" +
             document.querySelector("input[name=type]:checked").value +
+            "&clear=" + dataTypes +
             "&format=" + format;
 
         // Fetch the resources.
@@ -191,12 +208,21 @@
         }
       }
 
+      function updateChoices() {
+        var disabled = document.getElementById("type-add").checked;
+        document.querySelectorAll("input[name=clear]").forEach(
+            function(checkbox) { checkbox.disabled = disabled; });
+      }
+
       // Initialize.
       document.getElementById("button").addEventListener(
           "click", fetchResources);
+      document.querySelectorAll("input[name=type]").forEach(
+          function(radio) { radio.addEventListener("change", updateChoices); });
       document.querySelectorAll("input[type=radio]:first-child").forEach(
           function(radio) { radio.checked = true; });
       document.getElementById("amount").value = 10;
+      updateChoices();
       listCookiesAndStorage();
     </script>
 
