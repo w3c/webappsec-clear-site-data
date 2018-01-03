@@ -77,7 +77,10 @@ class RequestHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
       # Append the Clear-Site-Data header if requested.
       if resource_type in ['clear', 'both']:
-        self.send_header('Clear-Site-Data', '"cookies", "storage", "cache"')
+        data_types = self.path.split('clear=')[1].split('&')[0].split(',')
+        self.send_header(
+            'Clear-Site-Data',
+            ', '.join('"%s"' % data_type for data_type in data_types))
       self.end_headers()
 
       # File contents.
