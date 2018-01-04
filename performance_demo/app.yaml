@@ -1,0 +1,11 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /resource?
+  script: server.app
+
+- url: /(index\.html)?([?#].*)?$
+  static_files: index.html
+  upload: index.html
