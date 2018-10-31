@@ -12,7 +12,7 @@ It consists of
 ## Setup instructions
 
 1. Download the `demo/` directory.
-2. Run `python server.py` in that directory.
+2. Run `python server.py` in that directory (Use Python 3.5 or higher).
 3. Navigate to `localhost:8000`. (**NOTE:** Clear-Site-Data only works on
    `localhost` and `https`. Since `server.py` is HTTP-only, navigating to other
    hosts than `localhost` will not work.)
