@@ -1622,13 +1622,13 @@ host.</p>
     <p>The <dfn class="dfn-paneled" data-dfn-type="http-header" data-export="" id="http-headerdef-clear-site-data"><code>Clear-Site-Data</code></dfn> HTTP response header field sends a signal to the
   user agent that it ought to remove all data of a certain set of types. The header is
   represented by the following grammar:</p>
-<pre class="abnf">Clear-Site-Data = 1#( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6" id="ref-for-section-3.2.6">quoted-string</a> )
+<pre class="abnf">Clear-Site-Data = 1#( <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230#section-3.2.6" id="ref-for-section-3.2.6">quoted-string</a> )
 ; <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230#section-7" id="ref-for-section-7">#rule</a> is defined in Section 7 of RFC 7230.
 </pre>
     <p><a href="#fetch-integration">§3.2 Fetch Integration</a> and <a href="#parsing">§4.1 Parsing</a> describe how the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data⑤">Clear-Site-Data</a> header is processed.</p>
     <p>This document defines an initial set of known data types which can be cleared using this
   mechanism. See their descriptions below. Future versions of the header can support
-  additional datatypes, which MUST comply with the <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6" id="ref-for-section-3.2.6①">quoted-string</a> grammar. User agents
+  additional datatypes, which MUST comply with the <a data-link-type="grammar" href="https://tools.ietf.org/html/rfc7230#section-3.2.6" id="ref-for-section-3.2.6①">quoted-string</a> grammar. User agents
   MUST ignore unknown types when parsing the header.</p>
     <dl>
      <dt data-md="">"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export="" id="grammardef-cache"><code>cache</code></dfn>"
@@ -1663,7 +1663,7 @@ host.</p>
       <p>The "<code>storage</code>" type indicates that the server wishes to remove
   locally stored data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2②">origin</a> of a
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response②">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url②">url</a>. This includes storage
-  mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="ref-for-dom-localstorage①">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage" id="ref-for-dom-sessionstorage①">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechainsm such as <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration">service worker registrations</a>.</p>
+  mechansims such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="ref-for-dom-localstorage①">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage" id="ref-for-dom-sessionstorage①">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechanism such as <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration">service worker registrations</a>.</p>
       <p>Implementation details are in <a href="#clear-dom">§4.2.5 Clear DOM-accessible storage for origin</a>.</p>
       <div class="example" id="example-cc066205">
        <a class="self-link" href="#example-cc066205"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -2168,7 +2168,7 @@ host.</p>
     <a data-link-type="biblio">[RFC7230]</a> defines the following terms:
     <ul>
      <li><a href="https://tools.ietf.org/html/rfc7230#section-7">#rule</a>
-     <li><a href="https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6">quoted-string</a>
+     <li><a href="https://tools.ietf.org/html/rfc7230#section-3.2.6">quoted-string</a>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC7234]</a> defines the following terms:
