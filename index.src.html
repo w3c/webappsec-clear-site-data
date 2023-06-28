@@ -215,7 +215,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   3.  Web Workers (dedicated and shared) running for an origin are terminated.
   4.  Service Workers registered for an origin are terminated and deregistered.
   5.  Resources from an origin are removed from the user agent's local cache.
-  6.  None of the above can be bypassed by a maliciously active document that
+  6.  The [=Accept-CH cache=] for an origin is purged.
+  7.  None of the above can be bypassed by a maliciously active document that
       retains interesting data in memory, and rewrites it if it's cleared.
 </section>
 
@@ -266,7 +267,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       <a>response</a>'s [=response/url=]. This includes the <a>network
       cache</a>, of course, but will also remove data from various other caches
       which a user agent implements (prerendered pages, script caches, shader
-      caches, etc.).
+      caches, [=Accept-CH cache=], etc.).
 
       Implementation details are in [[#clear-cache]].
 
@@ -306,6 +307,10 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         </pre>
       </div>
 
+      Note: Clearing cookies should also clear the [=Accept-CH cache=] for
+      <a>origin</a>. This is because the cache is also cleared if the user
+      manually clears cookies.
+
   :   "<dfn grammar>`storage`</dfn>"
   ::  The "`storage`" type indicates that the server wishes to remove
       locally stored data associated with the <a>origin</a> of a
@@ -340,6 +345,24 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
           <a http-header>Clear-Site-Data</a>: "<a grammar>executionContexts</a>"
         </pre>
       </div>
+
+  :   "<dfn grammar>`clientHints`</dfn>"
+  ::  The "`clientHints`" type indicates that the server wishes clear the [=Accept-CH cache=]
+      for the <a>origin</a> of a particular <a>response</a>'s [=response/url=].
+
+      <div class="example">
+        When delivered with a response from `https://example.com/clear`,
+        the following header will cause the [=Accept-CH cache=] for origin 
+        `https://example.com` to be cleared:
+
+        <pre>
+          <a http-header>Clear-Site-Data</a>: "<a grammar>clientHints</a>"
+        </pre>
+      </div>
+
+      Note: The [=Accept-CH cache=] is also cleared for the <a grammar>cache</a> and
+      <a grammar>cookies</a> options, so it should be used only when neither of the
+      other options (or <a grammar>*</a>) are applied.
 
   :   "<dfn grammar>`*`</dfn>"
   ::  The "`*`" (wildcard) pseudotype indicates that the server has the same
@@ -425,13 +448,15 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         |type|:
 
         :   \``"cache"`\`
-        ::  Append "<a grammar>cache</a>" to |types|.
+        ::  Append "<a grammar>cache</a>" and "<a grammar>clientHints</a>" to |types|.
         :   \``"cookies"`\`
-        ::  Append "<a grammar>cookies</a>" to |types|.
+        ::  Append "<a grammar>cookies</a>" and "<a grammar>clientHints</a>" to |types|.
         :   \``"storage"`\`
         ::  Append "<a grammar>storage</a>" to |types|.
         :   \``"executionContexts"`\`
         ::  Append "<a grammar>executionContexts</a>" to |types|.
+        :   \``"clientHints"`\`
+        ::  Append "<a grammar>clientHints</a>" to |types|.
         :   \``"*"`\`
         ::  Append "<a grammar>cache</a>", "<a grammar>cookies</a>", "<a grammar>storage</a>",
             and "<a grammar>executionContexts</a>" to |types|.
@@ -471,6 +496,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
             ::  <a lt="clear cookies" abstract-op>Clear cookies for |origin|</a>.
             :   "<a grammar>`storage`</a>"
             ::  <a lt="clear storage" abstract-op>Clear DOM-accessible storage for |origin|</a>.
+            :   "<a grammar>`clientHints`</a>"
+            ::  [=map/Set=] [=Accept-CH cache=][|origin|] to an empty [=ordered set=].
 
     6.  If |types| contains "<a grammar>executionContexts</a>", then
         <a lt="reload" abstract-op>Reload |browsing contexts|</a>.
