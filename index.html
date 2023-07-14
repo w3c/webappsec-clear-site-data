@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version 5edf5e459, updated Thu Jun 22 11:28:01 2023 -0700" name="generator">
   <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
-  <meta content="3c26a168342efd6ff2359c6b68c4964188f21b6b" name="document-revision">
+  <meta content="d29a231f7647f7b3694f86cc96580cdf9796aff0" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -759,7 +759,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-06-28">28 June 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-07-14">14 July 2023</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -990,7 +990,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
      <li data-md>
       <p>Resources from an origin are removed from the user agent’s local cache.</p>
      <li data-md>
-      <p>The <a data-link-type="dfn">Accept-CH cache</a> for an origin is purged.</p>
+      <p>The <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache">Accept-CH cache</a> for an origin is purged.</p>
      <li data-md>
       <p>None of the above can be bypassed by a maliciously active document that
   retains interesting data in memory, and rewrites it if it’s cleared.</p>
@@ -1026,7 +1026,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   cached data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a>. This includes the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2">network
   cache</a>, of course, but will also remove data from various other caches
   which a user agent implements (prerendered pages, script caches, shader
-  caches, <a data-link-type="dfn">Accept-CH cache</a>, etc.).</p>
+  caches, <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache①">Accept-CH cache</a>, etc.).</p>
       <p>Implementation details are in <a href="#clear-cache">§ 4.2.3 Clear cache for origin</a>.</p>
       <div class="example" id="example-b245894e">
        <a class="self-link" href="#example-b245894e"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -1051,7 +1051,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
 <pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data⑦">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies④">cookies</a>"
 </pre>
       </div>
-      <p class="note" role="note"><span class="marker">Note:</span> Clearing cookies should also clear the <a data-link-type="dfn">Accept-CH cache</a> for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2②">origin</a>. This is because the cache is also cleared if the user
+      <p class="note" role="note"><span class="marker">Note:</span> Clearing cookies should also clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2②">origin</a>. This is because the cache is also cleared if the user
   manually clears cookies.</p>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-storage"><code>storage</code></dfn>"
      <dd data-md>
@@ -1079,14 +1079,14 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
       </div>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-clienthints"><code>clientHints</code></dfn>"
      <dd data-md>
-      <p>The "<code>clientHints</code>" type indicates that the server wishes clear the <a data-link-type="dfn">Accept-CH cache</a> for the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑤">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response④">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url④">url</a>.</p>
+      <p>The "<code>clientHints</code>" type indicates that the server wishes clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache③">Accept-CH cache</a> for the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑤">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response④">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url④">url</a>.</p>
       <div class="example" id="example-c284f61c">
        <a class="self-link" href="#example-c284f61c"></a> When delivered with a response from <code>https://example.com/clear</code>,
-    the following header will cause the <a data-link-type="dfn">Accept-CH cache</a> for origin <code>https://example.com</code> to be cleared: 
+    the following header will cause the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache④">Accept-CH cache</a> for origin <code>https://example.com</code> to be cleared: 
 <pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⓪">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints">clientHints</a>"
 </pre>
       </div>
-      <p class="note" role="note"><span class="marker">Note:</span> The <a data-link-type="dfn">Accept-CH cache</a> is also cleared for the <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑤">cache</a> and <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑤">cookies</a> options, so it should be used only when neither of the
+      <p class="note" role="note"><span class="marker">Note:</span> The <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑤">Accept-CH cache</a> is also cleared for the <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑤">cache</a> and <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑤">cookies</a> options, so it should be used only when neither of the
   other options (or <a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-">*</a>) are applied.</p>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-"><code>*</code></dfn>"
      <dd data-md>
@@ -1168,7 +1168,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
          <dt data-md>`<code>"*"</code>`
          <dd data-md>
           <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑦">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑧">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑥">storage</a>",
-  and "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑥">executionContexts</a>" to <var>types</var>.</p>
+  "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints④">clientHints</a>", and "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑥">executionContexts</a>" to <var>types</var>.</p>
         </dl>
        <li data-md>
         <p>Return <var>types</var>.</p>
@@ -1203,9 +1203,9 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
            <dt data-md>"<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑦"><code>storage</code></a>"
            <dd data-md>
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-dom-accessible-storage-for-origin" id="ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin">Clear DOM-accessible storage for <var>origin</var></a>.</p>
-           <dt data-md>"<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints④"><code>clientHints</code></a>"
+           <dt data-md>"<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints⑤"><code>clientHints</code></a>"
            <dd data-md>
-            <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#map-set" id="ref-for-map-set">Set</a> <a data-link-type="dfn">Accept-CH cache</a>[<var>origin</var>] to an empty <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#ordered-set" id="ref-for-ordered-set">ordered set</a>.</p>
+            <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-empty" id="ref-for-list-empty">Empty</a> <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑥">Accept-CH cache</a>[<var>origin</var>].</p>
           </dl>
         </ol>
        <li data-md>
@@ -1480,6 +1480,11 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[CLIENT-HINTS-INFRASTRUCTURE]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="55155baf">accept-ch cache</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="4d1eae38">authentication entry</span>
@@ -1521,8 +1526,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
      <li><span class="dfn-paneled" id="7b0d918d">break</span>
      <li><span class="dfn-paneled" id="ae8def21">contain</span>
      <li><span class="dfn-paneled" id="f937b7b6">continue</span>
-     <li><span class="dfn-paneled" id="692595fe">ordered set</span>
-     <li><span class="dfn-paneled" id="0e6b2056">set</span>
+     <li><span class="dfn-paneled" id="03afaf9c">empty</span>
     </ul>
    <li>
     <a data-link-type="biblio">[MIXED-CONTENT]</a> defines the following terms:
@@ -1575,6 +1579,8 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <dl>
    <dt id="biblio-channelid">[CHANNELID]
    <dd>Dirk Balfanz; Ryan Hamilton. <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid"><cite>Transport Layer Security (TLS) Channel IDs</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid">https://tools.ietf.org/html/draft-balfanz-tls-channelid</a>
+   <dt id="biblio-client-hints-infrastructure">[CLIENT-HINTS-INFRASTRUCTURE]
+   <dd><a href="https://wicg.github.io/client-hints-infrastructure/"><cite>Client Hints Infrastructure</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/client-hints-infrastructure/">https://wicg.github.io/client-hints-infrastructure/</a>
    <dt id="biblio-fetch">[FETCH]
    <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-file-system-api">[FILE-SYSTEM-API]
@@ -1963,6 +1969,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
 </script>
 <script>/* Boilerplate: script-dfn-panel-json */
 window.dfnpanelData = {};
+window.dfnpanelData['55155baf'] = {"dfnID": "55155baf", "url": "https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache", "dfnText": "accept-ch cache", "refSections": [{"refs": [{"id": "ref-for-accept-ch-cache"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-accept-ch-cache\u2460"}, {"id": "ref-for-accept-ch-cache\u2461"}, {"id": "ref-for-accept-ch-cache\u2462"}, {"id": "ref-for-accept-ch-cache\u2463"}, {"id": "ref-for-accept-ch-cache\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-accept-ch-cache\u2465"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['4d1eae38'] = {"dfnID": "4d1eae38", "url": "https://fetch.spec.whatwg.org/#authentication-entry", "dfnText": "authentication entry", "refSections": [{"refs": [{"id": "ref-for-authentication-entry"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
 window.dfnpanelData['3be1d4ac'] = {"dfnID": "3be1d4ac", "url": "https://fetch.spec.whatwg.org/#extract-header-list-values", "dfnText": "extracting header list values", "refSections": [{"refs": [{"id": "ref-for-extract-header-list-values"}], "title": "4.1. Parsing"}], "external": true};
 window.dfnpanelData['f7b00a8b'] = {"dfnID": "f7b00a8b", "url": "https://fetch.spec.whatwg.org/#concept-response-header-list", "dfnText": "header list", "refSections": [{"refs": [{"id": "ref-for-concept-response-header-list"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-concept-response-header-list\u2460"}], "title": "4.1. Parsing"}], "external": true};
@@ -1990,8 +1997,7 @@ window.dfnpanelData['53275e46'] = {"dfnID": "53275e46", "url": "https://infra.sp
 window.dfnpanelData['7b0d918d'] = {"dfnID": "7b0d918d", "url": "https://infra.spec.whatwg.org/#iteration-break", "dfnText": "break", "refSections": [{"refs": [{"id": "ref-for-iteration-break"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['ae8def21'] = {"dfnID": "ae8def21", "url": "https://infra.spec.whatwg.org/#list-contain", "dfnText": "contain", "refSections": [{"refs": [{"id": "ref-for-list-contain"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
 window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['692595fe'] = {"dfnID": "692595fe", "url": "https://infra.spec.whatwg.org/#ordered-set", "dfnText": "ordered set", "refSections": [{"refs": [{"id": "ref-for-ordered-set"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
-window.dfnpanelData['0e6b2056'] = {"dfnID": "0e6b2056", "url": "https://infra.spec.whatwg.org/#map-set", "dfnText": "set", "refSections": [{"refs": [{"id": "ref-for-map-set"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['03afaf9c'] = {"dfnID": "03afaf9c", "url": "https://infra.spec.whatwg.org/#list-empty", "dfnText": "empty", "refSections": [{"refs": [{"id": "ref-for-list-empty"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['4d8718f0'] = {"dfnID": "4d8718f0", "url": "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url", "dfnText": "a priori authenticated url", "refSections": [{"refs": [{"id": "ref-for-a-priori-authenticated-url"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['aba5485c'] = {"dfnID": "aba5485c", "url": "https://publicsuffix.org/list/#", "dfnText": "registered domain", "refSections": [{"refs": [{"id": "ref-for-something"}, {"id": "ref-for-something\u2460"}, {"id": "ref-for-something\u2461"}, {"id": "ref-for-something\u2462"}, {"id": "ref-for-something\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
 window.dfnpanelData['19353784'] = {"dfnID": "19353784", "url": "https://tools.ietf.org/html/rfc6265#section-5.3", "dfnText": "cookie store", "refSections": [{"refs": [{"id": "ref-for-section-5.3"}, {"id": "ref-for-section-5.3\u2460"}, {"id": "ref-for-section-5.3\u2461"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
@@ -2010,7 +2016,7 @@ window.dfnpanelData['grammardef-cache'] = {"dfnID": "grammardef-cache", "url": "
 window.dfnpanelData['grammardef-cookies'] = {"dfnID": "grammardef-cookies", "url": "#grammardef-cookies", "dfnText": "cookies", "refSections": [{"refs": [{"id": "ref-for-grammardef-cookies"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2463"}, {"id": "ref-for-grammardef-cookies\u2464"}, {"id": "ref-for-grammardef-cookies\u2465"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-cookies\u2466"}, {"id": "ref-for-grammardef-cookies\u2467"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2468"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
 window.dfnpanelData['grammardef-storage'] = {"dfnID": "grammardef-storage", "url": "#grammardef-storage", "dfnText": "storage", "refSections": [{"refs": [{"id": "ref-for-grammardef-storage"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-storage\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-storage\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-storage\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-storage\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-storage\u2464"}, {"id": "ref-for-grammardef-storage\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-storage\u2466"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
 window.dfnpanelData['grammardef-executioncontexts'] = {"dfnID": "grammardef-executioncontexts", "url": "#grammardef-executioncontexts", "dfnText": "executionContexts", "refSections": [{"refs": [{"id": "ref-for-grammardef-executioncontexts"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2464"}, {"id": "ref-for-grammardef-executioncontexts\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2466"}], "title": "4.2. \n    Clear data for response\n  "}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2467"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": false};
-window.dfnpanelData['grammardef-clienthints'] = {"dfnID": "grammardef-clienthints", "url": "#grammardef-clienthints", "dfnText": "clientHints", "refSections": [{"refs": [{"id": "ref-for-grammardef-clienthints"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2460"}, {"id": "ref-for-grammardef-clienthints\u2461"}, {"id": "ref-for-grammardef-clienthints\u2462"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2463"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['grammardef-clienthints'] = {"dfnID": "grammardef-clienthints", "url": "#grammardef-clienthints", "dfnText": "clientHints", "refSections": [{"refs": [{"id": "ref-for-grammardef-clienthints"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2460"}, {"id": "ref-for-grammardef-clienthints\u2461"}, {"id": "ref-for-grammardef-clienthints\u2462"}, {"id": "ref-for-grammardef-clienthints\u2463"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2464"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
 window.dfnpanelData['grammardef-'] = {"dfnID": "grammardef-", "url": "#grammardef-", "dfnText": "*", "refSections": [{"refs": [{"id": "ref-for-grammardef-"}, {"id": "ref-for-grammardef-\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}], "external": false};
 window.dfnpanelData['abstract-opdef-parse-responses-clear-site-data-header'] = {"dfnID": "abstract-opdef-parse-responses-clear-site-data-header", "url": "#abstract-opdef-parse-responses-clear-site-data-header", "dfnText": "parse\n  response\u2019s Clear-Site-Data header", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-parse-responses-clear-site-data-header"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
 window.dfnpanelData['abstract-opdef-prepare-to-clear-origins-data'] = {"dfnID": "abstract-opdef-prepare-to-clear-origins-data", "url": "#abstract-opdef-prepare-to-clear-origins-data", "dfnText": "prepare to clear origin\u2019s data", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-prepare-to-clear-origins-data"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
