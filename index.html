@@ -5,9 +5,9 @@
   <title>Clear Site Data</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 5edf5e459, updated Thu Jun 22 11:28:01 2023 -0700" name="generator">
+  <meta content="Bikeshed version b06c00b8e, updated Tue Jul 11 13:41:16 2023 -0700" name="generator">
   <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
-  <meta content="d29a231f7647f7b3694f86cc96580cdf9796aff0" name="document-revision">
+  <meta content="10608c7c3ff8e302c384b36fe034d9bf06766092" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -1132,6 +1132,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   removing only certain cookies might leave an application in an indeterminate
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the <code>Set-Cookie</code> header.</p>
+    <p class="note" role="note"><span class="marker">Note:</span> If we clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑥">Accept-CH cache</a> via the <code>Clear-Site-Data</code> header then any <code>Accept-CH</code> and <code>Critical-CH</code> headers in the same request must be ignored.</p>
     <p class="note" role="note"><span class="marker">Note:</span> While the fetch <code>credentials flag</code> is intended to restrict the
   modification of cookies, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①④"><code>Clear-Site-Data</code></a> applies the same restriction
   to all types for the sake of consistency.</p>
@@ -1205,7 +1206,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-dom-accessible-storage-for-origin" id="ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin">Clear DOM-accessible storage for <var>origin</var></a>.</p>
            <dt data-md>"<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints⑤"><code>clientHints</code></a>"
            <dd data-md>
-            <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-empty" id="ref-for-list-empty">Empty</a> <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑥">Accept-CH cache</a>[<var>origin</var>].</p>
+            <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-empty" id="ref-for-list-empty">Empty</a> <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑦">Accept-CH cache</a>[<var>origin</var>].</p>
           </dl>
         </ol>
        <li data-md>
@@ -1969,7 +1970,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
 </script>
 <script>/* Boilerplate: script-dfn-panel-json */
 window.dfnpanelData = {};
-window.dfnpanelData['55155baf'] = {"dfnID": "55155baf", "url": "https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache", "dfnText": "accept-ch cache", "refSections": [{"refs": [{"id": "ref-for-accept-ch-cache"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-accept-ch-cache\u2460"}, {"id": "ref-for-accept-ch-cache\u2461"}, {"id": "ref-for-accept-ch-cache\u2462"}, {"id": "ref-for-accept-ch-cache\u2463"}, {"id": "ref-for-accept-ch-cache\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-accept-ch-cache\u2465"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['55155baf'] = {"dfnID": "55155baf", "url": "https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache", "dfnText": "accept-ch cache", "refSections": [{"refs": [{"id": "ref-for-accept-ch-cache"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-accept-ch-cache\u2460"}, {"id": "ref-for-accept-ch-cache\u2461"}, {"id": "ref-for-accept-ch-cache\u2462"}, {"id": "ref-for-accept-ch-cache\u2463"}, {"id": "ref-for-accept-ch-cache\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-accept-ch-cache\u2465"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-accept-ch-cache\u2466"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['4d1eae38'] = {"dfnID": "4d1eae38", "url": "https://fetch.spec.whatwg.org/#authentication-entry", "dfnText": "authentication entry", "refSections": [{"refs": [{"id": "ref-for-authentication-entry"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
 window.dfnpanelData['3be1d4ac'] = {"dfnID": "3be1d4ac", "url": "https://fetch.spec.whatwg.org/#extract-header-list-values", "dfnText": "extracting header list values", "refSections": [{"refs": [{"id": "ref-for-extract-header-list-values"}], "title": "4.1. Parsing"}], "external": true};
 window.dfnpanelData['f7b00a8b'] = {"dfnID": "f7b00a8b", "url": "https://fetch.spec.whatwg.org/#concept-response-header-list", "dfnText": "header list", "refSections": [{"refs": [{"id": "ref-for-concept-response-header-list"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-concept-response-header-list\u2460"}], "title": "4.1. Parsing"}], "external": true};

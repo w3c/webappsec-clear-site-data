@@ -423,6 +423,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the `Set-Cookie` header.
 
+  Note: If we clear the [=Accept-CH cache=] via the `Clear-Site-Data` header then any
+  `Accept-CH` and `Critical-CH` headers in the same request must be ignored.
+
   Note: While the fetch `credentials flag` is intended to restrict the
   modification of cookies, <a http-header>`Clear-Site-Data`</a> applies the same restriction
   to all types for the sake of consistency.
