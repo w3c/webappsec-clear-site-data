@@ -3,12 +3,12 @@
   <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
   <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
   <title>Clear Site Data</title>
-  <link href="https://www.w3.org/StyleSheets/TR/2016/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version abfe96611, updated Fri Feb 5 17:27:03 2021 -0800" name="generator">
+  <meta content="ED" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
+  <meta content="Bikeshed version 5edf5e459, updated Thu Jun 22 11:28:01 2023 -0700" name="generator">
   <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
-  <meta content="cd3774ef674c17eea01404d72ff64ad6dad286fa" name="document-revision">
-<style>/* style-autolinks */
-
+  <meta content="d29a231f7647f7b3694f86cc96580cdf9796aff0" name="document-revision">
+<style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
     font-size: inherit;
@@ -68,8 +68,17 @@ pre .property::before, pre .property::after {
 
 [data-link-type=biblio] {
     white-space: pre;
-}</style>
-<style>/* style-colors */
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+</style>
+<style>/* Boilerplate: style-colors */
 
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
@@ -113,9 +122,9 @@ pre .property::before, pre .property::after {
     --ins-bg: transparent;
 
     --a-normal-text: #034575;
-    --a-normal-underline: #707070;
+    --a-normal-underline: #bbb;
     --a-visited-text: var(--a-normal-text);
-    --a-visited-underline: #bbb;
+    --a-visited-underline: #707070;
     --a-hover-bg: rgba(75%, 75%, 75%, .25);
     --a-active-text: #c00;
     --a-active-underline: #c00;
@@ -177,151 +186,7 @@ pre .property::before, pre .property::after {
     --outdated-shadow: red;
 
     --editedrec-bg: darkorange;
-}</style>
-<style>/* style-counters */
-
-body {
-    counter-reset: example figure issue;
 }
-.issue {
-    counter-increment: issue;
-}
-.issue:not(.no-marker)::before {
-    content: "Issue " counter(issue);
-}
-
-.example {
-    counter-increment: example;
-}
-.example:not(.no-marker)::before {
-    content: "Example " counter(example);
-}
-.invalid.example:not(.no-marker)::before,
-.illegal.example:not(.no-marker)::before {
-    content: "Invalid Example" counter(example);
-}
-
-figcaption {
-    counter-increment: figure;
-}
-figcaption:not(.no-marker)::before {
-    content: "Figure " counter(figure) " ";
-}</style>
-<style>/* style-dfn-panel */
-
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
-}
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    height: auto;
-    width: -webkit-fit-content;
-    width: fit-content;
-    max-width: 300px;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0; }
-.dfn-panel li { list-style: inside; }
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled { cursor: pointer; }
-</style>
-<style>/* style-md-lists */
-
-/* This is a weird hack for me not yet following the commonmark spec
-   regarding paragraph and lists. */
-[data-md] > :first-child {
-    margin-top: 0;
-}
-[data-md] > :last-child {
-    margin-bottom: 0;
-}</style>
-<style>/* style-selflinks */
-
-:root {
-    --selflink-text: white;
-    --selflink-bg: gray;
-    --selflink-hover-text: black;
-}
-.heading, .issue, .note, .example, li, dt {
-    position: relative;
-}
-a.self-link {
-    position: absolute;
-    top: 0;
-    left: calc(-1 * (3.5rem - 26px));
-    width: calc(3.5rem - 26px);
-    height: 2em;
-    text-align: center;
-    border: none;
-    transition: opacity .2s;
-    opacity: .5;
-}
-a.self-link:hover {
-    opacity: 1;
-}
-.heading > a.self-link {
-    font-size: 83%;
-}
-li > a.self-link {
-    left: calc(-1 * (3.5rem - 26px) - 2em);
-}
-dfn > a.self-link {
-    top: auto;
-    left: auto;
-    opacity: 0;
-    width: 1.5em;
-    height: 1.5em;
-    background: var(--selflink-bg);
-    color: var(--selflink-text);
-    font-style: normal;
-    transition: opacity .2s, background-color .2s, color .2s;
-}
-dfn:hover > a.self-link {
-    opacity: 1;
-}
-dfn > a.self-link:hover {
-    color: var(--selflink-hover-text);
-}
-
-a.self-link::before            { content: "¶"; }
-.heading > a.self-link::before { content: "§"; }
-dfn > a.self-link::before      { content: "#"; }
-</style>
-<style>/* style-var-click-highlighting */
-
-    var { cursor: pointer; }
-    var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
-    var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
-    var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
-    var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
-    var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
-    var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
-    var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
-    </style>
-<style>/* style-darkmode */
 
 @media (prefers-color-scheme: dark) {
     :root {
@@ -434,45 +299,490 @@ dfn > a.self-link::before      { content: "#"; }
        which is quite common in practice... */
     img { background: white; }
 }
-@media (prefers-color-scheme: dark) {
-    :root {
-        --selflink-text: black;
-        --selflink-bg: silver;
-        --selflink-hover-text: white;
-    }
+</style>
+<style>/* Boilerplate: style-counters */
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
 }
 
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
     }
-}</style>
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-dfn-panel */
+:root {
+    --dfnpanel-bg: #ddd;
+    --dfnpanel-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dfnpanel-bg: #222;
+        --dfnpanel-text: var(--text);
+    }
+}
+.dfn-panel {
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.75em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--dfnpanel-bg);
+    color: var(--dfnpanel-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+.dfn-panel:not(.on) { display: none; }
+.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
+.dfn-panel > b { display: block; }
+.dfn-panel a { color: var(--dfnpanel-text); }
+.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel > b + b { margin-top: 0.25em; }
+.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
+.dfn-panel li a {
+    white-space: pre;
+    display: inline-block;
+    max-width: calc(300px - 1.5em - 1em);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dfn-panel.activated {
+    display: inline-block;
+    position: fixed;
+    left: .5em;
+    bottom: 2em;
+    margin: 0 auto;
+    max-width: calc(100vw - 1.5em - .4em - .5em);
+    max-height: 30vh;
+}
+
+.dfn-paneled[role="button"] { cursor: pointer; }
+</style>
+<style>/* Boilerplate: style-issues */
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* Boilerplate: style-md-lists */
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+</style>
+<style>/* Boilerplate: style-mdn-anno */
+:root {
+	--mdn-bg: #EEE;
+	--mdn-shadow: #999;
+	--mdn-nosupport-text: #ccc;
+}
+@media (prefers-color-scheme: dark) {
+	:root {
+		--mdn-bg: #222;
+		--mdn-shadow: #444;
+		--mdn-nosupport-text: #666;
+	}
+}
+.mdn-anno {
+	background: var(--mdn-bg, #EEE);
+	border-radius: .25em;
+	box-shadow: 0 0 3px var(--mdn-shadow, #999);
+	color: var(--text, black);
+	font: 1em sans-serif;
+	hyphens: none;
+	max-width: min-content;
+	overflow: hidden;
+	padding: 0.2em;
+	position: absolute;
+	right: 0.3em;
+	top: auto;
+	white-space: nowrap;
+	word-wrap: normal;
+	z-index: 8;
+}
+.mdn-anno.unpositioned {
+	display: none;
+}
+.mdn-anno.overlapping-main {
+	opacity: .2;
+	transition: opacity .1s;
+}
+.mdn-anno[open] {
+	opacity: 1;
+	z-index: 9;
+	min-width: 9em;
+}
+.mdn-anno:hover {
+	opacity: 1;
+	outline: var(--text, black) 1px solid;
+}
+.mdn-anno > summary {
+	font-weight: normal;
+	text-align: right;
+	cursor: pointer;
+	display: block;
+}
+.mdn-anno > summary > .less-than-two-engines-flag {
+	color: red;
+	padding-right: 2px;
+}
+.mdn-anno > summary > .all-engines-flag {
+	color: green;
+	padding-right: 2px;
+}
+.mdn-anno > summary > span {
+	color: #fff;
+	background-color: #000;
+	font-weight: normal;
+	font-family: zillaslab, Palatino, "Palatino Linotype", serif;
+	padding: 2px 3px 0px 3px;
+	line-height: 1.3em;
+	vertical-align: top;
+}
+.mdn-anno > .feature {
+	margin-top: 20px;
+}
+.mdn-anno > .feature:not(:first-of-type) {
+	border-top: 1px solid #999;
+	margin-top: 6px;
+	padding-top: 2px;
+}
+.mdn-anno > .feature > .less-than-two-engines-text {
+	color: red;
+}
+.mdn-anno > .feature > .all-engines-text {
+	color: green;
+}
+.mdn-anno > .feature > p {
+	font-size: .75em;
+	margin-top: 6px;
+	margin-bottom: 0;
+}
+.mdn-anno > .feature > p + p {
+	margin-top: 3px;
+}
+.mdn-anno > .feature > .support {
+	display: block;
+	font-size: 0.6em;
+	margin: 0;
+	padding: 0;
+	margin-top: 2px;
+}
+.mdn-anno > .feature > .support + div {
+	padding-top: 0.5em;
+}
+.mdn-anno > .feature > .support > hr {
+	display: block;
+	border: none;
+	border-top: 1px dotted #999;
+	padding: 3px 0px 0px 0px;
+	margin: 2px 3px 0px 3px;
+}
+.mdn-anno > .feature > .support > hr::before {
+	content: "";
+}
+.mdn-anno > .feature > .support > span {
+	padding: 0.2em 0;
+	display: block;
+	display: table;
+}
+.mdn-anno > .feature > .support > span.no {
+	color: var(--mdn-nosupport-text);
+	filter: grayscale(100%);
+}
+.mdn-anno > .feature > .support > span.no::before {
+	opacity: 0.5;
+}
+.mdn-anno > .feature > .support > span:first-of-type {
+	padding-top: 0.5em;
+}
+.mdn-anno > .feature > .support > span > span {
+	padding: 0 0.5em;
+	display: table-cell;
+}
+.mdn-anno > .feature > .support > span > span:first-child {
+	width: 100%;
+}
+.mdn-anno > .feature > .support > span > span:last-child {
+	width: 100%;
+	white-space: pre;
+	padding: 0;
+}
+.mdn-anno > .feature > .support > span::before {
+	content: ' ';
+	display: table-cell;
+	min-width: 1.5em;
+	height: 1.5em;
+	background: no-repeat center center;
+	background-size: contain;
+	text-align: right;
+	font-size: 0.75em;
+	font-weight: bold;
+}
+.mdn-anno > .feature > .support > .chrome_android::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg);
+}
+.mdn-anno > .feature > .support > .firefox_android::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/firefox.png);
+}
+.mdn-anno > .feature > .support > .chrome::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/chrome.svg);
+}
+.mdn-anno > .feature > .support > .edge_blink::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/edge.svg);
+}
+.mdn-anno > .feature > .support > .edge::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/edge_legacy.svg);
+}
+.mdn-anno > .feature > .support > .firefox::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/firefox.png);
+}
+.mdn-anno > .feature > .support > .ie::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/ie.png);
+}
+.mdn-anno > .feature > .support > .safari_ios::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/safari-ios.svg);
+}
+.mdn-anno > .feature > .support > .nodejs::before {
+	background-image: url(https://nodejs.org/static/images/favicons/favicon.ico);
+}
+.mdn-anno > .feature > .support > .opera_android::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/opera.svg);
+}
+.mdn-anno > .feature > .support > .opera::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/opera.svg);
+}
+.mdn-anno > .feature > .support > .safari::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/safari.png);
+}
+.mdn-anno > .feature > .support > .samsunginternet_android::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/samsung.svg);
+}
+.mdn-anno > .feature > .support > .webview_android::before {
+	background-image: url(https://resources.whatwg.org/browser-logos/android-webview.png);
+}
+.name-slug-mismatch {
+	color: red;
+}
+.caniuse-status:hover {
+	z-index: 9;
+}
+/* dt, li, .issue, .note, and .example are "position: relative", so to put annotation at right margin, must move to right of containing block */;
+.h-entry:not(.status-LS) dt > .mdn-anno, .h-entry:not(.status-LS) li > .mdn-anno, .h-entry:not(.status-LS) .issue > .mdn-anno, .h-entry:not(.status-LS) .note > .mdn-anno, .h-entry:not(.status-LS) .example > .mdn-anno {
+	right: -6.7em;
+}
+.h-entry p + .mdn-anno {
+	margin-top: 0;
+}
+ h2 + .mdn-anno.after {
+	margin: -48px 0 0 0;
+}
+ h3 + .mdn-anno.after {
+	margin: -46px 0 0 0;
+}
+ h4 + .mdn-anno.after {
+	margin: -42px 0 0 0;
+}
+ h5 + .mdn-anno.after {
+	margin: -40px 0 0 0;
+}
+ h6 + .mdn-anno.after {
+	margin: -40px 0 0 0;
+}
+</style>
+<style>/* Boilerplate: style-selflinks */
+
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+<style>/* Boilerplate: style-var-click-highlighting */
+/*
+Colors were chosen in Lab using https://nixsensor.com/free-color-converter/
+D50 2deg illuminant, L in [0,100], a and b in [-128, 128]
+0 = lab(85,0,85)
+1 = lab(85,80,30)
+2 = lab(85,-40,40)
+3 = lab(85,-50,0)
+4 = lab(85,5,15)
+5 = lab(85,-10,-50)
+6 = lab(85,35,-15)
+*/
+var { cursor: pointer; }
+var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
+var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
+var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
+var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
+var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
+var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
+var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+</style>
  <body class="h-entry">
   <div class="head">
-   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2016/logos/W3C" width="72"> </a> </p>
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="subtitle"><span class="content">Editor’s Draft, <time class="dt-updated" datetime="2021-02-18">18 February 2021</time></span></h2>
-   <div data-fill-with="spec-metadata">
-    <dl>
-     <dt>This version:
-     <dd><a class="u-url" href="https://w3c.github.io/webappsec-clear-site-data/">https://w3c.github.io/webappsec-clear-site-data/</a>
-     <dt>Latest published version:
-     <dd><a href="http://www.w3.org/TR/clear-site-data/">http://www.w3.org/TR/clear-site-data/</a>
-     <dt>Previous Versions:
-     <dd><a href="http://www.w3.org/TR/2016/WD-clear-site-data-20160720/" rel="prev">http://www.w3.org/TR/2016/WD-clear-site-data-20160720/</a>
-     <dt>Version History:
-     <dd><a href="https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html">https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html</a>
-     <dt>Feedback:
-     <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bclear-site-data%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[clear-site-data] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
-     <dt class="editor">Editor:
-     <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
-     <dt>Participate:
-     <dd><a href="https://github.com/w3c/webappsec-clear-site-data/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-clear-site-data/issues">open issues</a>)
-    </dl>
-   </div>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-07-14">14 July 2023</time></p>
+   <details open>
+    <summary>More details about this document</summary>
+    <div data-fill-with="spec-metadata">
+     <dl>
+      <dt>This version:
+      <dd><a class="u-url" href="https://w3c.github.io/webappsec-clear-site-data/">https://w3c.github.io/webappsec-clear-site-data/</a>
+      <dt>Latest published version:
+      <dd><a href="http://www.w3.org/TR/clear-site-data/">http://www.w3.org/TR/clear-site-data/</a>
+      <dt>Previous Versions:
+      <dd><a href="http://www.w3.org/TR/2016/WD-clear-site-data-20160720/" rel="prev">http://www.w3.org/TR/2016/WD-clear-site-data-20160720/</a>
+      <dt>Version History:
+      <dd><a href="https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html">https://github.com/w3c/webappsec-clear-site-data/commits/master/index.src.html</a>
+      <dt>Feedback:
+      <dd><span><a href="mailto:public-webappsec@w3.org?subject=%5Bclear-site-data%5D%20YOUR%20TOPIC%20HERE">public-webappsec@w3.org</a> with subject line “<kbd>[clear-site-data] <i data-lt>… message topic …</i></kbd>” (<a href="https://lists.w3.org/Archives/Public/public-webappsec/" rel="discussion">archives</a>)</span>
+      <dt class="editor">Editor:
+      <dd class="editor p-author h-card vcard" data-editor-id="56384"><a class="p-name fn u-email email" href="mailto:mkwst@google.com">Mike West</a> (<span class="p-org org">Google Inc.</span>)
+      <dt>Participate:
+      <dd><a href="https://github.com/w3c/webappsec-clear-site-data/issues/new">File an issue</a> (<a href="https://github.com/w3c/webappsec-clear-site-data/issues">open issues</a>)
+     </dl>
+    </div>
+   </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2021 <a href="https://www.w3.org/"><abbr title="World Wide Web Consortium">W3C</abbr></a><sup>®</sup> (<a href="https://www.csail.mit.edu/"><abbr title="Massachusetts Institute of Technology">MIT</abbr></a>, <a href="https://www.ercim.eu/"><abbr title="European Research Consortium for Informatics and Mathematics">ERCIM</abbr></a>, <a href="https://www.keio.ac.jp/">Keio</a>, <a href="https://ev.buaa.edu.cn/">Beihang</a>). W3C <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-documents">document use</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/Consortium/Legal/ipr-notice#Copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/Consortium/Legal/ipr-notice#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/Consortium/Legal/ipr-notice#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/Consortium/Legal/copyright-software" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
@@ -482,7 +792,7 @@ dfn > a.self-link::before      { content: "#"; }
   instruct a user agent to clear a site’s locally stored data related to a
   host.</p>
   </div>
-  <h2 class="no-num no-toc no-ref heading settled" id="status"><span class="content">Status of this document</span></h2>
+  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
    <p> This is a public copy of the editors’ draft.
 	It is provided for discussion only and may change at any moment.
@@ -495,13 +805,13 @@ dfn > a.self-link::before      { content: "#"; }
 	please put the text “clear-site-data” in the subject,
 	preferably like this:
 	“[clear-site-data] <em>…summary of comment…</em>” </p>
-   <p> This document was produced by the <a href="https://www.w3.org/2011/webappsec/">Web Application Security Working Group</a>. </p>
+   <p> This document was produced by the <a href="https://www.w3.org/groups/wg/webappsec">Web Application Security Working Group</a>. </p>
    <p> This document was produced by a group operating under
-	the <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/">W3C Patent Policy</a>.
-	W3C maintains a <a href="https://www.w3.org/2004/01/pp-impl/49309/status" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
+	the <a href="https://www.w3.org/Consortium/Patent-Policy/">W3C Patent Policy</a>.
+	W3C maintains a <a href="https://www.w3.org/groups/wg/webappsec/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
-	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy-20170801/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2020/Process-20200915/" id="w3c_process_revision">15 September 2020 W3C Process Document</a>. </p>
+	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2021/Process-20211102/" id="w3c_process_revision">2 November 2021 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -560,12 +870,6 @@ dfn > a.self-link::before      { content: "#"; }
       <li><a href="#iana-clear-site-data"><span class="secno">7.1</span> <span class="content"> Clear-Site-Data </span></a>
      </ol>
     <li><a href="#acknowledgements"><span class="secno">8</span> <span class="content">Acknowledgements</span></a>
-    <li>
-     <a href="#conformance"><span class="secno"></span> <span class="content">Conformance</span></a>
-     <ol class="toc">
-      <li><a href="#conventions"><span class="secno"></span> <span class="content">Document conventions</span></a>
-      <li><a href="#conformant-algorithms"><span class="secno"></span> <span class="content">Conformant Algorithms</span></a>
-     </ol>
     <li>
      <a href="#index"><span class="secno"></span> <span class="content">Index</span></a>
      <ol class="toc">
@@ -658,16 +962,16 @@ dfn > a.self-link::before      { content: "#"; }
      <a class="self-link" href="#example-a7640e05"></a> Super Secret Social Network’s developers learn that the site was vulnerable
     to cross-site scripting attacks which allowed malicious parties to inject
     arbitrary code into its origin. They fixed the site, and added a strong
-    Content Security Policy <a data-link-type="biblio" href="#biblio-csp">[CSP]</a> to mitigate the risk going forward, but
+    Content Security Policy <a data-link-type="biblio" href="#biblio-csp" title="Content Security Policy Level 3">[CSP]</a> to mitigate the risk going forward, but
     they can’t be entirely sure that clients are really back to a trustworthy
     state. Perhaps the attackers found a clever persistence mechanism? 
      <p>They can reduce the risk of a persistent client-side XSS by sending the
     following HTTP header in a response to wipe out local sources of data:</p>
 <pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data④">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache③">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies③">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage③">storage</a>", "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts③">executionContexts</a>"
 </pre>
-     <p class="note" role="note"><span>Note:</span> Installing a Service Worker guarantees that a request will go out to
+     <p class="note" role="note"><span class="marker">Note:</span> Installing a Service Worker guarantees that a request will go out to
     a server every ~24 hours. That update ping would be a wonderful time to send
-    a header like this one in case of catastrophe. <a data-link-type="biblio" href="#biblio-service-workers">[SERVICE-WORKERS]</a></p>
+    a header like this one in case of catastrophe. <a data-link-type="biblio" href="#biblio-service-workers" title="Service Workers">[SERVICE-WORKERS]</a></p>
     </div>
     <h3 class="heading settled" data-level="1.2" id="goals"><span class="secno">1.2. </span><span class="content">Goals</span><a class="self-link" href="#goals"></a></h3>
     <p>Generally, the goal is to allow web developers more control over the data
@@ -675,10 +979,10 @@ dfn > a.self-link::before      { content: "#"; }
   should be able to reliably ensure the following:</p>
     <ol>
      <li data-md>
-      <p>Data stored in an origin’s client-side storage mechanisms like <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>,
+      <p>Data stored in an origin’s client-side storage mechanisms like <a data-link-type="biblio" href="#biblio-indexeddb" title="Indexed Database API">[INDEXEDDB]</a>,
   WebSQL, Filesystem, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="ref-for-dom-localstorage">localStorage</a></code>, and <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage" id="ref-for-dom-sessionstorage">sessionStorage</a></code> is cleared.</p>
      <li data-md>
-      <p>Cookies for an origin’s host are removed <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>.</p>
+      <p>Cookies for an origin’s host are removed <a data-link-type="biblio" href="#biblio-rfc6265" title="HTTP State Management Mechanism">[RFC6265]</a>.</p>
      <li data-md>
       <p>Web Workers (dedicated and shared) running for an origin are terminated.</p>
      <li data-md>
@@ -686,16 +990,18 @@ dfn > a.self-link::before      { content: "#"; }
      <li data-md>
       <p>Resources from an origin are removed from the user agent’s local cache.</p>
      <li data-md>
+      <p>The <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache">Accept-CH cache</a> for an origin is purged.</p>
+     <li data-md>
       <p>None of the above can be bypassed by a maliciously active document that
   retains interesting data in memory, and rewrites it if it’s cleared.</p>
     </ol>
    </section>
    <section>
     <h2 class="heading settled" data-level="2" id="infra"><span class="secno">2. </span><span class="content">Infrastructure</span><a class="self-link" href="#infra"></a></h2>
-    <p>This document uses ABNF grammar to specify syntax, as defined in <a data-link-type="biblio" href="#biblio-rfc5234">[RFC5234]</a> and updated in <a data-link-type="biblio" href="#biblio-rfc7405">[RFC7405]</a>, along with the <code>#rule</code> extension defined in <a href="https://tools.ietf.org/html/rfc7230#section-7" id="termref-for-section-7">Section 7</a> of <a data-link-type="biblio" href="#biblio-rfc7230">[RFC7230]</a>, and the <code>quoted-string</code> rule defined in <a href="https://tools.ietf.org/html/rfc7230#section-3.2.6">Section 3.2.6</a> of the same
+    <p>This document uses ABNF grammar to specify syntax, as defined in <a data-link-type="biblio" href="#biblio-rfc5234" title="Augmented BNF for Syntax Specifications: ABNF">[RFC5234]</a> and updated in <a data-link-type="biblio" href="#biblio-rfc7405" title="Case-Sensitive String Support in ABNF">[RFC7405]</a>, along with the <code>#rule</code> extension defined in <a href="https://tools.ietf.org/html/rfc7230#section-7" id="a04f67f90">Section 7</a> of <a data-link-type="biblio" href="#biblio-rfc7230" title="HTTP/1.1">[RFC7230]</a>, and the <code>quoted-string</code> rule defined in <a href="https://tools.ietf.org/html/rfc7230#section-3.2.6">Section 3.2.6</a> of the same
   document.</p>
     <p>This document depends on the Infra Standard for a number of foundational concepts used in its
-  algorithms and prose <a data-link-type="biblio" href="#biblio-infra">[INFRA]</a>.</p>
+  algorithms and prose <a data-link-type="biblio" href="#biblio-infra" title="Infra Standard">[INFRA]</a>.</p>
    </section>
    <section>
     <h2 class="heading settled" data-level="3" id="clearing"><span class="secno">3. </span><span class="content">Clearing Site Data</span><a class="self-link" href="#clearing"></a></h2>
@@ -720,7 +1026,7 @@ dfn > a.self-link::before      { content: "#"; }
   cached data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a>. This includes the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2">network
   cache</a>, of course, but will also remove data from various other caches
   which a user agent implements (prerendered pages, script caches, shader
-  caches, etc.).</p>
+  caches, <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache①">Accept-CH cache</a>, etc.).</p>
       <p>Implementation details are in <a href="#clear-cache">§ 4.2.3 Clear cache for origin</a>.</p>
       <div class="example" id="example-b245894e">
        <a class="self-link" href="#example-b245894e"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -728,15 +1034,15 @@ dfn > a.self-link::before      { content: "#"; }
 <pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data⑥">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache④">cache</a>"
 </pre>
       </div>
-      <p class="note" role="note"><span>Note:</span> Caches are typically not organized by origin, but rather by URL and
+      <p class="note" role="note"><span class="marker">Note:</span> Caches are typically not organized by origin, but rather by URL and
   timestamp. This means that in practice, clearing cache by origin might
   have to be implemented using a linear scan. For large caches, this makes
   it a prohibitively expensive operation.</p>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-cookies"><code>cookies</code></dfn>"
      <dd data-md>
       <p>The "<code>cookies</code>" type indicates that the server wishes to remove cookies
-  associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
-  ID <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and Token Binding <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> are also cleared.</p>
+  associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response①">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url①">url</a>. Along with cookies, HTTP authentication credentials <a data-link-type="biblio" href="#biblio-rfc7235" title="HTTP Semantics">[RFC7235]</a>, and origin-bound tokens such as those defined by Channel
+  ID <a data-link-type="biblio" href="#biblio-channelid" title="Transport Layer Security (TLS) Channel IDs">[CHANNELID]</a> and Token Binding <a data-link-type="biblio" href="#biblio-tokbind" title="The Token Binding Protocol Version 1.0">[TOKBIND]</a> are also cleared.</p>
       <p>Implementation details are in <a href="#clear-cookies">§ 4.2.4 Clear cookies for origin</a>.</p>
       <div class="example" id="example-3d4ad502">
        <a class="self-link" href="#example-3d4ad502"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -745,12 +1051,14 @@ dfn > a.self-link::before      { content: "#"; }
 <pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data⑦">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies④">cookies</a>"
 </pre>
       </div>
+      <p class="note" role="note"><span class="marker">Note:</span> Clearing cookies should also clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2②">origin</a>. This is because the cache is also cleared if the user
+  manually clears cookies.</p>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-storage"><code>storage</code></dfn>"
      <dd data-md>
       <p>The "<code>storage</code>" type indicates that the server wishes to remove
-  locally stored data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2②">origin</a> of a
+  locally stored data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2③">origin</a> of a
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response②">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url②">url</a>. This includes storage
-  mechanisms such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="ref-for-dom-localstorage①">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage" id="ref-for-dom-sessionstorage①">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>, etc), as well as tangentially related mechanism such as <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration">service worker registrations</a>.</p>
+  mechanisms such as (<code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="ref-for-dom-localstorage①">localStorage</a></code>, <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage" id="ref-for-dom-sessionstorage①">sessionStorage</a></code>, <a data-link-type="biblio" href="#biblio-indexeddb" title="Indexed Database API">[INDEXEDDB]</a>, <a data-link-type="biblio" href="#biblio-webdatabase" title="Web SQL Database">[WEBDATABASE]</a>, etc), as well as tangentially related mechanism such as <a data-link-type="dfn" href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration" id="ref-for-dfn-service-worker-registration">service worker registrations</a>.</p>
       <p>Implementation details are in <a href="#clear-dom">§ 4.2.5 Clear DOM-accessible storage for origin</a>.</p>
       <div class="example" id="example-b9b200c9">
        <a class="self-link" href="#example-b9b200c9"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -761,7 +1069,7 @@ dfn > a.self-link::before      { content: "#"; }
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-executioncontexts"><code>executionContexts</code></dfn>"
      <dd data-md>
       <p>The "<code>executionContexts</code>" type indicates that the server wishes to neuter
-  and reload execution contexts currently rendering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2③">origin</a> of a
+  and reload execution contexts currently rendering the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2④">origin</a> of a
   particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response③">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url③">url</a>.</p>
       <div class="example" id="example-7718f7d6">
        <a class="self-link" href="#example-7718f7d6"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -769,6 +1077,17 @@ dfn > a.self-link::before      { content: "#"; }
 <pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data⑨">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts④">executionContexts</a>"
 </pre>
       </div>
+     <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-clienthints"><code>clientHints</code></dfn>"
+     <dd data-md>
+      <p>The "<code>clientHints</code>" type indicates that the server wishes clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache③">Accept-CH cache</a> for the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑤">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response④">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url④">url</a>.</p>
+      <div class="example" id="example-c284f61c">
+       <a class="self-link" href="#example-c284f61c"></a> When delivered with a response from <code>https://example.com/clear</code>,
+    the following header will cause the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache④">Accept-CH cache</a> for origin <code>https://example.com</code> to be cleared: 
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⓪">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints">clientHints</a>"
+</pre>
+      </div>
+      <p class="note" role="note"><span class="marker">Note:</span> The <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑤">Accept-CH cache</a> is also cleared for the <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑤">cache</a> and <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑤">cookies</a> options, so it should be used only when neither of the
+  other options (or <a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-">*</a>) are applied.</p>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-"><code>*</code></dfn>"
      <dd data-md>
       <p>The "<code>*</code>" (wildcard) pseudotype indicates that the server has the same
@@ -779,7 +1098,7 @@ dfn > a.self-link::before      { content: "#"; }
     storage associated with the origin <code>https://example.com</code> to be cleared,
     as well as execution contexts for the same origin to be neutered and
     reloaded: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⓪">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-">*</a>"
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①①">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-①">*</a>"
 </pre>
       </div>
       <div class="note" role="note">
@@ -793,34 +1112,34 @@ dfn > a.self-link::before      { content: "#"; }
       above, as this meaning might change. </p>
       </div>
     </dl>
-    <p class="note" role="note"><span>Note:</span> The syntax defined here is compatible with future extensions to this document which might
+    <p class="note" role="note"><span class="marker">Note:</span> The syntax defined here is compatible with future extensions to this document which might
   add more granular filtering mechanisms to the types we’ve defined. For example, it’s likely that
-  "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑤"><code>cookies</code></a>" will need to grow a mechanism to prevent deletion of specific cookie
+  "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑥"><code>cookies</code></a>" will need to grow a mechanism to prevent deletion of specific cookie
   values. Wrapping all of the type names in double-quotes means that we can easily shift from
   simple splitting-strings-on-commas processing to something more complicated (like processing the
   header value as JSON) without losing backwards compatibility.</p>
     <h3 class="heading settled" data-level="3.2" id="fetch-integration"><span class="secno">3.2. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
-    <p>If the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①①"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response④">response</a> received from the network, then data MUST be cleared before rendering the
+    <p>If the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①②"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑤">response</a> received from the network, then data MUST be cleared before rendering the
   response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-network-fetch" id="ref-for-concept-http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
     <ol start="15">
      <li data-md>
-      <p>If <var>credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-header-list" id="ref-for-concept-response-header-list">header list</a> contains a header named <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①②"><code>Clear-Site-Data</code></a>, then
+      <p>If <var>credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-header-list" id="ref-for-concept-response-header-list">header list</a> contains a header named <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①③"><code>Clear-Site-Data</code></a>, then
    execute <a href="#clear-response">§ 4.2 Clear data for response</a> on <var>response</var>.</p>
     </ol>
-    <p class="note" role="note"><span>Note:</span> This happens <em>after</em> <code>Set-Cookie</code> headers are
+    <p class="note" role="note"><span class="marker">Note:</span> This happens <em>after</em> <code>Set-Cookie</code> headers are
   processed. If we clear cookies, we clear all of them. This is intentional, as
   removing only certain cookies might leave an application in an indeterminate
   and vulnerable state. Removing specific cookies is best done via expiration 
   using the <code>Set-Cookie</code> header.</p>
-    <p class="note" role="note"><span>Note:</span> While the fetch <code>credentials flag</code> is intended to restrict the
-  modification of cookies, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①③"><code>Clear-Site-Data</code></a> applies the same restriction
+    <p class="note" role="note"><span class="marker">Note:</span> While the fetch <code>credentials flag</code> is intended to restrict the
+  modification of cookies, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①④"><code>Clear-Site-Data</code></a> applies the same restriction
   to all types for the sake of consistency.</p>
     <section>
      <section>
       <h2 class="heading settled" data-level="4" id="algorithms"><span class="secno">4. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
       <h3 class="heading settled algorithm" data-algorithm="Parsing" data-level="4.1" id="parsing"><span class="secno">4.1. </span><span class="content">Parsing</span><a class="self-link" href="#parsing"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑤">response</a>, the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="parse response" data-lt="parse response’s Clear-Site-Data header" id="abstract-opdef-parse-responses-clear-site-data-header">parse <var>response</var>’s <code>Clear-Site-Data</code> header</dfn>, returning a list of types, as follows:</p>
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑥">response</a>, the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="parse response" data-lt="parse response’s Clear-Site-Data header" id="abstract-opdef-parse-responses-clear-site-data-header">parse <var>response</var>’s <code>Clear-Site-Data</code> header</dfn>, returning a list of types, as follows:</p>
       <ol class="algorithm">
        <li data-md>
         <p>Let <var>types</var> be an empty list.</p>
@@ -833,36 +1152,39 @@ dfn > a.self-link::before      { content: "#"; }
         <dl>
          <dt data-md>`<code>"cache"</code>`
          <dd data-md>
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑤">cache</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑥">cache</a>" and "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints①">clientHints</a>" to <var>types</var>.</p>
          <dt data-md>`<code>"cookies"</code>`
          <dd data-md>
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑥">cookies</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑦">cookies</a>" and "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints②">clientHints</a>" to <var>types</var>.</p>
          <dt data-md>`<code>"storage"</code>`
          <dd data-md>
           <p>Append "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑤">storage</a>" to <var>types</var>.</p>
          <dt data-md>`<code>"executionContexts"</code>`
          <dd data-md>
           <p>Append "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑤">executionContexts</a>" to <var>types</var>.</p>
+         <dt data-md>`<code>"clientHints"</code>`
+         <dd data-md>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints③">clientHints</a>" to <var>types</var>.</p>
          <dt data-md>`<code>"*"</code>`
          <dd data-md>
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑥">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑦">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑥">storage</a>",
-  and "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑥">executionContexts</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑦">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑧">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑥">storage</a>",
+  "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints④">clientHints</a>", and "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑥">executionContexts</a>" to <var>types</var>.</p>
         </dl>
        <li data-md>
         <p>Return <var>types</var>.</p>
       </ol>
-      <p class="note" role="note"><span>Note:</span> All of the existing values can be handled with the simple switch above. If and when more
+      <p class="note" role="note"><span class="marker">Note:</span> All of the existing values can be handled with the simple switch above. If and when more
   complex type definitions are created, the parser will likely shift over to JSON entirely.</p>
       <h3 class="heading settled algorithm" data-algorithm="Clear data for response" data-level="4.2" id="clear-response"><span class="secno">4.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑥">response</a> (<var>response</var>), the user agent can <dfn data-dfn-type="abstract-op" data-export data-lt="clear site data for response" id="abstract-opdef-clear-site-data-for-response">clear site data for <var>response</var><a class="self-link" href="#abstract-opdef-clear-site-data-for-response"></a></dfn> as follows:</p>
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑦">response</a> (<var>response</var>), the user agent can <dfn data-dfn-type="abstract-op" data-export data-lt="clear site data for response" id="abstract-opdef-clear-site-data-for-response">clear site data for <var>response</var><a class="self-link" href="#abstract-opdef-clear-site-data-for-response"></a></dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md>
-        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url④">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated
+        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑤">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated
   URL</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break" id="ref-for-iteration-break">break</a>.</p>
        <li data-md>
         <p>Let <var>types</var> be the result of <a data-link-type="abstract-op" href="#abstract-opdef-parse-responses-clear-site-data-header" id="ref-for-abstract-opdef-parse-responses-clear-site-data-header">parsing <var>response</var>’s <code>Clear-Site-Data</code> header</a>.</p>
        <li data-md>
-        <p>Let <var>origin</var> be <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑤">url</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>.</p>
+        <p>Let <var>origin</var> be <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑥">url</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>.</p>
        <li data-md>
         <p>Let <var>browsing contexts</var> be the result of <a data-link-type="abstract-op" href="#abstract-opdef-prepare-to-clear-origins-data" id="ref-for-abstract-opdef-prepare-to-clear-origins-data">preparing to clear
   data</a> for <var>origin</var> and <var>types</var>.</p>
@@ -872,26 +1194,29 @@ dfn > a.self-link::before      { content: "#"; }
          <li data-md>
           <p>Execute the first matching statement, if any, switching on <var>type</var>:</p>
           <dl>
-           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑦"><code>cache</code></a>"
+           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑧"><code>cache</code></a>"
            <dd data-md>
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cache-for-origin" id="ref-for-abstract-opdef-clear-cache-for-origin">Clear cache for <var>origin</var></a>.</p>
-           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑧"><code>cookies</code></a>"
+           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑨"><code>cookies</code></a>"
            <dd data-md>
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cookies-for-origin" id="ref-for-abstract-opdef-clear-cookies-for-origin">Clear cookies for <var>origin</var></a>.</p>
            <dt data-md>"<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑦"><code>storage</code></a>"
            <dd data-md>
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-dom-accessible-storage-for-origin" id="ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin">Clear DOM-accessible storage for <var>origin</var></a>.</p>
+           <dt data-md>"<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints⑤"><code>clientHints</code></a>"
+           <dd data-md>
+            <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-empty" id="ref-for-list-empty">Empty</a> <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑥">Accept-CH cache</a>[<var>origin</var>].</p>
           </dl>
         </ol>
        <li data-md>
         <p>If <var>types</var> contains "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑦">executionContexts</a>", then <a data-link-type="abstract-op" href="#abstract-opdef-reload-browsing-contexts" id="ref-for-abstract-opdef-reload-browsing-contexts">Reload <var>browsing contexts</var></a>.</p>
       </ol>
-      <p class="note" role="note"><span>Note:</span> User agents are are encouraged to give web developers some mechanism by which the clearing
+      <p class="note" role="note"><span class="marker">Note:</span> User agents are are encouraged to give web developers some mechanism by which the clearing
   operation can be debugged. This might take the form of a console message or timeline entry
   indicating success.</p>
       <h4 class="heading settled algorithm" data-algorithm="Prepare to clear origin’s data" data-level="4.2.1" id="prepare"><span class="secno">4.2.1. </span><span class="content"> Prepare to clear <var>origin</var>’s data </span><a class="self-link" href="#prepare"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2④">origin</a> (<var>origin</var>) and a list of types (<var>types</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="prepare" id="abstract-opdef-prepare-to-clear-origins-data">prepare to clear <var>origin</var>’s data</dfn> by executing
-  the following steps. The algorithm returns a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context">browsing contexts</a> which have been
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑥">origin</a> (<var>origin</var>) and a list of types (<var>types</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="prepare" id="abstract-opdef-prepare-to-clear-origins-data">prepare to clear <var>origin</var>’s data</dfn> by executing
+  the following steps. The algorithm returns a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-browsing-context">browsing contexts</a> which have been
   sandboxed in order to prevent them from recreating cleared data from in-memory JavaScript
   variables.</p>
       <ol class="algorithm">
@@ -900,14 +1225,14 @@ dfn > a.self-link::before      { content: "#"; }
        <li data-md>
         <p>If <var>types</var> does not <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-contain" id="ref-for-list-contain">contain</a> "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑧"><code>executionContexts</code></a>", return <var>sandboxed</var>.</p>
        <li data-md>
-        <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context①">browsing contexts</a>:</p>
+        <p>For each <var>context</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-browsing-context①">browsing contexts</a>:</p>
         <ol>
          <li data-md>
-          <p>Let <var>document</var> be <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document">active document</a>.</p>
+          <p>Let <var>document</var> be <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document" id="ref-for-nav-document">active document</a>.</p>
          <li data-md>
           <p>If <var>document</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin" id="ref-for-concept-settings-object-origin">origin</a> is not <var>origin</var>, <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue">continue</a>.</p>
          <li data-md>
-          <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive" id="ref-for-parse-a-sandboxing-directive">Parse a sandboxing directive</a> using the empty string as the input, and <var>document</var>’s <a data-link-type="dfn">active sandboxing flag set</a> as the output.</p>
+          <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive" id="ref-for-parse-a-sandboxing-directive">Parse a sandboxing directive</a> using the empty string as the input, and <var>document</var>’s <a data-link-type="dfn">active sandboxing flag set</a> as the output.</p>
          <li data-md>
           <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-append" id="ref-for-list-append">Append</a> <var>context</var> to <var>sandboxed</var>.</p>
         </ol>
@@ -915,23 +1240,23 @@ dfn > a.self-link::before      { content: "#"; }
         <p>Return <var>sandboxed</var>.</p>
       </ol>
       <h4 class="heading settled" data-level="4.2.2" id="reload-contexts"><span class="secno">4.2.2. </span><span class="content"> Reload <var>browsing contexts</var> </span><a class="self-link" href="#reload-contexts"></a></h4>
-      <p>Given a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context" id="ref-for-browsing-context②">browsing contexts</a> (<var>contexts</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="reload" id="abstract-opdef-reload-browsing-contexts">reload browsing contexts</dfn> as follows:</p>
+      <p>Given a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-browsing-context②">browsing contexts</a> (<var>contexts</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="reload" id="abstract-opdef-reload-browsing-contexts">reload browsing contexts</dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md>
         <p>For each <var>context</var> in <var>contexts</var>:</p>
         <ol>
          <li data-md>
-          <p>Execute <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#active-document" id="ref-for-active-document①">active document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/history.html#location" id="ref-for-location">Location</a></code> object’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/history.html#dom-location-reload" id="ref-for-dom-location-reload">reload()</a></code>.</p>
+          <p>Execute <var>context</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document" id="ref-for-nav-document①">active document</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object" id="ref-for-relevant-settings-object①">relevant settings object</a>'s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global" id="ref-for-concept-settings-object-global">global object</a>'s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#location" id="ref-for-location">Location</a></code> object’s <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload" id="ref-for-dom-location-reload">reload()</a></code>.</p>
           <p class="issue" id="issue-fb0b50ca"><a class="self-link" href="#issue-fb0b50ca"></a> This is the simplest thing, but it’s probably reaching a little too far into the
   documents and mucking with their context. I probably just need to break down and
   copy/paste the relevant bits from HTML.</p>
         </ol>
       </ol>
       <h4 class="heading settled" data-level="4.2.3" id="clear-cache"><span class="secno">4.2.3. </span><span class="content"> Clear cache for <var>origin</var> </span><a class="self-link" href="#clear-cache"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑤">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cache" id="abstract-opdef-clear-cache-for-origin">clear cache for <var>origin</var></dfn> as follows:</p>
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑦">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cache" id="abstract-opdef-clear-cache-for-origin">clear cache for <var>origin</var></dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md>
-        <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host">host</a>.</p>
+        <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host">host</a>.</p>
        <li data-md>
         <p>Let <var>cache list</var> be the set of entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2①">network cache</a> whose <code>target URI</code> <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host" id="ref-for-concept-url-host">host</a> is identical to <var>host</var>.</p>
        <li data-md>
@@ -943,23 +1268,23 @@ dfn > a.self-link::before      { content: "#"; }
        <li data-md>
         <p>If a user agent implements caches beyond a pure <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2③">network cache</a>, it MUST remove all
   entries from those caches which match <var>origin</var>.</p>
-        <p class="issue" id="issue-f5577029"><a class="self-link" href="#issue-f5577029"></a> We’re dealing with the network cache here, as defined in <a data-link-type="biblio" href="#biblio-rfc7234">[RFC7234]</a>, but that’s not
+        <p class="issue" id="issue-f5577029"><a class="self-link" href="#issue-f5577029"></a> We’re dealing with the network cache here, as defined in <a data-link-type="biblio" href="#biblio-rfc7234" title="HTTP Caching">[RFC7234]</a>, but that’s not
   nearly everything a user agent caches. How hand-wavey with the vendor-specific section can
   we be? For instance, Chrome clears out prerendered pages, script caches, WebGL shader
   caches, WebRTC bits and pieces, address bar suggestion caches, various networking bits that
-  aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a> will make this clearer?</p>
+  aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage" title="Storage Standard">[STORAGE]</a> will make this clearer?</p>
       </ol>
       <h4 class="heading settled" data-level="4.2.4" id="clear-cookies"><span class="secno">4.2.4. </span><span class="content"> Clear cookies for <var>origin</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑥">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cookies" id="abstract-opdef-clear-cookies-for-origin">clear cookies for <var>origin</var></dfn> as follows:</p>
-      <p class="note" role="note"><span>Note:</span> We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="termref-for-">registered domain</a>, as cookies ignore the
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑧">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cookies" id="abstract-opdef-clear-cookies-for-origin">clear cookies for <var>origin</var></dfn> as follows:</p>
+      <p class="note" role="note"><span class="marker">Note:</span> We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something">registered domain</a>, as cookies ignore the
   same-origin policy, and there’s a distinct risk that we’d leave applications in an ill-defined
   state if we only cleared cookies for a particular subdomain. Consider <code>accounts.google.com</code> vs <code>mail.google.com</code>, for instance, both of which have cookies that signal a user’s signed-in status.</p>
-      <p class="note" role="note"><span>Note:</span> This algorithm assumes that the user agent has implemented a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3" id="ref-for-section-5.3">cookie store</a> (as
-  discussed in Section 5.3 of <a data-link-type="biblio" href="#biblio-rfc6265">[RFC6265]</a>), which offers the ability to retrieve a list of cookies
+      <p class="note" role="note"><span class="marker">Note:</span> This algorithm assumes that the user agent has implemented a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3" id="ref-for-section-5.3">cookie store</a> (as
+  discussed in Section 5.3 of <a data-link-type="biblio" href="#biblio-rfc6265" title="HTTP State Management Mechanism">[RFC6265]</a>), which offers the ability to retrieve a list of cookies
   by host, and to remove individual cookies.</p>
       <ol class="algorithm">
        <li data-md>
-        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="termref-for-①">registered domain</a> of <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a>.</p>
+        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something①">registered domain</a> of <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a>.</p>
        <li data-md>
         <p>Let <var>cookie list</var> be the set of cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3" id="ref-for-section-5.3①">cookie
   store</a> whose <code>domain</code> attribute is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3" id="ref-for-section-5.1.3">domain-match</a> with <var>registered</var>.</p>
@@ -971,26 +1296,26 @@ dfn > a.self-link::before      { content: "#"; }
         </ol>
        <li data-md>
         <p>If the user agent supports other forms of cookie-like storage, these MUST also be cleared
-  for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑦">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host②">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="termref-for-②">registered domain</a> is <var>registered</var>.</p>
-        <p class="note" role="note"><span>Note:</span> For example, if the user agent supports Flash, its local stored objects will be
+  for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑨">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host②">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something②">registered domain</a> is <var>registered</var>.</p>
+        <p class="note" role="note"><span class="marker">Note:</span> For example, if the user agent supports Flash, its local stored objects will be
   cleared via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>.</p>
        <li data-md>
-        <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind">[TOKBIND]</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑧">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host③">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="termref-for-③">registered domain</a> is <var>registered</var>.</p>
+        <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid" title="Transport Layer Security (TLS) Channel IDs">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind" title="The Token Binding Protocol Version 1.0">[TOKBIND]</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①⓪">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host③">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something③">registered domain</a> is <var>registered</var>.</p>
        <li data-md>
-        <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry" id="ref-for-authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry" id="ref-for-proxy-authentication-entry">proxy-authentication entries</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑨">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host" id="ref-for-concept-origin-host④">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="termref-for-④">registered domain</a> is <var>registered</var>.</p>
+        <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry" id="ref-for-authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry" id="ref-for-proxy-authentication-entry">proxy-authentication entries</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①①">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host④">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something④">registered domain</a> is <var>registered</var>.</p>
       </ol>
       <p class="issue" id="issue-036b8c98"><a class="self-link" href="#issue-036b8c98"></a> The process of clearing both bound
-  tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">&lt;https://github.com/w3c/webappsec-clear-site-data/issues/2></a></p>
+  tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">[Issue #w3c/webappsec-clear-site-data#2]</a></p>
       <h4 class="heading settled" data-level="4.2.5" id="clear-dom"><span class="secno">4.2.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> </span><a class="self-link" href="#clear-dom"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①⓪">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear storage" id="abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for <var>origin</var></dfn> as
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①②">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear storage" id="abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for <var>origin</var></dfn> as
   follows:</p>
       <ol class="algorithm">
        <li data-md>
         <p>For each <var>area</var> in the user agent’s set of <a class="idl-code" data-link-type="attribute" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage" id="ref-for-dom-localstorage②">local storage
-  areas</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</p>
+  areas</a> <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a>:</p>
         <ol>
          <li data-md>
-          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①①">origin</a> is <var>origin</var>:</p>
+          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①③">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md>
             <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear" id="ref-for-dom-storage-clear">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#storage-2" id="ref-for-storage-2">Storage</a></code> object associated
@@ -999,10 +1324,10 @@ dfn > a.self-link::before      { content: "#"; }
         </ol>
        <li data-md>
         <p>For each <var>area</var> in the user agent’s set of <a class="idl-code" data-link-type="attribute" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage" id="ref-for-dom-sessionstorage②">session storage
-  areas</a> <a data-link-type="biblio" href="#biblio-html">[HTML]</a>:</p>
+  areas</a> <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a>:</p>
         <ol>
          <li data-md>
-          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①②">origin</a> is <var>origin</var>:</p>
+          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①④">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md>
             <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear" id="ref-for-dom-storage-clear①">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#storage-2" id="ref-for-storage-2①">Storage</a></code> object associated
@@ -1010,7 +1335,7 @@ dfn > a.self-link::before      { content: "#"; }
           </ol>
         </ol>
        <li data-md>
-        <p>For each <var>database</var> in the set of <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#database" id="ref-for-database">databases</a> for <var>origin</var> <a data-link-type="biblio" href="#biblio-indexeddb">[INDEXEDDB]</a>:</p>
+        <p>For each <var>database</var> in the set of <a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#database" id="ref-for-database">databases</a> for <var>origin</var> <a data-link-type="biblio" href="#biblio-indexeddb" title="Indexed Database API">[INDEXEDDB]</a>:</p>
         <ol>
          <li data-md>
           <p><a data-link-type="dfn" href="https://w3c.github.io/IndexedDB/#delete-a-database" id="ref-for-delete-a-database">Delete</a> <var>database</var>.</p>
@@ -1041,9 +1366,9 @@ dfn > a.self-link::before      { content: "#"; }
   limited to) the following:</p>
         <ol>
          <li data-md>
-          <p>An origin’s WebSQL databases <a data-link-type="biblio" href="#biblio-webdatabase">[WEBDATABASE]</a>.</p>
+          <p>An origin’s WebSQL databases <a data-link-type="biblio" href="#biblio-webdatabase" title="Web SQL Database">[WEBDATABASE]</a>.</p>
          <li data-md>
-          <p>An origin’s filesystems <a data-link-type="biblio" href="#biblio-file-system-api">[file-system-api]</a></p>
+          <p>An origin’s filesystems <a data-link-type="biblio" href="#biblio-file-system-api" title="File API: Directories and System">[file-system-api]</a></p>
          <li data-md>
           <p>Plugin data (e.g. Flash via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>),</p>
          <li data-md>
@@ -1073,7 +1398,7 @@ dfn > a.self-link::before      { content: "#"; }
   use case in <a href="#example-killswitch">§ 1.1.4 Kill Switch</a>.</p>
       <h2 class="heading settled" data-level="6" id="privacy"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
       <h3 class="heading settled" data-level="6.1" id="user-vs-author"><span class="secno">6.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
-      <p>If triggered at appropriate times, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①④"><code>Clear-Site-Data</code></a> can
+      <p>If triggered at appropriate times, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑤"><code>Clear-Site-Data</code></a> can
   increase a user’s privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
   is in control of when the clearing event is triggered. Even assuming a
@@ -1082,12 +1407,12 @@ dfn > a.self-link::before      { content: "#"; }
       <p>If a user wishes to ensure that site data is indeed cleared at some specific
   point, they ought to rely on the data-clearing functionality offered by their
   user agent.</p>
-      <p>At a bare minimum, user agents OUGHT TO (in the <a data-link-type="biblio" href="#biblio-rfc6919">[RFC6919]</a> sense of the
+      <p>At a bare minimum, user agents OUGHT TO (in the <a data-link-type="biblio" href="#biblio-rfc6919" title="Further Key Words for Use in RFCs to Indicate Requirement Levels">[RFC6919]</a> sense of the
   words) offer the same functionality to users that they offer to web
   developers. Ideally, they will offer significantly more than we can offer at
   a platform level (clearing browsing history, for example).</p>
       <h3 class="heading settled" data-level="6.2" id="remnants"><span class="secno">6.2. </span><span class="content">Remnants of data on disk.</span><a class="self-link" href="#remnants"></a></h3>
-      <p>While <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑤"><code>Clear-Site-Data</code></a> triggers a clearing event in a
+      <p>While <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑥"><code>Clear-Site-Data</code></a> triggers a clearing event in a
   user’s agent, it is difficult to make promises about the state of a user’s
   disk after a clearing event takes place. In particular, note that it is up
   to the user agent to ensure that all traces of a site’s date is actually
@@ -1104,7 +1429,7 @@ dfn > a.self-link::before      { content: "#"; }
      <section>
       <h2 class="heading settled" data-level="7" id="iana-considerations"><span class="secno">7. </span><span class="content">IANA Considerations</span><a class="self-link" href="#iana-considerations"></a></h2>
       <p>The permanent message header field registry should be updated
-  with the following registration: <a data-link-type="biblio" href="#biblio-rfc3864">[RFC3864]</a></p>
+  with the following registration: <a data-link-type="biblio" href="#biblio-rfc3864" title="Registration Procedures for Message Header Fields">[RFC3864]</a></p>
       <h3 class="heading settled" data-level="7.1" id="iana-clear-site-data"><span class="secno">7.1. </span><span class="content"> Clear-Site-Data </span><a class="self-link" href="#iana-clear-site-data"></a></h3>
       <dl>
        <dt>Header field name
@@ -1127,795 +1452,914 @@ dfn > a.self-link::before      { content: "#"; }
     </section>
    </section>
   </main>
-  <h2 class="no-ref no-num heading settled" id="conformance"><span class="content">Conformance</span><a class="self-link" href="#conformance"></a></h2>
-  <h3 class="no-ref no-num heading settled" id="conventions"><span class="content">Document conventions</span><a class="self-link" href="#conventions"></a></h3>
-  <p>Conformance requirements are expressed with a combination of
-    descriptive assertions and RFC 2119 terminology. The key words “MUST”,
-    “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”,
-    “RECOMMENDED”, “MAY”, and “OPTIONAL” in the normative parts of this
-    document are to be interpreted as described in RFC 2119.
-    However, for readability, these words do not appear in all uppercase
-    letters in this specification. </p>
-  <p>All of the text of this specification is normative except sections
-    explicitly marked as non-normative, examples, and notes. <a data-link-type="biblio" href="#biblio-rfc2119">[RFC2119]</a></p>
-  <p>Examples in this specification are introduced with the words “for example”
-    or are set apart from the normative text with <code>class="example"</code>,
-    like this: </p>
-  <div class="example" id="example-ae2b6bc0">
-   <a class="self-link" href="#example-ae2b6bc0"></a> 
-   <p>This is an example of an informative example.</p>
-  </div>
-  <p>Informative notes begin with the word “Note” and are set apart from the
-    normative text with <code>class="note"</code>, like this: </p>
-  <p class="note" role="note">Note, this is an informative note.</p>
-  <h3 class="no-ref no-num heading settled" id="conformant-algorithms"><span class="content">Conformant Algorithms</span><a class="self-link" href="#conformant-algorithms"></a></h3>
-  <p>Requirements phrased in the imperative as part of algorithms (such as
-    "strip any leading space characters" or "return false and abort these
-    steps") are to be interpreted with the meaning of the key word ("must",
-    "should", "may", etc) used in introducing the algorithm.</p>
-  <p>Conformance requirements phrased as algorithms or specific steps can be
-    implemented in any manner, so long as the end result is equivalent. In
-    particular, the algorithms defined in this specification are intended to
-    be easy to understand and are not intended to be performant. Implementers
-    are encouraged to optimize.</p>
-<script src="https://www.w3.org/scripts/TR/2016/fixup.js"></script>
+<script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="no-num no-ref heading settled" id="index"><span class="content">Index</span><a class="self-link" href="#index"></a></h2>
   <h3 class="no-num no-ref heading settled" id="index-defined-here"><span class="content">Terms defined by this specification</span><a class="self-link" href="#index-defined-here"></a></h3>
   <ul class="index">
-   <li><a href="#grammardef-">*</a><span>, in §3.1</span>
-   <li><a href="#grammardef-cache">cache</a><span>, in §3.1</span>
-   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache</a><span>, in §4.2.3</span>
-   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache for origin</a><span>, in §4.2.3</span>
-   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies</a><span>, in §4.2.4</span>
-   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies for origin</a><span>, in §4.2.4</span>
-   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for origin</a><span>, in §4.2.5</span>
-   <li><a href="#http-headerdef-clear-site-data">Clear-Site-Data</a><span>, in §3.1</span>
-   <li><a href="#abstract-opdef-clear-site-data-for-response">clear site data for response</a><span>, in §4.2</span>
-   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear storage</a><span>, in §4.2.5</span>
-   <li><a href="#grammardef-cookies">cookies</a><span>, in §3.1</span>
-   <li><a href="#grammardef-executioncontexts">executionContexts</a><span>, in §3.1</span>
-   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response</a><span>, in §4.1</span>
-   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response’s Clear-Site-Data header</a><span>, in §4.1</span>
-   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare</a><span>, in §4.2.1</span>
-   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare to clear origin’s data</a><span>, in §4.2.1</span>
-   <li><a href="#abstract-opdef-reload-browsing-contexts">reload</a><span>, in §4.2.2</span>
-   <li><a href="#abstract-opdef-reload-browsing-contexts">reload browsing contexts</a><span>, in §4.2.2</span>
-   <li><a href="#grammardef-storage">storage</a><span>, in §3.1</span>
+   <li><a href="#grammardef-">*</a><span>, in § 3.1</span>
+   <li><a href="#grammardef-cache">cache</a><span>, in § 3.1</span>
+   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache</a><span>, in § 4.2.3</span>
+   <li><a href="#abstract-opdef-clear-cache-for-origin">clear cache for origin</a><span>, in § 4.2.3</span>
+   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies</a><span>, in § 4.2.4</span>
+   <li><a href="#abstract-opdef-clear-cookies-for-origin">clear cookies for origin</a><span>, in § 4.2.4</span>
+   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for origin</a><span>, in § 4.2.5</span>
+   <li><a href="#http-headerdef-clear-site-data">Clear-Site-Data</a><span>, in § 3.1</span>
+   <li><a href="#abstract-opdef-clear-site-data-for-response">clear site data for response</a><span>, in § 4.2</span>
+   <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear storage</a><span>, in § 4.2.5</span>
+   <li><a href="#grammardef-clienthints">clientHints</a><span>, in § 3.1</span>
+   <li><a href="#grammardef-cookies">cookies</a><span>, in § 3.1</span>
+   <li><a href="#grammardef-executioncontexts">executionContexts</a><span>, in § 3.1</span>
+   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response</a><span>, in § 4.1</span>
+   <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response’s Clear-Site-Data header</a><span>, in § 4.1</span>
+   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare</a><span>, in § 4.2.1</span>
+   <li><a href="#abstract-opdef-prepare-to-clear-origins-data">prepare to clear origin’s data</a><span>, in § 4.2.1</span>
+   <li><a href="#abstract-opdef-reload-browsing-contexts">reload</a><span>, in § 4.2.2</span>
+   <li><a href="#abstract-opdef-reload-browsing-contexts">reload browsing contexts</a><span>, in § 4.2.2</span>
+   <li><a href="#grammardef-storage">storage</a><span>, in § 3.1</span>
   </ul>
-  <aside class="dfn-panel" data-for="term-for-authentication-entry">
-   <a href="https://fetch.spec.whatwg.org/#authentication-entry">https://fetch.spec.whatwg.org/#authentication-entry</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-authentication-entry">4.2.4. 
-    Clear cookies for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-extract-header-list-values">
-   <a href="https://fetch.spec.whatwg.org/#extract-header-list-values">https://fetch.spec.whatwg.org/#extract-header-list-values</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-extract-header-list-values">4.1. Parsing</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-response-header-list">
-   <a href="https://fetch.spec.whatwg.org/#concept-response-header-list">https://fetch.spec.whatwg.org/#concept-response-header-list</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-response-header-list">3.2. Fetch Integration</a>
-    <li><a href="#ref-for-concept-response-header-list①">4.1. Parsing</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-http-network-fetch">
-   <a href="https://fetch.spec.whatwg.org/#concept-http-network-fetch">https://fetch.spec.whatwg.org/#concept-http-network-fetch</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-http-network-fetch">3.2. Fetch Integration</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-proxy-authentication-entry">
-   <a href="https://fetch.spec.whatwg.org/#proxy-authentication-entry">https://fetch.spec.whatwg.org/#proxy-authentication-entry</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-proxy-authentication-entry">4.2.4. 
-    Clear cookies for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-response">
-   <a href="https://fetch.spec.whatwg.org/#concept-response">https://fetch.spec.whatwg.org/#concept-response</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-response">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-concept-response①">(2)</a> <a href="#ref-for-concept-response②">(3)</a> <a href="#ref-for-concept-response③">(4)</a>
-    <li><a href="#ref-for-concept-response④">3.2. Fetch Integration</a>
-    <li><a href="#ref-for-concept-response⑤">4.1. Parsing</a>
-    <li><a href="#ref-for-concept-response⑥">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-request-service-workers-mode">
-   <a href="https://fetch.spec.whatwg.org/#request-service-workers-mode">https://fetch.spec.whatwg.org/#request-service-workers-mode</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-request-service-workers-mode">5.2. Service workers</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-response-url">
-   <a href="https://fetch.spec.whatwg.org/#concept-response-url">https://fetch.spec.whatwg.org/#concept-response-url</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-response-url">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-concept-response-url①">(2)</a> <a href="#ref-for-concept-response-url②">(3)</a> <a href="#ref-for-concept-response-url③">(4)</a>
-    <li><a href="#ref-for-concept-response-url④">4.2. 
-    Clear data for response </a> <a href="#ref-for-concept-response-url⑤">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-location">
-   <a href="https://html.spec.whatwg.org/multipage/history.html#location">https://html.spec.whatwg.org/multipage/history.html#location</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-location">4.2.2. 
-    Reload browsing contexts </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-storage-2">
-   <a href="https://html.spec.whatwg.org/multipage/webstorage.html#storage-2">https://html.spec.whatwg.org/multipage/webstorage.html#storage-2</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-storage-2">4.2.5. 
-    Clear DOM-accessible storage for origin </a> <a href="#ref-for-storage-2①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-active-document">
-   <a href="https://html.spec.whatwg.org/multipage/browsers.html#active-document">https://html.spec.whatwg.org/multipage/browsers.html#active-document</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-active-document">4.2.1. 
-    Prepare to clear origin’s data </a>
-    <li><a href="#ref-for-active-document①">4.2.2. 
-    Reload browsing contexts </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-browsing-context">
-   <a href="https://html.spec.whatwg.org/multipage/browsers.html#browsing-context">https://html.spec.whatwg.org/multipage/browsers.html#browsing-context</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-browsing-context">4.2.1. 
-    Prepare to clear origin’s data </a> <a href="#ref-for-browsing-context①">(2)</a>
-    <li><a href="#ref-for-browsing-context②">4.2.2. 
-    Reload browsing contexts </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-storage-clear">
-   <a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear">https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-storage-clear">4.2.5. 
-    Clear DOM-accessible storage for origin </a> <a href="#ref-for-dom-storage-clear①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-settings-object-global">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-settings-object-global">4.2.2. 
-    Reload browsing contexts </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-origin-host">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host">https://html.spec.whatwg.org/multipage/origin.html#concept-origin-host</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-origin-host">4.2.3. 
-    Clear cache for origin </a>
-    <li><a href="#ref-for-concept-origin-host①">4.2.4. 
-    Clear cookies for origin </a> <a href="#ref-for-concept-origin-host②">(2)</a> <a href="#ref-for-concept-origin-host③">(3)</a> <a href="#ref-for-concept-origin-host④">(4)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-localstorage">
-   <a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage">https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-localstorage">1.2. Goals</a>
-    <li><a href="#ref-for-dom-localstorage①">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-    <li><a href="#ref-for-dom-localstorage②">4.2.5. 
-    Clear DOM-accessible storage for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-settings-object-origin">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin">https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-settings-object-origin">4.2.1. 
-    Prepare to clear origin’s data </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-parse-a-sandboxing-directive">
-   <a href="https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive">https://html.spec.whatwg.org/multipage/origin.html#parse-a-sandboxing-directive</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-parse-a-sandboxing-directive">4.2.1. 
-    Prepare to clear origin’s data </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-relevant-settings-object">
-   <a href="https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object">https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-relevant-settings-object">4.2.1. 
-    Prepare to clear origin’s data </a>
-    <li><a href="#ref-for-relevant-settings-object①">4.2.2. 
-    Reload browsing contexts </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-location-reload">
-   <a href="https://html.spec.whatwg.org/multipage/history.html#dom-location-reload">https://html.spec.whatwg.org/multipage/history.html#dom-location-reload</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-location-reload">4.2.2. 
-    Reload browsing contexts </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-sessionstorage">
-   <a href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage">https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-sessionstorage">1.2. Goals</a>
-    <li><a href="#ref-for-dom-sessionstorage①">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-    <li><a href="#ref-for-dom-sessionstorage②">4.2.5. 
-    Clear DOM-accessible storage for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-database">
-   <a href="https://w3c.github.io/IndexedDB/#database">https://w3c.github.io/IndexedDB/#database</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-database">4.2.5. 
-    Clear DOM-accessible storage for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-delete-a-database">
-   <a href="https://w3c.github.io/IndexedDB/#delete-a-database">https://w3c.github.io/IndexedDB/#delete-a-database</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-delete-a-database">4.2.5. 
-    Clear DOM-accessible storage for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-list-append">
-   <a href="https://infra.spec.whatwg.org/#list-append">https://infra.spec.whatwg.org/#list-append</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list-append">4.2.1. 
-    Prepare to clear origin’s data </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-iteration-break">
-   <a href="https://infra.spec.whatwg.org/#iteration-break">https://infra.spec.whatwg.org/#iteration-break</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-iteration-break">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-list-contain">
-   <a href="https://infra.spec.whatwg.org/#list-contain">https://infra.spec.whatwg.org/#list-contain</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-list-contain">4.2.1. 
-    Prepare to clear origin’s data </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-iteration-continue">
-   <a href="https://infra.spec.whatwg.org/#iteration-continue">https://infra.spec.whatwg.org/#iteration-continue</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-iteration-continue">4.2.1. 
-    Prepare to clear origin’s data </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-a-priori-authenticated-url">
-   <a href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url">https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-a-priori-authenticated-url">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-">
-   <a href="https://publicsuffix.org/list/#">https://publicsuffix.org/list/#</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#termref-for-">4.2.4. 
-    Clear cookies for origin </a> <a href="#termref-for-">(2)</a> <a href="#termref-for-">(3)</a> <a href="#termref-for-">(4)</a> <a href="#termref-for-">(5)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-section-5.3">
-   <a href="https://tools.ietf.org/html/rfc6265#section-5.3">https://tools.ietf.org/html/rfc6265#section-5.3</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-5.3">4.2.4. 
-    Clear cookies for origin </a> <a href="#ref-for-section-5.3①">(2)</a> <a href="#ref-for-section-5.3②">(3)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-section-5.1.3">
-   <a href="https://tools.ietf.org/html/rfc6265#section-5.1.3">https://tools.ietf.org/html/rfc6265#section-5.1.3</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-5.1.3">4.2.4. 
-    Clear cookies for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-section-3.2">
-   <a href="https://tools.ietf.org/html/rfc6454#section-3.2">https://tools.ietf.org/html/rfc6454#section-3.2</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-3.2">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-section-3.2①">(2)</a> <a href="#ref-for-section-3.2②">(3)</a> <a href="#ref-for-section-3.2③">(4)</a>
-    <li><a href="#ref-for-section-3.2④">4.2.1. 
-    Prepare to clear origin’s data </a>
-    <li><a href="#ref-for-section-3.2⑤">4.2.3. 
-    Clear cache for origin </a>
-    <li><a href="#ref-for-section-3.2⑥">4.2.4. 
-    Clear cookies for origin </a> <a href="#ref-for-section-3.2⑦">(2)</a> <a href="#ref-for-section-3.2⑧">(3)</a> <a href="#ref-for-section-3.2⑨">(4)</a>
-    <li><a href="#ref-for-section-3.2①⓪">4.2.5. 
-    Clear DOM-accessible storage for origin </a> <a href="#ref-for-section-3.2①①">(2)</a> <a href="#ref-for-section-3.2①②">(3)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-section-7">
-   <a href="https://tools.ietf.org/html/rfc7230#section-7">https://tools.ietf.org/html/rfc7230#section-7</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#termref-for-section-7">2. Infrastructure</a>
-    <li><a href="#ref-for-section-7">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-section-3.2.6">
-   <a href="https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6">https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-3.2.6">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-section-3.2.6①">(2)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-section-2">
-   <a href="https://tools.ietf.org/html/rfc7234#section-2">https://tools.ietf.org/html/rfc7234#section-2</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-section-2">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-    <li><a href="#ref-for-section-2①">4.2.3. 
-    Clear cache for origin </a> <a href="#ref-for-section-2②">(2)</a> <a href="#ref-for-section-2③">(3)</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dfn-scope-url">
-   <a href="https://w3c.github.io/ServiceWorker/#dfn-scope-url">https://w3c.github.io/ServiceWorker/#dfn-scope-url</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-scope-url">4.2.5. 
-    Clear DOM-accessible storage for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dfn-service-worker-registration">
-   <a href="https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration">https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dfn-service-worker-registration">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-    <li><a href="#ref-for-dfn-service-worker-registration①">4.2.5. 
-    Clear DOM-accessible storage for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-dom-serviceworkerregistration-unregister">
-   <a href="https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister">https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-dom-serviceworkerregistration-unregister">4.2.5. 
-    Clear DOM-accessible storage for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-host">
-   <a href="https://url.spec.whatwg.org/#concept-url-host">https://url.spec.whatwg.org/#concept-url-host</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-host">4.2.3. 
-    Clear cache for origin </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="term-for-concept-url-origin">
-   <a href="https://url.spec.whatwg.org/#concept-url-origin">https://url.spec.whatwg.org/#concept-url-origin</a><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-concept-url-origin">4.2. 
-    Clear data for response </a>
-    <li><a href="#ref-for-concept-url-origin①">4.2.5. 
-    Clear DOM-accessible storage for origin </a> <a href="#ref-for-concept-url-origin②">(2)</a>
-   </ul>
-  </aside>
   <h3 class="no-num no-ref heading settled" id="index-defined-elsewhere"><span class="content">Terms defined by reference</span><a class="self-link" href="#index-defined-elsewhere"></a></h3>
   <ul class="index">
    <li>
+    <a data-link-type="biblio">[CLIENT-HINTS-INFRASTRUCTURE]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="55155baf">accept-ch cache</span>
+    </ul>
+   <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-authentication-entry">authentication entry</span>
-     <li><span class="dfn-paneled" id="term-for-extract-header-list-values">extracting header list values</span>
-     <li><span class="dfn-paneled" id="term-for-concept-response-header-list">header list</span>
-     <li><span class="dfn-paneled" id="term-for-concept-http-network-fetch">http-network fetch</span>
-     <li><span class="dfn-paneled" id="term-for-proxy-authentication-entry">proxy-authentication entry</span>
-     <li><span class="dfn-paneled" id="term-for-concept-response">response</span>
-     <li><span class="dfn-paneled" id="term-for-request-service-workers-mode">service-workers mode</span>
-     <li><span class="dfn-paneled" id="term-for-concept-response-url">url</span>
+     <li><span class="dfn-paneled" id="4d1eae38">authentication entry</span>
+     <li><span class="dfn-paneled" id="3be1d4ac">extracting header list values</span>
+     <li><span class="dfn-paneled" id="f7b00a8b">header list</span>
+     <li><span class="dfn-paneled" id="d75f6c27">http-network fetch</span>
+     <li><span class="dfn-paneled" id="aea6ce83">proxy-authentication entry</span>
+     <li><span class="dfn-paneled" id="ee7bba09">response</span>
+     <li><span class="dfn-paneled" id="6d1db60d">service-workers mode</span>
+     <li><span class="dfn-paneled" id="3268a8eb">url</span>
     </ul>
    <li>
     <a data-link-type="biblio">[HTML]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-location">Location</span>
-     <li><span class="dfn-paneled" id="term-for-storage-2">Storage</span>
-     <li><span class="dfn-paneled" id="term-for-active-document">active document</span>
-     <li><span class="dfn-paneled" id="term-for-browsing-context">browsing context</span>
-     <li><span class="dfn-paneled" id="term-for-dom-storage-clear">clear()</span>
-     <li><span class="dfn-paneled" id="term-for-concept-settings-object-global">global object</span>
-     <li><span class="dfn-paneled" id="term-for-concept-origin-host">host</span>
-     <li><span class="dfn-paneled" id="term-for-dom-localstorage">localStorage</span>
-     <li><span class="dfn-paneled" id="term-for-concept-settings-object-origin">origin</span>
-     <li><span class="dfn-paneled" id="term-for-parse-a-sandboxing-directive">parse a sandboxing directive</span>
-     <li><span class="dfn-paneled" id="term-for-relevant-settings-object">relevant settings object</span>
-     <li><span class="dfn-paneled" id="term-for-dom-location-reload">reload()</span>
-     <li><span class="dfn-paneled" id="term-for-dom-sessionstorage">sessionStorage</span>
+     <li><span class="dfn-paneled" id="cc549724">Location</span>
+     <li><span class="dfn-paneled" id="b8bd9c92">Storage</span>
+     <li><span class="dfn-paneled" id="35972864">active document</span>
+     <li><span class="dfn-paneled" id="0d0390b4">browsing context</span>
+     <li><span class="dfn-paneled" id="5956d5fd">clear()</span>
+     <li><span class="dfn-paneled" id="8a30477b">global object</span>
+     <li><span class="dfn-paneled" id="77a2ee6e">host</span>
+     <li><span class="dfn-paneled" id="3a2db83f">localStorage</span>
+     <li><span class="dfn-paneled" id="43ac8374">origin</span>
+     <li><span class="dfn-paneled" id="53f0ea4e">parse a sandboxing directive</span>
+     <li><span class="dfn-paneled" id="9c4c1e66">relevant settings object</span>
+     <li><span class="dfn-paneled" id="383f2689">reload()</span>
+     <li><span class="dfn-paneled" id="7a899a17">sessionStorage</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[IndexedDB-2]</a> defines the following terms:
+    <a data-link-type="biblio">[IndexedDB-3]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-database">database</span>
-     <li><span class="dfn-paneled" id="term-for-delete-a-database">delete a database</span>
+     <li><span class="dfn-paneled" id="17c3a312">database</span>
+     <li><span class="dfn-paneled" id="b1f47c2a">delete a database</span>
     </ul>
    <li>
     <a data-link-type="biblio">[INFRA]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-list-append">append</span>
-     <li><span class="dfn-paneled" id="term-for-iteration-break">break</span>
-     <li><span class="dfn-paneled" id="term-for-list-contain">contain</span>
-     <li><span class="dfn-paneled" id="term-for-iteration-continue">continue</span>
+     <li><span class="dfn-paneled" id="53275e46">append</span>
+     <li><span class="dfn-paneled" id="7b0d918d">break</span>
+     <li><span class="dfn-paneled" id="ae8def21">contain</span>
+     <li><span class="dfn-paneled" id="f937b7b6">continue</span>
+     <li><span class="dfn-paneled" id="03afaf9c">empty</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[mixed-content]</a> defines the following terms:
+    <a data-link-type="biblio">[MIXED-CONTENT]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-a-priori-authenticated-url">a priori authenticated url</span>
+     <li><span class="dfn-paneled" id="4d8718f0">a priori authenticated url</span>
     </ul>
    <li>
     <a data-link-type="biblio">[PSL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-">registered domain</span>
+     <li><span class="dfn-paneled" id="aba5485c">registered domain</span>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC6265]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-section-5.3">cookie store</span>
-     <li><span class="dfn-paneled" id="term-for-section-5.1.3">domain-match</span>
+     <li><span class="dfn-paneled" id="19353784">cookie store</span>
+     <li><span class="dfn-paneled" id="50fbbdc5">domain-match</span>
     </ul>
    <li>
-    <a data-link-type="biblio">[rfc6454]</a> defines the following terms:
+    <a data-link-type="biblio">[RFC6454]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-section-3.2">origin</span>
+     <li><span class="dfn-paneled" id="c99fa6fa">origin</span>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC7230]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-section-7">#rule</span>
-     <li><span class="dfn-paneled" id="term-for-section-3.2.6">quoted-string</span>
+     <li><span class="dfn-paneled" id="79dfb502">#rule</span>
+     <li><span class="dfn-paneled" id="469becd8">quoted-string</span>
     </ul>
    <li>
     <a data-link-type="biblio">[RFC7234]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-section-2">network cache</span>
+     <li><span class="dfn-paneled" id="2f79c38f">network cache</span>
     </ul>
    <li>
     <a data-link-type="biblio">[SERVICE-WORKERS]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-dfn-scope-url">scope url</span>
-     <li><span class="dfn-paneled" id="term-for-dfn-service-worker-registration">service worker registration</span>
-     <li><span class="dfn-paneled" id="term-for-dom-serviceworkerregistration-unregister">unregister()</span>
+     <li><span class="dfn-paneled" id="fc627dec">scope url</span>
+     <li><span class="dfn-paneled" id="02406c7f">service worker registration</span>
+     <li><span class="dfn-paneled" id="fcb44595">unregister()</span>
     </ul>
    <li>
     <a data-link-type="biblio">[URL]</a> defines the following terms:
     <ul>
-     <li><span class="dfn-paneled" id="term-for-concept-url-host">host</span>
-     <li><span class="dfn-paneled" id="term-for-concept-url-origin">origin</span>
+     <li><span class="dfn-paneled" id="b85ee3be">host</span>
+     <li><span class="dfn-paneled" id="959ad97b">origin</span>
     </ul>
   </ul>
   <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
   <h3 class="no-num no-ref heading settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
   <dl>
    <dt id="biblio-channelid">[CHANNELID]
-   <dd>Dirk Balfanz; Ryan Hamilton. <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid">Transport Layer Security (TLS) Channel IDs</a>. URL: <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid">https://tools.ietf.org/html/draft-balfanz-tls-channelid</a>
+   <dd>Dirk Balfanz; Ryan Hamilton. <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid"><cite>Transport Layer Security (TLS) Channel IDs</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-balfanz-tls-channelid">https://tools.ietf.org/html/draft-balfanz-tls-channelid</a>
+   <dt id="biblio-client-hints-infrastructure">[CLIENT-HINTS-INFRASTRUCTURE]
+   <dd><a href="https://wicg.github.io/client-hints-infrastructure/"><cite>Client Hints Infrastructure</cite></a>. cg-draft. URL: <a href="https://wicg.github.io/client-hints-infrastructure/">https://wicg.github.io/client-hints-infrastructure/</a>
    <dt id="biblio-fetch">[FETCH]
-   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/">Fetch Standard</a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://fetch.spec.whatwg.org/"><cite>Fetch Standard</cite></a>. Living Standard. URL: <a href="https://fetch.spec.whatwg.org/">https://fetch.spec.whatwg.org/</a>
    <dt id="biblio-file-system-api">[FILE-SYSTEM-API]
-   <dd>Eric Uhrhane. <a href="https://www.w3.org/TR/file-system-api/">File API: Directories and System</a>. 24 April 2014. NOTE. URL: <a href="https://www.w3.org/TR/file-system-api/">https://www.w3.org/TR/file-system-api/</a>
+   <dd>Eric Uhrhane. <a href="https://dev.w3.org/2009/dap/file-system/file-dir-sys.html"><cite>File API: Directories and System</cite></a>. URL: <a href="https://dev.w3.org/2009/dap/file-system/file-dir-sys.html">https://dev.w3.org/2009/dap/file-system/file-dir-sys.html</a>
    <dt id="biblio-html">[HTML]
-   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/">HTML Standard</a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
+   <dd>Anne van Kesteren; et al. <a href="https://html.spec.whatwg.org/multipage/"><cite>HTML Standard</cite></a>. Living Standard. URL: <a href="https://html.spec.whatwg.org/multipage/">https://html.spec.whatwg.org/multipage/</a>
    <dt id="biblio-indexeddb">[INDEXEDDB]
-   <dd>Nikunj Mehta; et al. <a href="https://www.w3.org/TR/IndexedDB/">Indexed Database API</a>. 8 January 2015. REC. URL: <a href="https://www.w3.org/TR/IndexedDB/">https://www.w3.org/TR/IndexedDB/</a>
-   <dt id="biblio-indexeddb-2">[IndexedDB-2]
-   <dd>Ali Alabbas; Joshua Bell. <a href="https://www.w3.org/TR/IndexedDB-2/">Indexed Database API 2.0</a>. 30 January 2018. REC. URL: <a href="https://www.w3.org/TR/IndexedDB-2/">https://www.w3.org/TR/IndexedDB-2/</a>
+   <dd>Nikunj Mehta; et al. <a href="https://w3c.github.io/IndexedDB/"><cite>Indexed Database API</cite></a>. URL: <a href="https://w3c.github.io/IndexedDB/">https://w3c.github.io/IndexedDB/</a>
+   <dt id="biblio-indexeddb-3">[IndexedDB-3]
+   <dd>Ali Alabbas; Joshua Bell. <a href="https://w3c.github.io/IndexedDB/"><cite>Indexed Database API 3.0</cite></a>. URL: <a href="https://w3c.github.io/IndexedDB/">https://w3c.github.io/IndexedDB/</a>
    <dt id="biblio-infra">[INFRA]
-   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/">Infra Standard</a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-mixed-content">[MIXED-CONTENT]
-   <dd>Mike West. <a href="https://www.w3.org/TR/mixed-content/">Mixed Content</a>. 2 August 2016. CR. URL: <a href="https://www.w3.org/TR/mixed-content/">https://www.w3.org/TR/mixed-content/</a>
+   <dd>Emily Stark; Mike West; Carlos IbarraLopez. <a href="https://w3c.github.io/webappsec-mixed-content/"><cite>Mixed Content</cite></a>. URL: <a href="https://w3c.github.io/webappsec-mixed-content/">https://w3c.github.io/webappsec-mixed-content/</a>
    <dt id="biblio-psl">[PSL]
    <dd><cite><a href="https://publicsuffix.org/">Public Suffix List</a></cite>.    Mozilla Foundation.
-   <dt id="biblio-rfc2119">[RFC2119]
-   <dd>S. Bradner. <a href="https://tools.ietf.org/html/rfc2119">Key words for use in RFCs to Indicate Requirement Levels</a>. March 1997. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc2119">https://tools.ietf.org/html/rfc2119</a>
    <dt id="biblio-rfc3864">[RFC3864]
-   <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://tools.ietf.org/html/rfc3864">Registration Procedures for Message Header Fields</a>. September 2004. Best Current Practice. URL: <a href="https://tools.ietf.org/html/rfc3864">https://tools.ietf.org/html/rfc3864</a>
+   <dd>G. Klyne; M. Nottingham; J. Mogul. <a href="https://www.rfc-editor.org/rfc/rfc3864"><cite>Registration Procedures for Message Header Fields</cite></a>. September 2004. Best Current Practice. URL: <a href="https://www.rfc-editor.org/rfc/rfc3864">https://www.rfc-editor.org/rfc/rfc3864</a>
    <dt id="biblio-rfc5234">[RFC5234]
-   <dd>D. Crocker, Ed.; P. Overell. <a href="https://tools.ietf.org/html/rfc5234">Augmented BNF for Syntax Specifications: ABNF</a>. January 2008. Internet Standard. URL: <a href="https://tools.ietf.org/html/rfc5234">https://tools.ietf.org/html/rfc5234</a>
+   <dd>D. Crocker, Ed.; P. Overell. <a href="https://www.rfc-editor.org/rfc/rfc5234"><cite>Augmented BNF for Syntax Specifications: ABNF</cite></a>. January 2008. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc5234">https://www.rfc-editor.org/rfc/rfc5234</a>
    <dt id="biblio-rfc6265">[RFC6265]
-   <dd>A. Barth. <a href="https://httpwg.org/specs/rfc6265.html">HTTP State Management Mechanism</a>. April 2011. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc6265.html">https://httpwg.org/specs/rfc6265.html</a>
+   <dd>A. Barth. <a href="https://httpwg.org/specs/rfc6265.html"><cite>HTTP State Management Mechanism</cite></a>. April 2011. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc6265.html">https://httpwg.org/specs/rfc6265.html</a>
    <dt id="biblio-rfc6454">[RFC6454]
-   <dd>A. Barth. <a href="https://tools.ietf.org/html/rfc6454">The Web Origin Concept</a>. December 2011. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc6454">https://tools.ietf.org/html/rfc6454</a>
+   <dd>A. Barth. <a href="https://www.rfc-editor.org/rfc/rfc6454"><cite>The Web Origin Concept</cite></a>. December 2011. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc6454">https://www.rfc-editor.org/rfc/rfc6454</a>
    <dt id="biblio-rfc7230">[RFC7230]
-   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7230.html">Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7230.html">https://httpwg.org/specs/rfc7230.html</a>
+   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7230.html"><cite>Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing</cite></a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7230.html">https://httpwg.org/specs/rfc7230.html</a>
    <dt id="biblio-rfc7234">[RFC7234]
-   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7234.html">Hypertext Transfer Protocol (HTTP/1.1): Caching</a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7234.html">https://httpwg.org/specs/rfc7234.html</a>
+   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7234.html"><cite>Hypertext Transfer Protocol (HTTP/1.1): Caching</cite></a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7234.html">https://httpwg.org/specs/rfc7234.html</a>
    <dt id="biblio-rfc7235">[RFC7235]
-   <dd>R. Fielding, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7235.html">Hypertext Transfer Protocol (HTTP/1.1): Authentication</a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7235.html">https://httpwg.org/specs/rfc7235.html</a>
+   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc9110"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>
    <dt id="biblio-rfc7405">[RFC7405]
-   <dd>P. Kyzivat. <a href="https://tools.ietf.org/html/rfc7405">Case-Sensitive String Support in ABNF</a>. December 2014. Proposed Standard. URL: <a href="https://tools.ietf.org/html/rfc7405">https://tools.ietf.org/html/rfc7405</a>
+   <dd>P. Kyzivat. <a href="https://www.rfc-editor.org/rfc/rfc7405"><cite>Case-Sensitive String Support in ABNF</cite></a>. December 2014. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7405">https://www.rfc-editor.org/rfc/rfc7405</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
-   <dd>Alex Russell; et al. <a href="https://www.w3.org/TR/service-workers-1/">Service Workers 1</a>. 19 November 2019. CR. URL: <a href="https://www.w3.org/TR/service-workers-1/">https://www.w3.org/TR/service-workers-1/</a>
+   <dd>Jake Archibald; Marijn Kruisselbrink. <a href="https://w3c.github.io/ServiceWorker/"><cite>Service Workers</cite></a>. URL: <a href="https://w3c.github.io/ServiceWorker/">https://w3c.github.io/ServiceWorker/</a>
    <dt id="biblio-tokbind">[TOKBIND]
-   <dd>Andrei Popov; et al. <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol">The Token Binding Protocol Version 1.0</a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol">https://tools.ietf.org/html/draft-ietf-tokbind-protocol</a>
+   <dd>Andrei Popov; et al. <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol"><cite>The Token Binding Protocol Version 1.0</cite></a>. URL: <a href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol">https://tools.ietf.org/html/draft-ietf-tokbind-protocol</a>
    <dt id="biblio-url">[URL]
-   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/">URL Standard</a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://url.spec.whatwg.org/"><cite>URL Standard</cite></a>. Living Standard. URL: <a href="https://url.spec.whatwg.org/">https://url.spec.whatwg.org/</a>
    <dt id="biblio-webdatabase">[WEBDATABASE]
-   <dd>Ian Hickson. <a href="https://www.w3.org/TR/webdatabase/">Web SQL Database</a>. 18 November 2010. NOTE. URL: <a href="https://www.w3.org/TR/webdatabase/">https://www.w3.org/TR/webdatabase/</a>
+   <dd>Ian Hickson. <a href="https://www.w3.org/TR/webdatabase/"><cite>Web SQL Database</cite></a>. 18 November 2010. NOTE. URL: <a href="https://www.w3.org/TR/webdatabase/">https://www.w3.org/TR/webdatabase/</a>
   </dl>
   <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-csp">[CSP]
-   <dd>Mike West. <a href="https://www.w3.org/TR/CSP3/">Content Security Policy Level 3</a>. 15 October 2018. WD. URL: <a href="https://www.w3.org/TR/CSP3/">https://www.w3.org/TR/CSP3/</a>
+   <dd>Mike West; Antonio Sartori. <a href="https://w3c.github.io/webappsec-csp/"><cite>Content Security Policy Level 3</cite></a>. URL: <a href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a>
    <dt id="biblio-rfc6919">[RFC6919]
-   <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://tools.ietf.org/html/rfc6919">Further Key Words for Use in RFCs to Indicate Requirement Levels</a>. 1 April 2013. Experimental. URL: <a href="https://tools.ietf.org/html/rfc6919">https://tools.ietf.org/html/rfc6919</a>
+   <dd>R. Barnes; S. Kent; E. Rescorla. <a href="https://www.rfc-editor.org/rfc/rfc6919"><cite>Further Key Words for Use in RFCs to Indicate Requirement Levels</cite></a>. 1 April 2013. Experimental. URL: <a href="https://www.rfc-editor.org/rfc/rfc6919">https://www.rfc-editor.org/rfc/rfc6919</a>
    <dt id="biblio-storage">[STORAGE]
-   <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/">Storage Standard</a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
+   <dd>Anne van Kesteren. <a href="https://storage.spec.whatwg.org/"><cite>Storage Standard</cite></a>. Living Standard. URL: <a href="https://storage.spec.whatwg.org/">https://storage.spec.whatwg.org/</a>
   </dl>
   <h2 class="no-num no-ref heading settled" id="issues-index"><span class="content">Issues Index</span><a class="self-link" href="#issues-index"></a></h2>
   <div style="counter-reset:issue">
-   <div class="issue"> Monkey patching! Talk with Anne.<a href="#issue-3ded38d3"> ↵ </a></div>
+   <div class="issue"> Monkey patching! Talk with Anne. <a class="issue-return" href="#issue-3ded38d3" title="Jump to section">↵</a></div>
    <div class="issue"> This is the simplest thing, but it’s probably reaching a little too far into the
   documents and mucking with their context. I probably just need to break down and
-  copy/paste the relevant bits from HTML.<a href="#issue-fb0b50ca"> ↵ </a></div>
-   <div class="issue"> We’re dealing with the network cache here, as defined in <a data-link-type="biblio" href="#biblio-rfc7234">[RFC7234]</a>, but that’s not
+  copy/paste the relevant bits from HTML. <a class="issue-return" href="#issue-fb0b50ca" title="Jump to section">↵</a></div>
+   <div class="issue"> We’re dealing with the network cache here, as defined in <a data-link-type="biblio" href="#biblio-rfc7234" title="HTTP Caching">[RFC7234]</a>, but that’s not
   nearly everything a user agent caches. How hand-wavey with the vendor-specific section can
   we be? For instance, Chrome clears out prerendered pages, script caches, WebGL shader
   caches, WebRTC bits and pieces, address bar suggestion caches, various networking bits that
-  aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage">[STORAGE]</a> will make this clearer?<a href="#issue-f5577029"> ↵ </a></div>
+  aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage" title="Storage Standard">[STORAGE]</a> will make this clearer? <a class="issue-return" href="#issue-f5577029" title="Jump to section">↵</a></div>
    <div class="issue"> The process of clearing both bound
-  tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">&lt;https://github.com/w3c/webappsec-clear-site-data/issues/2></a><a href="#issue-036b8c98"> ↵ </a></div>
-   <div class="issue"> Moar?<a href="#issue-b346d876"> ↵ </a></div>
+  tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">[Issue #w3c/webappsec-clear-site-data#2]</a> <a class="issue-return" href="#issue-036b8c98" title="Jump to section">↵</a></div>
+   <div class="issue"> Moar? <a class="issue-return" href="#issue-b346d876" title="Jump to section">↵</a></div>
   </div>
-  <aside class="dfn-panel" data-for="http-headerdef-clear-site-data">
-   <b><a href="#http-headerdef-clear-site-data">#http-headerdef-clear-site-data</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-http-headerdef-clear-site-data">1. Introduction</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data①">1.1.1. Signing Out</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data②">1.1.2. Targeted Clearing</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data③">1.1.3. Keep Critical Cookies</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data④">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data⑤">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-http-headerdef-clear-site-data⑥">(2)</a> <a href="#ref-for-http-headerdef-clear-site-data⑦">(3)</a> <a href="#ref-for-http-headerdef-clear-site-data⑧">(4)</a> <a href="#ref-for-http-headerdef-clear-site-data⑨">(5)</a> <a href="#ref-for-http-headerdef-clear-site-data①⓪">(6)</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data①①">3.2. Fetch Integration</a> <a href="#ref-for-http-headerdef-clear-site-data①②">(2)</a> <a href="#ref-for-http-headerdef-clear-site-data①③">(3)</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data①④">6.1. Web developers control the timing.</a>
-    <li><a href="#ref-for-http-headerdef-clear-site-data①⑤">6.2. Remnants of data on disk.</a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="grammardef-cache">
-   <b><a href="#grammardef-cache">#grammardef-cache</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-grammardef-cache">1.1.1. Signing Out</a>
-    <li><a href="#ref-for-grammardef-cache①">1.1.2. Targeted Clearing</a>
-    <li><a href="#ref-for-grammardef-cache②">1.1.3. Keep Critical Cookies</a>
-    <li><a href="#ref-for-grammardef-cache③">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-cache④">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-    <li><a href="#ref-for-grammardef-cache⑤">4.1. Parsing</a> <a href="#ref-for-grammardef-cache⑥">(2)</a>
-    <li><a href="#ref-for-grammardef-cache⑦">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="grammardef-cookies">
-   <b><a href="#grammardef-cookies">#grammardef-cookies</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-grammardef-cookies">1.1.1. Signing Out</a>
-    <li><a href="#ref-for-grammardef-cookies①">1.1.2. Targeted Clearing</a>
-    <li><a href="#ref-for-grammardef-cookies②">1.1.3. Keep Critical Cookies</a>
-    <li><a href="#ref-for-grammardef-cookies③">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-cookies④">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a> <a href="#ref-for-grammardef-cookies⑤">(2)</a>
-    <li><a href="#ref-for-grammardef-cookies⑥">4.1. Parsing</a> <a href="#ref-for-grammardef-cookies⑦">(2)</a>
-    <li><a href="#ref-for-grammardef-cookies⑧">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="grammardef-storage">
-   <b><a href="#grammardef-storage">#grammardef-storage</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-grammardef-storage">1.1.1. Signing Out</a>
-    <li><a href="#ref-for-grammardef-storage①">1.1.2. Targeted Clearing</a>
-    <li><a href="#ref-for-grammardef-storage②">1.1.3. Keep Critical Cookies</a>
-    <li><a href="#ref-for-grammardef-storage③">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-storage④">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-    <li><a href="#ref-for-grammardef-storage⑤">4.1. Parsing</a> <a href="#ref-for-grammardef-storage⑥">(2)</a>
-    <li><a href="#ref-for-grammardef-storage⑦">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="grammardef-executioncontexts">
-   <b><a href="#grammardef-executioncontexts">#grammardef-executioncontexts</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-grammardef-executioncontexts">1.1.1. Signing Out</a>
-    <li><a href="#ref-for-grammardef-executioncontexts①">1.1.2. Targeted Clearing</a>
-    <li><a href="#ref-for-grammardef-executioncontexts②">1.1.3. Keep Critical Cookies</a>
-    <li><a href="#ref-for-grammardef-executioncontexts③">1.1.4. Kill Switch</a>
-    <li><a href="#ref-for-grammardef-executioncontexts④">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-    <li><a href="#ref-for-grammardef-executioncontexts⑤">4.1. Parsing</a> <a href="#ref-for-grammardef-executioncontexts⑥">(2)</a>
-    <li><a href="#ref-for-grammardef-executioncontexts⑦">4.2. 
-    Clear data for response </a>
-    <li><a href="#ref-for-grammardef-executioncontexts⑧">4.2.1. 
-    Prepare to clear origin’s data </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="grammardef-">
-   <b><a href="#grammardef-">#grammardef-</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-grammardef-">3.1. 
-    The Clear-Site-Data HTTP Response Header Field </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="abstract-opdef-parse-responses-clear-site-data-header">
-   <b><a href="#abstract-opdef-parse-responses-clear-site-data-header">#abstract-opdef-parse-responses-clear-site-data-header</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-abstract-opdef-parse-responses-clear-site-data-header">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="abstract-opdef-prepare-to-clear-origins-data">
-   <b><a href="#abstract-opdef-prepare-to-clear-origins-data">#abstract-opdef-prepare-to-clear-origins-data</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-abstract-opdef-prepare-to-clear-origins-data">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="abstract-opdef-reload-browsing-contexts">
-   <b><a href="#abstract-opdef-reload-browsing-contexts">#abstract-opdef-reload-browsing-contexts</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-abstract-opdef-reload-browsing-contexts">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="abstract-opdef-clear-cache-for-origin">
-   <b><a href="#abstract-opdef-clear-cache-for-origin">#abstract-opdef-clear-cache-for-origin</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-abstract-opdef-clear-cache-for-origin">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="abstract-opdef-clear-cookies-for-origin">
-   <b><a href="#abstract-opdef-clear-cookies-for-origin">#abstract-opdef-clear-cookies-for-origin</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-abstract-opdef-clear-cookies-for-origin">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-  <aside class="dfn-panel" data-for="abstract-opdef-clear-dom-accessible-storage-for-origin">
-   <b><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">#abstract-opdef-clear-dom-accessible-storage-for-origin</a></b><b>Referenced in:</b>
-   <ul>
-    <li><a href="#ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin">4.2. 
-    Clear data for response </a>
-   </ul>
-  </aside>
-<script>/* script-dfn-panel */
+  <details class="mdn-anno unpositioned" data-anno-for="header">
+   <summary><span>MDN</span></summary>
+   <div class="feature">
+    <p><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Clear-Site-Data" title="The Clear-Site-Data header clears browsing data (cookies, storage, cache) associated with the requesting website. It allows web developers to have more control over the data stored by a client browser for their origins.">Headers/Clear-Site-Data</a></p>
+    <div class="support">
+     <span class="firefox yes"><span>Firefox</span><span>63+</span></span><span class="safari no"><span>Safari</span><span>None</span></span><span class="chrome yes"><span>Chrome</span><span>61+</span></span>
+     <hr>
+     <span class="opera no"><span>Opera</span><span>?</span></span><span class="edge_blink yes"><span>Edge</span><span>79+</span></span>
+     <hr>
+     <span class="edge no"><span>Edge (Legacy)</span><span>None</span></span><span class="ie no"><span>IE</span><span>None</span></span>
+     <hr>
+     <span class="firefox_android no"><span>Firefox for Android</span><span>?</span></span><span class="safari_ios no"><span>iOS Safari</span><span>?</span></span><span class="chrome_android no"><span>Chrome for Android</span><span>?</span></span><span class="webview_android no"><span>Android WebView</span><span>?</span></span><span class="samsunginternet_android no"><span>Samsung Internet</span><span>?</span></span><span class="opera_android no"><span>Opera Mobile</span><span>?</span></span>
+    </div>
+   </div>
+  </details>
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+    const dfnsJson = window.dfnsJson || {};
 
-document.body.addEventListener("click", function(e) {
-    var queryAll = function(sel) { return [].slice.call(document.querySelectorAll(sel)); }
-    // Find the dfn element or panel, if any, that was clicked on.
-    var el = e.target;
-    var target;
-    var hitALink = false;
-    while(el.parentElement) {
-        if(el.tagName == "A") {
-            // Clicking on a link in a <dfn> shouldn't summon the panel
-            hitALink = true;
-        }
-        if(el.classList.contains("dfn-paneled")) {
-            target = "dfn";
-            break;
-        }
-        if(el.classList.contains("dfn-panel")) {
-            target = "dfn-panel";
-            break;
-        }
-        el = el.parentElement;
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
     }
-    if(target != "dfn-panel") {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(function(el){
-            el.classList.remove("on");
-            el.classList.remove("activated");
-        });
-    }
-    if(target == "dfn" && !hitALink) {
-        // open the panel
-        var dfnPanel = document.querySelector(".dfn-panel[data-for='" + el.id + "']");
-        if(dfnPanel) {
-            dfnPanel.classList.add("on");
-            var rect = el.getBoundingClientRect();
-            dfnPanel.style.left = window.scrollX + rect.right + 5 + "px";
-            dfnPanel.style.top = window.scrollY + rect.top + "px";
-            var panelRect = dfnPanel.getBoundingClientRect();
-            var panelWidth = panelRect.right - panelRect.left;
-            if(panelRect.right > document.body.scrollWidth && (rect.left - (panelWidth + 5)) > 0) {
-                // Reposition, because the panel is overflowing
-                dfnPanel.style.left = window.scrollX + rect.left - (panelWidth + 5) + "px";
+
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
+            } else {
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
             }
-        } else {
-            console.log("Couldn't find .dfn-panel[data-for='" + el.id + "']");
         }
-    } else if(target == "dfn-panel") {
-        // Switch it to "activated" state, which pins it.
-        el.classList.add("activated");
-        el.style.left = null;
-        el.style.top = null;
     }
 
-});
-</script>
-<script>/* script-var-click-highlighting */
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
 
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
+
+    function hideAllDfnPanels() {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
+    }
+
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn, dfnPanel) {
+        // Find dfn panel
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
+                pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        })
+    }
+}
+</script>
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+    const dfnsJson = window.dfnsJson || {};
+
+    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
+        return mk.aside({
+            class: "dfn-panel",
+            id: `infopanel-for-${dfnID}`,
+            "data-for": dfnID,
+            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+            },
+            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+                `Info about the '${dfnText}' ${external?"external":""} reference.`),
+            mk.a({href:url}, url),
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({
+                                    href: `#${ref.id}`
+                                    },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        );
+    }
+
+    function genAllDfnPanels() {
+        for(const panelData of Object.values(window.dfnpanelData)) {
+            const dfnID = panelData.dfnID;
+            const dfn = document.getElementById(dfnID);
+            if(!dfn) {
+                console.log(`Can't find dfn#${dfnID}.`, panelData);
+            } else {
+                const panel = genDfnPanel(panelData);
+                append(document.body, panel);
+                insertDfnPopupAction(dfn, panel)
+            }
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+        genAllDfnPanels();
+
+        // Add popup behavior to all dfns to show the corresponding dfn-panel.
+        var dfns = queryAll('.dfn-paneled');
+        for(let dfn of dfns) { ; }
+
+        document.body.addEventListener("click", (e) => {
+            // If not handled already, just hide all dfn panels.
+            hideAllDfnPanels();
+        });
+    })
+
+
+    function hideAllDfnPanels() {
+        // Turn off any currently "on" or "activated" panels.
+        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
+    }
+
+    function showDfnPanel(dfnPanel, dfn) {
+        hideAllDfnPanels(); // Only display one at this time.
+        dfn.setAttribute("aria-expanded", "true");
+        dfnPanel.classList.add("on");
+        dfnPanel.style.left = "5px";
+        dfnPanel.style.top = "0px";
+        const panelRect = dfnPanel.getBoundingClientRect();
+        const panelWidth = panelRect.right - panelRect.left;
+        if (panelRect.right > document.body.scrollWidth) {
+            // Panel's overflowing the screen.
+            // Just drop it below the dfn and flip it rightward instead.
+            // This still wont' fix things if the screen is *really* wide,
+            // but fixing that's a lot harder without 'anchor()'.
+            dfnPanel.style.top = "1.5em";
+            dfnPanel.style.left = "auto";
+            dfnPanel.style.right = "0px";
+        }
+    }
+
+    function pinDfnPanel(dfnPanel) {
+        // Switch it to "activated" state, which pins it.
+        dfnPanel.classList.add("activated");
+        dfnPanel.style.left = null;
+        dfnPanel.style.top = null;
+    }
+
+    function hideDfnPanel(dfnPanel, dfn) {
+        if(!dfn) {
+            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
+        }
+        dfn.setAttribute("aria-expanded", "false")
+        dfnPanel.classList.remove("on");
+        dfnPanel.classList.remove("activated");
+    }
+
+    function toggleDfnPanel(dfnPanel, dfn) {
+        if(dfnPanel.classList.contains("on")) {
+            hideDfnPanel(dfnPanel, dfn);
+        } else {
+            showDfnPanel(dfnPanel, dfn);
+        }
+    }
+
+    function insertDfnPopupAction(dfn, dfnPanel) {
+        // Find dfn panel
+        const panelWrapper = document.createElement('span');
+        panelWrapper.appendChild(dfnPanel);
+        panelWrapper.style.position = "relative";
+        panelWrapper.style.height = "0px";
+        dfn.insertAdjacentElement("afterend", panelWrapper);
+        dfn.setAttribute('role', 'button');
+        dfn.setAttribute('aria-expanded', 'false')
+        dfn.tabIndex = 0;
+        dfn.classList.add('has-dfn-panel');
+        dfn.addEventListener('click', (event) => {
+            showDfnPanel(dfnPanel, dfn);
+            event.stopPropagation();
+        });
+        dfn.addEventListener('keypress', (event) => {
+            const kc = event.keyCode;
+            // 32->Space, 13->Enter
+            if(kc == 32 || kc == 13) {
+                toggleDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        });
+
+        dfnPanel.addEventListener('click', (event) => {
+            if (event.target.nodeName == 'A') {
+                pinDfnPanel(dfnPanel);
+            }
+            event.stopPropagation();
+        });
+
+        dfnPanel.addEventListener('keydown', (event) => {
+            if(event.keyCode == 27) { // Escape key
+                hideDfnPanel(dfnPanel, dfn);
+                event.stopPropagation();
+                event.preventDefault();
+            }
+        })
+    }
+}
+</script>
+<script>/* Boilerplate: script-dfn-panel-json */
+window.dfnpanelData = {};
+window.dfnpanelData['55155baf'] = {"dfnID": "55155baf", "url": "https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache", "dfnText": "accept-ch cache", "refSections": [{"refs": [{"id": "ref-for-accept-ch-cache"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-accept-ch-cache\u2460"}, {"id": "ref-for-accept-ch-cache\u2461"}, {"id": "ref-for-accept-ch-cache\u2462"}, {"id": "ref-for-accept-ch-cache\u2463"}, {"id": "ref-for-accept-ch-cache\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-accept-ch-cache\u2465"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['4d1eae38'] = {"dfnID": "4d1eae38", "url": "https://fetch.spec.whatwg.org/#authentication-entry", "dfnText": "authentication entry", "refSections": [{"refs": [{"id": "ref-for-authentication-entry"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
+window.dfnpanelData['3be1d4ac'] = {"dfnID": "3be1d4ac", "url": "https://fetch.spec.whatwg.org/#extract-header-list-values", "dfnText": "extracting header list values", "refSections": [{"refs": [{"id": "ref-for-extract-header-list-values"}], "title": "4.1. Parsing"}], "external": true};
+window.dfnpanelData['f7b00a8b'] = {"dfnID": "f7b00a8b", "url": "https://fetch.spec.whatwg.org/#concept-response-header-list", "dfnText": "header list", "refSections": [{"refs": [{"id": "ref-for-concept-response-header-list"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-concept-response-header-list\u2460"}], "title": "4.1. Parsing"}], "external": true};
+window.dfnpanelData['d75f6c27'] = {"dfnID": "d75f6c27", "url": "https://fetch.spec.whatwg.org/#concept-http-network-fetch", "dfnText": "http-network fetch", "refSections": [{"refs": [{"id": "ref-for-concept-http-network-fetch"}], "title": "3.2. Fetch Integration"}], "external": true};
+window.dfnpanelData['aea6ce83'] = {"dfnID": "aea6ce83", "url": "https://fetch.spec.whatwg.org/#proxy-authentication-entry", "dfnText": "proxy-authentication entry", "refSections": [{"refs": [{"id": "ref-for-proxy-authentication-entry"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
+window.dfnpanelData['ee7bba09'] = {"dfnID": "ee7bba09", "url": "https://fetch.spec.whatwg.org/#concept-response", "dfnText": "response", "refSections": [{"refs": [{"id": "ref-for-concept-response"}, {"id": "ref-for-concept-response\u2460"}, {"id": "ref-for-concept-response\u2461"}, {"id": "ref-for-concept-response\u2462"}, {"id": "ref-for-concept-response\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-concept-response\u2464"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-concept-response\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-concept-response\u2466"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['6d1db60d'] = {"dfnID": "6d1db60d", "url": "https://fetch.spec.whatwg.org/#request-service-workers-mode", "dfnText": "service-workers mode", "refSections": [{"refs": [{"id": "ref-for-request-service-workers-mode"}], "title": "5.2. Service workers"}], "external": true};
+window.dfnpanelData['3268a8eb'] = {"dfnID": "3268a8eb", "url": "https://fetch.spec.whatwg.org/#concept-response-url", "dfnText": "url", "refSections": [{"refs": [{"id": "ref-for-concept-response-url"}, {"id": "ref-for-concept-response-url\u2460"}, {"id": "ref-for-concept-response-url\u2461"}, {"id": "ref-for-concept-response-url\u2462"}, {"id": "ref-for-concept-response-url\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-concept-response-url\u2464"}, {"id": "ref-for-concept-response-url\u2465"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['cc549724'] = {"dfnID": "cc549724", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#location", "dfnText": "Location", "refSections": [{"refs": [{"id": "ref-for-location"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['b8bd9c92'] = {"dfnID": "b8bd9c92", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#storage-2", "dfnText": "Storage", "refSections": [{"refs": [{"id": "ref-for-storage-2"}, {"id": "ref-for-storage-2\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['35972864'] = {"dfnID": "35972864", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document", "dfnText": "active document", "refSections": [{"refs": [{"id": "ref-for-nav-document"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-nav-document\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['0d0390b4'] = {"dfnID": "0d0390b4", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context", "dfnText": "browsing context", "refSections": [{"refs": [{"id": "ref-for-browsing-context"}, {"id": "ref-for-browsing-context\u2460"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-browsing-context\u2461"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['5956d5fd'] = {"dfnID": "5956d5fd", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear", "dfnText": "clear()", "refSections": [{"refs": [{"id": "ref-for-dom-storage-clear"}, {"id": "ref-for-dom-storage-clear\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['8a30477b'] = {"dfnID": "8a30477b", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global", "dfnText": "global object", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-global"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['77a2ee6e'] = {"dfnID": "77a2ee6e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host", "dfnText": "host", "refSections": [{"refs": [{"id": "ref-for-concept-origin-host"}], "title": "4.2.3. \n    Clear cache for origin\n  "}, {"refs": [{"id": "ref-for-concept-origin-host\u2460"}, {"id": "ref-for-concept-origin-host\u2461"}, {"id": "ref-for-concept-origin-host\u2462"}, {"id": "ref-for-concept-origin-host\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
+window.dfnpanelData['3a2db83f'] = {"dfnID": "3a2db83f", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage", "dfnText": "localStorage", "refSections": [{"refs": [{"id": "ref-for-dom-localstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-localstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-localstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['43ac8374'] = {"dfnID": "43ac8374", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-origin"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
+window.dfnpanelData['53f0ea4e'] = {"dfnID": "53f0ea4e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive", "dfnText": "parse a sandboxing directive", "refSections": [{"refs": [{"id": "ref-for-parse-a-sandboxing-directive"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
+window.dfnpanelData['9c4c1e66'] = {"dfnID": "9c4c1e66", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object", "dfnText": "relevant settings object", "refSections": [{"refs": [{"id": "ref-for-relevant-settings-object"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-relevant-settings-object\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['383f2689'] = {"dfnID": "383f2689", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload", "dfnText": "reload()", "refSections": [{"refs": [{"id": "ref-for-dom-location-reload"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['7a899a17'] = {"dfnID": "7a899a17", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage", "dfnText": "sessionStorage", "refSections": [{"refs": [{"id": "ref-for-dom-sessionstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['17c3a312'] = {"dfnID": "17c3a312", "url": "https://w3c.github.io/IndexedDB/#database", "dfnText": "database", "refSections": [{"refs": [{"id": "ref-for-database"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['b1f47c2a'] = {"dfnID": "b1f47c2a", "url": "https://w3c.github.io/IndexedDB/#delete-a-database", "dfnText": "delete a database", "refSections": [{"refs": [{"id": "ref-for-delete-a-database"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['53275e46'] = {"dfnID": "53275e46", "url": "https://infra.spec.whatwg.org/#list-append", "dfnText": "append", "refSections": [{"refs": [{"id": "ref-for-list-append"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
+window.dfnpanelData['7b0d918d'] = {"dfnID": "7b0d918d", "url": "https://infra.spec.whatwg.org/#iteration-break", "dfnText": "break", "refSections": [{"refs": [{"id": "ref-for-iteration-break"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['ae8def21'] = {"dfnID": "ae8def21", "url": "https://infra.spec.whatwg.org/#list-contain", "dfnText": "contain", "refSections": [{"refs": [{"id": "ref-for-list-contain"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
+window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
+window.dfnpanelData['03afaf9c'] = {"dfnID": "03afaf9c", "url": "https://infra.spec.whatwg.org/#list-empty", "dfnText": "empty", "refSections": [{"refs": [{"id": "ref-for-list-empty"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['4d8718f0'] = {"dfnID": "4d8718f0", "url": "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url", "dfnText": "a priori authenticated url", "refSections": [{"refs": [{"id": "ref-for-a-priori-authenticated-url"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
+window.dfnpanelData['aba5485c'] = {"dfnID": "aba5485c", "url": "https://publicsuffix.org/list/#", "dfnText": "registered domain", "refSections": [{"refs": [{"id": "ref-for-something"}, {"id": "ref-for-something\u2460"}, {"id": "ref-for-something\u2461"}, {"id": "ref-for-something\u2462"}, {"id": "ref-for-something\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
+window.dfnpanelData['19353784'] = {"dfnID": "19353784", "url": "https://tools.ietf.org/html/rfc6265#section-5.3", "dfnText": "cookie store", "refSections": [{"refs": [{"id": "ref-for-section-5.3"}, {"id": "ref-for-section-5.3\u2460"}, {"id": "ref-for-section-5.3\u2461"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
+window.dfnpanelData['50fbbdc5'] = {"dfnID": "50fbbdc5", "url": "https://tools.ietf.org/html/rfc6265#section-5.1.3", "dfnText": "domain-match", "refSections": [{"refs": [{"id": "ref-for-section-5.1.3"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
+window.dfnpanelData['c99fa6fa'] = {"dfnID": "c99fa6fa", "url": "https://tools.ietf.org/html/rfc6454#section-3.2", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-section-3.2"}, {"id": "ref-for-section-3.2\u2460"}, {"id": "ref-for-section-3.2\u2461"}, {"id": "ref-for-section-3.2\u2462"}, {"id": "ref-for-section-3.2\u2463"}, {"id": "ref-for-section-3.2\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2465"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2466"}], "title": "4.2.3. \n    Clear cache for origin\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2467"}, {"id": "ref-for-section-3.2\u2468"}, {"id": "ref-for-section-3.2\u2460\u24ea"}, {"id": "ref-for-section-3.2\u2460\u2460"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2460\u2461"}, {"id": "ref-for-section-3.2\u2460\u2462"}, {"id": "ref-for-section-3.2\u2460\u2463"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['79dfb502'] = {"dfnID": "79dfb502", "url": "https://tools.ietf.org/html/rfc7230#section-7", "dfnText": "#rule", "refSections": [{"refs": [{"id": "a04f67f90"}], "title": "2. Infrastructure"}, {"refs": [{"id": "ref-for-section-7"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}], "external": true};
+window.dfnpanelData['469becd8'] = {"dfnID": "469becd8", "url": "https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6", "dfnText": "quoted-string", "refSections": [{"refs": [{"id": "ref-for-section-3.2.6"}, {"id": "ref-for-section-3.2.6\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}], "external": true};
+window.dfnpanelData['2f79c38f'] = {"dfnID": "2f79c38f", "url": "https://tools.ietf.org/html/rfc7234#section-2", "dfnText": "network cache", "refSections": [{"refs": [{"id": "ref-for-section-2"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-section-2\u2460"}, {"id": "ref-for-section-2\u2461"}, {"id": "ref-for-section-2\u2462"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['fc627dec'] = {"dfnID": "fc627dec", "url": "https://w3c.github.io/ServiceWorker/#dfn-scope-url", "dfnText": "scope url", "refSections": [{"refs": [{"id": "ref-for-dfn-scope-url"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['02406c7f'] = {"dfnID": "02406c7f", "url": "https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration", "dfnText": "service worker registration", "refSections": [{"refs": [{"id": "ref-for-dfn-service-worker-registration"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dfn-service-worker-registration\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['fcb44595'] = {"dfnID": "fcb44595", "url": "https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister", "dfnText": "unregister()", "refSections": [{"refs": [{"id": "ref-for-dom-serviceworkerregistration-unregister"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['b85ee3be'] = {"dfnID": "b85ee3be", "url": "https://url.spec.whatwg.org/#concept-url-host", "dfnText": "host", "refSections": [{"refs": [{"id": "ref-for-concept-url-host"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['959ad97b'] = {"dfnID": "959ad97b", "url": "https://url.spec.whatwg.org/#concept-url-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-url-origin"}], "title": "4.2. \n    Clear data for response\n  "}, {"refs": [{"id": "ref-for-concept-url-origin\u2460"}, {"id": "ref-for-concept-url-origin\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['http-headerdef-clear-site-data'] = {"dfnID": "http-headerdef-clear-site-data", "url": "#http-headerdef-clear-site-data", "dfnText": "Clear-Site-Data", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-clear-site-data"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2461"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2462"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2463"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2464"}, {"id": "ref-for-http-headerdef-clear-site-data\u2465"}, {"id": "ref-for-http-headerdef-clear-site-data\u2466"}, {"id": "ref-for-http-headerdef-clear-site-data\u2467"}, {"id": "ref-for-http-headerdef-clear-site-data\u2468"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u24ea"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460\u2461"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u2462"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u2463"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460\u2464"}], "title": "6.1. Web developers control the timing."}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460\u2465"}], "title": "6.2. Remnants of data on disk."}], "external": false};
+window.dfnpanelData['grammardef-cache'] = {"dfnID": "grammardef-cache", "url": "#grammardef-cache", "dfnText": "cache", "refSections": [{"refs": [{"id": "ref-for-grammardef-cache"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-cache\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-cache\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-cache\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-cache\u2463"}, {"id": "ref-for-grammardef-cache\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-cache\u2465"}, {"id": "ref-for-grammardef-cache\u2466"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-cache\u2467"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['grammardef-cookies'] = {"dfnID": "grammardef-cookies", "url": "#grammardef-cookies", "dfnText": "cookies", "refSections": [{"refs": [{"id": "ref-for-grammardef-cookies"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2463"}, {"id": "ref-for-grammardef-cookies\u2464"}, {"id": "ref-for-grammardef-cookies\u2465"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-cookies\u2466"}, {"id": "ref-for-grammardef-cookies\u2467"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2468"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['grammardef-storage'] = {"dfnID": "grammardef-storage", "url": "#grammardef-storage", "dfnText": "storage", "refSections": [{"refs": [{"id": "ref-for-grammardef-storage"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-storage\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-storage\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-storage\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-storage\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-storage\u2464"}, {"id": "ref-for-grammardef-storage\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-storage\u2466"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['grammardef-executioncontexts'] = {"dfnID": "grammardef-executioncontexts", "url": "#grammardef-executioncontexts", "dfnText": "executionContexts", "refSections": [{"refs": [{"id": "ref-for-grammardef-executioncontexts"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2464"}, {"id": "ref-for-grammardef-executioncontexts\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2466"}], "title": "4.2. \n    Clear data for response\n  "}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2467"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": false};
+window.dfnpanelData['grammardef-clienthints'] = {"dfnID": "grammardef-clienthints", "url": "#grammardef-clienthints", "dfnText": "clientHints", "refSections": [{"refs": [{"id": "ref-for-grammardef-clienthints"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2460"}, {"id": "ref-for-grammardef-clienthints\u2461"}, {"id": "ref-for-grammardef-clienthints\u2462"}, {"id": "ref-for-grammardef-clienthints\u2463"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2464"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['grammardef-'] = {"dfnID": "grammardef-", "url": "#grammardef-", "dfnText": "*", "refSections": [{"refs": [{"id": "ref-for-grammardef-"}, {"id": "ref-for-grammardef-\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}], "external": false};
+window.dfnpanelData['abstract-opdef-parse-responses-clear-site-data-header'] = {"dfnID": "abstract-opdef-parse-responses-clear-site-data-header", "url": "#abstract-opdef-parse-responses-clear-site-data-header", "dfnText": "parse\n  response\u2019s Clear-Site-Data header", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-parse-responses-clear-site-data-header"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['abstract-opdef-prepare-to-clear-origins-data'] = {"dfnID": "abstract-opdef-prepare-to-clear-origins-data", "url": "#abstract-opdef-prepare-to-clear-origins-data", "dfnText": "prepare to clear origin\u2019s data", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-prepare-to-clear-origins-data"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['abstract-opdef-reload-browsing-contexts'] = {"dfnID": "abstract-opdef-reload-browsing-contexts", "url": "#abstract-opdef-reload-browsing-contexts", "dfnText": "reload browsing contexts", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-reload-browsing-contexts"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['abstract-opdef-clear-cache-for-origin'] = {"dfnID": "abstract-opdef-clear-cache-for-origin", "url": "#abstract-opdef-clear-cache-for-origin", "dfnText": "clear cache for origin", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-clear-cache-for-origin"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['abstract-opdef-clear-cookies-for-origin'] = {"dfnID": "abstract-opdef-clear-cookies-for-origin", "url": "#abstract-opdef-clear-cookies-for-origin", "dfnText": "clear cookies for origin", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-clear-cookies-for-origin"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+window.dfnpanelData['abstract-opdef-clear-dom-accessible-storage-for-origin'] = {"dfnID": "abstract-opdef-clear-dom-accessible-storage-for-origin", "url": "#abstract-opdef-clear-dom-accessible-storage-for-origin", "dfnText": "clear DOM-accessible storage for origin", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
+</script>
+<script>/* Boilerplate: script-dom-helper */
+function query(sel) { return document.querySelector(sel); }
+
+function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
+
+function iter(obj) {
+	if(!obj) return [];
+	var it = obj[Symbol.iterator];
+	if(it) return it;
+	return Object.entries(obj);
+}
+
+function mk(tagname, attrs, ...children) {
+	const el = document.createElement(tagname);
+	for(const [k,v] of iter(attrs)) {
+		if(k.slice(0,3) == "_on") {
+			const eventName = k.slice(3);
+			el.addEventListener(eventName, v);
+		} else if(k[0] == "_") {
+			// property, not attribute
+			el[k.slice(1)] = v;
+		} else {
+			if(v === false || v == null) {
+        continue;
+      } else if(v === true) {
+        el.setAttribute(k, "");
+        continue;
+      } else {
+  			el.setAttribute(k, v);
+      }
+		}
+	}
+	append(el, children);
+	return el;
+}
+
+/* Create shortcuts for every known HTML element */
+[
+  "a",
+  "abbr",
+  "acronym",
+  "address",
+  "applet",
+  "area",
+  "article",
+  "aside",
+  "audio",
+  "b",
+  "base",
+  "basefont",
+  "bdo",
+  "big",
+  "blockquote",
+  "body",
+  "br",
+  "button",
+  "canvas",
+  "caption",
+  "center",
+  "cite",
+  "code",
+  "col",
+  "colgroup",
+  "datalist",
+  "dd",
+  "del",
+  "details",
+  "dfn",
+  "dialog",
+  "div",
+  "dl",
+  "dt",
+  "em",
+  "embed",
+  "fieldset",
+  "figcaption",
+  "figure",
+  "font",
+  "footer",
+  "form",
+  "frame",
+  "frameset",
+  "head",
+  "header",
+  "h1",
+  "h2",
+  "h3",
+  "h4",
+  "h5",
+  "h6",
+  "hr",
+  "html",
+  "i",
+  "iframe",
+  "img",
+  "input",
+  "ins",
+  "kbd",
+  "label",
+  "legend",
+  "li",
+  "link",
+  "main",
+  "map",
+  "mark",
+  "meta",
+  "meter",
+  "nav",
+  "nobr",
+  "noscript",
+  "object",
+  "ol",
+  "optgroup",
+  "option",
+  "output",
+  "p",
+  "param",
+  "pre",
+  "progress",
+  "q",
+  "s",
+  "samp",
+  "script",
+  "section",
+  "select",
+  "small",
+  "source",
+  "span",
+  "strike",
+  "strong",
+  "style",
+  "sub",
+  "summary",
+  "sup",
+  "table",
+  "tbody",
+  "td",
+  "template",
+  "textarea",
+  "tfoot",
+  "th",
+  "thead",
+  "time",
+  "title",
+  "tr",
+  "u",
+  "ul",
+  "var",
+  "video",
+  "wbr",
+  "xmp",
+].forEach(tagname=>{
+	mk[tagname] = (...args) => mk(tagname, ...args);
+});
+
+function* nodesFromChildList(children) {
+	for(const child of children.flat(Infinity)) {
+		if(child instanceof Node) {
+			yield child;
+		} else {
+			yield new Text(child);
+		}
+	}
+}
+function append(el, ...children) {
+	for(const child of nodesFromChildList(children)) {
+		if(el instanceof Node) el.appendChild(child);
+		else el.push(child);
+	}
+	return el;
+}
+
+function insertAfter(el, ...children) {
+	for(const child of nodesFromChildList(children)) {
+		el.parentNode.insertBefore(child, el.nextSibling);
+	}
+	return el;
+}
+
+function clearContents(el) {
+	el.innerHTML = "";
+	return el;
+}
+
+function parseHTML(markup) {
+	if(markup.toLowerCase().trim().indexOf('<!doctype') === 0) {
+		const doc = document.implementation.createHTMLDocument("");
+		doc.documentElement.innerHTML = markup;
+		return doc;
+	} else {
+		const el = mk.template({});
+		el.innerHTML = markup;
+		return el.content;
+	}
+}
+</script>
+<script>/* Boilerplate: script-position-annos */
+"use strict";
+{
+
+function repositionAnnoPanels(){
+    const panels = [...document.querySelectorAll("[data-anno-for]")];
+    const main = document.querySelector("main");
+    let mainRect;
+    if(main) mainRect = main.getBoundingClientRect();
+    for(const panel of panels) {
+        const dfn = document.getElementById(panel.getAttribute("data-anno-for"));
+        if(!dfn) {
+            console.log("Can't find the annotation panel target:", panel);
+            continue;
+        }
+        const rect = dfn.getBoundingClientRect();
+        const top = window.scrollY + rect.top
+        panel.style.top = top + "px";
+        panel.top = top;
+        panel.height = rect.height;
+        panel.classList.remove("unpositioned");
+        const panelRect = panel.getBoundingClientRect()
+        if(main) {
+            panel.classList.toggle("overlapping-main", panelRect.left < mainRect.right)
+        }
+    }
+    let vSoFar = 0;
+    for(const panel of panels.sort(cmpTops)) {
+        if(panel.top < vSoFar) {
+            panel.top = vSoFar;
+            panel.style.top = vSoFar + "px";
+        }
+        vSoFar = panel.top + panel.height + 15;
+    }
+}
+
+function cmpTops(a,b) {
+    return a.top - b.top;
+}
+
+window.addEventListener("load", repositionAnnoPanels);
+window.addEventListener("resize", repositionAnnoPanels);
+}
+</script>
+<script>/* Boilerplate: script-var-click-highlighting */
+/*
+Color-choosing design:
+
+Colors are ordered by goodness.
+Each color has a usage count (initially zero).
+Each variable has a last-used color.
+
+* If the var has a last-used color, and that color's usage is 0,
+    return that color.
+* Otherwise, return the lowest-indexed color with the lowest usage.
+    Increment the color's usage and set it as the last-used color
+    for that var.
+* On unclicking, decrement usage of the color.
+*/
+"use strict";
+{
     document.addEventListener("click", e=>{
         if(e.target.nodeName == "VAR") {
             highlightSameAlgoVars(e.target);
         }
     });
-    {
-        const indexCounts = new Map();
-        const indexNames = new Map();
-        function highlightSameAlgoVars(v) {
-            // Find the algorithm container.
-            let algoContainer = null;
-            let searchEl = v;
-            while(algoContainer == null && searchEl != document.body) {
-                searchEl = searchEl.parentNode;
-                if(searchEl.hasAttribute("data-algorithm")) {
-                    algoContainer = searchEl;
-                }
-            }
-
-            // Not highlighting document-global vars,
-            // too likely to be unrelated.
-            if(algoContainer == null) return;
-
-            const algoName = algoContainer.getAttribute("data-algorithm");
-            const varName = getVarName(v);
-            const addClass = !v.classList.contains("selected");
-            let highlightClass = null;
-            if(addClass) {
-                const index = chooseHighlightIndex(algoName, varName);
-                indexCounts.get(algoName)[index] += 1;
-                indexNames.set(algoName+"///"+varName, index);
-                highlightClass = nameFromIndex(index);
-            } else {
-                const index = previousHighlightIndex(algoName, varName);
-                indexCounts.get(algoName)[index] -= 1;
-                highlightClass = nameFromIndex(index);
-            }
-
-            // Find all same-name vars, and toggle their class appropriately.
-            for(const el of algoContainer.querySelectorAll("var")) {
-                if(getVarName(el) == varName) {
-                    el.classList.toggle("selected", addClass);
-                    el.classList.toggle(highlightClass, addClass);
-                }
+    const indexCounts = new Map();
+    const indexNames = new Map();
+    function highlightSameAlgoVars(v) {
+        // Find the algorithm container.
+        let algoContainer = null;
+        let searchEl = v;
+        while(algoContainer == null && searchEl != document.body) {
+            searchEl = searchEl.parentNode;
+            if(searchEl.hasAttribute("data-algorithm")) {
+                algoContainer = searchEl;
             }
         }
-        function getVarName(el) {
-            return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
-        }
-        function chooseHighlightIndex(algoName, varName) {
-            let indexes = null;
-            if(indexCounts.has(algoName)) {
-                indexes = indexCounts.get(algoName);
-            } else {
-                // 7 classes right now
-                indexes = [0,0,0,0,0,0,0];
-                indexCounts.set(algoName, indexes);
-            }
 
-            // If the element was recently unclicked,
-            // *and* that color is still unclaimed,
-            // give it back the same color.
-            const lastIndex = previousHighlightIndex(algoName, varName);
-            if(indexes[lastIndex] === 0) return lastIndex;
+        // Not highlighting document-global vars,
+        // too likely to be unrelated.
+        if(algoContainer == null) return;
 
-            // Find the earliest index with the lowest count.
-            const minCount = Math.min.apply(null, indexes);
-            let index = null;
-            for(var i = 0; i < indexes.length; i++) {
-                if(indexes[i] == minCount) {
-                    return i;
-                }
+        const algoName = algoContainer.getAttribute("data-algorithm");
+        const varName = getVarName(v);
+        const addClass = !v.classList.contains("selected");
+        let highlightClass = null;
+        if(addClass) {
+            const index = chooseHighlightIndex(algoName, varName);
+            indexCounts.get(algoName)[index] += 1;
+            indexNames.set(algoName+"///"+varName, index);
+            highlightClass = nameFromIndex(index);
+        } else {
+            const index = previousHighlightIndex(algoName, varName);
+            indexCounts.get(algoName)[index] -= 1;
+            highlightClass = nameFromIndex(index);
+        }
+
+        // Find all same-name vars, and toggle their class appropriately.
+        for(const el of algoContainer.querySelectorAll("var")) {
+            if(getVarName(el) == varName) {
+                el.classList.toggle("selected", addClass);
+                el.classList.toggle(highlightClass, addClass);
             }
-        }
-        function previousHighlightIndex(algoName, varName) {
-            return indexNames.get(algoName+"///"+varName);
-        }
-        function nameFromIndex(index) {
-            return "selected" + index;
         }
     }
-    </script>
+    function getVarName(el) {
+        return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+    }
+    function chooseHighlightIndex(algoName, varName) {
+        let indexes = null;
+        if(indexCounts.has(algoName)) {
+            indexes = indexCounts.get(algoName);
+        } else {
+            // 7 classes right now
+            indexes = [0,0,0,0,0,0,0];
+            indexCounts.set(algoName, indexes);
+        }
+
+        // If the element was recently unclicked,
+        // *and* that color is still unclaimed,
+        // give it back the same color.
+        const lastIndex = previousHighlightIndex(algoName, varName);
+        if(indexes[lastIndex] === 0) return lastIndex;
+
+        // Find the earliest index with the lowest count.
+        const minCount = Math.min.apply(null, indexes);
+        let index = null;
+        for(var i = 0; i < indexes.length; i++) {
+            if(indexes[i] == minCount) {
+                return i;
+            }
+        }
+    }
+    function previousHighlightIndex(algoName, varName) {
+        return indexNames.get(algoName+"///"+varName);
+    }
+    function nameFromIndex(index) {
+        return "selected" + index;
+    }
+}
+</script>
