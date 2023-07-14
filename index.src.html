@@ -497,7 +497,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
             :   "<a grammar>`storage`</a>"
             ::  <a lt="clear storage" abstract-op>Clear DOM-accessible storage for |origin|</a>.
             :   "<a grammar>`clientHints`</a>"
-            ::  [=map/Set=] [=Accept-CH cache=][|origin|] to an empty [=ordered set=].
+            ::  [=list/Empty=] [=Accept-CH cache=][|origin|].
 
     6.  If |types| contains "<a grammar>executionContexts</a>", then
         <a lt="reload" abstract-op>Reload |browsing contexts|</a>.
