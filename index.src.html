@@ -20,6 +20,8 @@ Markup Shorthands: css off, markdown on
 </pre>
 <pre class="link-defaults">
 spec:html; type:dfn; for:/; text:browsing context
+spec:html; type:dfn; for:navigable; text:top-level traversable
+spec:html; type:dfn; for:/; text:session history entries
 spec:fetch; type:dfn; for:/; text:response
 spec:fetch; type:dfn; for:/; text:http-network fetch
 
@@ -54,6 +56,15 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 spec: PSL; urlPrefix: https://publicsuffix.org/list/
   type: dfn
     text: registered domain; url: #
+spec: html; urlPrefix: https://html.spec.whatwg.org/
+  type: dfn
+    text: document state; url: #document-state-2
+spec: html; urlPrefix: https://html.spec.whatwg.org/
+  type: dfn
+    text: fully active; url: #fully-active
+spec: html; urlPrefix: https://html.spec.whatwg.org
+  type: dfn
+    text: Destroy; url: #destroy-a-document
 </pre>
 <pre class="biblio">
 {
@@ -266,8 +277,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       cached data associated with the <a>origin</a> of a particular
       <a>response</a>'s [=response/url=]. This includes the <a>network
       cache</a>, of course, but will also remove data from various other caches
-      which a user agent implements (prerendered pages, script caches, shader
-      caches, [=Accept-CH cache=], etc.).
+      which a user agent implements (prerendered pages, back/forward caches, script caches,
+      shader caches, [=Accept-CH cache=], etc.).
 
       Implementation details are in [[#clear-cache]].
 
@@ -572,12 +583,25 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
     2.  Let |cache list| be the set of entries from the <a>network cache</a> whose `target URI`
         [=url/host=] is identical to |host|.
 
-    3.  For each |entry| in |cache list|:
+        1.  For each |entry| in |cache list|:
    
-        1.  Remove |entry| from the <a>network cache</a>.
+            1.  Remove |entry| from the <a>network cache</a>.
 
-    4.  If a user agent implements caches beyond a pure <a>network cache</a>, it MUST remove all
-        entries from those caches which match |origin|.
+        2.  If a user agent implements caches beyond a pure <a>network cache</a>, it MUST remove
+            all entries from those caches which match |origin|.
+
+    3.  For each |traversable| in the user agent's set of [=top-level traversable=]:
+
+        1.  For each |entry| in the |traversable|'s [=session history entries=]:
+
+            1.  Let |state| be |entry|'s <a>document state</a> whose `origin` attribute is identical
+                to |host|.
+
+            2.  Let |document| be |state|'s `document` attribute.
+
+            3.  If |document| is non-<a>fully active</a>:
+
+                1. <a>Destroy</a> the |document|.
 
         ISSUE: We're dealing with the network cache here, as defined in [[!RFC7234]], but that's not
         nearly everything a user agent caches. How hand-wavey with the vendor-specific section can
