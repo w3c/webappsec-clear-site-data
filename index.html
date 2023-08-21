@@ -7,7 +7,7 @@
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
   <meta content="Bikeshed version d29f71adb, updated Wed Jul 19 11:08:56 2023 -0700" name="generator">
   <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
-  <meta content="78a1b5b6ab4f3070b9422b80b81e62bf933da72f" name="document-revision">
+  <meta content="bea156014acf45a60fc588730590cc70b2bcfb60" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -759,7 +759,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-08-15">15 August 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-08-21">21 August 2023</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -1278,15 +1278,22 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
           <p>For each <var>entry</var> in the <var>traversable</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#tn-session-history-entries" id="ref-for-tn-session-history-entries">session history entries</a>:</p>
           <ol>
            <li data-md>
-            <p>Let <var>state</var> be <var>entry</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/#document-state-2" id="ref-for-document-state-2">document state</a> whose <code>origin</code> attribute is identical
-  to <var>host</var>.</p>
+            <p>Let <var>state</var> be <var>entry</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-2" id="ref-for-document-state-2">document state</a>.</p>
            <li data-md>
-            <p>Let <var>document</var> be <var>state</var>’s <code>document</code> attribute.</p>
+            <p>Let <var>entry origin</var> be <var>state</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-origin" id="ref-for-document-state-origin">origin</a>.</p>
            <li data-md>
-            <p>If <var>document</var> is non-<a data-link-type="dfn" href="https://html.spec.whatwg.org/#fully-active" id="ref-for-fully-active">fully active</a>:</p>
+            <p>If <var>entry origin</var> is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#same-origin" id="ref-for-same-origin">same origin</a> as <var>origin</var>:</p>
             <ol>
              <li data-md>
-              <p><a data-link-type="dfn" href="https://html.spec.whatwg.org#document-state-document" id="ref-for-document-state-document">Destroy</a> the <var>document</var>.</p>
+              <p>Let <var>document</var> be <var>state</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-document" id="ref-for-document-state-document">document</a>.</p>
+             <li data-md>
+              <p>If <var>document</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#fully-active" id="ref-for-fully-active">fully active</a>:</p>
+              <ol>
+               <li data-md>
+                <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-lifecycle.html#destroy-a-document" id="ref-for-destroy-a-document">Destroy</a> the <var>document</var>.</p>
+               <li data-md>
+                <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue①">continue</a>.</p>
+              </ol>
             </ol>
           </ol>
         </ol>
@@ -1526,9 +1533,11 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
      <li><span class="dfn-paneled" id="35972864">active document</span>
      <li><span class="dfn-paneled" id="0d0390b4">browsing context</span>
      <li><span class="dfn-paneled" id="5956d5fd">clear()</span>
-     <li><span class="dfn-paneled" id="2d3e3a3f">destroy</span>
-     <li><span class="dfn-paneled" id="a5ab6d98">document state</span>
-     <li><span class="dfn-paneled" id="4a7a25b9">fully active</span>
+     <li><span class="dfn-paneled" id="d899aea4">destroy</span>
+     <li><span class="dfn-paneled" id="67436284">document state</span>
+     <li><span class="dfn-paneled" id="92f976fe">document state document</span>
+     <li><span class="dfn-paneled" id="fbaadd69">document state origin</span>
+     <li><span class="dfn-paneled" id="0e3ba9f8">fully active</span>
      <li><span class="dfn-paneled" id="8a30477b">global object</span>
      <li><span class="dfn-paneled" id="77a2ee6e">host</span>
      <li><span class="dfn-paneled" id="3a2db83f">localStorage</span>
@@ -1536,6 +1545,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
      <li><span class="dfn-paneled" id="53f0ea4e">parse a sandboxing directive</span>
      <li><span class="dfn-paneled" id="9c4c1e66">relevant settings object</span>
      <li><span class="dfn-paneled" id="383f2689">reload()</span>
+     <li><span class="dfn-paneled" id="7393da89">same origin</span>
      <li><span class="dfn-paneled" id="5e1e14ce">session history entries</span>
      <li><span class="dfn-paneled" id="7a899a17">sessionStorage</span>
      <li><span class="dfn-paneled" id="30717154">top-level traversable</span>
@@ -2010,9 +2020,11 @@ window.dfnpanelData['b8bd9c92'] = {"dfnID": "b8bd9c92", "url": "https://html.spe
 window.dfnpanelData['35972864'] = {"dfnID": "35972864", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document", "dfnText": "active document", "refSections": [{"refs": [{"id": "ref-for-nav-document"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-nav-document\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['0d0390b4'] = {"dfnID": "0d0390b4", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context", "dfnText": "browsing context", "refSections": [{"refs": [{"id": "ref-for-browsing-context"}, {"id": "ref-for-browsing-context\u2460"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-browsing-context\u2461"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['5956d5fd'] = {"dfnID": "5956d5fd", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear", "dfnText": "clear()", "refSections": [{"refs": [{"id": "ref-for-dom-storage-clear"}, {"id": "ref-for-dom-storage-clear\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['2d3e3a3f'] = {"dfnID": "2d3e3a3f", "url": "https://html.spec.whatwg.org#document-state-document", "dfnText": "destroy", "refSections": [{"refs": [{"id": "ref-for-document-state-document"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
-window.dfnpanelData['a5ab6d98'] = {"dfnID": "a5ab6d98", "url": "https://html.spec.whatwg.org/#document-state-2", "dfnText": "document state", "refSections": [{"refs": [{"id": "ref-for-document-state-2"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
-window.dfnpanelData['4a7a25b9'] = {"dfnID": "4a7a25b9", "url": "https://html.spec.whatwg.org/#fully-active", "dfnText": "fully active", "refSections": [{"refs": [{"id": "ref-for-fully-active"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['d899aea4'] = {"dfnID": "d899aea4", "url": "https://html.spec.whatwg.org/multipage/document-lifecycle.html#destroy-a-document", "dfnText": "destroy", "refSections": [{"refs": [{"id": "ref-for-destroy-a-document"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['67436284'] = {"dfnID": "67436284", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-2", "dfnText": "document state", "refSections": [{"refs": [{"id": "ref-for-document-state-2"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['92f976fe'] = {"dfnID": "92f976fe", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-document", "dfnText": "document state document", "refSections": [{"refs": [{"id": "ref-for-document-state-document"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['fbaadd69'] = {"dfnID": "fbaadd69", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-origin", "dfnText": "document state origin", "refSections": [{"refs": [{"id": "ref-for-document-state-origin"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['0e3ba9f8'] = {"dfnID": "0e3ba9f8", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#fully-active", "dfnText": "fully active", "refSections": [{"refs": [{"id": "ref-for-fully-active"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['8a30477b'] = {"dfnID": "8a30477b", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global", "dfnText": "global object", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-global"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['77a2ee6e'] = {"dfnID": "77a2ee6e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host", "dfnText": "host", "refSections": [{"refs": [{"id": "ref-for-concept-origin-host"}], "title": "4.2.3. \n    Clear cache for origin\n  "}, {"refs": [{"id": "ref-for-concept-origin-host\u2460"}, {"id": "ref-for-concept-origin-host\u2461"}, {"id": "ref-for-concept-origin-host\u2462"}, {"id": "ref-for-concept-origin-host\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
 window.dfnpanelData['3a2db83f'] = {"dfnID": "3a2db83f", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage", "dfnText": "localStorage", "refSections": [{"refs": [{"id": "ref-for-dom-localstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-localstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-localstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
@@ -2020,6 +2032,7 @@ window.dfnpanelData['43ac8374'] = {"dfnID": "43ac8374", "url": "https://html.spe
 window.dfnpanelData['53f0ea4e'] = {"dfnID": "53f0ea4e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive", "dfnText": "parse a sandboxing directive", "refSections": [{"refs": [{"id": "ref-for-parse-a-sandboxing-directive"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
 window.dfnpanelData['9c4c1e66'] = {"dfnID": "9c4c1e66", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object", "dfnText": "relevant settings object", "refSections": [{"refs": [{"id": "ref-for-relevant-settings-object"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-relevant-settings-object\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['383f2689'] = {"dfnID": "383f2689", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload", "dfnText": "reload()", "refSections": [{"refs": [{"id": "ref-for-dom-location-reload"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['5e1e14ce'] = {"dfnID": "5e1e14ce", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#tn-session-history-entries", "dfnText": "session history entries", "refSections": [{"refs": [{"id": "ref-for-tn-session-history-entries"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['7a899a17'] = {"dfnID": "7a899a17", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage", "dfnText": "sessionStorage", "refSections": [{"refs": [{"id": "ref-for-dom-sessionstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
 window.dfnpanelData['30717154'] = {"dfnID": "30717154", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#nav-top", "dfnText": "top-level traversable", "refSections": [{"refs": [{"id": "ref-for-nav-top"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
@@ -2028,7 +2041,7 @@ window.dfnpanelData['b1f47c2a'] = {"dfnID": "b1f47c2a", "url": "https://w3c.gith
 window.dfnpanelData['53275e46'] = {"dfnID": "53275e46", "url": "https://infra.spec.whatwg.org/#list-append", "dfnText": "append", "refSections": [{"refs": [{"id": "ref-for-list-append"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
 window.dfnpanelData['7b0d918d'] = {"dfnID": "7b0d918d", "url": "https://infra.spec.whatwg.org/#iteration-break", "dfnText": "break", "refSections": [{"refs": [{"id": "ref-for-iteration-break"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['ae8def21'] = {"dfnID": "ae8def21", "url": "https://infra.spec.whatwg.org/#list-contain", "dfnText": "contain", "refSections": [{"refs": [{"id": "ref-for-list-contain"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
+window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-iteration-continue\u2460"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['03afaf9c'] = {"dfnID": "03afaf9c", "url": "https://infra.spec.whatwg.org/#list-empty", "dfnText": "empty", "refSections": [{"refs": [{"id": "ref-for-list-empty"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['4d8718f0'] = {"dfnID": "4d8718f0", "url": "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url", "dfnText": "a priori authenticated url", "refSections": [{"refs": [{"id": "ref-for-a-priori-authenticated-url"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['aba5485c'] = {"dfnID": "aba5485c", "url": "https://publicsuffix.org/list/#", "dfnText": "registered domain", "refSections": [{"refs": [{"id": "ref-for-something"}, {"id": "ref-for-something\u2460"}, {"id": "ref-for-something\u2461"}, {"id": "ref-for-something\u2462"}, {"id": "ref-for-something\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};

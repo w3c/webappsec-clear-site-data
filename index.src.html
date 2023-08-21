@@ -56,13 +56,16 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 spec: PSL; urlPrefix: https://publicsuffix.org/list/
   type: dfn
     text: registered domain; url: #
-spec: html; urlPrefix: https://html.spec.whatwg.org/
+spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html
   type: dfn
     text: document state; url: #document-state-2
-spec: html; urlPrefix: https://html.spec.whatwg.org/
+spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html
   type: dfn
-    text: fully active; url: #fully-active
-spec: html; urlPrefix: https://html.spec.whatwg.org
+    text: document state document; url: #document-state-document
+spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/browsing-the-web.html
+  type: dfn
+    text: document state origin; url: #document-state-origin
+spec: html; urlPrefix: https://html.spec.whatwg.org/multipage/document-lifecycle.html
   type: dfn
     text: Destroy; url: #destroy-a-document
 </pre>
@@ -594,14 +597,17 @@ spec: html; urlPrefix: https://html.spec.whatwg.org
 
         1.  For each |entry| in the |traversable|'s [=session history entries=]:
 
-            1.  Let |state| be |entry|'s <a>document state</a> whose `origin` attribute is identical
-                to |host|.
+            1.  Let |state| be |entry|'s [=document state=].
 
-            2.  Let |document| be |state|'s `document` attribute.
+            2.  Let |entry origin| be |state|'s [=document state origin|origin=].
 
-            3.  If |document| is non-<a>fully active</a>:
+            3.  If |entry origin| is the [=same origin=] as |origin|:
 
-                1. <a>Destroy</a> the |document|.
+              1.  Let |document| be |state|'s [=document state document|document=].
+
+              2.  If |document| is not [=Document/fully active=]:
+
+                  1. [=Destroy=] the |document|.
 
         ISSUE: We're dealing with the network cache here, as defined in [[!RFC7234]], but that's not
         nearly everything a user agent caches. How hand-wavey with the vendor-specific section can
