@@ -5,9 +5,9 @@
   <title>Clear Site Data</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version b06c00b8e, updated Tue Jul 11 13:41:16 2023 -0700" name="generator">
+  <meta content="Bikeshed version d29f71adb, updated Wed Jul 19 11:08:56 2023 -0700" name="generator">
   <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
-  <meta content="10608c7c3ff8e302c384b36fe034d9bf06766092" name="document-revision">
+  <meta content="bea156014acf45a60fc588730590cc70b2bcfb60" name="document-revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -759,7 +759,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-07-14">14 July 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-08-21">21 August 2023</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -811,7 +811,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
 	W3C maintains a <a href="https://www.w3.org/groups/wg/webappsec/ipr" rel="disclosure">public list of any patent disclosures</a> made in connection with the deliverables of the group;
 	that page also includes instructions for disclosing a patent.
 	An individual who has actual knowledge of a patent which the individual believes contains <a href="https://www.w3.org/Consortium/Patent-Policy/#def-essential">Essential Claim(s)</a> must disclose the information in accordance with <a href="https://www.w3.org/Consortium/Patent-Policy/#sec-Disclosure">section 6 of the W3C Patent Policy</a>. </p>
-   <p> This document is governed by the <a href="https://www.w3.org/2021/Process-20211102/" id="w3c_process_revision">2 November 2021 W3C Process Document</a>. </p>
+   <p> This document is governed by the <a href="https://www.w3.org/2023/Process-20230612/" id="w3c_process_revision">12 June 2023 W3C Process Document</a>. </p>
    <p></p>
   </div>
   <div data-fill-with="at-risk"></div>
@@ -1025,8 +1025,8 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
       <p>The "<code>cache</code>" type indicates that the server wishes to remove locally
   cached data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a>. This includes the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2">network
   cache</a>, of course, but will also remove data from various other caches
-  which a user agent implements (prerendered pages, script caches, shader
-  caches, <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache①">Accept-CH cache</a>, etc.).</p>
+  which a user agent implements (prerendered pages, back/forward caches, script caches,
+  shader caches, <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache①">Accept-CH cache</a>, etc.).</p>
       <p>Implementation details are in <a href="#clear-cache">§ 4.2.3 Clear cache for origin</a>.</p>
       <div class="example" id="example-b245894e">
        <a class="self-link" href="#example-b245894e"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -1260,15 +1260,43 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
         <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host">host</a>.</p>
        <li data-md>
         <p>Let <var>cache list</var> be the set of entries from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2①">network cache</a> whose <code>target URI</code> <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-host" id="ref-for-concept-url-host">host</a> is identical to <var>host</var>.</p>
-       <li data-md>
-        <p>For each <var>entry</var> in <var>cache list</var>:</p>
         <ol>
          <li data-md>
-          <p>Remove <var>entry</var> from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2②">network cache</a>.</p>
+          <p>For each <var>entry</var> in <var>cache list</var>:</p>
+          <ol>
+           <li data-md>
+            <p>Remove <var>entry</var> from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2②">network cache</a>.</p>
+          </ol>
+         <li data-md>
+          <p>If a user agent implements caches beyond a pure <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2③">network cache</a>, it MUST remove
+  all entries from those caches which match <var>origin</var>.</p>
         </ol>
        <li data-md>
-        <p>If a user agent implements caches beyond a pure <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2③">network cache</a>, it MUST remove all
-  entries from those caches which match <var>origin</var>.</p>
+        <p>For each <var>traversable</var> in the user agent’s set of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#nav-top" id="ref-for-nav-top">top-level traversable</a>:</p>
+        <ol>
+         <li data-md>
+          <p>For each <var>entry</var> in the <var>traversable</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#tn-session-history-entries" id="ref-for-tn-session-history-entries">session history entries</a>:</p>
+          <ol>
+           <li data-md>
+            <p>Let <var>state</var> be <var>entry</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-2" id="ref-for-document-state-2">document state</a>.</p>
+           <li data-md>
+            <p>Let <var>entry origin</var> be <var>state</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-origin" id="ref-for-document-state-origin">origin</a>.</p>
+           <li data-md>
+            <p>If <var>entry origin</var> is the <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#same-origin" id="ref-for-same-origin">same origin</a> as <var>origin</var>:</p>
+            <ol>
+             <li data-md>
+              <p>Let <var>document</var> be <var>state</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-document" id="ref-for-document-state-document">document</a>.</p>
+             <li data-md>
+              <p>If <var>document</var> is not <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#fully-active" id="ref-for-fully-active">fully active</a>:</p>
+              <ol>
+               <li data-md>
+                <p><a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-lifecycle.html#destroy-a-document" id="ref-for-destroy-a-document">Destroy</a> the <var>document</var>.</p>
+               <li data-md>
+                <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-continue" id="ref-for-iteration-continue①">continue</a>.</p>
+              </ol>
+            </ol>
+          </ol>
+        </ol>
         <p class="issue" id="issue-f5577029"><a class="self-link" href="#issue-f5577029"></a> We’re dealing with the network cache here, as defined in <a data-link-type="biblio" href="#biblio-rfc7234" title="HTTP Caching">[RFC7234]</a>, but that’s not
   nearly everything a user agent caches. How hand-wavey with the vendor-specific section can
   we be? For instance, Chrome clears out prerendered pages, script caches, WebGL shader
@@ -1505,6 +1533,11 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
      <li><span class="dfn-paneled" id="35972864">active document</span>
      <li><span class="dfn-paneled" id="0d0390b4">browsing context</span>
      <li><span class="dfn-paneled" id="5956d5fd">clear()</span>
+     <li><span class="dfn-paneled" id="d899aea4">destroy</span>
+     <li><span class="dfn-paneled" id="67436284">document state</span>
+     <li><span class="dfn-paneled" id="92f976fe">document state document</span>
+     <li><span class="dfn-paneled" id="fbaadd69">document state origin</span>
+     <li><span class="dfn-paneled" id="0e3ba9f8">fully active</span>
      <li><span class="dfn-paneled" id="8a30477b">global object</span>
      <li><span class="dfn-paneled" id="77a2ee6e">host</span>
      <li><span class="dfn-paneled" id="3a2db83f">localStorage</span>
@@ -1512,7 +1545,10 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
      <li><span class="dfn-paneled" id="53f0ea4e">parse a sandboxing directive</span>
      <li><span class="dfn-paneled" id="9c4c1e66">relevant settings object</span>
      <li><span class="dfn-paneled" id="383f2689">reload()</span>
+     <li><span class="dfn-paneled" id="7393da89">same origin</span>
+     <li><span class="dfn-paneled" id="5e1e14ce">session history entries</span>
      <li><span class="dfn-paneled" id="7a899a17">sessionStorage</span>
+     <li><span class="dfn-paneled" id="30717154">top-level traversable</span>
     </ul>
    <li>
     <a data-link-type="biblio">[IndexedDB-3]</a> defines the following terms:
@@ -1591,7 +1627,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
    <dt id="biblio-indexeddb">[INDEXEDDB]
    <dd>Nikunj Mehta; et al. <a href="https://w3c.github.io/IndexedDB/"><cite>Indexed Database API</cite></a>. URL: <a href="https://w3c.github.io/IndexedDB/">https://w3c.github.io/IndexedDB/</a>
    <dt id="biblio-indexeddb-3">[IndexedDB-3]
-   <dd>Ali Alabbas; Joshua Bell. <a href="https://w3c.github.io/IndexedDB/"><cite>Indexed Database API 3.0</cite></a>. URL: <a href="https://w3c.github.io/IndexedDB/">https://w3c.github.io/IndexedDB/</a>
+   <dd>Joshua Bell. <a href="https://w3c.github.io/IndexedDB/"><cite>Indexed Database API 3.0</cite></a>. URL: <a href="https://w3c.github.io/IndexedDB/">https://w3c.github.io/IndexedDB/</a>
    <dt id="biblio-infra">[INFRA]
    <dd>Anne van Kesteren; Domenic Denicola. <a href="https://infra.spec.whatwg.org/"><cite>Infra Standard</cite></a>. Living Standard. URL: <a href="https://infra.spec.whatwg.org/">https://infra.spec.whatwg.org/</a>
    <dt id="biblio-mixed-content">[MIXED-CONTENT]
@@ -1984,6 +2020,11 @@ window.dfnpanelData['b8bd9c92'] = {"dfnID": "b8bd9c92", "url": "https://html.spe
 window.dfnpanelData['35972864'] = {"dfnID": "35972864", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document", "dfnText": "active document", "refSections": [{"refs": [{"id": "ref-for-nav-document"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-nav-document\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['0d0390b4'] = {"dfnID": "0d0390b4", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context", "dfnText": "browsing context", "refSections": [{"refs": [{"id": "ref-for-browsing-context"}, {"id": "ref-for-browsing-context\u2460"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-browsing-context\u2461"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['5956d5fd'] = {"dfnID": "5956d5fd", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear", "dfnText": "clear()", "refSections": [{"refs": [{"id": "ref-for-dom-storage-clear"}, {"id": "ref-for-dom-storage-clear\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['d899aea4'] = {"dfnID": "d899aea4", "url": "https://html.spec.whatwg.org/multipage/document-lifecycle.html#destroy-a-document", "dfnText": "destroy", "refSections": [{"refs": [{"id": "ref-for-destroy-a-document"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['67436284'] = {"dfnID": "67436284", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-2", "dfnText": "document state", "refSections": [{"refs": [{"id": "ref-for-document-state-2"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['92f976fe'] = {"dfnID": "92f976fe", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-document", "dfnText": "document state document", "refSections": [{"refs": [{"id": "ref-for-document-state-document"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['fbaadd69'] = {"dfnID": "fbaadd69", "url": "https://html.spec.whatwg.org/multipage/browsing-the-web.html#document-state-origin", "dfnText": "document state origin", "refSections": [{"refs": [{"id": "ref-for-document-state-origin"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['0e3ba9f8'] = {"dfnID": "0e3ba9f8", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#fully-active", "dfnText": "fully active", "refSections": [{"refs": [{"id": "ref-for-fully-active"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['8a30477b'] = {"dfnID": "8a30477b", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global", "dfnText": "global object", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-global"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['77a2ee6e'] = {"dfnID": "77a2ee6e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host", "dfnText": "host", "refSections": [{"refs": [{"id": "ref-for-concept-origin-host"}], "title": "4.2.3. \n    Clear cache for origin\n  "}, {"refs": [{"id": "ref-for-concept-origin-host\u2460"}, {"id": "ref-for-concept-origin-host\u2461"}, {"id": "ref-for-concept-origin-host\u2462"}, {"id": "ref-for-concept-origin-host\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
 window.dfnpanelData['3a2db83f'] = {"dfnID": "3a2db83f", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage", "dfnText": "localStorage", "refSections": [{"refs": [{"id": "ref-for-dom-localstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-localstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-localstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
@@ -1991,13 +2032,16 @@ window.dfnpanelData['43ac8374'] = {"dfnID": "43ac8374", "url": "https://html.spe
 window.dfnpanelData['53f0ea4e'] = {"dfnID": "53f0ea4e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive", "dfnText": "parse a sandboxing directive", "refSections": [{"refs": [{"id": "ref-for-parse-a-sandboxing-directive"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
 window.dfnpanelData['9c4c1e66'] = {"dfnID": "9c4c1e66", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object", "dfnText": "relevant settings object", "refSections": [{"refs": [{"id": "ref-for-relevant-settings-object"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-relevant-settings-object\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
 window.dfnpanelData['383f2689'] = {"dfnID": "383f2689", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload", "dfnText": "reload()", "refSections": [{"refs": [{"id": "ref-for-dom-location-reload"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
+window.dfnpanelData['7393da89'] = {"dfnID": "7393da89", "url": "https://html.spec.whatwg.org/multipage/browsers.html#same-origin", "dfnText": "same origin", "refSections": [{"refs": [{"id": "ref-for-same-origin"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
+window.dfnpanelData['5e1e14ce'] = {"dfnID": "5e1e14ce", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#tn-session-history-entries", "dfnText": "session history entries", "refSections": [{"refs": [{"id": "ref-for-tn-session-history-entries"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['7a899a17'] = {"dfnID": "7a899a17", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage", "dfnText": "sessionStorage", "refSections": [{"refs": [{"id": "ref-for-dom-sessionstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
+window.dfnpanelData['30717154'] = {"dfnID": "30717154", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#nav-top", "dfnText": "top-level traversable", "refSections": [{"refs": [{"id": "ref-for-nav-top"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['17c3a312'] = {"dfnID": "17c3a312", "url": "https://w3c.github.io/IndexedDB/#database", "dfnText": "database", "refSections": [{"refs": [{"id": "ref-for-database"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
 window.dfnpanelData['b1f47c2a'] = {"dfnID": "b1f47c2a", "url": "https://w3c.github.io/IndexedDB/#delete-a-database", "dfnText": "delete a database", "refSections": [{"refs": [{"id": "ref-for-delete-a-database"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
 window.dfnpanelData['53275e46'] = {"dfnID": "53275e46", "url": "https://infra.spec.whatwg.org/#list-append", "dfnText": "append", "refSections": [{"refs": [{"id": "ref-for-list-append"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
 window.dfnpanelData['7b0d918d'] = {"dfnID": "7b0d918d", "url": "https://infra.spec.whatwg.org/#iteration-break", "dfnText": "break", "refSections": [{"refs": [{"id": "ref-for-iteration-break"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['ae8def21'] = {"dfnID": "ae8def21", "url": "https://infra.spec.whatwg.org/#list-contain", "dfnText": "contain", "refSections": [{"refs": [{"id": "ref-for-list-contain"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
+window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-iteration-continue\u2460"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
 window.dfnpanelData['03afaf9c'] = {"dfnID": "03afaf9c", "url": "https://infra.spec.whatwg.org/#list-empty", "dfnText": "empty", "refSections": [{"refs": [{"id": "ref-for-list-empty"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['4d8718f0'] = {"dfnID": "4d8718f0", "url": "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url", "dfnText": "a priori authenticated url", "refSections": [{"refs": [{"id": "ref-for-a-priori-authenticated-url"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
 window.dfnpanelData['aba5485c'] = {"dfnID": "aba5485c", "url": "https://publicsuffix.org/list/#", "dfnText": "registered domain", "refSections": [{"refs": [{"id": "ref-for-something"}, {"id": "ref-for-something\u2460"}, {"id": "ref-for-something\u2461"}, {"id": "ref-for-something\u2462"}, {"id": "ref-for-something\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
