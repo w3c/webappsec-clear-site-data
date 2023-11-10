@@ -10,5 +10,5 @@ index.html: index.src.html
 	bikeshed -f spec ./index.src.html
 
 publish:
-	git push origin master
+	git push origin main
 
