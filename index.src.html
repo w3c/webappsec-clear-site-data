@@ -54,6 +54,9 @@ spec: RFC7230; urlPrefix: https://tools.ietf.org/html/rfc7230
 spec: PSL; urlPrefix: https://publicsuffix.org/list/
   type: dfn
     text: registered domain; url: #
+spec: Compression Dictionary Transport; urlPrefix: https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html
+  type: dfn
+    text: compression dictionary; url: #
 </pre>
 <pre class="biblio">
 {
@@ -216,7 +219,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
   4.  Service Workers registered for an origin are terminated and deregistered.
   5.  Resources from an origin are removed from the user agent's local cache.
   6.  The [=Accept-CH cache=] for an origin is purged.
-  7.  None of the above can be bypassed by a maliciously active document that
+  7.  The [=compression dictionaries=] for an origin is purged.
+  8.  None of the above can be bypassed by a maliciously active document that
       retains interesting data in memory, and rewrites it if it's cleared.
 </section>
 
@@ -267,7 +271,7 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       <a>response</a>'s [=response/url=]. This includes the <a>network
       cache</a>, of course, but will also remove data from various other caches
       which a user agent implements (prerendered pages, script caches, shader
-      caches, [=Accept-CH cache=], etc.).
+      caches, [=Accept-CH cache=], [=compression dictionaries=], etc.).
 
       Implementation details are in [[#clear-cache]].
 
@@ -307,9 +311,9 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         </pre>
       </div>
 
-      Note: Clearing cookies should also clear the [=Accept-CH cache=] for
-      <a>origin</a>. This is because the cache is also cleared if the user
-      manually clears cookies.
+      Note: Clearing cookies should also clear the [=Accept-CH cache=] and
+      [=compression dictionaries=] for <a>origin</a>. This is because the cache
+      is also cleared if the user manually clears cookies.
 
   :   "<dfn grammar>`storage`</dfn>"
   ::  The "`storage`" type indicates that the server wishes to remove
@@ -363,6 +367,26 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
       Note: The [=Accept-CH cache=] is also cleared for the <a grammar>cache</a> and
       <a grammar>cookies</a> options, so it should be used only when neither of the
       other options (or <a grammar>*</a>) are applied.
+
+  :   "<dfn grammar>`dictionaries`</dfn>"
+  ::  The "`dictionaries`" type indicates that the server wishes clear the
+      [=compression dictionaries=] for the <a>origin</a> of a particular
+      <a>response</a>'s [=response/url=].
+
+      <div class="example">
+        When delivered with a response from `https://example.com/clear`,
+        the following header will cause the [=compression dictionaries=] for 
+        origin `https://example.com` to be cleared:
+
+        <pre>
+          <a http-header>Clear-Site-Data</a>: "<a grammar>dictionaries</a>"
+        </pre>
+      </div>
+
+      Note: The [=compression dictionaries=] is also cleared for the
+      <a grammar>cache</a> and <a grammar>cookies</a> options, so it should be
+      used only when neither of the other options (or <a grammar>*</a>) are
+      applied.
 
   :   "<dfn grammar>`*`</dfn>"
   ::  The "`*`" (wildcard) pseudotype indicates that the server has the same
@@ -451,18 +475,23 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
         |type|:
 
         :   \``"cache"`\`
-        ::  Append "<a grammar>cache</a>" and "<a grammar>clientHints</a>" to |types|.
+        ::  Append "<a grammar>cache</a>" and "<a grammar>clientHints</a>" and
+            "<a grammar>dictionaries</a>" to |types|.
         :   \``"cookies"`\`
-        ::  Append "<a grammar>cookies</a>" and "<a grammar>clientHints</a>" to |types|.
+        ::  Append "<a grammar>cookies</a>" and "<a grammar>clientHints</a>" and
+            "<a grammar>dictionaries</a>" to |types|.
         :   \``"storage"`\`
         ::  Append "<a grammar>storage</a>" to |types|.
         :   \``"executionContexts"`\`
         ::  Append "<a grammar>executionContexts</a>" to |types|.
         :   \``"clientHints"`\`
         ::  Append "<a grammar>clientHints</a>" to |types|.
+        :   \``"dictionaries"`\`
+        ::  Append "<a grammar>dictionaries</a>" to |types|.
         :   \``"*"`\`
         ::  Append "<a grammar>cache</a>", "<a grammar>cookies</a>", "<a grammar>storage</a>",
-            "<a grammar>clientHints</a>", and "<a grammar>executionContexts</a>" to |types|.
+            "<a grammar>clientHints</a>", and "<a grammar>dictionaries</a>", and
+            "<a grammar>executionContexts</a>" to |types|.
 
     5.  Return |types|.
   </ol>
@@ -501,6 +530,8 @@ spec: PSL; urlPrefix: https://publicsuffix.org/list/
             ::  <a lt="clear storage" abstract-op>Clear DOM-accessible storage for |origin|</a>.
             :   "<a grammar>`clientHints`</a>"
             ::  [=list/Empty=] [=Accept-CH cache=][|origin|].
+            :   "<a grammar>`dictionaries`</a>"
+            ::  Clear [=compression dictionaries=] for |origin|.
 
     6.  If |types| contains "<a grammar>executionContexts</a>", then
         <a lt="reload" abstract-op>Reload |browsing contexts|</a>.
