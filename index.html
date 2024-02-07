@@ -5,9 +5,9 @@
   <title>Clear Site Data</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 82ce88815, updated Thu Sep 7 16:33:55 2023 -0700" name="generator">
+  <meta content="Bikeshed version d5d58a306, updated Fri Jan 26 16:12:28 2024 -0800" name="generator">
   <link href="http://www.w3.org/TR/clear-site-data/" rel="canonical">
-  <meta content="60cb809bb06587cd5accad4c907f3223d90dca79" name="document-revision">
+  <meta content="33652a81f4448c49bb335f300753c117657ad272" name="revision">
 <style>/* Boilerplate: style-autolinks */
 .css.css, .property.property, .descriptor.descriptor {
     color: var(--a-normal-text);
@@ -79,7 +79,6 @@ pre .property::before, pre .property::after {
 }
 </style>
 <style>/* Boilerplate: style-colors */
-
 /* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
 :root {
     color-scheme: light dark;
@@ -333,11 +332,15 @@ figcaption:not(.no-marker)::before {
 :root {
     --dfnpanel-bg: #ddd;
     --dfnpanel-text: var(--text);
+    --dfnpanel-target-bg: #ffc;
+    --dfnpanel-target-outline: orange;
 }
 @media (prefers-color-scheme: dark) {
     :root {
         --dfnpanel-bg: #222;
         --dfnpanel-text: var(--text);
+        --dfnpanel-target-bg: #333;
+        --dfnpanel-target-outline: silver;
     }
 }
 .dfn-panel {
@@ -360,11 +363,13 @@ figcaption:not(.no-marker)::before {
 .dfn-panel > b { display: block; }
 .dfn-panel a { color: var(--dfnpanel-text); }
 .dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
+.dfn-panel a:focus {
+    outline: 5px auto Highlight;
+    outline: 5px auto -webkit-focus-ring-color;
+}
 .dfn-panel > b + b { margin-top: 0.25em; }
 .dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
 .dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
     max-width: calc(300px - 1.5em - 1em);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -373,67 +378,79 @@ figcaption:not(.no-marker)::before {
 .dfn-panel.activated {
     display: inline-block;
     position: fixed;
-    left: .5em;
+    left: 8px;
     bottom: 2em;
     margin: 0 auto;
     max-width: calc(100vw - 1.5em - .4em - .5em);
     max-height: 30vh;
+    transition: left 1s ease-out, bottom 1s ease-out;
 }
 
-.dfn-paneled[role="button"] { cursor: pointer; }
-</style>
-<style>/* Boilerplate: style-dfn-panel */
-:root {
-    --dfnpanel-bg: #ddd;
-    --dfnpanel-text: var(--text);
+.dfn-panel .link-item:hover {
+    text-decoration: underline;
 }
-@media (prefers-color-scheme: dark) {
-    :root {
-        --dfnpanel-bg: #222;
-        --dfnpanel-text: var(--text);
+.dfn-panel .link-item .copy-icon {
+    opacity: 0;
+}
+.dfn-panel .link-item:hover .copy-icon,
+.dfn-panel .link-item .copy-icon:focus {
+    opacity: 1;
+}
+
+.dfn-panel .copy-icon {
+    display: inline-block;
+    margin-right: 0.5em;
+    width: 0.85em;
+    height: 1em;
+    border-radius: 3px;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.dfn-panel .copy-icon .icon {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.dfn-panel .copy-icon .icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    background-color: #ccc;
+    opacity: 0.25;
+    transform: translate(3px, -3px);
+}
+
+.dfn-panel .copy-icon:active .icon::before {
+    opacity: 1;
+}
+
+.dfn-paneled[role="button"] { cursor: help; }
+
+.highlighted {
+    animation: target-fade 3s;
+}
+
+@keyframes target-fade {
+    from {
+        background-color: var(--dfnpanel-target-bg);
+        outline: 5px solid var(--dfnpanel-target-outline);
+    }
+    to {
+        color: var(--a-normal-text);
+        background-color: transparent;
+        outline: transparent;
     }
 }
-.dfn-panel {
-    position: absolute;
-    z-index: 35;
-    width: 20em;
-    width: 300px;
-    height: auto;
-    max-height: 500px;
-    overflow: auto;
-    padding: 0.5em 0.75em;
-    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
-    background: var(--dfnpanel-bg);
-    color: var(--dfnpanel-text);
-    border: outset 0.2em;
-    white-space: normal; /* in case it's moved into a pre */
-}
-.dfn-panel:not(.on) { display: none; }
-.dfn-panel * { margin: 0; padding: 0; text-indent: 0; }
-.dfn-panel > b { display: block; }
-.dfn-panel a { color: var(--dfnpanel-text); }
-.dfn-panel a:not(:hover) { text-decoration: none !important; border-bottom: none !important; }
-.dfn-panel > b + b { margin-top: 0.25em; }
-.dfn-panel ul { padding: 0 0 0 1em; list-style: none; }
-.dfn-panel li a {
-    white-space: pre;
-    display: inline-block;
-    max-width: calc(300px - 1.5em - 1em);
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.dfn-panel.activated {
-    display: inline-block;
-    position: fixed;
-    left: .5em;
-    bottom: 2em;
-    margin: 0 auto;
-    max-width: calc(100vw - 1.5em - .4em - .5em);
-    max-height: 30vh;
-}
-
-.dfn-paneled[role="button"] { cursor: pointer; }
 </style>
 <style>/* Boilerplate: style-issues */
 a[href].issue-return {
@@ -459,12 +476,16 @@ a[href].issue-return {
 	--mdn-bg: #EEE;
 	--mdn-shadow: #999;
 	--mdn-nosupport-text: #ccc;
+	--mdn-pass: green;
+	--mdn-fail: red;
 }
 @media (prefers-color-scheme: dark) {
 	:root {
 		--mdn-bg: #222;
 		--mdn-shadow: #444;
 		--mdn-nosupport-text: #666;
+		--mdn-pass: #690;
+		--mdn-fail: #d22;
 	}
 }
 .mdn-anno {
@@ -507,11 +528,11 @@ a[href].issue-return {
 	display: block;
 }
 .mdn-anno > summary > .less-than-two-engines-flag {
-	color: red;
+	color: var(--mdn-fail);
 	padding-right: 2px;
 }
 .mdn-anno > summary > .all-engines-flag {
-	color: green;
+	color: var(--mdn-pass);
 	padding-right: 2px;
 }
 .mdn-anno > summary > span {
@@ -532,10 +553,10 @@ a[href].issue-return {
 	padding-top: 2px;
 }
 .mdn-anno > .feature > .less-than-two-engines-text {
-	color: red;
+	color: var(--mdn-fail);
 }
 .mdn-anno > .feature > .all-engines-text {
-	color: green;
+	color: var(--mdn-pass);
 }
 .mdn-anno > .feature > p {
 	font-size: .75em;
@@ -674,8 +695,40 @@ a[href].issue-return {
 	margin: -40px 0 0 0;
 }
 </style>
-<style>/* Boilerplate: style-selflinks */
+<style>/* Boilerplate: style-ref-hints */
+:root {
+    --ref-hint-bg: #ddd;
+    --ref-hint-text: var(--text);
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ref-hint-bg: #222;
+        --ref-hint-text: var(--text);
+    }
+}
 
+.ref-hint {
+    display: inline-block;
+    position: absolute;
+    z-index: 35;
+    width: 20em;
+    width: 300px;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+    padding: 0.5em 0.5em;
+    font: small Helvetica Neue, sans-serif, Droid Sans Fallback;
+    background: var(--ref-hint-bg);
+    color: var(--ref-hint-text);
+    border: outset 0.2em;
+    white-space: normal; /* in case it's moved into a pre */
+}
+
+.ref-hint * { margin: 0; padding: 0; text-indent: 0; }
+
+.ref-hint ul { padding: 0 0 0 1em; list-style: none; }
+</style>
+<style>/* Boilerplate: style-selflinks */
 :root {
     --selflink-text: white;
     --selflink-bg: gray;
@@ -746,20 +799,20 @@ D50 2deg illuminant, L in [0,100], a and b in [-128, 128]
 5 = lab(85,-10,-50)
 6 = lab(85,35,-15)
 */
-var { cursor: pointer; }
-var.selected0 { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
-var.selected1 { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
-var.selected2 { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
-var.selected3 { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
-var.selected4 { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
-var.selected5 { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
-var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
+[data-algorithm] var { cursor: pointer; }
+var[data-var-color="0"] { background-color: #F4D200; box-shadow: 0 0 0 2px #F4D200; }
+var[data-var-color="1"] { background-color: #FF87A2; box-shadow: 0 0 0 2px #FF87A2; }
+var[data-var-color="2"] { background-color: #96E885; box-shadow: 0 0 0 2px #96E885; }
+var[data-var-color="3"] { background-color: #3EEED2; box-shadow: 0 0 0 2px #3EEED2; }
+var[data-var-color="4"] { background-color: #EACFB6; box-shadow: 0 0 0 2px #EACFB6; }
+var[data-var-color="5"] { background-color: #82DDFF; box-shadow: 0 0 0 2px #82DDFF; }
+var[data-var-color="6"] { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
 </style>
  <body class="h-entry">
   <div class="head">
    <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/"> <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72"> </a> </p>
    <h1>Clear Site Data</h1>
-   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2023-11-10">10 November 2023</time></p>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types#ED">Editor’s Draft</a>, <time class="dt-updated" datetime="2024-02-07">7 February 2024</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -782,15 +835,14 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
     </div>
    </details>
    <div data-fill-with="warning"></div>
-   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2023 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2024 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply. </p>
    <hr title="Separator for header">
   </div>
   <div class="p-summary" data-fill-with="abstract">
    <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
    <p>This document defines an imperative mechanism which allows web developers to
-
-  instruct a user agent to clear a site’s locally stored data related to a
-  host.</p>
+instruct a user agent to clear a site’s locally stored data related to a
+host.</p>
   </div>
   <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
   <div data-fill-with="status">
@@ -992,6 +1044,8 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
      <li data-md>
       <p>The <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache">Accept-CH cache</a> for an origin is purged.</p>
      <li data-md>
+      <p>The <a data-link-type="dfn" href="https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#" id="ref-for-something">compression dictionaries</a> for an origin is purged.</p>
+     <li data-md>
       <p>None of the above can be bypassed by a maliciously active document that
   retains interesting data in memory, and rewrites it if it’s cleared.</p>
     </ol>
@@ -1026,7 +1080,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   cached data associated with the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url">url</a>. This includes the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc7234#section-2" id="ref-for-section-2">network
   cache</a>, of course, but will also remove data from various other caches
   which a user agent implements (prerendered pages, script caches, shader
-  caches, <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache①">Accept-CH cache</a>, etc.).</p>
+  caches, <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache①">Accept-CH cache</a>, <a data-link-type="dfn" href="https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#" id="ref-for-something①">compression dictionaries</a>, etc.).</p>
       <p>Implementation details are in <a href="#clear-cache">§ 4.2.3 Clear cache for origin</a>.</p>
       <div class="example" id="example-b245894e">
        <a class="self-link" href="#example-b245894e"></a> When delivered with a response from <code>https://example.com/clear</code>,
@@ -1051,8 +1105,8 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
 <pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data⑦">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies④">cookies</a>"
 </pre>
       </div>
-      <p class="note" role="note"><span class="marker">Note:</span> Clearing cookies should also clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2②">origin</a>. This is because the cache is also cleared if the user
-  manually clears cookies.</p>
+      <p class="note" role="note"><span class="marker">Note:</span> Clearing cookies should also clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache②">Accept-CH cache</a> and <a data-link-type="dfn" href="https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#" id="ref-for-something②">compression dictionaries</a> for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2②">origin</a>. This is because the cache
+  is also cleared if the user manually clears cookies.</p>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-storage"><code>storage</code></dfn>"
      <dd data-md>
       <p>The "<code>storage</code>" type indicates that the server wishes to remove
@@ -1088,6 +1142,19 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
       </div>
       <p class="note" role="note"><span class="marker">Note:</span> The <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑤">Accept-CH cache</a> is also cleared for the <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑤">cache</a> and <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑤">cookies</a> options, so it should be used only when neither of the
   other options (or <a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-">*</a>) are applied.</p>
+     <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-dictionaries"><code>dictionaries</code></dfn>"
+     <dd data-md>
+      <p>The "<code>dictionaries</code>" type indicates that the server wishes clear the <a data-link-type="dfn" href="https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#" id="ref-for-something③">compression dictionaries</a> for the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑥">origin</a> of a particular <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑤">response</a>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑤">url</a>.</p>
+      <div class="example" id="example-0ef881ca">
+       <a class="self-link" href="#example-0ef881ca"></a> When delivered with a response from <code>https://example.com/clear</code>,
+    the following header will cause the <a data-link-type="dfn" href="https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#" id="ref-for-something④">compression dictionaries</a> for 
+    origin <code>https://example.com</code> to be cleared: 
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①①">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-dictionaries" id="ref-for-grammardef-dictionaries">dictionaries</a>"
+</pre>
+      </div>
+      <p class="note" role="note"><span class="marker">Note:</span> The <a data-link-type="dfn" href="https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#" id="ref-for-something⑤">compression dictionaries</a> is also cleared for the <a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑥">cache</a> and <a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑥">cookies</a> options, so it should be
+  used only when neither of the other options (or <a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-①">*</a>) are
+  applied.</p>
      <dt data-md>"<dfn class="dfn-paneled" data-dfn-type="grammar" data-export id="grammardef-"><code>*</code></dfn>"
      <dd data-md>
       <p>The "<code>*</code>" (wildcard) pseudotype indicates that the server has the same
@@ -1098,7 +1165,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
     storage associated with the origin <code>https://example.com</code> to be cleared,
     as well as execution contexts for the same origin to be neutered and
     reloaded: 
-<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①①">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-①">*</a>"
+<pre><a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①②">Clear-Site-Data</a>: "<a data-link-type="grammar" href="#grammardef-" id="ref-for-grammardef-②">*</a>"
 </pre>
       </div>
       <div class="note" role="note">
@@ -1114,17 +1181,17 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
     </dl>
     <p class="note" role="note"><span class="marker">Note:</span> The syntax defined here is compatible with future extensions to this document which might
   add more granular filtering mechanisms to the types we’ve defined. For example, it’s likely that
-  "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑥"><code>cookies</code></a>" will need to grow a mechanism to prevent deletion of specific cookie
+  "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑦"><code>cookies</code></a>" will need to grow a mechanism to prevent deletion of specific cookie
   values. Wrapping all of the type names in double-quotes means that we can easily shift from
   simple splitting-strings-on-commas processing to something more complicated (like processing the
   header value as JSON) without losing backwards compatibility.</p>
     <h3 class="heading settled" data-level="3.2" id="fetch-integration"><span class="secno">3.2. </span><span class="content">Fetch Integration</span><a class="self-link" href="#fetch-integration"></a></h3>
     <p class="issue" id="issue-3ded38d3"><a class="self-link" href="#issue-3ded38d3"></a> Monkey patching! Talk with Anne.</p>
-    <p>If the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①②"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑤">response</a> received from the network, then data MUST be cleared before rendering the
+    <p>If the <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①③"><code>Clear-Site-Data</code></a> header is present in an HTTP <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑥">response</a> received from the network, then data MUST be cleared before rendering the
   response to the user. That is, after step #14 in the current <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-http-network-fetch" id="ref-for-concept-http-network-fetch">HTTP-network fetch</a> algorithm, execute the following step:</p>
     <ol start="15">
      <li data-md>
-      <p>If <var>credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-header-list" id="ref-for-concept-response-header-list">header list</a> contains a header named <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①③"><code>Clear-Site-Data</code></a>, then
+      <p>If <var>credentials flag</var> is set, and <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-header-list" id="ref-for-concept-response-header-list">header list</a> contains a header named <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①④"><code>Clear-Site-Data</code></a>, then
    execute <a href="#clear-response">§ 4.2 Clear data for response</a> on <var>response</var>.</p>
     </ol>
     <p class="note" role="note"><span class="marker">Note:</span> This happens <em>after</em> <code>Set-Cookie</code> headers are
@@ -1134,13 +1201,13 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   using the <code>Set-Cookie</code> header.</p>
     <p class="note" role="note"><span class="marker">Note:</span> If we clear the <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑥">Accept-CH cache</a> via the <code>Clear-Site-Data</code> header then any <code>Accept-CH</code> and <code>Critical-CH</code> headers in the same request must be ignored.</p>
     <p class="note" role="note"><span class="marker">Note:</span> While the fetch <code>credentials flag</code> is intended to restrict the
-  modification of cookies, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①④"><code>Clear-Site-Data</code></a> applies the same restriction
+  modification of cookies, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑤"><code>Clear-Site-Data</code></a> applies the same restriction
   to all types for the sake of consistency.</p>
     <section>
      <section>
       <h2 class="heading settled" data-level="4" id="algorithms"><span class="secno">4. </span><span class="content">Algorithms</span><a class="self-link" href="#algorithms"></a></h2>
       <h3 class="heading settled algorithm" data-algorithm="Parsing" data-level="4.1" id="parsing"><span class="secno">4.1. </span><span class="content">Parsing</span><a class="self-link" href="#parsing"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑥">response</a>, the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="parse response" data-lt="parse response’s Clear-Site-Data header" id="abstract-opdef-parse-responses-clear-site-data-header">parse <var>response</var>’s <code>Clear-Site-Data</code> header</dfn>, returning a list of types, as follows:</p>
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑦">response</a>, the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="parse response" data-lt="parse response’s Clear-Site-Data header" id="abstract-opdef-parse-responses-clear-site-data-header">parse <var>response</var>’s <code>Clear-Site-Data</code> header</dfn>, returning a list of types, as follows:</p>
       <ol class="algorithm">
        <li data-md>
         <p>Let <var>types</var> be an empty list.</p>
@@ -1153,10 +1220,12 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
         <dl>
          <dt data-md>`<code>"cache"</code>`
          <dd data-md>
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑥">cache</a>" and "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints①">clientHints</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑦">cache</a>" and "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints①">clientHints</a>" and
+  "<a data-link-type="grammar" href="#grammardef-dictionaries" id="ref-for-grammardef-dictionaries①">dictionaries</a>" to <var>types</var>.</p>
          <dt data-md>`<code>"cookies"</code>`
          <dd data-md>
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑦">cookies</a>" and "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints②">clientHints</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑧">cookies</a>" and "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints②">clientHints</a>" and
+  "<a data-link-type="grammar" href="#grammardef-dictionaries" id="ref-for-grammardef-dictionaries②">dictionaries</a>" to <var>types</var>.</p>
          <dt data-md>`<code>"storage"</code>`
          <dd data-md>
           <p>Append "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑤">storage</a>" to <var>types</var>.</p>
@@ -1166,10 +1235,14 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
          <dt data-md>`<code>"clientHints"</code>`
          <dd data-md>
           <p>Append "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints③">clientHints</a>" to <var>types</var>.</p>
+         <dt data-md>`<code>"dictionaries"</code>`
+         <dd data-md>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-dictionaries" id="ref-for-grammardef-dictionaries③">dictionaries</a>" to <var>types</var>.</p>
          <dt data-md>`<code>"*"</code>`
          <dd data-md>
-          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑦">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑧">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑥">storage</a>",
-  "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints④">clientHints</a>", and "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑥">executionContexts</a>" to <var>types</var>.</p>
+          <p>Append "<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑧">cache</a>", "<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑨">cookies</a>", "<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑥">storage</a>",
+  "<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints④">clientHints</a>", and "<a data-link-type="grammar" href="#grammardef-dictionaries" id="ref-for-grammardef-dictionaries④">dictionaries</a>", and
+  "<a data-link-type="grammar" href="#grammardef-executioncontexts" id="ref-for-grammardef-executioncontexts⑥">executionContexts</a>" to <var>types</var>.</p>
         </dl>
        <li data-md>
         <p>Return <var>types</var>.</p>
@@ -1177,15 +1250,15 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
       <p class="note" role="note"><span class="marker">Note:</span> All of the existing values can be handled with the simple switch above. If and when more
   complex type definitions are created, the parser will likely shift over to JSON entirely.</p>
       <h3 class="heading settled algorithm" data-algorithm="Clear data for response" data-level="4.2" id="clear-response"><span class="secno">4.2. </span><span class="content"> Clear data for <var>response</var> </span><a class="self-link" href="#clear-response"></a></h3>
-      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑦">response</a> (<var>response</var>), the user agent can <dfn data-dfn-type="abstract-op" data-export data-lt="clear site data for response" id="abstract-opdef-clear-site-data-for-response">clear site data for <var>response</var><a class="self-link" href="#abstract-opdef-clear-site-data-for-response"></a></dfn> as follows:</p>
+      <p>Given a <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response" id="ref-for-concept-response⑧">response</a> (<var>response</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-lt="clear site data for response" id="abstract-opdef-clear-site-data-for-response">clear site data for <var>response</var></dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md>
-        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑤">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated
+        <p>If <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑥">url</a> is not an <a data-link-type="dfn" href="https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url" id="ref-for-a-priori-authenticated-url"><i lang="la">a priori</i> authenticated
   URL</a>, then <a data-link-type="dfn" href="https://infra.spec.whatwg.org/#iteration-break" id="ref-for-iteration-break">break</a>.</p>
        <li data-md>
         <p>Let <var>types</var> be the result of <a data-link-type="abstract-op" href="#abstract-opdef-parse-responses-clear-site-data-header" id="ref-for-abstract-opdef-parse-responses-clear-site-data-header">parsing <var>response</var>’s <code>Clear-Site-Data</code> header</a>.</p>
        <li data-md>
-        <p>Let <var>origin</var> be <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑥">url</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>.</p>
+        <p>Let <var>origin</var> be <var>response</var>’s <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#concept-response-url" id="ref-for-concept-response-url⑦">url</a>'s <a data-link-type="dfn" href="https://url.spec.whatwg.org/#concept-url-origin" id="ref-for-concept-url-origin">origin</a>.</p>
        <li data-md>
         <p>Let <var>browsing contexts</var> be the result of <a data-link-type="abstract-op" href="#abstract-opdef-prepare-to-clear-origins-data" id="ref-for-abstract-opdef-prepare-to-clear-origins-data">preparing to clear
   data</a> for <var>origin</var> and <var>types</var>.</p>
@@ -1195,10 +1268,10 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
          <li data-md>
           <p>Execute the first matching statement, if any, switching on <var>type</var>:</p>
           <dl>
-           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑧"><code>cache</code></a>"
+           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cache" id="ref-for-grammardef-cache⑨"><code>cache</code></a>"
            <dd data-md>
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cache-for-origin" id="ref-for-abstract-opdef-clear-cache-for-origin">Clear cache for <var>origin</var></a>.</p>
-           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies⑨"><code>cookies</code></a>"
+           <dt data-md>"<a data-link-type="grammar" href="#grammardef-cookies" id="ref-for-grammardef-cookies①⓪"><code>cookies</code></a>"
            <dd data-md>
             <p><a data-link-type="abstract-op" href="#abstract-opdef-clear-cookies-for-origin" id="ref-for-abstract-opdef-clear-cookies-for-origin">Clear cookies for <var>origin</var></a>.</p>
            <dt data-md>"<a data-link-type="grammar" href="#grammardef-storage" id="ref-for-grammardef-storage⑦"><code>storage</code></a>"
@@ -1207,6 +1280,9 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
            <dt data-md>"<a data-link-type="grammar" href="#grammardef-clienthints" id="ref-for-grammardef-clienthints⑤"><code>clientHints</code></a>"
            <dd data-md>
             <p><a data-link-type="dfn" href="https://infra.spec.whatwg.org/#list-empty" id="ref-for-list-empty">Empty</a> <a data-link-type="dfn" href="https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache" id="ref-for-accept-ch-cache⑦">Accept-CH cache</a>[<var>origin</var>].</p>
+           <dt data-md>"<a data-link-type="grammar" href="#grammardef-dictionaries" id="ref-for-grammardef-dictionaries⑤"><code>dictionaries</code></a>"
+           <dd data-md>
+            <p>Clear <a data-link-type="dfn" href="https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#" id="ref-for-something⑥">compression dictionaries</a> for <var>origin</var>.</p>
           </dl>
         </ol>
        <li data-md>
@@ -1216,7 +1292,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   operation can be debugged. This might take the form of a console message or timeline entry
   indicating success.</p>
       <h4 class="heading settled algorithm" data-algorithm="Prepare to clear origin’s data" data-level="4.2.1" id="prepare"><span class="secno">4.2.1. </span><span class="content"> Prepare to clear <var>origin</var>’s data </span><a class="self-link" href="#prepare"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑥">origin</a> (<var>origin</var>) and a list of types (<var>types</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="prepare" id="abstract-opdef-prepare-to-clear-origins-data">prepare to clear <var>origin</var>’s data</dfn> by executing
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑦">origin</a> (<var>origin</var>) and a list of types (<var>types</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="prepare" id="abstract-opdef-prepare-to-clear-origins-data">prepare to clear <var>origin</var>’s data</dfn> by executing
   the following steps. The algorithm returns a list of <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context" id="ref-for-browsing-context">browsing contexts</a> which have been
   sandboxed in order to prevent them from recreating cleared data from in-memory JavaScript
   variables.</p>
@@ -1254,7 +1330,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
         </ol>
       </ol>
       <h4 class="heading settled" data-level="4.2.3" id="clear-cache"><span class="secno">4.2.3. </span><span class="content"> Clear cache for <var>origin</var> </span><a class="self-link" href="#clear-cache"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑦">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cache" id="abstract-opdef-clear-cache-for-origin">clear cache for <var>origin</var></dfn> as follows:</p>
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑧">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cache" id="abstract-opdef-clear-cache-for-origin">clear cache for <var>origin</var></dfn> as follows:</p>
       <ol class="algorithm">
        <li data-md>
         <p>Let <var>host</var> be <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host">host</a>.</p>
@@ -1276,8 +1352,8 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   aren’t representations (HSTS/HPKP, SCDH, etc.). Perhaps <a data-link-type="biblio" href="#biblio-storage" title="Storage Standard">[STORAGE]</a> will make this clearer?</p>
       </ol>
       <h4 class="heading settled" data-level="4.2.4" id="clear-cookies"><span class="secno">4.2.4. </span><span class="content"> Clear cookies for <var>origin</var> </span><a class="self-link" href="#clear-cookies"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑧">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cookies" id="abstract-opdef-clear-cookies-for-origin">clear cookies for <var>origin</var></dfn> as follows:</p>
-      <p class="note" role="note"><span class="marker">Note:</span> We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something">registered domain</a>, as cookies ignore the
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑨">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear cookies" id="abstract-opdef-clear-cookies-for-origin">clear cookies for <var>origin</var></dfn> as follows:</p>
+      <p class="note" role="note"><span class="marker">Note:</span> We remove all the cookies for an entire <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something⑦">registered domain</a>, as cookies ignore the
   same-origin policy, and there’s a distinct risk that we’d leave applications in an ill-defined
   state if we only cleared cookies for a particular subdomain. Consider <code>accounts.google.com</code> vs <code>mail.google.com</code>, for instance, both of which have cookies that signal a user’s signed-in status.</p>
       <p class="note" role="note"><span class="marker">Note:</span> This algorithm assumes that the user agent has implemented a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3" id="ref-for-section-5.3">cookie store</a> (as
@@ -1285,7 +1361,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   by host, and to remove individual cookies.</p>
       <ol class="algorithm">
        <li data-md>
-        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something①">registered domain</a> of <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a>.</p>
+        <p>Let <var>registered</var> be the <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something⑧">registered domain</a> of <var>origin</var>’s <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host①">host</a>.</p>
        <li data-md>
         <p>Let <var>cookie list</var> be the set of cookies from the <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.3" id="ref-for-section-5.3①">cookie
   store</a> whose <code>domain</code> attribute is a <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6265#section-5.1.3" id="ref-for-section-5.1.3">domain-match</a> with <var>registered</var>.</p>
@@ -1297,18 +1373,18 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
         </ol>
        <li data-md>
         <p>If the user agent supports other forms of cookie-like storage, these MUST also be cleared
-  for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2⑨">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host②">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something②">registered domain</a> is <var>registered</var>.</p>
+  for <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①⓪">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host②">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something⑨">registered domain</a> is <var>registered</var>.</p>
         <p class="note" role="note"><span class="marker">Note:</span> For example, if the user agent supports Flash, its local stored objects will be
   cleared via <a href="https://wiki.mozilla.org/NPAPI:ClearSiteData">NPP_ClearSiteData</a>.</p>
        <li data-md>
-        <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid" title="Transport Layer Security (TLS) Channel IDs">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind" title="The Token Binding Protocol Version 1.0">[TOKBIND]</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①⓪">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host③">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something③">registered domain</a> is <var>registered</var>.</p>
+        <p>Clear any Channel IDs <a data-link-type="biblio" href="#biblio-channelid" title="Transport Layer Security (TLS) Channel IDs">[CHANNELID]</a> and bound tokens <a data-link-type="biblio" href="#biblio-tokbind" title="The Token Binding Protocol Version 1.0">[TOKBIND]</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①①">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host③">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something①⓪">registered domain</a> is <var>registered</var>.</p>
        <li data-md>
-        <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry" id="ref-for-authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry" id="ref-for-proxy-authentication-entry">proxy-authentication entries</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①①">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host④">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something④">registered domain</a> is <var>registered</var>.</p>
+        <p>Clear <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#authentication-entry" id="ref-for-authentication-entry">authentication entries</a> and <a data-link-type="dfn" href="https://fetch.spec.whatwg.org/#proxy-authentication-entry" id="ref-for-proxy-authentication-entry">proxy-authentication entries</a> associated with <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①②">origins</a> whose <a data-link-type="dfn" href="https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host" id="ref-for-concept-origin-host④">host</a>'s <a data-link-type="dfn" href="https://publicsuffix.org/list/#" id="ref-for-something①①">registered domain</a> is <var>registered</var>.</p>
       </ol>
       <p class="issue" id="issue-036b8c98"><a class="self-link" href="#issue-036b8c98"></a> The process of clearing both bound
   tokens/IDs and HTTP authentication is super hand-wavey. <a href="https://github.com/w3c/webappsec-clear-site-data/issues/2">[Issue #w3c/webappsec-clear-site-data#2]</a></p>
       <h4 class="heading settled" data-level="4.2.5" id="clear-dom"><span class="secno">4.2.5. </span><span class="content"> Clear DOM-accessible storage for <var>origin</var> </span><a class="self-link" href="#clear-dom"></a></h4>
-      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①②">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear storage" id="abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for <var>origin</var></dfn> as
+      <p>Given an <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①③">origin</a> (<var>origin</var>), the user agent can <dfn class="dfn-paneled" data-dfn-type="abstract-op" data-export data-local-lt="clear storage" id="abstract-opdef-clear-dom-accessible-storage-for-origin">clear DOM-accessible storage for <var>origin</var></dfn> as
   follows:</p>
       <ol class="algorithm">
        <li data-md>
@@ -1316,7 +1392,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   areas</a> <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a>:</p>
         <ol>
          <li data-md>
-          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①③">origin</a> is <var>origin</var>:</p>
+          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①④">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md>
             <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear" id="ref-for-dom-storage-clear">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#storage-2" id="ref-for-storage-2">Storage</a></code> object associated
@@ -1328,7 +1404,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   areas</a> <a data-link-type="biblio" href="#biblio-html" title="HTML Standard">[HTML]</a>:</p>
         <ol>
          <li data-md>
-          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①④">origin</a> is <var>origin</var>:</p>
+          <p>If <var>area</var>’s <a data-link-type="dfn" href="https://tools.ietf.org/html/rfc6454#section-3.2" id="ref-for-section-3.2①⑤">origin</a> is <var>origin</var>:</p>
           <ol>
            <li data-md>
             <p>Execute <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear" id="ref-for-dom-storage-clear①">clear()</a></code> on the <code class="idl"><a data-link-type="idl" href="https://html.spec.whatwg.org/multipage/webstorage.html#storage-2" id="ref-for-storage-2①">Storage</a></code> object associated
@@ -1399,7 +1475,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   use case in <a href="#example-killswitch">§ 1.1.4 Kill Switch</a>.</p>
       <h2 class="heading settled" data-level="6" id="privacy"><span class="secno">6. </span><span class="content">Privacy Considerations</span><a class="self-link" href="#privacy"></a></h2>
       <h3 class="heading settled" data-level="6.1" id="user-vs-author"><span class="secno">6.1. </span><span class="content">Web developers control the timing.</span><a class="self-link" href="#user-vs-author"></a></h3>
-      <p>If triggered at appropriate times, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑤"><code>Clear-Site-Data</code></a> can
+      <p>If triggered at appropriate times, <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑥"><code>Clear-Site-Data</code></a> can
   increase a user’s privacy and security by clearing sensitive data from their
   user agent. However, note that the web developer (and <em>not</em> the user)
   is in control of when the clearing event is triggered. Even assuming a
@@ -1413,7 +1489,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
   developers. Ideally, they will offer significantly more than we can offer at
   a platform level (clearing browsing history, for example).</p>
       <h3 class="heading settled" data-level="6.2" id="remnants"><span class="secno">6.2. </span><span class="content">Remnants of data on disk.</span><a class="self-link" href="#remnants"></a></h3>
-      <p>While <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑥"><code>Clear-Site-Data</code></a> triggers a clearing event in a
+      <p>While <a data-link-type="http-header" href="#http-headerdef-clear-site-data" id="ref-for-http-headerdef-clear-site-data①⑦"><code>Clear-Site-Data</code></a> triggers a clearing event in a
   user’s agent, it is difficult to make promises about the state of a user’s
   disk after a clearing event takes place. In particular, note that it is up
   to the user agent to ensure that all traces of a site’s date is actually
@@ -1469,6 +1545,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
    <li><a href="#abstract-opdef-clear-dom-accessible-storage-for-origin">clear storage</a><span>, in § 4.2.5</span>
    <li><a href="#grammardef-clienthints">clientHints</a><span>, in § 3.1</span>
    <li><a href="#grammardef-cookies">cookies</a><span>, in § 3.1</span>
+   <li><a href="#grammardef-dictionaries">dictionaries</a><span>, in § 3.1</span>
    <li><a href="#grammardef-executioncontexts">executionContexts</a><span>, in § 3.1</span>
    <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response</a><span>, in § 4.1</span>
    <li><a href="#abstract-opdef-parse-responses-clear-site-data-header">parse response’s Clear-Site-Data header</a><span>, in § 4.1</span>
@@ -1484,6 +1561,11 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
     <a data-link-type="biblio">[CLIENT-HINTS-INFRASTRUCTURE]</a> defines the following terms:
     <ul>
      <li><span class="dfn-paneled" id="55155baf">accept-ch cache</span>
+    </ul>
+   <li>
+    <a data-link-type="biblio">[COMPRESSION DICTIONARY TRANSPORT]</a> defines the following terms:
+    <ul>
+     <li><span class="dfn-paneled" id="0d1fcd41">compression dictionary</span>
     </ul>
    <li>
     <a data-link-type="biblio">[FETCH]</a> defines the following terms:
@@ -1611,7 +1693,7 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
    <dt id="biblio-rfc7234">[RFC7234]
    <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc7234.html"><cite>Hypertext Transfer Protocol (HTTP/1.1): Caching</cite></a>. June 2014. Proposed Standard. URL: <a href="https://httpwg.org/specs/rfc7234.html">https://httpwg.org/specs/rfc7234.html</a>
    <dt id="biblio-rfc7235">[RFC7235]
-   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://www.rfc-editor.org/rfc/rfc9110"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc9110">https://www.rfc-editor.org/rfc/rfc9110</a>
+   <dd>R. Fielding, Ed.; M. Nottingham, Ed.; J. Reschke, Ed.. <a href="https://httpwg.org/specs/rfc9110.html"><cite>HTTP Semantics</cite></a>. June 2022. Internet Standard. URL: <a href="https://httpwg.org/specs/rfc9110.html">https://httpwg.org/specs/rfc9110.html</a>
    <dt id="biblio-rfc7405">[RFC7405]
    <dd>P. Kyzivat. <a href="https://www.rfc-editor.org/rfc/rfc7405"><cite>Case-Sensitive String Support in ABNF</cite></a>. December 2014. Proposed Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc7405">https://www.rfc-editor.org/rfc/rfc7405</a>
    <dt id="biblio-service-workers">[SERVICE-WORKERS]
@@ -1662,371 +1744,8 @@ var.selected6 { background-color: #FFBCF2; box-shadow: 0 0 0 2px #FFBCF2; }
     </div>
    </div>
   </details>
-<script>/* Boilerplate: script-dfn-panel */
-"use strict";
-{
-    const dfnsJson = window.dfnsJson || {};
-
-    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
-        return mk.aside({
-            class: "dfn-panel",
-            id: `infopanel-for-${dfnID}`,
-            "data-for": dfnID,
-            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
-            },
-            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
-                `Info about the '${dfnText}' ${external?"external":""} reference.`),
-            mk.a({href:url}, url),
-            mk.b({}, "Referenced in:"),
-            mk.ul({},
-                ...refSections.map(section=>
-                    mk.li({},
-                        ...section.refs.map((ref, refI)=>
-                            [
-                                mk.a({
-                                    href: `#${ref.id}`
-                                    },
-                                    (refI == 0) ? section.title : `(${refI + 1})`
-                                ),
-                                " ",
-                            ]
-                        ),
-                    ),
-                ),
-            ),
-        );
-    }
-
-    function genAllDfnPanels() {
-        for(const panelData of Object.values(window.dfnpanelData)) {
-            const dfnID = panelData.dfnID;
-            const dfn = document.getElementById(dfnID);
-            if(!dfn) {
-                console.log(`Can't find dfn#${dfnID}.`, panelData);
-            } else {
-                const panel = genDfnPanel(panelData);
-                append(document.body, panel);
-                insertDfnPopupAction(dfn, panel)
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-        genAllDfnPanels();
-
-        // Add popup behavior to all dfns to show the corresponding dfn-panel.
-        var dfns = queryAll('.dfn-paneled');
-        for(let dfn of dfns) { ; }
-
-        document.body.addEventListener("click", (e) => {
-            // If not handled already, just hide all dfn panels.
-            hideAllDfnPanels();
-        });
-    })
-
-
-    function hideAllDfnPanels() {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
-    }
-
-    function showDfnPanel(dfnPanel, dfn) {
-        hideAllDfnPanels(); // Only display one at this time.
-        dfn.setAttribute("aria-expanded", "true");
-        dfnPanel.classList.add("on");
-        dfnPanel.style.left = "5px";
-        dfnPanel.style.top = "0px";
-        const panelRect = dfnPanel.getBoundingClientRect();
-        const panelWidth = panelRect.right - panelRect.left;
-        if (panelRect.right > document.body.scrollWidth) {
-            // Panel's overflowing the screen.
-            // Just drop it below the dfn and flip it rightward instead.
-            // This still wont' fix things if the screen is *really* wide,
-            // but fixing that's a lot harder without 'anchor()'.
-            dfnPanel.style.top = "1.5em";
-            dfnPanel.style.left = "auto";
-            dfnPanel.style.right = "0px";
-        }
-    }
-
-    function pinDfnPanel(dfnPanel) {
-        // Switch it to "activated" state, which pins it.
-        dfnPanel.classList.add("activated");
-        dfnPanel.style.left = null;
-        dfnPanel.style.top = null;
-    }
-
-    function hideDfnPanel(dfnPanel, dfn) {
-        if(!dfn) {
-            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
-        }
-        dfn.setAttribute("aria-expanded", "false")
-        dfnPanel.classList.remove("on");
-        dfnPanel.classList.remove("activated");
-    }
-
-    function toggleDfnPanel(dfnPanel, dfn) {
-        if(dfnPanel.classList.contains("on")) {
-            hideDfnPanel(dfnPanel, dfn);
-        } else {
-            showDfnPanel(dfnPanel, dfn);
-        }
-    }
-
-    function insertDfnPopupAction(dfn, dfnPanel) {
-        // Find dfn panel
-        const panelWrapper = document.createElement('span');
-        panelWrapper.appendChild(dfnPanel);
-        panelWrapper.style.position = "relative";
-        panelWrapper.style.height = "0px";
-        dfn.insertAdjacentElement("afterend", panelWrapper);
-        dfn.setAttribute('role', 'button');
-        dfn.setAttribute('aria-expanded', 'false')
-        dfn.tabIndex = 0;
-        dfn.classList.add('has-dfn-panel');
-        dfn.addEventListener('click', (event) => {
-            showDfnPanel(dfnPanel, dfn);
-            event.stopPropagation();
-        });
-        dfn.addEventListener('keypress', (event) => {
-            const kc = event.keyCode;
-            // 32->Space, 13->Enter
-            if(kc == 32 || kc == 13) {
-                toggleDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-
-        dfnPanel.addEventListener('click', (event) => {
-            if (event.target.nodeName == 'A') {
-                pinDfnPanel(dfnPanel);
-            }
-            event.stopPropagation();
-        });
-
-        dfnPanel.addEventListener('keydown', (event) => {
-            if(event.keyCode == 27) { // Escape key
-                hideDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        })
-    }
-}
-</script>
-<script>/* Boilerplate: script-dfn-panel */
-"use strict";
-{
-    const dfnsJson = window.dfnsJson || {};
-
-    function genDfnPanel({dfnID, url, dfnText, refSections, external}) {
-        return mk.aside({
-            class: "dfn-panel",
-            id: `infopanel-for-${dfnID}`,
-            "data-for": dfnID,
-            "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
-            },
-            mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
-                `Info about the '${dfnText}' ${external?"external":""} reference.`),
-            mk.a({href:url}, url),
-            mk.b({}, "Referenced in:"),
-            mk.ul({},
-                ...refSections.map(section=>
-                    mk.li({},
-                        ...section.refs.map((ref, refI)=>
-                            [
-                                mk.a({
-                                    href: `#${ref.id}`
-                                    },
-                                    (refI == 0) ? section.title : `(${refI + 1})`
-                                ),
-                                " ",
-                            ]
-                        ),
-                    ),
-                ),
-            ),
-        );
-    }
-
-    function genAllDfnPanels() {
-        for(const panelData of Object.values(window.dfnpanelData)) {
-            const dfnID = panelData.dfnID;
-            const dfn = document.getElementById(dfnID);
-            if(!dfn) {
-                console.log(`Can't find dfn#${dfnID}.`, panelData);
-            } else {
-                const panel = genDfnPanel(panelData);
-                append(document.body, panel);
-                insertDfnPopupAction(dfn, panel)
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", ()=>{
-        genAllDfnPanels();
-
-        // Add popup behavior to all dfns to show the corresponding dfn-panel.
-        var dfns = queryAll('.dfn-paneled');
-        for(let dfn of dfns) { ; }
-
-        document.body.addEventListener("click", (e) => {
-            // If not handled already, just hide all dfn panels.
-            hideAllDfnPanels();
-        });
-    })
-
-
-    function hideAllDfnPanels() {
-        // Turn off any currently "on" or "activated" panels.
-        queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>hideDfnPanel(el));
-    }
-
-    function showDfnPanel(dfnPanel, dfn) {
-        hideAllDfnPanels(); // Only display one at this time.
-        dfn.setAttribute("aria-expanded", "true");
-        dfnPanel.classList.add("on");
-        dfnPanel.style.left = "5px";
-        dfnPanel.style.top = "0px";
-        const panelRect = dfnPanel.getBoundingClientRect();
-        const panelWidth = panelRect.right - panelRect.left;
-        if (panelRect.right > document.body.scrollWidth) {
-            // Panel's overflowing the screen.
-            // Just drop it below the dfn and flip it rightward instead.
-            // This still wont' fix things if the screen is *really* wide,
-            // but fixing that's a lot harder without 'anchor()'.
-            dfnPanel.style.top = "1.5em";
-            dfnPanel.style.left = "auto";
-            dfnPanel.style.right = "0px";
-        }
-    }
-
-    function pinDfnPanel(dfnPanel) {
-        // Switch it to "activated" state, which pins it.
-        dfnPanel.classList.add("activated");
-        dfnPanel.style.left = null;
-        dfnPanel.style.top = null;
-    }
-
-    function hideDfnPanel(dfnPanel, dfn) {
-        if(!dfn) {
-            dfn = document.getElementById(dfnPanel.getAttribute("data-for"));
-        }
-        dfn.setAttribute("aria-expanded", "false")
-        dfnPanel.classList.remove("on");
-        dfnPanel.classList.remove("activated");
-    }
-
-    function toggleDfnPanel(dfnPanel, dfn) {
-        if(dfnPanel.classList.contains("on")) {
-            hideDfnPanel(dfnPanel, dfn);
-        } else {
-            showDfnPanel(dfnPanel, dfn);
-        }
-    }
-
-    function insertDfnPopupAction(dfn, dfnPanel) {
-        // Find dfn panel
-        const panelWrapper = document.createElement('span');
-        panelWrapper.appendChild(dfnPanel);
-        panelWrapper.style.position = "relative";
-        panelWrapper.style.height = "0px";
-        dfn.insertAdjacentElement("afterend", panelWrapper);
-        dfn.setAttribute('role', 'button');
-        dfn.setAttribute('aria-expanded', 'false')
-        dfn.tabIndex = 0;
-        dfn.classList.add('has-dfn-panel');
-        dfn.addEventListener('click', (event) => {
-            showDfnPanel(dfnPanel, dfn);
-            event.stopPropagation();
-        });
-        dfn.addEventListener('keypress', (event) => {
-            const kc = event.keyCode;
-            // 32->Space, 13->Enter
-            if(kc == 32 || kc == 13) {
-                toggleDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        });
-
-        dfnPanel.addEventListener('click', (event) => {
-            if (event.target.nodeName == 'A') {
-                pinDfnPanel(dfnPanel);
-            }
-            event.stopPropagation();
-        });
-
-        dfnPanel.addEventListener('keydown', (event) => {
-            if(event.keyCode == 27) { // Escape key
-                hideDfnPanel(dfnPanel, dfn);
-                event.stopPropagation();
-                event.preventDefault();
-            }
-        })
-    }
-}
-</script>
-<script>/* Boilerplate: script-dfn-panel-json */
-window.dfnpanelData = {};
-window.dfnpanelData['55155baf'] = {"dfnID": "55155baf", "url": "https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache", "dfnText": "accept-ch cache", "refSections": [{"refs": [{"id": "ref-for-accept-ch-cache"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-accept-ch-cache\u2460"}, {"id": "ref-for-accept-ch-cache\u2461"}, {"id": "ref-for-accept-ch-cache\u2462"}, {"id": "ref-for-accept-ch-cache\u2463"}, {"id": "ref-for-accept-ch-cache\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-accept-ch-cache\u2465"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-accept-ch-cache\u2466"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
-window.dfnpanelData['4d1eae38'] = {"dfnID": "4d1eae38", "url": "https://fetch.spec.whatwg.org/#authentication-entry", "dfnText": "authentication entry", "refSections": [{"refs": [{"id": "ref-for-authentication-entry"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
-window.dfnpanelData['3be1d4ac'] = {"dfnID": "3be1d4ac", "url": "https://fetch.spec.whatwg.org/#extract-header-list-values", "dfnText": "extracting header list values", "refSections": [{"refs": [{"id": "ref-for-extract-header-list-values"}], "title": "4.1. Parsing"}], "external": true};
-window.dfnpanelData['f7b00a8b'] = {"dfnID": "f7b00a8b", "url": "https://fetch.spec.whatwg.org/#concept-response-header-list", "dfnText": "header list", "refSections": [{"refs": [{"id": "ref-for-concept-response-header-list"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-concept-response-header-list\u2460"}], "title": "4.1. Parsing"}], "external": true};
-window.dfnpanelData['d75f6c27'] = {"dfnID": "d75f6c27", "url": "https://fetch.spec.whatwg.org/#concept-http-network-fetch", "dfnText": "http-network fetch", "refSections": [{"refs": [{"id": "ref-for-concept-http-network-fetch"}], "title": "3.2. Fetch Integration"}], "external": true};
-window.dfnpanelData['aea6ce83'] = {"dfnID": "aea6ce83", "url": "https://fetch.spec.whatwg.org/#proxy-authentication-entry", "dfnText": "proxy-authentication entry", "refSections": [{"refs": [{"id": "ref-for-proxy-authentication-entry"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
-window.dfnpanelData['ee7bba09'] = {"dfnID": "ee7bba09", "url": "https://fetch.spec.whatwg.org/#concept-response", "dfnText": "response", "refSections": [{"refs": [{"id": "ref-for-concept-response"}, {"id": "ref-for-concept-response\u2460"}, {"id": "ref-for-concept-response\u2461"}, {"id": "ref-for-concept-response\u2462"}, {"id": "ref-for-concept-response\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-concept-response\u2464"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-concept-response\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-concept-response\u2466"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
-window.dfnpanelData['6d1db60d'] = {"dfnID": "6d1db60d", "url": "https://fetch.spec.whatwg.org/#request-service-workers-mode", "dfnText": "service-workers mode", "refSections": [{"refs": [{"id": "ref-for-request-service-workers-mode"}], "title": "5.2. Service workers"}], "external": true};
-window.dfnpanelData['3268a8eb'] = {"dfnID": "3268a8eb", "url": "https://fetch.spec.whatwg.org/#concept-response-url", "dfnText": "url", "refSections": [{"refs": [{"id": "ref-for-concept-response-url"}, {"id": "ref-for-concept-response-url\u2460"}, {"id": "ref-for-concept-response-url\u2461"}, {"id": "ref-for-concept-response-url\u2462"}, {"id": "ref-for-concept-response-url\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-concept-response-url\u2464"}, {"id": "ref-for-concept-response-url\u2465"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
-window.dfnpanelData['cc549724'] = {"dfnID": "cc549724", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#location", "dfnText": "Location", "refSections": [{"refs": [{"id": "ref-for-location"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
-window.dfnpanelData['b8bd9c92'] = {"dfnID": "b8bd9c92", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#storage-2", "dfnText": "Storage", "refSections": [{"refs": [{"id": "ref-for-storage-2"}, {"id": "ref-for-storage-2\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['35972864'] = {"dfnID": "35972864", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document", "dfnText": "active document", "refSections": [{"refs": [{"id": "ref-for-nav-document"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-nav-document\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
-window.dfnpanelData['0d0390b4'] = {"dfnID": "0d0390b4", "url": "https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context", "dfnText": "browsing context", "refSections": [{"refs": [{"id": "ref-for-browsing-context"}, {"id": "ref-for-browsing-context\u2460"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-browsing-context\u2461"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
-window.dfnpanelData['5956d5fd'] = {"dfnID": "5956d5fd", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear", "dfnText": "clear()", "refSections": [{"refs": [{"id": "ref-for-dom-storage-clear"}, {"id": "ref-for-dom-storage-clear\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['8a30477b'] = {"dfnID": "8a30477b", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global", "dfnText": "global object", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-global"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
-window.dfnpanelData['77a2ee6e'] = {"dfnID": "77a2ee6e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host", "dfnText": "host", "refSections": [{"refs": [{"id": "ref-for-concept-origin-host"}], "title": "4.2.3. \n    Clear cache for origin\n  "}, {"refs": [{"id": "ref-for-concept-origin-host\u2460"}, {"id": "ref-for-concept-origin-host\u2461"}, {"id": "ref-for-concept-origin-host\u2462"}, {"id": "ref-for-concept-origin-host\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
-window.dfnpanelData['3a2db83f'] = {"dfnID": "3a2db83f", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage", "dfnText": "localStorage", "refSections": [{"refs": [{"id": "ref-for-dom-localstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-localstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-localstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['43ac8374'] = {"dfnID": "43ac8374", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-settings-object-origin"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['53f0ea4e'] = {"dfnID": "53f0ea4e", "url": "https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive", "dfnText": "parse a sandboxing directive", "refSections": [{"refs": [{"id": "ref-for-parse-a-sandboxing-directive"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['9c4c1e66'] = {"dfnID": "9c4c1e66", "url": "https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object", "dfnText": "relevant settings object", "refSections": [{"refs": [{"id": "ref-for-relevant-settings-object"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-relevant-settings-object\u2460"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
-window.dfnpanelData['383f2689'] = {"dfnID": "383f2689", "url": "https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload", "dfnText": "reload()", "refSections": [{"refs": [{"id": "ref-for-dom-location-reload"}], "title": "4.2.2. \n    Reload browsing contexts\n  "}], "external": true};
-window.dfnpanelData['7a899a17'] = {"dfnID": "7a899a17", "url": "https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage", "dfnText": "sessionStorage", "refSections": [{"refs": [{"id": "ref-for-dom-sessionstorage"}], "title": "1.2. Goals"}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dom-sessionstorage\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['17c3a312'] = {"dfnID": "17c3a312", "url": "https://w3c.github.io/IndexedDB/#database", "dfnText": "database", "refSections": [{"refs": [{"id": "ref-for-database"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['b1f47c2a'] = {"dfnID": "b1f47c2a", "url": "https://w3c.github.io/IndexedDB/#delete-a-database", "dfnText": "delete a database", "refSections": [{"refs": [{"id": "ref-for-delete-a-database"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['53275e46'] = {"dfnID": "53275e46", "url": "https://infra.spec.whatwg.org/#list-append", "dfnText": "append", "refSections": [{"refs": [{"id": "ref-for-list-append"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['7b0d918d'] = {"dfnID": "7b0d918d", "url": "https://infra.spec.whatwg.org/#iteration-break", "dfnText": "break", "refSections": [{"refs": [{"id": "ref-for-iteration-break"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
-window.dfnpanelData['ae8def21'] = {"dfnID": "ae8def21", "url": "https://infra.spec.whatwg.org/#list-contain", "dfnText": "contain", "refSections": [{"refs": [{"id": "ref-for-list-contain"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['f937b7b6'] = {"dfnID": "f937b7b6", "url": "https://infra.spec.whatwg.org/#iteration-continue", "dfnText": "continue", "refSections": [{"refs": [{"id": "ref-for-iteration-continue"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": true};
-window.dfnpanelData['03afaf9c'] = {"dfnID": "03afaf9c", "url": "https://infra.spec.whatwg.org/#list-empty", "dfnText": "empty", "refSections": [{"refs": [{"id": "ref-for-list-empty"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
-window.dfnpanelData['4d8718f0'] = {"dfnID": "4d8718f0", "url": "https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url", "dfnText": "a priori authenticated url", "refSections": [{"refs": [{"id": "ref-for-a-priori-authenticated-url"}], "title": "4.2. \n    Clear data for response\n  "}], "external": true};
-window.dfnpanelData['aba5485c'] = {"dfnID": "aba5485c", "url": "https://publicsuffix.org/list/#", "dfnText": "registered domain", "refSections": [{"refs": [{"id": "ref-for-something"}, {"id": "ref-for-something\u2460"}, {"id": "ref-for-something\u2461"}, {"id": "ref-for-something\u2462"}, {"id": "ref-for-something\u2463"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
-window.dfnpanelData['19353784'] = {"dfnID": "19353784", "url": "https://tools.ietf.org/html/rfc6265#section-5.3", "dfnText": "cookie store", "refSections": [{"refs": [{"id": "ref-for-section-5.3"}, {"id": "ref-for-section-5.3\u2460"}, {"id": "ref-for-section-5.3\u2461"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
-window.dfnpanelData['50fbbdc5'] = {"dfnID": "50fbbdc5", "url": "https://tools.ietf.org/html/rfc6265#section-5.1.3", "dfnText": "domain-match", "refSections": [{"refs": [{"id": "ref-for-section-5.1.3"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}], "external": true};
-window.dfnpanelData['c99fa6fa'] = {"dfnID": "c99fa6fa", "url": "https://tools.ietf.org/html/rfc6454#section-3.2", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-section-3.2"}, {"id": "ref-for-section-3.2\u2460"}, {"id": "ref-for-section-3.2\u2461"}, {"id": "ref-for-section-3.2\u2462"}, {"id": "ref-for-section-3.2\u2463"}, {"id": "ref-for-section-3.2\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2465"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2466"}], "title": "4.2.3. \n    Clear cache for origin\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2467"}, {"id": "ref-for-section-3.2\u2468"}, {"id": "ref-for-section-3.2\u2460\u24ea"}, {"id": "ref-for-section-3.2\u2460\u2460"}], "title": "4.2.4. \n    Clear cookies for origin\n  "}, {"refs": [{"id": "ref-for-section-3.2\u2460\u2461"}, {"id": "ref-for-section-3.2\u2460\u2462"}, {"id": "ref-for-section-3.2\u2460\u2463"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['79dfb502'] = {"dfnID": "79dfb502", "url": "https://tools.ietf.org/html/rfc7230#section-7", "dfnText": "#rule", "refSections": [{"refs": [{"id": "a04f67f90"}], "title": "2. Infrastructure"}, {"refs": [{"id": "ref-for-section-7"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}], "external": true};
-window.dfnpanelData['469becd8'] = {"dfnID": "469becd8", "url": "https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6", "dfnText": "quoted-string", "refSections": [{"refs": [{"id": "ref-for-section-3.2.6"}, {"id": "ref-for-section-3.2.6\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}], "external": true};
-window.dfnpanelData['2f79c38f'] = {"dfnID": "2f79c38f", "url": "https://tools.ietf.org/html/rfc7234#section-2", "dfnText": "network cache", "refSections": [{"refs": [{"id": "ref-for-section-2"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-section-2\u2460"}, {"id": "ref-for-section-2\u2461"}, {"id": "ref-for-section-2\u2462"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
-window.dfnpanelData['fc627dec'] = {"dfnID": "fc627dec", "url": "https://w3c.github.io/ServiceWorker/#dfn-scope-url", "dfnText": "scope url", "refSections": [{"refs": [{"id": "ref-for-dfn-scope-url"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['02406c7f'] = {"dfnID": "02406c7f", "url": "https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration", "dfnText": "service worker registration", "refSections": [{"refs": [{"id": "ref-for-dfn-service-worker-registration"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-dfn-service-worker-registration\u2460"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['fcb44595'] = {"dfnID": "fcb44595", "url": "https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister", "dfnText": "unregister()", "refSections": [{"refs": [{"id": "ref-for-dom-serviceworkerregistration-unregister"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['b85ee3be'] = {"dfnID": "b85ee3be", "url": "https://url.spec.whatwg.org/#concept-url-host", "dfnText": "host", "refSections": [{"refs": [{"id": "ref-for-concept-url-host"}], "title": "4.2.3. \n    Clear cache for origin\n  "}], "external": true};
-window.dfnpanelData['959ad97b'] = {"dfnID": "959ad97b", "url": "https://url.spec.whatwg.org/#concept-url-origin", "dfnText": "origin", "refSections": [{"refs": [{"id": "ref-for-concept-url-origin"}], "title": "4.2. \n    Clear data for response\n  "}, {"refs": [{"id": "ref-for-concept-url-origin\u2460"}, {"id": "ref-for-concept-url-origin\u2461"}], "title": "4.2.5. \n    Clear DOM-accessible storage for origin\n  "}], "external": true};
-window.dfnpanelData['http-headerdef-clear-site-data'] = {"dfnID": "http-headerdef-clear-site-data", "url": "#http-headerdef-clear-site-data", "dfnText": "Clear-Site-Data", "refSections": [{"refs": [{"id": "ref-for-http-headerdef-clear-site-data"}], "title": "1. Introduction"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2461"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2462"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2463"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2464"}, {"id": "ref-for-http-headerdef-clear-site-data\u2465"}, {"id": "ref-for-http-headerdef-clear-site-data\u2466"}, {"id": "ref-for-http-headerdef-clear-site-data\u2467"}, {"id": "ref-for-http-headerdef-clear-site-data\u2468"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u24ea"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460\u2461"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u2462"}, {"id": "ref-for-http-headerdef-clear-site-data\u2460\u2463"}], "title": "3.2. Fetch Integration"}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460\u2464"}], "title": "6.1. Web developers control the timing."}, {"refs": [{"id": "ref-for-http-headerdef-clear-site-data\u2460\u2465"}], "title": "6.2. Remnants of data on disk."}], "external": false};
-window.dfnpanelData['grammardef-cache'] = {"dfnID": "grammardef-cache", "url": "#grammardef-cache", "dfnText": "cache", "refSections": [{"refs": [{"id": "ref-for-grammardef-cache"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-cache\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-cache\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-cache\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-cache\u2463"}, {"id": "ref-for-grammardef-cache\u2464"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-cache\u2465"}, {"id": "ref-for-grammardef-cache\u2466"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-cache\u2467"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['grammardef-cookies'] = {"dfnID": "grammardef-cookies", "url": "#grammardef-cookies", "dfnText": "cookies", "refSections": [{"refs": [{"id": "ref-for-grammardef-cookies"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2463"}, {"id": "ref-for-grammardef-cookies\u2464"}, {"id": "ref-for-grammardef-cookies\u2465"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-cookies\u2466"}, {"id": "ref-for-grammardef-cookies\u2467"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-cookies\u2468"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['grammardef-storage'] = {"dfnID": "grammardef-storage", "url": "#grammardef-storage", "dfnText": "storage", "refSections": [{"refs": [{"id": "ref-for-grammardef-storage"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-storage\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-storage\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-storage\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-storage\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-storage\u2464"}, {"id": "ref-for-grammardef-storage\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-storage\u2466"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['grammardef-executioncontexts'] = {"dfnID": "grammardef-executioncontexts", "url": "#grammardef-executioncontexts", "dfnText": "executionContexts", "refSections": [{"refs": [{"id": "ref-for-grammardef-executioncontexts"}], "title": "1.1.1. Signing Out"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2460"}], "title": "1.1.2. Targeted Clearing"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2461"}], "title": "1.1.3. Keep Critical Cookies"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2462"}], "title": "1.1.4. Kill Switch"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2463"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2464"}, {"id": "ref-for-grammardef-executioncontexts\u2465"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2466"}], "title": "4.2. \n    Clear data for response\n  "}, {"refs": [{"id": "ref-for-grammardef-executioncontexts\u2467"}], "title": "4.2.1. \n    Prepare to clear origin\u2019s data\n  "}], "external": false};
-window.dfnpanelData['grammardef-clienthints'] = {"dfnID": "grammardef-clienthints", "url": "#grammardef-clienthints", "dfnText": "clientHints", "refSections": [{"refs": [{"id": "ref-for-grammardef-clienthints"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2460"}, {"id": "ref-for-grammardef-clienthints\u2461"}, {"id": "ref-for-grammardef-clienthints\u2462"}, {"id": "ref-for-grammardef-clienthints\u2463"}], "title": "4.1. Parsing"}, {"refs": [{"id": "ref-for-grammardef-clienthints\u2464"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['grammardef-'] = {"dfnID": "grammardef-", "url": "#grammardef-", "dfnText": "*", "refSections": [{"refs": [{"id": "ref-for-grammardef-"}, {"id": "ref-for-grammardef-\u2460"}], "title": "3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}], "external": false};
-window.dfnpanelData['abstract-opdef-parse-responses-clear-site-data-header'] = {"dfnID": "abstract-opdef-parse-responses-clear-site-data-header", "url": "#abstract-opdef-parse-responses-clear-site-data-header", "dfnText": "parse\n  response\u2019s Clear-Site-Data header", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-parse-responses-clear-site-data-header"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['abstract-opdef-prepare-to-clear-origins-data'] = {"dfnID": "abstract-opdef-prepare-to-clear-origins-data", "url": "#abstract-opdef-prepare-to-clear-origins-data", "dfnText": "prepare to clear origin\u2019s data", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-prepare-to-clear-origins-data"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['abstract-opdef-reload-browsing-contexts'] = {"dfnID": "abstract-opdef-reload-browsing-contexts", "url": "#abstract-opdef-reload-browsing-contexts", "dfnText": "reload browsing contexts", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-reload-browsing-contexts"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['abstract-opdef-clear-cache-for-origin'] = {"dfnID": "abstract-opdef-clear-cache-for-origin", "url": "#abstract-opdef-clear-cache-for-origin", "dfnText": "clear cache for origin", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-clear-cache-for-origin"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['abstract-opdef-clear-cookies-for-origin'] = {"dfnID": "abstract-opdef-clear-cookies-for-origin", "url": "#abstract-opdef-clear-cookies-for-origin", "dfnText": "clear cookies for origin", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-clear-cookies-for-origin"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-window.dfnpanelData['abstract-opdef-clear-dom-accessible-storage-for-origin'] = {"dfnID": "abstract-opdef-clear-dom-accessible-storage-for-origin", "url": "#abstract-opdef-clear-dom-accessible-storage-for-origin", "dfnText": "clear DOM-accessible storage for origin", "refSections": [{"refs": [{"id": "ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin"}], "title": "4.2. \n    Clear data for response\n  "}], "external": false};
-</script>
 <script>/* Boilerplate: script-dom-helper */
+"use strict";
 function query(sel) { return document.querySelector(sel); }
 
 function queryAll(sel) { return [...document.querySelectorAll(sel)]; }
@@ -2220,34 +1939,459 @@ function parseHTML(markup) {
 		el.innerHTML = markup;
 		return el.content;
 	}
+}</script>
+<script>/* Boilerplate: script-dfn-panel */
+"use strict";
+{
+let dfnPanelData = {
+"02406c7f": {"dfnID":"02406c7f","dfnText":"service worker registration","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-service-worker-registration"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-dfn-service-worker-registration\u2460"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration"},
+"03afaf9c": {"dfnID":"03afaf9c","dfnText":"empty","external":true,"refSections":[{"refs":[{"id":"ref-for-list-empty"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"https://infra.spec.whatwg.org/#list-empty"},
+"0d0390b4": {"dfnID":"0d0390b4","dfnText":"browsing context","external":true,"refSections":[{"refs":[{"id":"ref-for-browsing-context"},{"id":"ref-for-browsing-context\u2460"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "},{"refs":[{"id":"ref-for-browsing-context\u2461"}],"title":"4.2.2. \n    Reload browsing contexts\n  "}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context"},
+"0d1fcd41": {"dfnID":"0d1fcd41","dfnText":"compression dictionary","external":true,"refSections":[{"refs":[{"id":"ref-for-something"}],"title":"1.2. Goals"},{"refs":[{"id":"ref-for-something\u2460"},{"id":"ref-for-something\u2461"},{"id":"ref-for-something\u2462"},{"id":"ref-for-something\u2463"},{"id":"ref-for-something\u2464"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-something\u2465"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#"},
+"17c3a312": {"dfnID":"17c3a312","dfnText":"database","external":true,"refSections":[{"refs":[{"id":"ref-for-database"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://w3c.github.io/IndexedDB/#database"},
+"19353784": {"dfnID":"19353784","dfnText":"cookie store","external":true,"refSections":[{"refs":[{"id":"ref-for-section-5.3"},{"id":"ref-for-section-5.3\u2460"},{"id":"ref-for-section-5.3\u2461"}],"title":"4.2.4. \n    Clear cookies for origin\n  "}],"url":"https://tools.ietf.org/html/rfc6265#section-5.3"},
+"2f79c38f": {"dfnID":"2f79c38f","dfnText":"network cache","external":true,"refSections":[{"refs":[{"id":"ref-for-section-2"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-section-2\u2460"},{"id":"ref-for-section-2\u2461"},{"id":"ref-for-section-2\u2462"}],"title":"4.2.3. \n    Clear cache for origin\n  "}],"url":"https://tools.ietf.org/html/rfc7234#section-2"},
+"3268a8eb": {"dfnID":"3268a8eb","dfnText":"url","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-response-url"},{"id":"ref-for-concept-response-url\u2460"},{"id":"ref-for-concept-response-url\u2461"},{"id":"ref-for-concept-response-url\u2462"},{"id":"ref-for-concept-response-url\u2463"},{"id":"ref-for-concept-response-url\u2464"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-concept-response-url\u2465"},{"id":"ref-for-concept-response-url\u2466"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"https://fetch.spec.whatwg.org/#concept-response-url"},
+"35972864": {"dfnID":"35972864","dfnText":"active document","external":true,"refSections":[{"refs":[{"id":"ref-for-nav-document"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "},{"refs":[{"id":"ref-for-nav-document\u2460"}],"title":"4.2.2. \n    Reload browsing contexts\n  "}],"url":"https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document"},
+"383f2689": {"dfnID":"383f2689","dfnText":"reload()","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-location-reload"}],"title":"4.2.2. \n    Reload browsing contexts\n  "}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload"},
+"3a2db83f": {"dfnID":"3a2db83f","dfnText":"localStorage","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-localstorage"}],"title":"1.2. Goals"},{"refs":[{"id":"ref-for-dom-localstorage\u2460"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-dom-localstorage\u2461"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage"},
+"3be1d4ac": {"dfnID":"3be1d4ac","dfnText":"extracting header list values","external":true,"refSections":[{"refs":[{"id":"ref-for-extract-header-list-values"}],"title":"4.1. Parsing"}],"url":"https://fetch.spec.whatwg.org/#extract-header-list-values"},
+"43ac8374": {"dfnID":"43ac8374","dfnText":"origin","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-settings-object-origin"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin"},
+"469becd8": {"dfnID":"469becd8","dfnText":"quoted-string","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.2.6"},{"id":"ref-for-section-3.2.6\u2460"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}],"url":"https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6"},
+"4d1eae38": {"dfnID":"4d1eae38","dfnText":"authentication entry","external":true,"refSections":[{"refs":[{"id":"ref-for-authentication-entry"}],"title":"4.2.4. \n    Clear cookies for origin\n  "}],"url":"https://fetch.spec.whatwg.org/#authentication-entry"},
+"4d8718f0": {"dfnID":"4d8718f0","dfnText":"a priori authenticated url","external":true,"refSections":[{"refs":[{"id":"ref-for-a-priori-authenticated-url"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url"},
+"50fbbdc5": {"dfnID":"50fbbdc5","dfnText":"domain-match","external":true,"refSections":[{"refs":[{"id":"ref-for-section-5.1.3"}],"title":"4.2.4. \n    Clear cookies for origin\n  "}],"url":"https://tools.ietf.org/html/rfc6265#section-5.1.3"},
+"53275e46": {"dfnID":"53275e46","dfnText":"append","external":true,"refSections":[{"refs":[{"id":"ref-for-list-append"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "}],"url":"https://infra.spec.whatwg.org/#list-append"},
+"53f0ea4e": {"dfnID":"53f0ea4e","dfnText":"parse a sandboxing directive","external":true,"refSections":[{"refs":[{"id":"ref-for-parse-a-sandboxing-directive"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "}],"url":"https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive"},
+"55155baf": {"dfnID":"55155baf","dfnText":"accept-ch cache","external":true,"refSections":[{"refs":[{"id":"ref-for-accept-ch-cache"}],"title":"1.2. Goals"},{"refs":[{"id":"ref-for-accept-ch-cache\u2460"},{"id":"ref-for-accept-ch-cache\u2461"},{"id":"ref-for-accept-ch-cache\u2462"},{"id":"ref-for-accept-ch-cache\u2463"},{"id":"ref-for-accept-ch-cache\u2464"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-accept-ch-cache\u2465"}],"title":"3.2. Fetch Integration"},{"refs":[{"id":"ref-for-accept-ch-cache\u2466"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache"},
+"5956d5fd": {"dfnID":"5956d5fd","dfnText":"clear()","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-storage-clear"},{"id":"ref-for-dom-storage-clear\u2460"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear"},
+"6d1db60d": {"dfnID":"6d1db60d","dfnText":"service-workers mode","external":true,"refSections":[{"refs":[{"id":"ref-for-request-service-workers-mode"}],"title":"5.2. Service workers"}],"url":"https://fetch.spec.whatwg.org/#request-service-workers-mode"},
+"77a2ee6e": {"dfnID":"77a2ee6e","dfnText":"host","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-origin-host"}],"title":"4.2.3. \n    Clear cache for origin\n  "},{"refs":[{"id":"ref-for-concept-origin-host\u2460"},{"id":"ref-for-concept-origin-host\u2461"},{"id":"ref-for-concept-origin-host\u2462"},{"id":"ref-for-concept-origin-host\u2463"}],"title":"4.2.4. \n    Clear cookies for origin\n  "}],"url":"https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host"},
+"79dfb502": {"dfnID":"79dfb502","dfnText":"#rule","external":true,"refSections":[{"refs":[{"id":"a04f67f90"}],"title":"2. Infrastructure"},{"refs":[{"id":"ref-for-section-7"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}],"url":"https://tools.ietf.org/html/rfc7230#section-7"},
+"7a899a17": {"dfnID":"7a899a17","dfnText":"sessionStorage","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-sessionstorage"}],"title":"1.2. Goals"},{"refs":[{"id":"ref-for-dom-sessionstorage\u2460"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-dom-sessionstorage\u2461"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage"},
+"7b0d918d": {"dfnID":"7b0d918d","dfnText":"break","external":true,"refSections":[{"refs":[{"id":"ref-for-iteration-break"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"https://infra.spec.whatwg.org/#iteration-break"},
+"8a30477b": {"dfnID":"8a30477b","dfnText":"global object","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-settings-object-global"}],"title":"4.2.2. \n    Reload browsing contexts\n  "}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global"},
+"959ad97b": {"dfnID":"959ad97b","dfnText":"origin","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-url-origin"}],"title":"4.2. \n    Clear data for response\n  "},{"refs":[{"id":"ref-for-concept-url-origin\u2460"},{"id":"ref-for-concept-url-origin\u2461"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://url.spec.whatwg.org/#concept-url-origin"},
+"9c4c1e66": {"dfnID":"9c4c1e66","dfnText":"relevant settings object","external":true,"refSections":[{"refs":[{"id":"ref-for-relevant-settings-object"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "},{"refs":[{"id":"ref-for-relevant-settings-object\u2460"}],"title":"4.2.2. \n    Reload browsing contexts\n  "}],"url":"https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object"},
+"aba5485c": {"dfnID":"aba5485c","dfnText":"registered domain","external":true,"refSections":[{"refs":[{"id":"ref-for-something\u2466"},{"id":"ref-for-something\u2467"},{"id":"ref-for-something\u2468"},{"id":"ref-for-something\u2460\u24ea"},{"id":"ref-for-something\u2460\u2460"}],"title":"4.2.4. \n    Clear cookies for origin\n  "}],"url":"https://publicsuffix.org/list/#"},
+"abstract-opdef-clear-cache-for-origin": {"dfnID":"abstract-opdef-clear-cache-for-origin","dfnText":"clear cache for origin","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-clear-cache-for-origin"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#abstract-opdef-clear-cache-for-origin"},
+"abstract-opdef-clear-cookies-for-origin": {"dfnID":"abstract-opdef-clear-cookies-for-origin","dfnText":"clear cookies for origin","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-clear-cookies-for-origin"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#abstract-opdef-clear-cookies-for-origin"},
+"abstract-opdef-clear-dom-accessible-storage-for-origin": {"dfnID":"abstract-opdef-clear-dom-accessible-storage-for-origin","dfnText":"clear DOM-accessible storage for origin","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-clear-dom-accessible-storage-for-origin"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#abstract-opdef-clear-dom-accessible-storage-for-origin"},
+"abstract-opdef-clear-site-data-for-response": {"dfnID":"abstract-opdef-clear-site-data-for-response","dfnText":"clear site data for\n  response","external":false,"refSections":[],"url":"#abstract-opdef-clear-site-data-for-response"},
+"abstract-opdef-parse-responses-clear-site-data-header": {"dfnID":"abstract-opdef-parse-responses-clear-site-data-header","dfnText":"parse\n  response\u2019s Clear-Site-Data header","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-parse-responses-clear-site-data-header"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#abstract-opdef-parse-responses-clear-site-data-header"},
+"abstract-opdef-prepare-to-clear-origins-data": {"dfnID":"abstract-opdef-prepare-to-clear-origins-data","dfnText":"prepare to clear origin\u2019s data","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-prepare-to-clear-origins-data"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#abstract-opdef-prepare-to-clear-origins-data"},
+"abstract-opdef-reload-browsing-contexts": {"dfnID":"abstract-opdef-reload-browsing-contexts","dfnText":"reload browsing contexts","external":false,"refSections":[{"refs":[{"id":"ref-for-abstract-opdef-reload-browsing-contexts"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#abstract-opdef-reload-browsing-contexts"},
+"ae8def21": {"dfnID":"ae8def21","dfnText":"contain","external":true,"refSections":[{"refs":[{"id":"ref-for-list-contain"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "}],"url":"https://infra.spec.whatwg.org/#list-contain"},
+"aea6ce83": {"dfnID":"aea6ce83","dfnText":"proxy-authentication entry","external":true,"refSections":[{"refs":[{"id":"ref-for-proxy-authentication-entry"}],"title":"4.2.4. \n    Clear cookies for origin\n  "}],"url":"https://fetch.spec.whatwg.org/#proxy-authentication-entry"},
+"b1f47c2a": {"dfnID":"b1f47c2a","dfnText":"delete a database","external":true,"refSections":[{"refs":[{"id":"ref-for-delete-a-database"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://w3c.github.io/IndexedDB/#delete-a-database"},
+"b85ee3be": {"dfnID":"b85ee3be","dfnText":"host","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-url-host"}],"title":"4.2.3. \n    Clear cache for origin\n  "}],"url":"https://url.spec.whatwg.org/#concept-url-host"},
+"b8bd9c92": {"dfnID":"b8bd9c92","dfnText":"Storage","external":true,"refSections":[{"refs":[{"id":"ref-for-storage-2"},{"id":"ref-for-storage-2\u2460"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://html.spec.whatwg.org/multipage/webstorage.html#storage-2"},
+"c99fa6fa": {"dfnID":"c99fa6fa","dfnText":"origin","external":true,"refSections":[{"refs":[{"id":"ref-for-section-3.2"},{"id":"ref-for-section-3.2\u2460"},{"id":"ref-for-section-3.2\u2461"},{"id":"ref-for-section-3.2\u2462"},{"id":"ref-for-section-3.2\u2463"},{"id":"ref-for-section-3.2\u2464"},{"id":"ref-for-section-3.2\u2465"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-section-3.2\u2466"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "},{"refs":[{"id":"ref-for-section-3.2\u2467"}],"title":"4.2.3. \n    Clear cache for origin\n  "},{"refs":[{"id":"ref-for-section-3.2\u2468"},{"id":"ref-for-section-3.2\u2460\u24ea"},{"id":"ref-for-section-3.2\u2460\u2460"},{"id":"ref-for-section-3.2\u2460\u2461"}],"title":"4.2.4. \n    Clear cookies for origin\n  "},{"refs":[{"id":"ref-for-section-3.2\u2460\u2462"},{"id":"ref-for-section-3.2\u2460\u2463"},{"id":"ref-for-section-3.2\u2460\u2464"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://tools.ietf.org/html/rfc6454#section-3.2"},
+"cc549724": {"dfnID":"cc549724","dfnText":"Location","external":true,"refSections":[{"refs":[{"id":"ref-for-location"}],"title":"4.2.2. \n    Reload browsing contexts\n  "}],"url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#location"},
+"d75f6c27": {"dfnID":"d75f6c27","dfnText":"http-network fetch","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-http-network-fetch"}],"title":"3.2. Fetch Integration"}],"url":"https://fetch.spec.whatwg.org/#concept-http-network-fetch"},
+"ee7bba09": {"dfnID":"ee7bba09","dfnText":"response","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-response"},{"id":"ref-for-concept-response\u2460"},{"id":"ref-for-concept-response\u2461"},{"id":"ref-for-concept-response\u2462"},{"id":"ref-for-concept-response\u2463"},{"id":"ref-for-concept-response\u2464"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-concept-response\u2465"}],"title":"3.2. Fetch Integration"},{"refs":[{"id":"ref-for-concept-response\u2466"}],"title":"4.1. Parsing"},{"refs":[{"id":"ref-for-concept-response\u2467"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"https://fetch.spec.whatwg.org/#concept-response"},
+"f7b00a8b": {"dfnID":"f7b00a8b","dfnText":"header list","external":true,"refSections":[{"refs":[{"id":"ref-for-concept-response-header-list"}],"title":"3.2. Fetch Integration"},{"refs":[{"id":"ref-for-concept-response-header-list\u2460"}],"title":"4.1. Parsing"}],"url":"https://fetch.spec.whatwg.org/#concept-response-header-list"},
+"f937b7b6": {"dfnID":"f937b7b6","dfnText":"continue","external":true,"refSections":[{"refs":[{"id":"ref-for-iteration-continue"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "}],"url":"https://infra.spec.whatwg.org/#iteration-continue"},
+"fc627dec": {"dfnID":"fc627dec","dfnText":"scope url","external":true,"refSections":[{"refs":[{"id":"ref-for-dfn-scope-url"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://w3c.github.io/ServiceWorker/#dfn-scope-url"},
+"fcb44595": {"dfnID":"fcb44595","dfnText":"unregister()","external":true,"refSections":[{"refs":[{"id":"ref-for-dom-serviceworkerregistration-unregister"}],"title":"4.2.5. \n    Clear DOM-accessible storage for origin\n  "}],"url":"https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister"},
+"grammardef-": {"dfnID":"grammardef-","dfnText":"*","external":false,"refSections":[{"refs":[{"id":"ref-for-grammardef-"},{"id":"ref-for-grammardef-\u2460"},{"id":"ref-for-grammardef-\u2461"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "}],"url":"#grammardef-"},
+"grammardef-cache": {"dfnID":"grammardef-cache","dfnText":"cache","external":false,"refSections":[{"refs":[{"id":"ref-for-grammardef-cache"}],"title":"1.1.1. Signing Out"},{"refs":[{"id":"ref-for-grammardef-cache\u2460"}],"title":"1.1.2. Targeted Clearing"},{"refs":[{"id":"ref-for-grammardef-cache\u2461"}],"title":"1.1.3. Keep Critical Cookies"},{"refs":[{"id":"ref-for-grammardef-cache\u2462"}],"title":"1.1.4. Kill Switch"},{"refs":[{"id":"ref-for-grammardef-cache\u2463"},{"id":"ref-for-grammardef-cache\u2464"},{"id":"ref-for-grammardef-cache\u2465"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-grammardef-cache\u2466"},{"id":"ref-for-grammardef-cache\u2467"}],"title":"4.1. Parsing"},{"refs":[{"id":"ref-for-grammardef-cache\u2468"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#grammardef-cache"},
+"grammardef-clienthints": {"dfnID":"grammardef-clienthints","dfnText":"clientHints","external":false,"refSections":[{"refs":[{"id":"ref-for-grammardef-clienthints"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-grammardef-clienthints\u2460"},{"id":"ref-for-grammardef-clienthints\u2461"},{"id":"ref-for-grammardef-clienthints\u2462"},{"id":"ref-for-grammardef-clienthints\u2463"}],"title":"4.1. Parsing"},{"refs":[{"id":"ref-for-grammardef-clienthints\u2464"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#grammardef-clienthints"},
+"grammardef-cookies": {"dfnID":"grammardef-cookies","dfnText":"cookies","external":false,"refSections":[{"refs":[{"id":"ref-for-grammardef-cookies"}],"title":"1.1.1. Signing Out"},{"refs":[{"id":"ref-for-grammardef-cookies\u2460"}],"title":"1.1.2. Targeted Clearing"},{"refs":[{"id":"ref-for-grammardef-cookies\u2461"}],"title":"1.1.3. Keep Critical Cookies"},{"refs":[{"id":"ref-for-grammardef-cookies\u2462"}],"title":"1.1.4. Kill Switch"},{"refs":[{"id":"ref-for-grammardef-cookies\u2463"},{"id":"ref-for-grammardef-cookies\u2464"},{"id":"ref-for-grammardef-cookies\u2465"},{"id":"ref-for-grammardef-cookies\u2466"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-grammardef-cookies\u2467"},{"id":"ref-for-grammardef-cookies\u2468"}],"title":"4.1. Parsing"},{"refs":[{"id":"ref-for-grammardef-cookies\u2460\u24ea"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#grammardef-cookies"},
+"grammardef-dictionaries": {"dfnID":"grammardef-dictionaries","dfnText":"dictionaries","external":false,"refSections":[{"refs":[{"id":"ref-for-grammardef-dictionaries"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-grammardef-dictionaries\u2460"},{"id":"ref-for-grammardef-dictionaries\u2461"},{"id":"ref-for-grammardef-dictionaries\u2462"},{"id":"ref-for-grammardef-dictionaries\u2463"}],"title":"4.1. Parsing"},{"refs":[{"id":"ref-for-grammardef-dictionaries\u2464"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#grammardef-dictionaries"},
+"grammardef-executioncontexts": {"dfnID":"grammardef-executioncontexts","dfnText":"executionContexts","external":false,"refSections":[{"refs":[{"id":"ref-for-grammardef-executioncontexts"}],"title":"1.1.1. Signing Out"},{"refs":[{"id":"ref-for-grammardef-executioncontexts\u2460"}],"title":"1.1.2. Targeted Clearing"},{"refs":[{"id":"ref-for-grammardef-executioncontexts\u2461"}],"title":"1.1.3. Keep Critical Cookies"},{"refs":[{"id":"ref-for-grammardef-executioncontexts\u2462"}],"title":"1.1.4. Kill Switch"},{"refs":[{"id":"ref-for-grammardef-executioncontexts\u2463"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-grammardef-executioncontexts\u2464"},{"id":"ref-for-grammardef-executioncontexts\u2465"}],"title":"4.1. Parsing"},{"refs":[{"id":"ref-for-grammardef-executioncontexts\u2466"}],"title":"4.2. \n    Clear data for response\n  "},{"refs":[{"id":"ref-for-grammardef-executioncontexts\u2467"}],"title":"4.2.1. \n    Prepare to clear origin\u2019s data\n  "}],"url":"#grammardef-executioncontexts"},
+"grammardef-storage": {"dfnID":"grammardef-storage","dfnText":"storage","external":false,"refSections":[{"refs":[{"id":"ref-for-grammardef-storage"}],"title":"1.1.1. Signing Out"},{"refs":[{"id":"ref-for-grammardef-storage\u2460"}],"title":"1.1.2. Targeted Clearing"},{"refs":[{"id":"ref-for-grammardef-storage\u2461"}],"title":"1.1.3. Keep Critical Cookies"},{"refs":[{"id":"ref-for-grammardef-storage\u2462"}],"title":"1.1.4. Kill Switch"},{"refs":[{"id":"ref-for-grammardef-storage\u2463"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-grammardef-storage\u2464"},{"id":"ref-for-grammardef-storage\u2465"}],"title":"4.1. Parsing"},{"refs":[{"id":"ref-for-grammardef-storage\u2466"}],"title":"4.2. \n    Clear data for response\n  "}],"url":"#grammardef-storage"},
+"http-headerdef-clear-site-data": {"dfnID":"http-headerdef-clear-site-data","dfnText":"Clear-Site-Data","external":false,"refSections":[{"refs":[{"id":"ref-for-http-headerdef-clear-site-data"}],"title":"1. Introduction"},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2460"}],"title":"1.1.1. Signing Out"},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2461"}],"title":"1.1.2. Targeted Clearing"},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2462"}],"title":"1.1.3. Keep Critical Cookies"},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2463"}],"title":"1.1.4. Kill Switch"},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2464"},{"id":"ref-for-http-headerdef-clear-site-data\u2465"},{"id":"ref-for-http-headerdef-clear-site-data\u2466"},{"id":"ref-for-http-headerdef-clear-site-data\u2467"},{"id":"ref-for-http-headerdef-clear-site-data\u2468"},{"id":"ref-for-http-headerdef-clear-site-data\u2460\u24ea"},{"id":"ref-for-http-headerdef-clear-site-data\u2460\u2460"},{"id":"ref-for-http-headerdef-clear-site-data\u2460\u2461"}],"title":"3.1. \n    The Clear-Site-Data HTTP Response Header Field\n  "},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2460\u2462"},{"id":"ref-for-http-headerdef-clear-site-data\u2460\u2463"},{"id":"ref-for-http-headerdef-clear-site-data\u2460\u2464"}],"title":"3.2. Fetch Integration"},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2460\u2465"}],"title":"6.1. Web developers control the timing."},{"refs":[{"id":"ref-for-http-headerdef-clear-site-data\u2460\u2466"}],"title":"6.2. Remnants of data on disk."}],"url":"#http-headerdef-clear-site-data"},
+};
+
+document.addEventListener("DOMContentLoaded", ()=>{
+    genAllDfnPanels();
+
+    document.body.addEventListener("click", (e) => {
+        // If not handled already, just hide all dfn panels.
+        hideAllDfnPanels();
+    });
+});
+
+window.addEventListener("resize", () => {
+    // Pin any visible dfn panel
+    queryAll(".dfn-panel.on, .dfn-panel.activated").forEach(el=>positionDfnPanel(el));
+});
+
+function genAllDfnPanels() {
+    for(const panelData of Object.values(dfnPanelData)) {
+        const dfnID = panelData.dfnID;
+        const dfn = document.getElementById(dfnID);
+        if(!dfn) {
+            console.log(`Can't find dfn#${dfnID}.`, panelData);
+            continue;
+        }
+        dfn.panelData = panelData;
+        insertDfnPopupAction(dfn);
+    }
+}
+
+function genDfnPanel(dfn, { dfnID, url, dfnText, refSections, external }) {
+    const dfnPanel = mk.aside({
+        class: "dfn-panel on",
+        id: `infopanel-for-${dfnID}`,
+        "data-for": dfnID,
+        "aria-labelled-by":`infopaneltitle-for-${dfnID}`,
+        },
+        mk.span({id:`infopaneltitle-for-${dfnID}`, style:"display:none"},
+            `Info about the '${dfnText}' ${external?"external":""} reference.`),
+        mk.a({href:url, class:"dfn-link"}, url),
+        refSections.length == 0 ? [] :
+            mk.b({}, "Referenced in:"),
+            mk.ul({},
+                ...refSections.map(section=>
+                    mk.li({},
+                        ...section.refs.map((ref, refI)=>
+                            [
+                                mk.a({ href: `#${ref.id}` },
+                                    (refI == 0) ? section.title : `(${refI + 1})`
+                                ),
+                                " ",
+                            ]
+                        ),
+                    ),
+                ),
+            ),
+        genLinkingSyntaxes(dfn),
+    );
+
+    dfnPanel.addEventListener('click', (event) => {
+        if (event.target.nodeName == 'A') {
+            scrollToTargetAndHighlight(event);
+            pinDfnPanel(dfnPanel);
+        }
+        event.stopPropagation();
+        refocusOnTarget(event);
+    });
+    dfnPanel.addEventListener('keydown', (event) => {
+        if(event.keyCode == 27) { // Escape key
+            hideDfnPanel({dfnPanel});
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    });
+
+    dfnPanel.dfn = dfn;
+    dfn.dfnPanel = dfnPanel;
+    return dfnPanel;
+}
+
+
+
+function hideAllDfnPanels() {
+    // Delete the currently-active dfn panel.
+    queryAll(".dfn-panel").forEach(dfnPanel=>hideDfnPanel({dfnPanel}));
+}
+
+function showDfnPanel(dfn) {
+    hideAllDfnPanels(); // Only display one at a time.
+
+    dfn.setAttribute("aria-expanded", "true");
+
+    const dfnPanel = genDfnPanel(dfn, dfn.panelData);
+
+    // Give the dfn a unique tabindex, and then
+    // give all the tabbable panel bits successive indexes.
+    let tabIndex = 100;
+    dfn.tabIndex = tabIndex++;
+    const tabbable = dfnPanel.querySelectorAll(":is(a, button)");
+    for (const el of tabbable) {
+        el.tabIndex = tabIndex++;
+    }
+
+    append(document.body, dfnPanel);
+    positionDfnPanel(dfnPanel);
+}
+
+function positionDfnPanel(dfnPanel) {
+    const dfn = dfnPanel.dfn;
+    const dfnPos = getBounds(dfn);
+    dfnPanel.style.top = dfnPos.bottom + "px";
+    dfnPanel.style.left = dfnPos.left + "px";
+
+    const panelPos = dfnPanel.getBoundingClientRect();
+    const panelMargin = 8;
+    const maxRight = document.body.parentNode.clientWidth - panelMargin;
+    if (panelPos.right > maxRight) {
+        const overflowAmount = panelPos.right - maxRight;
+        const newLeft = Math.max(panelMargin, dfnPos.left - overflowAmount);
+        dfnPanel.style.left = newLeft + "px";
+    }
+}
+
+function pinDfnPanel(dfnPanel) {
+    // Switch it to "activated" state, which pins it.
+    dfnPanel.classList.add("activated");
+    dfnPanel.style.position = "fixed";
+    dfnPanel.style.left = null;
+    dfnPanel.style.top = null;
+}
+
+function hideDfnPanel({dfn, dfnPanel}) {
+    if(!dfnPanel) dfnPanel = dfn.dfnPanel;
+    if(!dfn) dfn = dfnPanel.dfn;
+    dfn.dfnPanel = undefined;
+    dfnPanel.dfn = undefined;
+    dfn.setAttribute("aria-expanded", "false");
+    dfn.tabIndex = undefined;
+    dfnPanel.remove()
+}
+
+function toggleDfnPanel(dfn) {
+    if(dfn.dfnPanel) {
+        hideDfnPanel(dfn);
+    } else {
+        showDfnPanel(dfn);
+    }
+}
+
+function insertDfnPopupAction(dfn) {
+    dfn.setAttribute('role', 'button');
+    dfn.setAttribute('aria-expanded', 'false')
+    dfn.tabIndex = 0;
+    dfn.classList.add('has-dfn-panel');
+    dfn.addEventListener('click', (event) => {
+        toggleDfnPanel(dfn);
+        event.stopPropagation();
+    });
+    dfn.addEventListener('keypress', (event) => {
+        const kc = event.keyCode;
+        // 32->Space, 13->Enter
+        if(kc == 32 || kc == 13) {
+            toggleDfnPanel(dfn);
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    });
+}
+
+function refocusOnTarget(event) {
+    const target = event.target;
+    setTimeout(() => {
+        // Refocus on the event.target element.
+        // This is needed after browser scrolls to the destination.
+        target.focus();
+    });
+}
+
+// TODO: shared util
+// Returns the root-level absolute position {left and top} of element.
+function getBounds(el, relativeTo=document.body) {
+    const relativeRect = relativeTo.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const top = elRect.top - relativeRect.top;
+    const left = elRect.left - relativeRect.left;
+    return {
+        top,
+        left,
+        bottom: top + elRect.height,
+        right: left + elRect.width,
+    }
+}
+
+function scrollToTargetAndHighlight(event) {
+    let hash = event.target.hash;
+    if (hash) {
+        hash = decodeURIComponent(hash.substring(1));
+        const dest = document.getElementById(hash);
+        if (dest) {
+            dest.classList.add('highlighted');
+            setTimeout(() => dest.classList.remove('highlighted'), 1000);
+        }
+    }
+}
+
+// Functions, divided by link type, that wrap an autolink's
+// contents with the appropriate outer syntax.
+// Alternately, a string naming another type they format
+// the same as.
+function needsFor(type) {
+    switch(type) {
+        case "descriptor":
+        case "value":
+        case "element-attr":
+        case "attr-value":
+        case "element-state":
+        case "method":
+        case "constructor":
+        case "argument":
+        case "attribute":
+        case "const":
+        case "dict-member":
+        case "event":
+        case "enum-value":
+        case "stringifier":
+        case "serializer":
+        case "iterator":
+        case "maplike":
+        case "setlike":
+        case "state":
+        case "mode":
+        case "context":
+        case "facet": return true;
+
+        default: return false;
+    }
+}
+function refusesFor(type) {
+    switch(type) {
+        case "property":
+        case "element":
+        case "interface":
+        case "namespace":
+        case "callback":
+        case "dictionary":
+        case "enum":
+        case "exception":
+        case "typedef":
+        case "http-header":
+        case "permission": return true;
+
+        default: return false;
+    }
+}
+function linkFormatterFromType(type) {
+    switch(type) {
+        case 'scheme':
+        case 'permission':
+        case 'dfn': return (text) => `[=${text}=]`;
+
+        case 'abstract-op': return (text) => `[\$${text}\$]`;
+
+        case 'function':
+        case 'at-rule':
+        case 'selector':
+        case 'value': return (text) => `''${text}''`;
+
+        case 'http-header': return (text) => `[:${text}:]`;
+
+        case 'interface':
+        case 'constructor':
+        case 'method':
+        case 'argument':
+        case 'attribute':
+        case 'callback':
+        case 'dictionary':
+        case 'dict-member':
+        case 'enum':
+        case 'enum-value':
+        case 'exception':
+        case 'const':
+        case 'typedef':
+        case 'stringifier':
+        case 'serializer':
+        case 'iterator':
+        case 'maplike':
+        case 'setlike':
+        case 'extended-attribute':
+        case 'event':
+        case 'idl': return (text) => `{{${text}}}`;
+
+        case 'element-state':
+        case 'element-attr':
+        case 'attr-value':
+        case 'element': return (element) => `<{${element}}>`;
+
+        case 'grammar': return (text) => `${text} (within a <pre class=prod>)`;
+
+        case 'type': return (text)=> `<<${text}>>`;
+
+        case 'descriptor':
+        case 'property': return (text) => `'${text}'`;
+
+        default: return;
+    };
+};
+
+function genLinkingSyntaxes(dfn) {
+    if(dfn.tagName != "DFN") return;
+
+    const type = dfn.getAttribute('data-dfn-type');
+    if(!type) {
+        console.log(`<dfn> doesn't have a data-dfn-type:`, dfn);
+        return [];
+    }
+
+    // Return a function that wraps link text based on the type
+    const linkFormatter = linkFormatterFromType(type);
+    if(!linkFormatter) {
+        console.log(`<dfn> has an unknown data-dfn-type:`, dfn);
+        return [];
+    }
+
+    let ltAlts;
+    if(dfn.hasAttribute('data-lt')) {
+        ltAlts = dfn.getAttribute('data-lt')
+            .split("|")
+            .map(x=>x.trim());
+    } else {
+        ltAlts = [dfn.textContent.trim()];
+    }
+    if(type == "type") {
+        // lt of "<foo>", but "foo" is the interior;
+        // <<foo/bar>> is how you write it with a for,
+        // not <foo/<bar>> or whatever.
+        for(var i = 0; i < ltAlts.length; i++) {
+            const lt = ltAlts[i];
+            const match = /<(.*)>/.exec(lt);
+            if(match) { ltAlts[i] = match[1]; }
+        }
+    }
+
+    let forAlts;
+    if(dfn.hasAttribute('data-dfn-for')) {
+        forAlts = dfn.getAttribute('data-dfn-for')
+            .split(",")
+            .map(x=>x.trim());
+    } else {
+        forAlts = [''];
+    }
+
+    let linkingSyntaxes = [];
+    if(!needsFor(type)) {
+        for(const lt of ltAlts) {
+            linkingSyntaxes.push(linkFormatter(lt));
+        }
+    }
+    if(!refusesFor(type)) {
+        for(const f of forAlts) {
+            linkingSyntaxes.push(linkFormatter(`${f}/${ltAlts[0]}`))
+        }
+    }
+    return [
+        mk.b({}, 'Possible linking syntaxes:'),
+        mk.ul({},
+            ...linkingSyntaxes.map(link => {
+                const copyLink = async () =>
+                    await navigator.clipboard.writeText(link);
+                return mk.li({},
+                    mk.div({ class: 'link-item' },
+                        mk.button({
+                            class: 'copy-icon', title: 'Copy',
+                            type: 'button',
+                            _onclick: copyLink,
+                            tabindex: 0,
+                        }, mk.span({ class: 'icon' }) ),
+                        mk.span({}, link)
+                    )
+                );
+            })
+        )
+    ];
+}
 }
 </script>
 <script>/* Boilerplate: script-position-annos */
 "use strict";
 {
-
 function repositionAnnoPanels(){
     const panels = [...document.querySelectorAll("[data-anno-for]")];
-    const main = document.querySelector("main");
-    let mainRect;
-    if(main) mainRect = main.getBoundingClientRect();
-    for(const panel of panels) {
-        const dfn = document.getElementById(panel.getAttribute("data-anno-for"));
-        if(!dfn) {
-            console.log("Can't find the annotation panel target:", panel);
-            continue;
-        }
-        const rect = dfn.getBoundingClientRect();
-        const top = window.scrollY + rect.top
-        panel.style.top = top + "px";
-        panel.top = top;
-        panel.height = rect.height;
-        panel.classList.remove("unpositioned");
-        const panelRect = panel.getBoundingClientRect()
-        if(main) {
-            panel.classList.toggle("overlapping-main", panelRect.left < mainRect.right)
-        }
-    }
+    hydratePanels(panels);
     let vSoFar = 0;
     for(const panel of panels.sort(cmpTops)) {
         if(panel.top < vSoFar) {
@@ -2255,6 +2399,39 @@ function repositionAnnoPanels(){
             panel.style.top = vSoFar + "px";
         }
         vSoFar = panel.top + panel.height + 15;
+    }
+}
+function hydratePanels(panels) {
+    const main = document.querySelector("main");
+    let mainRect;
+    if(main) mainRect = main.getBoundingClientRect();
+    // First display them all, if they're not already visible.
+    for(const panel of panels) {
+        panel.classList.remove("unpositioned");
+    }
+    // Measure them all
+    for(const panel of panels) {
+        const dfn = document.getElementById(panel.getAttribute("data-anno-for"));
+        if(!dfn) {
+            console.log("Can't find the annotation panel target:", panel);
+            continue;
+        }
+        panel.dfn = dfn;
+        panel.top = window.scrollY + dfn.getBoundingClientRect().top;
+        let panelRect = panel.getBoundingClientRect();
+        panel.height = panelRect.height;
+        if(main) {
+            panel.overlappingMain = panelRect.left < mainRect.right;
+        } else {
+            panel.overlappingMain = false;
+        }
+    }
+    // And finally position them
+    for(const panel of panels) {
+        const dfn = panel.dfn;
+        if(!dfn) continue;
+        panel.style.top = panel.top + "px";
+        panel.classList.toggle("overlapping-main", panel.overlappingMain);
     }
 }
 
@@ -2266,101 +2443,347 @@ window.addEventListener("load", repositionAnnoPanels);
 window.addEventListener("resize", repositionAnnoPanels);
 }
 </script>
+<script>/* Boilerplate: script-ref-hints */
+"use strict";
+{
+let refsData = {
+"#abstract-opdef-clear-cache-for-origin": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"clear cache","type":"abstract-op","url":"#abstract-opdef-clear-cache-for-origin"},
+"#abstract-opdef-clear-cookies-for-origin": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"clear cookies","type":"abstract-op","url":"#abstract-opdef-clear-cookies-for-origin"},
+"#abstract-opdef-clear-dom-accessible-storage-for-origin": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"clear storage","type":"abstract-op","url":"#abstract-opdef-clear-dom-accessible-storage-for-origin"},
+"#abstract-opdef-parse-responses-clear-site-data-header": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"parse response","type":"abstract-op","url":"#abstract-opdef-parse-responses-clear-site-data-header"},
+"#abstract-opdef-prepare-to-clear-origins-data": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"prepare","type":"abstract-op","url":"#abstract-opdef-prepare-to-clear-origins-data"},
+"#abstract-opdef-reload-browsing-contexts": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"reload","type":"abstract-op","url":"#abstract-opdef-reload-browsing-contexts"},
+"#grammardef-": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"*","type":"grammar","url":"#grammardef-"},
+"#grammardef-cache": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"cache","type":"grammar","url":"#grammardef-cache"},
+"#grammardef-clienthints": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"clienthints","type":"grammar","url":"#grammardef-clienthints"},
+"#grammardef-cookies": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"cookies","type":"grammar","url":"#grammardef-cookies"},
+"#grammardef-dictionaries": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"dictionaries","type":"grammar","url":"#grammardef-dictionaries"},
+"#grammardef-executioncontexts": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"executioncontexts","type":"grammar","url":"#grammardef-executioncontexts"},
+"#grammardef-storage": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"storage","type":"grammar","url":"#grammardef-storage"},
+"#http-headerdef-clear-site-data": {"export":true,"for_":[],"level":"","normative":true,"shortname":"clear-site-data","spec":"clear-site-data","status":"local","text":"clear-site-data","type":"http-header","url":"#http-headerdef-clear-site-data"},
+"https://fetch.spec.whatwg.org/#authentication-entry": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"authentication entry","type":"dfn","url":"https://fetch.spec.whatwg.org/#authentication-entry"},
+"https://fetch.spec.whatwg.org/#concept-http-network-fetch": {"export":false,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"http-network fetch","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-http-network-fetch"},
+"https://fetch.spec.whatwg.org/#concept-response": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"response","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-response"},
+"https://fetch.spec.whatwg.org/#concept-response-header-list": {"export":true,"for_":["response"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"header list","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-response-header-list"},
+"https://fetch.spec.whatwg.org/#concept-response-url": {"export":true,"for_":["response"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"url","type":"dfn","url":"https://fetch.spec.whatwg.org/#concept-response-url"},
+"https://fetch.spec.whatwg.org/#extract-header-list-values": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"extracting header list values","type":"dfn","url":"https://fetch.spec.whatwg.org/#extract-header-list-values"},
+"https://fetch.spec.whatwg.org/#proxy-authentication-entry": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"proxy-authentication entry","type":"dfn","url":"https://fetch.spec.whatwg.org/#proxy-authentication-entry"},
+"https://fetch.spec.whatwg.org/#request-service-workers-mode": {"export":true,"for_":["request"],"level":"1","normative":true,"shortname":"fetch","spec":"fetch","status":"current","text":"service-workers mode","type":"dfn","url":"https://fetch.spec.whatwg.org/#request-service-workers-mode"},
+"https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host": {"export":true,"for_":["origin"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"host","type":"dfn","url":"https://html.spec.whatwg.org/multipage/browsers.html#concept-origin-host"},
+"https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"parse a sandboxing directive","type":"dfn","url":"https://html.spec.whatwg.org/multipage/browsers.html#parse-a-sandboxing-directive"},
+"https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"browsing context","type":"dfn","url":"https://html.spec.whatwg.org/multipage/document-sequences.html#browsing-context"},
+"https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document": {"export":true,"for_":["navigable"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"active document","type":"dfn","url":"https://html.spec.whatwg.org/multipage/document-sequences.html#nav-document"},
+"https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload": {"export":true,"for_":["Location"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"reload()","type":"method","url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#dom-location-reload"},
+"https://html.spec.whatwg.org/multipage/nav-history-apis.html#location": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Location","type":"interface","url":"https://html.spec.whatwg.org/multipage/nav-history-apis.html#location"},
+"https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global": {"export":true,"for_":["environment settings object"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"global object","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-global"},
+"https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin": {"export":true,"for_":["environment settings object"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"origin","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#concept-settings-object-origin"},
+"https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"relevant settings object","type":"dfn","url":"https://html.spec.whatwg.org/multipage/webappapis.html#relevant-settings-object"},
+"https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage": {"export":true,"for_":["WindowLocalStorage"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"localStorage","type":"attribute","url":"https://html.spec.whatwg.org/multipage/webstorage.html#dom-localstorage"},
+"https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage": {"export":true,"for_":["WindowSessionStorage"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"sessionStorage","type":"attribute","url":"https://html.spec.whatwg.org/multipage/webstorage.html#dom-sessionstorage"},
+"https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear": {"export":true,"for_":["Storage"],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"clear()","type":"method","url":"https://html.spec.whatwg.org/multipage/webstorage.html#dom-storage-clear"},
+"https://html.spec.whatwg.org/multipage/webstorage.html#storage-2": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"html","spec":"html","status":"current","text":"Storage","type":"interface","url":"https://html.spec.whatwg.org/multipage/webstorage.html#storage-2"},
+"https://infra.spec.whatwg.org/#iteration-break": {"export":true,"for_":["iteration"],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"break","type":"dfn","url":"https://infra.spec.whatwg.org/#iteration-break"},
+"https://infra.spec.whatwg.org/#iteration-continue": {"export":true,"for_":["iteration"],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"continue","type":"dfn","url":"https://infra.spec.whatwg.org/#iteration-continue"},
+"https://infra.spec.whatwg.org/#list-append": {"export":true,"for_":["list"],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"append","type":"dfn","url":"https://infra.spec.whatwg.org/#list-append"},
+"https://infra.spec.whatwg.org/#list-contain": {"export":true,"for_":["list","stack","queue","set"],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"contain","type":"dfn","url":"https://infra.spec.whatwg.org/#list-contain"},
+"https://infra.spec.whatwg.org/#list-empty": {"export":true,"for_":["list","stack","queue","set"],"level":"1","normative":true,"shortname":"infra","spec":"infra","status":"current","text":"empty","type":"dfn","url":"https://infra.spec.whatwg.org/#list-empty"},
+"https://publicsuffix.org/list/#": {"export":true,"for_":[],"level":"","normative":true,"shortname":"psl","spec":"psl","status":"anchor-block","text":"registered domain","type":"dfn","url":"https://publicsuffix.org/list/#"},
+"https://tools.ietf.org/html/rfc6265#section-5.1.3": {"export":true,"for_":[],"level":"","normative":true,"shortname":"rfc6265","spec":"rfc6265","status":"anchor-block","text":"domain-match","type":"dfn","url":"https://tools.ietf.org/html/rfc6265#section-5.1.3"},
+"https://tools.ietf.org/html/rfc6265#section-5.3": {"export":true,"for_":[],"level":"","normative":true,"shortname":"rfc6265","spec":"rfc6265","status":"anchor-block","text":"cookie store","type":"dfn","url":"https://tools.ietf.org/html/rfc6265#section-5.3"},
+"https://tools.ietf.org/html/rfc6454#section-3.2": {"export":true,"for_":[],"level":"","normative":true,"shortname":"rfc6454","spec":"rfc6454","status":"anchor-block","text":"origin","type":"dfn","url":"https://tools.ietf.org/html/rfc6454#section-3.2"},
+"https://tools.ietf.org/html/rfc7230#section-7": {"export":true,"for_":[],"level":"","normative":true,"shortname":"rfc7230","spec":"rfc7230","status":"anchor-block","text":"#rule","type":"grammar","url":"https://tools.ietf.org/html/rfc7230#section-7"},
+"https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6": {"export":true,"for_":[],"level":"","normative":true,"shortname":"rfc7230","spec":"rfc7230","status":"anchor-block","text":"quoted-string","type":"grammar","url":"https://tools.ietf.org/html/rfc7230https://tools.ietf.org/html/rfc7230#section-3.2.6"},
+"https://tools.ietf.org/html/rfc7234#section-2": {"export":true,"for_":[],"level":"","normative":true,"shortname":"rfc7234","spec":"rfc7234","status":"anchor-block","text":"network cache","type":"dfn","url":"https://tools.ietf.org/html/rfc7234#section-2"},
+"https://url.spec.whatwg.org/#concept-url-host": {"export":true,"for_":["url"],"level":"1","normative":true,"shortname":"url","spec":"url","status":"current","text":"host","type":"dfn","url":"https://url.spec.whatwg.org/#concept-url-host"},
+"https://url.spec.whatwg.org/#concept-url-origin": {"export":true,"for_":["url"],"level":"1","normative":true,"shortname":"url","spec":"url","status":"current","text":"origin","type":"dfn","url":"https://url.spec.whatwg.org/#concept-url-origin"},
+"https://w3c.github.io/IndexedDB/#database": {"export":false,"for_":[],"level":"3","normative":true,"shortname":"indexeddb","spec":"indexeddb-3","status":"current","text":"database","type":"dfn","url":"https://w3c.github.io/IndexedDB/#database"},
+"https://w3c.github.io/IndexedDB/#delete-a-database": {"export":false,"for_":[],"level":"3","normative":true,"shortname":"indexeddb","spec":"indexeddb-3","status":"current","text":"delete a database","type":"dfn","url":"https://w3c.github.io/IndexedDB/#delete-a-database"},
+"https://w3c.github.io/ServiceWorker/#dfn-scope-url": {"export":true,"for_":["service worker registration"],"level":"1","normative":true,"shortname":"service-workers","spec":"service-workers","status":"current","text":"scope url","type":"dfn","url":"https://w3c.github.io/ServiceWorker/#dfn-scope-url"},
+"https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"service-workers","spec":"service-workers","status":"current","text":"service worker registration","type":"dfn","url":"https://w3c.github.io/ServiceWorker/#dfn-service-worker-registration"},
+"https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister": {"export":true,"for_":["ServiceWorkerRegistration"],"level":"1","normative":true,"shortname":"service-workers","spec":"service-workers","status":"current","text":"unregister()","type":"method","url":"https://w3c.github.io/ServiceWorker/#dom-serviceworkerregistration-unregister"},
+"https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url": {"export":true,"for_":[],"level":"1","normative":false,"shortname":"mixed-content","spec":"mixed-content","status":"current","text":"a priori authenticated url","type":"dfn","url":"https://w3c.github.io/webappsec-mixed-content/#a-priori-authenticated-url"},
+"https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache": {"export":true,"for_":[],"level":"1","normative":true,"shortname":"client-hints-infrastructure","spec":"client-hints-infrastructure","status":"current","text":"accept-ch cache","type":"dfn","url":"https://wicg.github.io/client-hints-infrastructure/#accept-ch-cache"},
+"https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#": {"export":true,"for_":[],"level":"","normative":true,"shortname":"compression dictionary transport","spec":"compression dictionary transport","status":"anchor-block","text":"compression dictionary","type":"dfn","url":"https://www.ietf.org/archive/id/draft-ietf-httpbis-compression-dictionary-02.html#"},
+};
+
+function mkRefHint(link, ref) {
+    const linkText = link.textContent;
+    let dfnTextElements = '';
+    if (ref.text != linkText) {
+        dfnTextElements =
+            mk.li({},
+                mk.b({}, "Term: "),
+                mk.span({}, ref.text)
+            );
+    }
+    const forList = ref.for_;
+    let forListElements;
+    if(forList.length == 0) {
+        forListElements = [];
+    } else if(forList.length == 1) {
+        forListElements = mk.li({},
+            mk.b({}, "For: "),
+            mk.span({}, forList[0]),
+        );
+    } else {
+        forListElements = mk.li({},
+            mk.b({}, "For: "),
+            mk.ul({},
+                ...forList.map(forItem =>
+                    mk.li({},
+                        mk.span({}, forItem)
+                    ),
+                ),
+            ),
+        );
+    }
+    const url = ref.url;
+    const safeUrl = encodeURIComponent(url);
+    const hintPanel = mk.aside({
+        class: "ref-hint",
+        id: `ref-hint-for-${safeUrl}`,
+        "data-for": url,
+        "aria-labelled-by": `ref-hint-for-${safeUrl}`,
+    },
+        mk.ul({},
+            dfnTextElements,
+            mk.li({},
+                mk.b({}, "URL: "),
+                mk.a({ href: url, class: "ref" }, url),
+            ),
+            mk.li({},
+                mk.b({}, "Type: "),
+                mk.span({}, `${ref.type}`),
+            ),
+            mk.li({},
+                mk.b({}, "Spec: "),
+                mk.span({}, `${ref.spec ? ref.spec : ''}`),
+            ),
+            forListElements
+        ),
+    );
+    hintPanel.forLink = link;
+    setupRefHintEventListeners(link, hintPanel);
+    return hintPanel;
+}
+
+function hideAllRefHints() {
+    queryAll(".ref-hint").forEach(el=>hideRefHint(el));
+}
+
+function hideRefHint(refHint) {
+    const link = refHint.forLink;
+    link.setAttribute("aria-expanded", "false");
+    if(refHint.teardownEventListeners) {
+        refHint.teardownEventListeners();
+    }
+    refHint.remove();
+}
+
+function showRefHint(link) {
+    if(link.classList.contains("dfn-link")) return;
+    const url = link.getAttribute("href");
+    const ref = refsData[url];
+    if(!ref) return;
+
+    hideAllRefHints(); // Only display one at this time.
+
+    const refHint = mkRefHint(link, ref);
+    append(document.body, refHint);
+    link.setAttribute("aria-expanded", "true");
+    positionRefHint(refHint);
+}
+
+function setupRefHintEventListeners(link, refHint) {
+    if (refHint.teardownEventListeners) return;
+    // Add event handlers to hide the refHint after the user moves away
+    // from both the link and refHint, if not hovering either within one second.
+    let timeout = null;
+    const startHidingRefHint = (event) => {
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(() => {
+            hideRefHint(refHint);
+        }, 1000);
+    }
+    const resetHidingRefHint = (event) => {
+        if (timeout) clearTimeout(timeout);
+        timeout = null;
+    };
+    link.addEventListener("mouseleave", startHidingRefHint);
+    link.addEventListener("mouseenter", resetHidingRefHint);
+    link.addEventListener("blur", startHidingRefHint);
+    link.addEventListener("focus", resetHidingRefHint);
+    refHint.addEventListener("mouseleave", startHidingRefHint);
+    refHint.addEventListener("mouseenter", resetHidingRefHint);
+    refHint.addEventListener("blur", startHidingRefHint);
+    refHint.addEventListener("focus", resetHidingRefHint);
+
+    refHint.teardownEventListeners = () => {
+        // remove event listeners
+        resetHidingRefHint();
+        link.removeEventListener("mouseleave", startHidingRefHint);
+        link.removeEventListener("mouseenter", resetHidingRefHint);
+        link.removeEventListener("blur", startHidingRefHint);
+        link.removeEventListener("focus", resetHidingRefHint);
+        refHint.removeEventListener("mouseleave", startHidingRefHint);
+        refHint.removeEventListener("mouseenter", resetHidingRefHint);
+        refHint.removeEventListener("blur", startHidingRefHint);
+        refHint.removeEventListener("focus", resetHidingRefHint);
+    };
+}
+
+function positionRefHint(refHint) {
+    const link = refHint.forLink;
+    const linkPos = getBounds(link);
+    refHint.style.top = linkPos.bottom + "px";
+    refHint.style.left = linkPos.left + "px";
+
+    const panelPos = refHint.getBoundingClientRect();
+    const panelMargin = 8;
+    const maxRight = document.body.parentNode.clientWidth - panelMargin;
+    if (panelPos.right > maxRight) {
+        const overflowAmount = panelPos.right - maxRight;
+        const newLeft = Math.max(panelMargin, linkPos.left - overflowAmount);
+        refHint.style.left = newLeft + "px";
+    }
+}
+
+// TODO: shared util
+// Returns the root-level absolute position {left and top} of element.
+function getBounds(el, relativeTo=document.body) {
+    const relativeRect = relativeTo.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    const top = elRect.top - relativeRect.top;
+    const left = elRect.left - relativeRect.left;
+    return {
+        top,
+        left,
+        bottom: top + elRect.height,
+        right: left + elRect.width,
+    }
+}
+
+function showRefHintListener(e) {
+    // If the target isn't in a link (or is a link),
+    // just ignore it.
+    let link = e.target.closest("a");
+    if(!link) return;
+
+    // If the target is in a ref-hint panel
+    // (aka a link in the already-open one),
+    // also just ignore it.
+    if(link.closest(".ref-hint")) return;
+
+    // Otherwise, show the panel for the link.
+    showRefHint(link);
+}
+
+function hideAllHintsListener(e) {
+    // If the click is inside a ref-hint panel, ignore it.
+    if(e.target.closest(".ref-hint")) return;
+    // Otherwise, close all the current panels.
+    hideAllRefHints();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.body.addEventListener("mousedown", showRefHintListener);
+    document.body.addEventListener("focus", showRefHintListener);
+
+    document.body.addEventListener("click", hideAllHintsListener);
+});
+
+window.addEventListener("resize", () => {
+    // Hide any open ref hint.
+    hideAllRefHints();
+});
+}
+</script>
 <script>/* Boilerplate: script-var-click-highlighting */
+"use strict";
+{
 /*
 Color-choosing design:
 
-Colors are ordered by goodness.
-Each color has a usage count (initially zero).
-Each variable has a last-used color.
-
-* If the var has a last-used color, and that color's usage is 0,
-    return that color.
-* Otherwise, return the lowest-indexed color with the lowest usage.
-    Increment the color's usage and set it as the last-used color
-    for that var.
-* On unclicking, decrement usage of the color.
+* Colors are ordered by goodness.
+* On clicking a var, give it the earliest color
+    with the lowest usage in the algorithm.
+* On re-clicking, re-use the var's most recent color
+    if that's not currently being used elsewhere.
 */
-"use strict";
-{
-    document.addEventListener("click", e=>{
-        if(e.target.nodeName == "VAR") {
-            highlightSameAlgoVars(e.target);
-        }
-    });
-    const indexCounts = new Map();
-    const indexNames = new Map();
-    function highlightSameAlgoVars(v) {
-        // Find the algorithm container.
-        let algoContainer = null;
-        let searchEl = v;
-        while(algoContainer == null && searchEl != document.body) {
-            searchEl = searchEl.parentNode;
-            if(searchEl.hasAttribute("data-algorithm")) {
-                algoContainer = searchEl;
-            }
-        }
 
-        // Not highlighting document-global vars,
-        // too likely to be unrelated.
-        if(algoContainer == null) return;
+const COLOR_COUNT = 7;
 
-        const algoName = algoContainer.getAttribute("data-algorithm");
-        const varName = getVarName(v);
-        const addClass = !v.classList.contains("selected");
-        let highlightClass = null;
-        if(addClass) {
-            const index = chooseHighlightIndex(algoName, varName);
-            indexCounts.get(algoName)[index] += 1;
-            indexNames.set(algoName+"///"+varName, index);
-            highlightClass = nameFromIndex(index);
-        } else {
-            const index = previousHighlightIndex(algoName, varName);
-            indexCounts.get(algoName)[index] -= 1;
-            highlightClass = nameFromIndex(index);
-        }
+document.addEventListener("click", e=>{
+    if(e.target.nodeName == "VAR") {
+        highlightSameAlgoVars(e.target);
+    }
+});
 
-        // Find all same-name vars, and toggle their class appropriately.
+function highlightSameAlgoVars(v) {
+    // Find the algorithm container.
+    let algoContainer = findAlgoContainer(v);
+
+    // Not highlighting document-global vars,
+    // too likely to be unrelated.
+    if(algoContainer == null) return;
+
+    const varName = nameFromVar(v);
+    if(!v.hasAttribute("data-var-color")) {
+        const newColor = chooseHighlightColor(algoContainer, v);
         for(const el of algoContainer.querySelectorAll("var")) {
-            if(getVarName(el) == varName) {
-                el.classList.toggle("selected", addClass);
-                el.classList.toggle(highlightClass, addClass);
+            if(nameFromVar(el) == varName) {
+                el.setAttribute("data-var-color", newColor);
+                el.setAttribute("data-var-last-color", newColor);
+            }
+        }
+    } else {
+        for(const el of algoContainer.querySelectorAll("var")) {
+            if(nameFromVar(el) == varName) {
+                el.removeAttribute("data-var-color");
             }
         }
     }
-    function getVarName(el) {
-        return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+}
+function findAlgoContainer(el) {
+    while(el != document.body) {
+        if(el.hasAttribute("data-algorithm")) return el;
+        el = el.parentNode;
     }
-    function chooseHighlightIndex(algoName, varName) {
-        let indexes = null;
-        if(indexCounts.has(algoName)) {
-            indexes = indexCounts.get(algoName);
-        } else {
-            // 7 classes right now
-            indexes = [0,0,0,0,0,0,0];
-            indexCounts.set(algoName, indexes);
-        }
+    return null;
+}
+function nameFromVar(el) {
+    return el.textContent.replace(/(\s|\xa0)+/, " ").trim();
+}
+function colorCountsFromContainer(container) {
+    const namesFromColor = Array.from({length:COLOR_COUNT}, x=>new Set());
+    for(let v of container.querySelectorAll("var[data-var-color]")) {
+        let color = +v.getAttribute("data-var-color");
+        namesFromColor[color].add(nameFromVar(v));
+    }
 
-        // If the element was recently unclicked,
-        // *and* that color is still unclaimed,
-        // give it back the same color.
-        const lastIndex = previousHighlightIndex(algoName, varName);
-        if(indexes[lastIndex] === 0) return lastIndex;
-
-        // Find the earliest index with the lowest count.
-        const minCount = Math.min.apply(null, indexes);
-        let index = null;
-        for(var i = 0; i < indexes.length; i++) {
-            if(indexes[i] == minCount) {
-                return i;
-            }
+    return namesFromColor.map(x=>x.size);
+}
+function leastUsedColor(colors) {
+    // Find the earliest color with the lowest count.
+    let minCount = Infinity;
+    let minColor = null;
+    for(var i = 0; i < colors.length; i++) {
+        if(colors[i] < minCount) {
+            minColor = i;
+            minCount = colors[i];
         }
     }
-    function previousHighlightIndex(algoName, varName) {
-        return indexNames.get(algoName+"///"+varName);
+    return minColor;
+}
+function chooseHighlightColor(container, v) {
+    const colorCounts = colorCountsFromContainer(container);
+    if(v.hasAttribute("data-var-last-color")) {
+        let color = +v.getAttribute("data-var-last-color");
+        if(colorCounts[color] == 0) return color;
     }
-    function nameFromIndex(index) {
-        return "selected" + index;
-    }
+    return leastUsedColor(colorCounts);
+}
 }
 </script>
